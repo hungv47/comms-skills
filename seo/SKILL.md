@@ -128,7 +128,7 @@ When both `seo` and `imc-plan` are in use, they should coordinate:
 
 ### Step 0: Product Context
 Check for `.agents/product-context.md`. If available, read for product positioning context.
-If `.agents/mkt/icp-research.md` or `.agents/mkt/imc-plan.md` `date` fields are older than 30 days, recommend re-running upstream skills — stale audience data weakens SEO strategy.
+If `.agents/mkt/icp-research.md` or `.agents/mkt/imc-plan.md` `date` fields are older than 30 days, recommend re-running upstream skills — stale audience data weakens SEO strategy. Run `/navigate status` first for a single-pass freshness report across all upstream artifacts.
 
 ### Required Artifacts
 | Artifact | Source | If Missing |

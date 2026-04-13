@@ -162,7 +162,7 @@ Before dispatching any agent, the orchestrator gathers context that ALL agents w
 
 ### Product Context Check
 Check for `.agents/product-context.md`. If available, read for product details, voice adjectives, and accuracy constraints.
-If `.agents/product-context.md` or `.agents/mkt/icp-research.md` `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research` before proceeding. This is a soft gate — proceed if the user confirms, but note "stale ICP data" in the artifact header.
+If `.agents/product-context.md` or `.agents/mkt/icp-research.md` `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research` before proceeding. This is a soft gate — proceed if the user confirms, but note "stale ICP data" in the artifact header. Tip: `/navigate status` gives a single-pass freshness report across all upstream artifacts.
 
 ### Language
 Default: English. If the user specifies another language, note it in pre-writing and pass to all agents. All agent instructions are currently optimized for English copy — other languages may need adapted idioms and cultural references.

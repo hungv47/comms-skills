@@ -228,7 +228,7 @@ Ask: *"Full brand system or quick brand for MVP?"*
 ## Step 0: Pre-Dispatch Context Gathering
 
 ### Product Context Check
-Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills.
+Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills. Run `/navigate status` first for a single-pass freshness report across all upstream artifacts.
 
 ### Required Inputs — Interview If Missing
 - Product description or PRD

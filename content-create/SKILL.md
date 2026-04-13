@@ -198,7 +198,7 @@ Previous: `imc-plan` | Next: `attribution`
 ## Step 0: Pre-Dispatch Context Gathering
 
 ### Product Context Check
-Check for `.agents/product-context.md` and `.agents/mkt/imc-plan.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills.
+Check for `.agents/product-context.md` and `.agents/mkt/imc-plan.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills. Run `/navigate status` first for a single-pass freshness report across all upstream artifacts.
 
 ### Required Artifacts
 | Artifact | Source | If Missing |
