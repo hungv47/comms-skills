@@ -7,10 +7,10 @@ Brand identity, content creation, campaign planning, optimization, and performan
 Installs via the [`skills` CLI](https://skills.sh). Requires Node.js 18+. Auto-detects Claude Code, Cursor, Codex, Windsurf, Gemini CLI, or VS Code.
 
 ```bash
-# Install the full marketing stack (8 skills)
+# Install the full marketing stack
 npx skills add hungv47/marketing-skills
 
-# Cherry-pick a single skill
+# Cherry-pick a single skill (any skill in the stack — these are just examples)
 npx skills add hungv47/marketing-skills --skill copywriting
 npx skills add hungv47/marketing-skills --skill seo
 npx skills add hungv47/marketing-skills --skill humanize
