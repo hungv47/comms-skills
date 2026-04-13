@@ -156,7 +156,7 @@ Previous: `icp-research` | Next: `content-create`
 ## Step 0: Pre-Dispatch Context Gathering
 
 ### Product Context Check
-Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research`.
+Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research`. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
 
 ### Required Artifacts
 | Artifact | Source | If Missing |

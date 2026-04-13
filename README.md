@@ -4,9 +4,28 @@ Brand identity, content creation, campaign planning, optimization, and performan
 
 ## Install
 
+Installs via the [`skills` CLI](https://skills.sh). Requires Node.js 18+. Auto-detects Claude Code, Cursor, Codex, Windsurf, Gemini CLI, or VS Code.
+
 ```bash
+# Install the full marketing stack
 npx skills add hungv47/marketing-skills
+
+# Cherry-pick a single skill (any skill in the stack — these are just examples)
+npx skills add hungv47/marketing-skills --skill copywriting
+npx skills add hungv47/marketing-skills --skill seo
+npx skills add hungv47/marketing-skills --skill humanize
+
+# List available skills without installing
+npx skills add hungv47/marketing-skills --list
+
+# Target a specific editor
+npx skills add hungv47/marketing-skills --agent claude-code
+
+# Install globally (available in every project)
+npx skills add hungv47/marketing-skills -g
 ```
+
+See the [root README](https://github.com/hungv47/agent-skills#install) for the full install reference.
 
 ## Pipeline
 
