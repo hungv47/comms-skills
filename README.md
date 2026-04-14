@@ -156,6 +156,24 @@ Strips AI patterns, injects brand voice, and compresses existing text. Targets 1
 
 ---
 
+### `vn-tone` — polish translated Vietnamese into native register
+
+Post-translation polish for Vietnamese text. Detects translation giveaways (pronoun drift, missing sentence-final particles, literal idiom calques, passive-voice calques, corporate translationese, typography) and rewrites into one of four target registers: **báo chí** (news/formal), **semi-casual** (tech community/blogger), **bro** (Otofun or Voz forum casual), or **pop-marketing** (consumer marketing/lifestyle).
+
+Uses a live-scraped corpus from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun, Voz, and Kenh14 as the register reference.
+
+**Use when:**
+- You have Vietnamese text that was translated from English (by AI, MT, or a non-native writer) and reads robotic
+- You have native Vietnamese copy that needs register alignment (e.g., corporate voice that should be bro-community)
+- You're localizing marketing copy and need the final polish before publication
+- Your brand serves a Vietnamese audience and generic MT output won't land
+
+**Not for:** translating from English to Vietnamese (use your preferred MT first, then this), writing new Vietnamese from scratch (use `copywriting`), or stripping AI patterns in English (use `humanize` first, then translate, then `vn-tone`).
+
+**Produces:** `.agents/mkt/content/[slug].vn-tone.md`
+
+---
+
 ## Cross-Stack
 
 - `brand-system`, `imc-plan`, `content-create`, `copywriting`, `lp-optimization`, `seo` read `.agents/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
