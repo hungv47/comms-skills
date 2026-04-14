@@ -5,7 +5,7 @@ Brand identity, content creation, campaign planning, optimization, and attributi
 ## Pipeline
 brand-system (visual identity foundation)
 content-research (research-skills) → imc-plan → content-create → attribution
-Horizontal: copywriting, lp-optimization, seo, humanize
+Horizontal: copywriting, lp-optimization, seo, humanize, vn-tone
 
 ## Recommended Starting Point
 Run `icp-research` (from [research-skills](https://github.com/hungv47/research-skills)) first — it creates `.agents/product-context.md`, the canonical cross-stack artifact consumed by 12+ downstream skills.
@@ -21,6 +21,7 @@ Skills write to `.agents/mkt/`, except `product-context.md` which is cross-stack
 - `.agents/mkt/attribution.md`
 - `.agents/mkt/seo-[mode].md` (mode = audit | ai | programmatic | competitor)
 - `.agents/mkt/content/[slug].humanized.md`
+- `.agents/mkt/content/[slug].vn-tone.md`
 - `brand/BRAND.md` (brand narrative, voice, positioning, archetype)
 - `brand/DESIGN.md` (AI-readable design system with palettes, tokens, components)
 
@@ -32,7 +33,7 @@ Attribution and IMC Plan can read research artifacts for alignment:
 
 ## Multi-Agent Skills
 
-All 8 skills use a two-layer multi-agent orchestration pattern:
+All 9 skills use a two-layer multi-agent orchestration pattern:
 
 - `SKILL.md` = **orchestrator** — dispatch graph, routing logic, merge step, critic gate
 - `agents/` = **sub-agent instruction files** — each with role, input/output contracts, domain knowledge, self-check
@@ -51,6 +52,7 @@ All 8 skills use a two-layer multi-agent orchestration pattern:
 - `content-create` — 8 agents (format, voc-extraction, hook, body, CTA, platform-compliance, ab-variant, critic). Layer 1→1.5→2 pattern (format resolves first, then writers parallel).
 - `imc-plan` — 6 agents (pillar, angle, channel, timeline, launch-sequencing, critic). Primarily sequential.
 - `humanize` — 6 agents (pattern-scanner, voice-extractor, strip, soul-injection, compression, critic). Layer 1 parallel (scan + extract) → Layer 2 sequential (strip→inject→compress→critic).
+- `vn-tone` — 3 agents (diagnostic, polisher, critic). Layer 1 (diagnostic) → Layer 2 sequential (polisher→critic). Post-translation Vietnamese register polish across 4 registers (báo chí, semi-casual, bro, pop-marketing) backed by a live-scraped corpus reference.
 - `lp-optimization` — 7 agents (hero-audit, trust-audit, cta-audit, ux-audit, message-match, prioritization, critic). Layer 1 parallel (4 audit agents) → Layer 2 sequential (message-match→prioritization→critic).
 - `seo` — 11 agents across 4 modes (technical, AI, programmatic, competitor). Mode-based routing.
 - `attribution` — 7 agents (kpi-hierarchy, initiative-mapper, channel-attribution, content-mapper, gap-analysis, action, critic). Fully sequential.
