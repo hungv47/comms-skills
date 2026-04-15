@@ -1,6 +1,6 @@
 # Marketing Skills
 
-Brand identity, content creation, campaign planning, optimization, and performance attribution.
+Brand identity, content creation, campaign planning, optimization, localization polish, and performance attribution. 9 skills.
 
 ## Install
 
@@ -30,7 +30,7 @@ See the [root README](https://github.com/hungv47/agent-skills#install) for the f
 ## Pipeline
 
 <picture>
-  <img src="./assets/pipeline.svg" alt="Marketing pipeline: brand-system → imc-plan → content-create → attribution, plus horizontal copywriting, lp-optimization, seo, humanize" width="100%">
+  <img src="./assets/pipeline.svg" alt="Marketing pipeline: brand-system → imc-plan → content-create → attribution, plus horizontal copywriting, lp-optimization, seo, humanize, vn-tone" width="100%">
 </picture>
 
 ## Skills
