@@ -9,6 +9,27 @@ metadata:
   version: "3.0.0"
   budget: deep
   estimated-cost: "$1-3"
+promptSignals:
+  phrases:
+    - "landing page"
+    - "conversion rate optimization"
+    - "page optimization"
+    - "cro audit"
+    - "landing page audit"
+    - "optimize the landing page"
+  allOf:
+    - [landing, page]
+    - [conversion, audit]
+  anyOf:
+    - "landing page"
+    - "conversion"
+    - "cro"
+    - "bounce rate"
+    - "above the fold"
+  noneOf:
+    - "write copy"
+    - "brand identity"
+  minScore: 6
 routing:
   intent-tags:
     - conversion-audit

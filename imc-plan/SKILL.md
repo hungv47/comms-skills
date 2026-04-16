@@ -9,6 +9,30 @@ metadata:
   version: "8.0.0"
   budget: deep
   estimated-cost: "$1-3"
+promptSignals:
+  phrases:
+    - "marketing plan"
+    - "campaign plan"
+    - "go to market"
+    - "channel strategy"
+    - "content calendar"
+    - "growth motion"
+    - "marketing strategy"
+  allOf:
+    - [marketing, plan]
+    - [channel, strategy]
+  anyOf:
+    - "campaign"
+    - "channel"
+    - "calendar"
+    - "gtm"
+    - "plg"
+    - "slg"
+  noneOf:
+    - "write copy"
+    - "headline"
+    - "tagline"
+  minScore: 6
 routing:
   intent-tags:
     - campaign-planning

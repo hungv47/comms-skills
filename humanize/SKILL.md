@@ -9,6 +9,27 @@ metadata:
   version: "2.0.0"
   budget: standard
   estimated-cost: "$0.15-0.40"
+promptSignals:
+  phrases:
+    - "sounds like ai"
+    - "too robotic"
+    - "humanize this"
+    - "remove ai patterns"
+    - "make it sound human"
+    - "ai slop"
+  allOf:
+    - [ai, pattern]
+    - [sound, human]
+  anyOf:
+    - "humanize"
+    - "robotic"
+    - "ai-sounding"
+    - "compress"
+    - "voice injection"
+  noneOf:
+    - "brand identity"
+    - "design system"
+  minScore: 6
 routing:
   intent-tags:
     - humanize

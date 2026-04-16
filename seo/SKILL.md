@@ -9,6 +9,29 @@ metadata:
   version: "2.0.0"
   budget: deep
   estimated-cost: "$2-5"
+promptSignals:
+  phrases:
+    - "seo audit"
+    - "keyword research"
+    - "search ranking"
+    - "search optimization"
+    - "app store optimization"
+    - "aso"
+  allOf:
+    - [seo, audit]
+    - [keyword, research]
+  anyOf:
+    - "seo"
+    - "keyword"
+    - "ranking"
+    - "backlink"
+    - "search"
+    - "aso"
+    - "aeo"
+  noneOf:
+    - "landing page audit"
+    - "cro"
+  minScore: 6
 routing:
   intent-tags:
     - seo-audit

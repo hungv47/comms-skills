@@ -9,6 +9,28 @@ metadata:
   version: "6.0.0"
   budget: deep
   estimated-cost: "$2-5"
+promptSignals:
+  phrases:
+    - "brand identity"
+    - "brand voice"
+    - "design system"
+    - "brand guidelines"
+    - "visual identity"
+    - "brand book"
+  allOf:
+    - [brand, identity]
+    - [design, system]
+  anyOf:
+    - "brand"
+    - "voice"
+    - "typography"
+    - "color system"
+    - "design tokens"
+    - "logo"
+  noneOf:
+    - "landing page audit"
+    - "conversion rate"
+  minScore: 6
 routing:
   intent-tags:
     - brand-identity

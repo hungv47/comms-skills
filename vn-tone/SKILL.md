@@ -9,6 +9,22 @@ metadata:
   version: "1.0.0"
   budget: standard
   estimated-cost: "$0.08-0.20"
+promptSignals:
+  phrases:
+    - "vietnamese"
+    - "tiếng việt"
+    - "polish vietnamese"
+    - "vn tone"
+    - "dịch sang tiếng việt"
+  allOf:
+    - [vietnamese, tone]
+  anyOf:
+    - "tiếng việt"
+    - "bro tone"
+    - "báo chí"
+    - "localization"
+  noneOf: []
+  minScore: 6
 routing:
   intent-tags:
     - vietnamese-tone

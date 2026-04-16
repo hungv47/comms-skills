@@ -9,6 +9,31 @@ metadata:
   version: "2.0.0"
   budget: deep
   estimated-cost: "$1-3"
+promptSignals:
+  phrases:
+    - "write copy"
+    - "headline"
+    - "tagline"
+    - "call to action"
+    - "write a headline"
+    - "hook line"
+    - "write a cta"
+  allOf:
+    - [write, copy]
+    - [craft, headline]
+  anyOf:
+    - "copy"
+    - "headline"
+    - "cta"
+    - "tagline"
+    - "hook"
+    - "persuasive"
+  noneOf:
+    - "social media post"
+    - "blog post"
+    - "email campaign"
+    - "carousel"
+  minScore: 6
 routing:
   intent-tags:
     - write-copy

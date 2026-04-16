@@ -9,6 +9,36 @@ metadata:
   version: "4.0.0"
   budget: deep
   estimated-cost: "$1-3"
+promptSignals:
+  phrases:
+    - "social media"
+    - "social post"
+    - "linkedin post"
+    - "write a blog"
+    - "email campaign"
+    - "video script"
+    - "newsletter"
+    - "carousel"
+    - "write content for"
+    - "social presence"
+  allOf:
+    - [write, content]
+    - [create, post]
+    - [draft, email]
+  anyOf:
+    - "social"
+    - "blog"
+    - "email"
+    - "video"
+    - "carousel"
+    - "newsletter"
+    - "post"
+    - "thread"
+  noneOf:
+    - "seo audit"
+    - "keyword research"
+    - "brand identity"
+  minScore: 6
 routing:
   intent-tags:
     - content-asset

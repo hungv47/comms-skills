@@ -9,6 +9,27 @@ metadata:
   version: "3.0.0"
   budget: deep
   estimated-cost: "$1-3"
+promptSignals:
+  phrases:
+    - "channel roi"
+    - "marketing attribution"
+    - "which channel is working"
+    - "cac by channel"
+    - "marketing measurement"
+  allOf:
+    - [channel, roi]
+    - [marketing, measurement]
+  anyOf:
+    - "attribution"
+    - "roi"
+    - "cac"
+    - "channel"
+    - "measurement"
+    - "multi-touch"
+  noneOf:
+    - "campaign plan"
+    - "content calendar"
+  minScore: 6
 routing:
   intent-tags:
     - kpi-mapping
