@@ -203,8 +203,8 @@ This skill's examples are marketing-focused, but it works on any content type. A
 Before dispatching any agent, the orchestrator gathers context that ALL agents will need.
 
 ### Product Context Check
-Check for `.agents/product-context.md`. If available, read for voice adjectives and brand personality. Voice injection (soul-injection-agent) requires these adjectives — without them, output will be clean but generic.
-If `.agents/product-context.md`'s `date` field is older than 30 days, recommend re-running `icp-research` to refresh voice adjectives — brand voice evolves. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+Check for `research/product-context.md`. If available, read for voice adjectives and brand personality. Voice injection (soul-injection-agent) requires these adjectives — without them, output will be clean but generic.
+If `research/product-context.md`'s `date` field is older than 30 days, recommend re-running `icp-research` to refresh voice adjectives — brand voice evolves. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
 
 ### Content Type Classification
 Determine the content type from the brief or the source artifact. This governs strip intensity, voice injection level, and compression targets per the Content Type Calibration table above.
@@ -239,7 +239,7 @@ For each agent dispatched below, use the **Agent tool** with a prompt constructe
 1. **Read** the agent instruction file (e.g., `agents/pattern-scanner-agent.md`) — include its FULL content in the Agent prompt
 2. **Append** the brief and pre-writing context after the instructions
 3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory. Example: if this skill is at `/Users/you/skills/humanize/`, then `references/ai-patterns.md` becomes `/Users/you/skills/humanize/references/ai-patterns.md`. Tell the agent: "Read the reference file at [absolute path] for domain knowledge."
-4. **Pass upstream artifacts by content, not path**: the orchestrator reads `.agents/product-context.md` FIRST, then includes relevant excerpts (voice adjectives, audience register) in the pre-writing object. Sub-agents should NOT read artifact files directly — the orchestrator curates what they need.
+4. **Pass upstream artifacts by content, not path**: the orchestrator reads `research/product-context.md` FIRST, then includes relevant excerpts (voice adjectives, audience register) in the pre-writing object. Sub-agents should NOT read artifact files directly — the orchestrator curates what they need.
 5. If **feedback** exists (from a critic FAIL cycle), append it at the end of the prompt with the header "## Critic Feedback — Address Every Point"
 
 ### Single-agent fallback

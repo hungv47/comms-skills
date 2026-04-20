@@ -147,7 +147,7 @@ kpi-hierarchy-agent (L1)
 ### Before Starting
 
 #### Step 0: Product Context
-Check for `.agents/product-context.md`. If available, read for product context. If missing, strongly recommend running `icp-research` first — attribution mapping is significantly more accurate with product context.
+Check for `research/product-context.md`. If available, read for product context. If missing, strongly recommend running `icp-research` first — attribution mapping is significantly more accurate with product context.
 If `.agents/targets.md`, `.agents/solution-design.md`, or `.agents/mkt/imc-plan.md` `date` fields are older than 30 days, recommend re-running upstream skills — stale data produces inaccurate attribution maps. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
 
 #### Required Artifacts

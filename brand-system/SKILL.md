@@ -255,7 +255,7 @@ Ask: *"Full brand system or quick brand for MVP?"*
 ## Step 0: Pre-Dispatch Context Gathering
 
 ### Product Context Check
-Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+Check for `research/product-context.md` and `research/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
 
 ### Required Inputs — Interview If Missing
 - Product description or PRD
@@ -290,10 +290,10 @@ Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `da
 ### Optional Artifacts
 | Artifact | Source | Benefit |
 |----------|--------|---------|
-| `.agents/product-context.md` | icp-research (from `hungv47/marketing-skills`) | Product positioning, audience, and voice adjectives — grounds brand strategy in audience research |
-| `.agents/mkt/icp-research.md` | icp-research (from `hungv47/marketing-skills`) | Audience personas, pain profiles, and VoC quotes — brand strategy without audience research produces generic archetypes |
+| `research/product-context.md` | icp-research (from `hungv47/research-skills`) | Product positioning, audience, and voice adjectives — grounds brand strategy in audience research |
+| `research/icp-research.md` | icp-research (from `hungv47/research-skills`) | Audience personas, pain profiles, and VoC quotes — brand strategy without audience research produces generic archetypes |
 
-**Strongly recommended:** Run `icp-research` (from marketing-skills) first if audience research hasn't been done.
+**Strongly recommended:** Run `icp-research` (from research-skills) first if audience research hasn't been done.
 
 ### Context to Pass to All Agents
 1. **Product:** description, audience, competitive landscape

@@ -46,7 +46,7 @@ Creates brand identity systems — color palettes, typography, design tokens, lo
 
 **Not for:** writing marketing copy (use `content-create`) or mapping user flows (use `user-flow`)
 
-**Produces:** `.agents/design/brand-system.md`
+**Produces:** `brand/BRAND.md` + `brand/DESIGN.md`
 
 ---
 
@@ -176,7 +176,7 @@ Uses a live-scraped corpus from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun
 
 ## Cross-Stack
 
-- `brand-system`, `imc-plan`, `content-create`, `copywriting`, `lp-optimization`, `seo` read `.agents/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
+- `brand-system`, `imc-plan`, `content-create`, `copywriting`, `lp-optimization`, `seo` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
 - `imc-plan` and `attribution` read `.agents/solution-design.md` and `.agents/targets.md` from research-skills
 
 ## License

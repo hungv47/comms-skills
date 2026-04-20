@@ -51,7 +51,7 @@ routing:
     # mode = audit | ai | programmatic | competitor | aso
   consumes:
     - product-context.md
-    - mkt/icp-research.md
+    - icp-research.md
     - mkt/imc-plan.md
   requires: []
   defers-to:
@@ -112,7 +112,7 @@ Before delivering any SEO artifact, these must be true:
 
 ## Inputs Required
 
-- ICP research from `.agents/mkt/icp-research.md` (audience questions, pain points, search behavior)
+- ICP research from `research/icp-research.md` (audience questions, pain points, search behavior)
 - IMC plan from `.agents/mkt/imc-plan.md` (content pillars and angles)
 - OR: User describes their SEO situation / site to audit
 
@@ -150,8 +150,8 @@ When both `seo` and `imc-plan` are in use, they should coordinate:
 ## Before Starting
 
 ### Step 0: Product Context
-Check for `.agents/product-context.md`. If available, read for product positioning context.
-If `.agents/mkt/icp-research.md` or `.agents/mkt/imc-plan.md` `date` fields are older than 30 days, recommend re-running upstream skills — stale audience data weakens SEO strategy. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+Check for `research/product-context.md`. If available, read for product positioning context.
+If `research/icp-research.md` or `.agents/mkt/imc-plan.md` `date` fields are older than 30 days, recommend re-running upstream skills — stale audience data weakens SEO strategy. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
 
 ### Required Artifacts
 | Artifact | Source | If Missing |
@@ -416,7 +416,7 @@ pre-writing: {
   cms_framework: "Next.js",
   mode: "audit",
   known_issues: "30% organic traffic drop last quarter",
-  icp_data: "from .agents/mkt/icp-research.md",
+  icp_data: "from research/icp-research.md",
   competitors: ["competitor-a.com", "competitor-b.com"]
 }
 ```

@@ -48,7 +48,7 @@ routing:
     - mkt/imc-plan.md
   consumes:
     - product-context.md
-    - mkt/icp-research.md
+    - icp-research.md
     - mkt/content-research.md
     - solution-design.md
   requires: []
@@ -85,7 +85,7 @@ routing:
 Frameworks (ORB, 3D Angles, Pillar Types) are proven defaults — not mandatory templates. Adapt based on data. When ICP research provides habitat maps, use them. When it doesn't, gather the data before planning channels.
 
 ## Inputs Required
-- ICP research from `.agents/mkt/icp-research.md` + `.agents/product-context.md` (or user-provided)
+- ICP research from `research/icp-research.md` + `research/product-context.md` (or user-provided)
 
 ## Output
 - `.agents/mkt/imc-plan.md`
@@ -180,7 +180,7 @@ Previous: `icp-research` | Next: `content-create`
 ## Step 0: Pre-Dispatch Context Gathering
 
 ### Product Context Check
-Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research`. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+Check for `research/product-context.md` and `research/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research`. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
 
 ### Required Artifacts
 | Artifact | Source | If Missing |

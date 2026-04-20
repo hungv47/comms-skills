@@ -8,12 +8,12 @@ content-research (research-skills) → imc-plan → content-create → attributi
 Horizontal: copywriting, lp-optimization, seo, humanize, vn-tone
 
 ## Recommended Starting Point
-Run `icp-research` (from [research-skills](https://github.com/hungv47/research-skills)) first — it creates `.agents/product-context.md`, the canonical cross-stack artifact consumed by 12+ downstream skills.
+Run `icp-research` (from [research-skills](https://github.com/hungv47/research-skills)) first — it creates `research/product-context.md`, the canonical cross-stack record consumed by 12+ downstream skills.
 
 ## Artifacts
-Skills write to `.agents/mkt/`, except `product-context.md` which is cross-stack:
-- `.agents/product-context.md` (cross-stack — created by icp-research in research-skills)
-- `.agents/mkt/icp-research.md`
+Pipeline outputs write to `.agents/mkt/`; cross-stack records live in the top-level `research/` folder:
+- `research/product-context.md` (cross-stack — created by icp-research in research-skills)
+- `research/icp-research.md` (canonical audience record — from icp-research in research-skills)
 - `.agents/mkt/content-research.md` (from content-research in research-skills)
 - `.agents/mkt/imc-plan.md`
 - `.agents/mkt/content/[slug].md`

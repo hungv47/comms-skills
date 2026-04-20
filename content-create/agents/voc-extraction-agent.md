@@ -63,8 +63,8 @@ You do NOT:
 ### Where to Find VoC
 
 Read in this priority order:
-1. `.agents/mkt/icp-research.md` — Primary source of VoC quotes and pain analysis
-2. `.agents/product-context.md` — Product details, voice adjectives
+1. `research/icp-research.md` — Primary source of VoC quotes and pain analysis
+2. `research/product-context.md` — Product details, voice adjectives
 3. User-provided brief — Sometimes includes customer quotes or feedback
 
 ### Quote Selection Criteria

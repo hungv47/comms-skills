@@ -60,7 +60,7 @@ routing:
     - mkt/content/[slug].md
   consumes:
     - product-context.md
-    - mkt/icp-research.md
+    - icp-research.md
     - mkt/imc-plan.md
     - mkt/content-research.md
   requires: []
@@ -228,7 +228,7 @@ Previous: `imc-plan` | Next: `attribution`
 ## Step 0: Pre-Dispatch Context Gathering
 
 ### Product Context Check
-Check for `.agents/product-context.md` and `.agents/mkt/imc-plan.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+Check for `research/product-context.md` and `.agents/mkt/imc-plan.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
 
 ### Required Artifacts
 | Artifact | Source | If Missing |
@@ -258,7 +258,7 @@ Check for `.agents/product-context.md` and `.agents/mkt/imc-plan.md`. If `date` 
 1. **Read** the agent instruction file — include its FULL content in the Agent prompt
 2. **Append** the context (angle, channel, awareness stage, VoC, content research insights) after the instructions
 3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory
-4. **Pass upstream artifacts by content**: the orchestrator reads `.agents/product-context.md`, `.agents/mkt/icp-research.md`, `.agents/mkt/imc-plan.md`, and `.agents/mkt/content-research.md` (if it exists) FIRST, then includes relevant excerpts in context. Sub-agents should NOT read artifact files directly.
+4. **Pass upstream artifacts by content**: the orchestrator reads `research/product-context.md`, `research/icp-research.md`, `.agents/mkt/imc-plan.md`, and `.agents/mkt/content-research.md` (if it exists) FIRST, then includes relevant excerpts in context. Sub-agents should NOT read artifact files directly.
 5. If **feedback** exists (from critic FAIL), append with header "## Critic Feedback — Address Every Point"
 
 ### Single-agent fallback

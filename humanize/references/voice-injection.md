@@ -35,7 +35,7 @@ Voice is defined by 3-5 adjectives from product context. Each adjective has conc
 | **Provocative** | Short, punchy | Contrarian framing | Bold claims (backed by evidence), challenging assumptions |
 | **Empathetic** | Medium, natural rhythm | Feeling words, acknowledgment | Naming the reader's frustration before solving it |
 
-**How to use:** Read the voice adjectives from `.agents/product-context.md`. For each adjective, apply its column constraints. Where adjectives conflict (e.g., "direct" + "warm"), alternate — a warm sentence followed by a direct one creates rhythm.
+**How to use:** Read the voice adjectives from `research/product-context.md`. For each adjective, apply its column constraints. Where adjectives conflict (e.g., "direct" + "warm"), alternate — a warm sentence followed by a direct one creates rhythm.
 
 ---
 

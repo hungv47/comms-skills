@@ -171,12 +171,12 @@ Small skill, two routes.
 ### Register Resolution
 Determine target register from (in priority order):
 1. Explicit `--register` argument from user
-2. Brand voice from `.agents/product-context.md` (if present) — map brand voice adjectives to register: "authoritative/institutional" → bao-chi; "warm/community" → semi-casual; "in-group/community" → bro; "young/lifestyle/consumer" → pop-marketing
+2. Brand voice from `research/product-context.md` (if present) — map brand voice adjectives to register: "authoritative/institutional" → bao-chi; "warm/community" → semi-casual; "in-group/community" → bro; "young/lifestyle/consumer" → pop-marketing
 3. Content type inferred from upstream artifact (news article → bao-chi; blog post → semi-casual; landing page → pop-marketing)
 4. Ask the user — do not guess silently
 
 ### Product Context Check
-Check for `.agents/product-context.md`. If available, read for brand voice and any dialect/register preferences. Note in pre-writing if the brand specifies Northern/Southern dialect or has a glossary of terms to preserve.
+Check for `research/product-context.md`. If available, read for brand voice and any dialect/register preferences. Note in pre-writing if the brand specifies Northern/Southern dialect or has a glossary of terms to preserve.
 
 ### Required Artifacts
 None — polishes any Vietnamese text standalone.

@@ -41,7 +41,7 @@ routing:
     - mkt/lp-optimization.md
   consumes:
     - product-context.md
-    - mkt/icp-research.md
+    - icp-research.md
   requires: []
   defers-to:
     - skill: copywriting
@@ -72,7 +72,7 @@ The frameworks here (PAS, 4-U, social proof hierarchy) are evidence-backed defau
 
 ## Inputs Required
 - Landing page URL or description of the page
-- ICP research from `.agents/mkt/icp-research.md` (recommended — VoC language strengthens copy)
+- ICP research from `research/icp-research.md` (recommended — VoC language strengthens copy)
 - Traffic source context (where visitors come from)
 
 ## Output
@@ -201,8 +201,8 @@ This is a write workflow, not an audit workflow. The agents are repurposed as pl
 Before dispatching any agent, the orchestrator gathers context that ALL agents will need.
 
 ### Product Context Check
-Check for `.agents/product-context.md`. If available, read for product details and accuracy. If missing, strongly recommend running `icp-research` first — this skill works without it but produces significantly better output with it.
-If `.agents/product-context.md` or `.agents/mkt/icp-research.md` `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research` before proceeding. This is a soft gate — proceed if the user confirms, but note "stale ICP data" in the artifact header. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+Check for `research/product-context.md`. If available, read for product details and accuracy. If missing, strongly recommend running `icp-research` first — this skill works without it but produces significantly better output with it.
+If `research/product-context.md` or `research/icp-research.md` `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research` before proceeding. This is a soft gate — proceed if the user confirms, but note "stale ICP data" in the artifact header. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
 
 ### Required Artifacts
 None — can audit any page standalone.
@@ -222,7 +222,7 @@ Answer these questions before dispatching. Pass the answers to every agent as th
 3. **Where is the traffic coming from?** (Ad, search, email, social, direct) — determines message match requirements.
 4. **What traffic source copy exists?** (ad headlines, email subject lines, search meta descriptions) — needed for message-match verification.
 
-If `.agents/mkt/icp-research.md` exists, pull VoC quotes and pain language for all agents.
+If `research/icp-research.md` exists, pull VoC quotes and pain language for all agents.
 
 ---
 
@@ -235,7 +235,7 @@ For each agent dispatched below, use the **Agent tool** with a prompt constructe
 1. **Read** the agent instruction file (e.g., `agents/hero-audit-agent.md`) — include its FULL content in the Agent prompt
 2. **Append** the brief and pre-writing context after the instructions
 3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory. Example: if this skill is at `/Users/you/skills/lp-optimization/`, then `references/core-principles.md` becomes `/Users/you/skills/lp-optimization/references/core-principles.md`. Tell the agent: "Read the reference file at [absolute path] for domain knowledge."
-4. **Pass upstream artifacts by content, not path**: the orchestrator reads `.agents/product-context.md` and `.agents/mkt/icp-research.md` FIRST, then includes relevant excerpts (VoC quotes, pain language, product details) in the pre-writing object. Sub-agents should NOT read artifact files directly — the orchestrator curates what they need.
+4. **Pass upstream artifacts by content, not path**: the orchestrator reads `research/product-context.md` and `research/icp-research.md` FIRST, then includes relevant excerpts (VoC quotes, pain language, product details) in the pre-writing object. Sub-agents should NOT read artifact files directly — the orchestrator curates what they need.
 5. If **feedback** exists (from a critic FAIL cycle), append it at the end of the prompt with the header "## Critic Feedback — Address Every Point"
 
 ### Single-agent fallback
