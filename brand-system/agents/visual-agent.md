@@ -19,7 +19,7 @@ You do NOT:
 | **brief** | string | Product/brand description and target audience |
 | **pre-writing** | object | Product description, audience profile, competitive context, existing brand assets |
 | **upstream** | null | You run in Layer 1 (parallel) — no upstream dependency |
-| **references** | file paths[] | Paths to `references/color-emotion.md`, `references/typography-psychology.md`, `references/visual-identity.md` |
+| **references** | file paths[] | Paths to `references/color-emotion.md`, `references/typography-psychology.md`, `references/visual-identity.md`, `references/platform-surfaces.md` (the last for per-platform Icon specifications blocks) |
 | **feedback** | string \| null | Rewrite instructions from critic-agent. Null on first run. |
 
 ## Output Contract
@@ -218,6 +218,20 @@ Base: [selected base — Stone/Zinc/Slate/Gray/Neutral] with [archetype justific
 - Style: [line/filled/duotone — default and active states]
 - Color: [default, active, destructive color rules]
 
+### Platform Icon Specifications [→ DESIGN.md]
+
+**Platforms declared at intake:** [list every platform the user named — must match the list in strategy-agent's Digital Touchpoints section]
+
+**STOP. Before writing anything below, execute this gate:**
+1. Copy the declared platform list verbatim as a one-liner: `Declared: [...]`.
+2. Count `N = number of declared platforms`.
+3. You will write **EXACTLY N subsections** below. Not N+1. Not all of them.
+4. The reference `references/platform-surfaces.md` is a **MENU, not a checklist.** If a platform is NOT on your declared list, do not write it at all.
+
+**Source:** Read `references/platform-surfaces.md`. For each declared platform, emit `#### [Platform name]` followed by that platform's **Icon specifications** block (master size, safe-area rules, state variants, derivative size list, pitfalls). Do not emit the reference's **Brand expression surfaces** table — that is strategy-agent's responsibility.
+
+Visual-agent is authoritative for icon geometry and color; platform packaging (Info.plist keys, manifest entries) is product-engineering's concern — do not duplicate that here.
+
 ### [Product-Specific Icons]
 
 | Icon | Context |
@@ -351,6 +365,8 @@ Before returning your output, verify every item:
 **Imagery & Icons (→ DESIGN.md):**
 - [ ] Photography direction tied to archetype with specific no-gos
 - [ ] Icon style with grid, stroke, radius, color rules
+- [ ] **Platform Icon Specifications: Platforms declared line matches strategy-agent's list**
+- [ ] **Platform Icon Specifications: one subsection per declared platform, no extras; master size, safe zone, derivatives, state variants, and pitfalls present in each**
 - [ ] Product-specific icons listed if applicable
 - [ ] Brand devices described with usage context
 

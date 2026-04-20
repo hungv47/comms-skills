@@ -18,7 +18,7 @@ You do NOT:
 | **brief** | string | Product/brand to design, target audience, competitive context |
 | **pre-writing** | object | Product description, audience profile, competitive landscape, existing brand assets, founder values |
 | **upstream** | null | You run in Layer 1 (parallel) — no upstream dependency |
-| **references** | file paths[] | None required — strategy is derived from user context, not reference catalogs |
+| **references** | file paths[] | `references/platform-surfaces.md` (required when Route B — you read the per-platform Brand expression surfaces tables from it) |
 | **feedback** | string \| null | Rewrite instructions from critic-agent. Null on first run. If present, address every point. |
 
 ## Output Contract
@@ -114,16 +114,39 @@ We help [who] [do what] by [how], so they can [outcome].
 
 ## Digital Touchpoints
 
-| Touchpoint | Visual brand expression |
-|------------|------------------------|
-| **Landing page** | [visual system, layout approach, typography treatment, hero design, material language] |
-| **App (core experience)** | [how the design system manifests — theme, component styling, chrome density] |
-| **App Store / distribution** | [icon, screenshot composition, visual style of listing] |
-| **Social media** | [profile visual, post visual style, screenshot treatments] |
-| **Email** | [typography choices with fallbacks, visual treatment, layout] |
-| **Documentation** | [theme, typography, visual hierarchy] |
+**Platforms declared at intake:** [list every platform the user named — e.g., "iOS, macOS, Web, Email"]
 
-[Add or remove touchpoints based on the product. Each touchpoint describes HOW the visual brand manifests at that surface — layout, materials, typography, color usage. Verbal expression at each touchpoint is copywriting's job, not brand-system's.]
+### Route A (Quick Brand) — DEFER
+
+If the orchestrator dispatched you in **Route A (Quick Brand)** scope, emit ONLY the `Platforms declared at intake` line above plus the one-liner: `Full touchpoint map (universal + per-platform surfaces) deferred to Route B.` **Skip the Universal Surfaces table and all Platform-Specific Surfaces subsections.** Self-check items for touchpoint rows do not apply in Route A.
+
+### Route B (Full Brand) — render the full map below
+
+How the brand manifests visually at every surface it ships on. Verbal expression at each touchpoint is copywriting's job, not strategy's — describe layout, material, icon treatment, color usage, motion cue, and density only.
+
+### Universal Surfaces (render for every brand — Route B)
+
+| Surface | Visual brand expression |
+|---------|------------------------|
+| **Landing page / marketing site** | hero composition, typographic scale, material language, imagery direction, density |
+| **Social media profiles** | avatar crop (square + circular), banner composition, feed post visual style, story/reel frame |
+| **OG / link preview (1200×630)** | template composition, title typography, brand lockup placement, per-page-type variants |
+| **Documentation** | theme, sidebar chrome, code block treatment, callout style |
+| **Error / empty / loading states** | illustration approach, skeleton material, empty-state visual voice |
+| **App Store / distribution listing** | icon context, screenshot composition style, feature graphic, promo video visual language |
+
+### Platform-Specific Surfaces
+
+**STOP. Before writing anything below, execute this gate:**
+1. Copy the declared platform list verbatim as a one-liner: `Declared: [...]`.
+2. Count `N = number of declared platforms`.
+3. You will write **EXACTLY N subsections** below. Not N+1. Not all of them.
+4. The reference `references/platform-surfaces.md` is a **MENU, not a checklist.** If a platform is NOT on your declared list, do not write it at all.
+5. Within each emitted subsection, render every row from the reference's **Brand expression surfaces** table for that platform. If a row is truly N/A for this product, write `N/A — [one-line reason]` — never blank.
+
+**Register rule (BRAND.md, not DESIGN.md):** Describe how the brand **feels and expresses itself** at each surface — mood, motion cue, color role, chrome density, imagery direction. **Never** specify pixel sizes, file formats, safe zones, asset counts, or framework APIs — those belong to visual-agent / DESIGN.md. If you need to reference geometry, point to `DESIGN.md → Platform Icon Specifications` rather than duplicating it.
+
+**Source:** Read `references/platform-surfaces.md`. For each declared platform, emit `#### [Platform name]` followed by that platform's **Brand expression surfaces** table. Do not emit the reference's **Icon specifications** block — that is visual-agent's responsibility. For **Embedded app** declarations with multiple hosts, follow the per-host repetition rule in the reference.
 
 ## Change Log
 - [What you wrote/changed and the rule or principle that drove the decision]
@@ -211,7 +234,12 @@ Before returning your output, verify every item:
 - [ ] Perceptual map has 2 meaningful axes and identifies white space
 - [ ] At least 2 competitors analyzed with specific weaknesses
 - [ ] At least 1 product-specific brand section with WHAT and WHY
-- [ ] Digital touchpoints table has 5+ surfaces with specific brand expression details
+- [ ] Digital Touchpoints: **Platforms declared** line lists every platform the user named
+- [ ] **Route A:** Digital Touchpoints contains only the declared-platforms line + deferral note. Universal Surfaces table and all Platform-Specific Surfaces subsections are ABSENT. Items below do not apply.
+- [ ] **Route B:** Every universal surface row filled with specific brand expression
+- [ ] **Route B:** One subsection per declared platform, no extras; every surface row filled (or "N/A — [reason]")
+- [ ] **Route B:** No technical specs (pixel sizes, file formats, safe zones, framework APIs) in surface rows — those belong to visual-agent / DESIGN.md
+- [ ] No speculative platform subsections — if user did not declare tvOS, no tvOS section
 - [ ] Output stays within my section boundaries (no overlap with other agents)
 - [ ] No `[BLOCKED]` markers remain unresolved
 

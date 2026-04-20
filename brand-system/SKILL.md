@@ -111,10 +111,10 @@ The skill produces two complementary files, each serving a different audience:
 
 | Agent Output | → BRAND.md | → DESIGN.md |
 |-------------|-----------|------------|
-| Strategy Agent | Origin story, naming, purpose/mission/vision, values, positioning, competitive landscape, product-specific sections, digital touchpoints | — |
+| Strategy Agent | Origin story, naming, purpose/mission/vision, values, positioning, competitive landscape, product-specific sections, digital touchpoints (universal + per-declared-platform surfaces) | — |
 | Personality Agent | Archetype, personality traits, emotional journey map | — |
 | Voice Agent | Voice attributes (Do/Don't), tone range (3 contexts), tagline | — |
-| Visual Agent | Brand mark / logo system | Visual atmosphere, color system, per-theme palettes, typography, imagery, iconography, surface & material language, shadow system, z-index, do's and don'ts |
+| Visual Agent | Brand mark / logo system | Visual atmosphere, color system, per-theme palettes, typography, imagery, iconography (including **per-declared-platform icon specs**: sizes, safe zones, state variants), surface & material language, shadow system, z-index, do's and don'ts |
 | Token Architect Agent | — | Primitive scales, semantic token map, spacing, radius |
 | Component Token Agent | — | Component specs, product-specific components, motion tokens, named animations |
 | Accessibility Agent | — | Contrast audit, touch targets, focus states, dark mode, color independence, motion safety |
@@ -132,6 +132,9 @@ Before delivering, the **critic agent** verifies both files:
 - [ ] Emotional journey is touchpoint-level with design/interaction triggers (not copy triggers)
 - [ ] Brand mark described with enough detail to commission or generate
 - [ ] Digital touchpoints scoped to visual expression (not verbal)
+- [ ] **Route B — Platform coverage:** Universal Surfaces table filled + one Digital Touchpoints subsection per declared platform; every surface within each subsection has a brand-expression entry (not blank, not "TBD"). Zero undeclared platforms appear.
+- [ ] **Route A — Platform coverage:** Digital Touchpoints contains only the `Platforms declared at intake` line plus deferral note. Per-platform tables are ABSENT (not empty, not TBD — absent).
+- [ ] **Register separation:** Digital Touchpoints surface rows describe brand expression (mood, motion cue, color role, density), never geometry (pixel sizes, masks, safe zones, framework APIs). Geometry lives in DESIGN.md Platform Icon Specifications only.
 - [ ] Prose quality: reads like a brand book, not fill-in-the-blank templates
 
 **DESIGN.md checks:**
@@ -144,6 +147,7 @@ Before delivering, the **critic agent** verifies both files:
 - [ ] Surface/material language documented with CSS formulas
 - [ ] Shadow system with multiple elevation levels
 - [ ] Named animations with physics values (spring stiffness, damping, mass)
+- [ ] **Platform Icon Specifications: one subsection per declared platform with sizes, safe-area rules, state variants (dark/tinted/themed/monochrome as applicable), and derivative size list. Zero undeclared platforms appear.**
 - [ ] Do's and Don'ts section with concrete rules
 
 **Cross-file coherence:**
@@ -191,6 +195,7 @@ Previous: `icp-research` (product context) | Next: `imc-plan`, `copywriting`, `c
 - `references/component-tokens.md` — Component token map, button/input/card specs, motion tokens
 - `references/component-patterns.md` — Extended UI component patterns with token consumption maps
 - `references/implementation-rules.md` — Accessibility baseline, dark mode rules, brand applications
+- `references/platform-surfaces.md` — Per-platform brand-expression surfaces + icon specifications (strategy-agent reads the Brand expression tables, visual-agent reads the Icon specifications blocks)
 - `references/artboard-generation.md` — Paper MCP artboard specs and workflow
 - `references/paper-artboard-templates.md` — Paper MCP HTML/CSS templates
 - `references/ai-slop-detection.md` — AI-generated design anti-patterns checklist
@@ -220,7 +225,7 @@ Ask: *"Full brand system or quick brand for MVP?"*
 5. Deliver Quick Brand artifact
 ```
 
-**Quick Brand scope:** Purpose/mission/vision, core values, positioning, primary color + neutrals, display + body font, basic type hierarchy. Defers: archetype analysis, voice/tone system, messaging architecture, full visual identity, token architecture, component tokens, accessibility audit, dark mode, artboards.
+**Quick Brand scope:** Purpose/mission/vision, core values, positioning, primary color + neutrals, display + body font, basic type hierarchy. **Target platforms are still captured at intake** and recorded in BRAND.md as a one-line declaration ("Ships on: iOS, macOS, Web") so Route B can pick them up later. Defers: archetype analysis, voice/tone system, messaging architecture, full visual identity, token architecture, component tokens, accessibility audit, dark mode, artboards, **per-platform Digital Touchpoints surfaces, per-platform icon specifications**.
 
 **Quick Brand output includes a note:** "Run full brand-system when ready to build the design system."
 
@@ -256,6 +261,22 @@ Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `da
 - Product description or PRD
 - Target audience profile
 - Competitive context
+- **Target platforms** — which surfaces the brand ships on. Multi-select. Ask explicitly; do not assume "a web app." Canonical set:
+  - **Web** (marketing site, in-product web UI, PWA)
+  - **iOS / iPadOS**
+  - **Android**
+  - **macOS** (native AppKit/SwiftUI, or cross-platform shell like Electron/Tauri — ask which)
+  - **Windows** (native WinUI/Win32, or cross-platform shell)
+  - **Linux desktop** (GTK/Qt, or shell)
+  - **watchOS** / **Wear OS**
+  - **tvOS**
+  - **CarPlay / Android Auto**
+  - **Browser extension** (Chrome / Firefox / Safari / Edge — ask which)
+  - **CLI / terminal**
+  - **Email** (as a first-class brand channel — transactional + newsletter)
+  - **Embedded app** (Slack / Notion / Discord / Microsoft Teams / Linear / GitHub — ask which host)
+
+  **Disambiguate common vagueness:** "mobile app" → iOS, Android, or both? "desktop app" → native or Electron? "web app" → marketing site + product, or just one? If the user names a cross-platform shell (Electron, Tauri, Flutter, RN, Capacitor), still enumerate the host OSes — each OS gets its own surface set.
 
 ### Strongly Recommended
 - Existing brand assets (logos, colors, fonts, past guidelines)
@@ -279,6 +300,7 @@ Check for `.agents/product-context.md` and `.agents/mkt/icp-research.md`. If `da
 2. **Existing assets:** any logos, colors, fonts, guidelines to preserve or evolve
 3. **Positioning intent:** premium, accessible, disruptive, trusted
 4. **Upstream artifacts:** excerpts from product-context.md and icp-research.md if available
+5. **Target platforms:** declared platform list from intake — **strategy-agent renders a Digital Touchpoints subsection per declared platform; visual-agent renders per-platform icon specs. Undeclared platforms MUST NOT appear in output.** If the user declared "iOS + web" only, do not pad the artifact with Android/Windows sections.
 
 Missing product details are not guessable — interview for them.
 
@@ -314,10 +336,10 @@ Spawn **IN PARALLEL**:
 
 | Agent | Instruction File | Pass These Inputs | Reference Files |
 |-------|-----------------|-------------------|-----------------|
-| Strategy Agent | `agents/strategy-agent.md` | brief (product + audience + competitors) | — |
+| Strategy Agent | `agents/strategy-agent.md` | brief (product + audience + competitors + declared platforms) | `references/platform-surfaces.md` (Route B only) |
 | Personality Agent | `agents/personality-agent.md` | brief (product + audience) | `references/brand-archetypes.md` |
 | Voice Agent | `agents/voice-agent.md` | brief (product + audience) | `references/brand-voice.md` |
-| Visual Agent | `agents/visual-agent.md` | brief (product + audience + existing assets) | `references/color-emotion.md`, `references/typography-psychology.md`, `references/visual-identity.md` |
+| Visual Agent | `agents/visual-agent.md` | brief (product + audience + existing assets + declared platforms) | `references/color-emotion.md`, `references/typography-psychology.md`, `references/visual-identity.md`, `references/platform-surfaces.md` |
 
 Wait for all to complete. Their outputs feed the merge step and Layer 2.
 
@@ -357,7 +379,7 @@ After Layer 1 completes, assemble outputs into **two separate files** simultaneo
 | 4. Component Stylings | Component Token Agent | Product-specific core components + standard components |
 | 5. Layout Principles | Token Architect Agent | Spacing scale, border radius |
 | 6. Shadows & Elevation | Visual Agent + Component Token | Shadow scale, z-index scale |
-| 7. Iconography | Visual Agent | System icons, product-specific icons |
+| 7. Iconography | Visual Agent | System icons, product-specific icons, **Platform Icon Specifications** (per declared platform) |
 | 8. Imagery & Visual Direction | Visual Agent | Photography, brand devices |
 | 9. Motion & Animation | Component Token Agent | Principles, duration scale, easing, named animations, motion safety |
 | 10. Accessibility | Accessibility Agent | Contrast, focus, touch targets, color independence |
@@ -424,7 +446,7 @@ On re-run: rename existing artifacts to `BRAND.v[N].md` / `DESIGN.v[N].md` and c
 **Input**: FinLit — a personal finance app for young professionals (22-30), positioned against intimidating banking apps.
 
 ### Step 0: Pre-Dispatch
-Product: personal finance app. Audience: young professionals 22-30. Competitors: traditional banking apps (Mint, bank mobile apps).
+Product: personal finance app. Audience: young professionals 22-30. Competitors: traditional banking apps (Mint, bank mobile apps). **Platforms declared:** iOS, Web (marketing site + PWA), Email.
 
 ### Layer 1: Parallel Foundation
 All 4 agents dispatched in parallel:
@@ -456,7 +478,7 @@ All outputs go to DESIGN.md:
 **Input**: TaskFlow — a new project management tool, pre-MVP, needs basic brand to start building.
 
 ### Step 0: Pre-Dispatch
-Product: project management tool. Audience: small team leads. Quick Brand selected.
+Product: project management tool. Audience: small team leads. **Platforms declared:** Web, macOS (Electron). Quick Brand selected — platforms captured as one line in BRAND.md; per-platform surfaces and icon specs deferred to Route B.
 
 ### Layer 1: Parallel (reduced)
 - **Strategy agent** returns: Purpose, values (clarity over complexity, speed over ceremony), positioning. Origin story deferred.
@@ -514,6 +536,7 @@ Quick Brand artifact saved as single `brand/BRAND.md` with note: "Run full brand
 - [references/token-templates.md](references/token-templates.md) — Primitive scales, semantic token map, radius-archetype mapping, mapping example
 - [references/component-tokens.md](references/component-tokens.md) — Component token map, button/input/card specs, motion tokens
 - [references/implementation-rules.md](references/implementation-rules.md) — Accessibility baseline, dark mode rules, brand applications
+- [references/platform-surfaces.md](references/platform-surfaces.md) — Per-platform brand-expression surfaces + icon specifications (single source of truth for both strategy-agent and visual-agent)
 - [references/artboard-generation.md](references/artboard-generation.md) — Paper MCP artboard specs and workflow
 - [references/typography-psychology.md](references/typography-psychology.md) — Font personality mappings and pairing rules
 - [references/color-emotion.md](references/color-emotion.md) — Color psychology, OKLCH values, audience palettes
