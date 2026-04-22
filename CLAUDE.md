@@ -1,11 +1,11 @@
 # Marketing Skills
 
-Brand identity, content creation, campaign planning, optimization, and attribution.
+Brand identity, content creation, campaign planning, optimization, outbound, and attribution.
 
 ## Pipeline
 brand-system (visual identity foundation)
 content-research (research-skills) → imc-plan → content-create → attribution
-Horizontal: copywriting, lp-optimization, seo, humanize, vn-tone
+Horizontal: copywriting, lp-optimization, seo, humanize, vn-tone, cold-outreach
 
 ## Recommended Starting Point
 Run `icp-research` (from [research-skills](https://github.com/hungv47/research-skills)) first — it creates `research/product-context.md`, the canonical cross-stack record consumed by 12+ downstream skills.
@@ -22,6 +22,7 @@ Pipeline outputs write to `.agents/mkt/`; cross-stack records live in the top-le
 - `.agents/mkt/seo-[mode].md` (mode = audit | ai | programmatic | competitor)
 - `.agents/mkt/content/[slug].humanized.md`
 - `.agents/mkt/content/[slug].vn-tone.md`
+- `.agents/mkt/cold-outreach/[slug].md` (+ `[slug].rationale.md` + `[slug].critic-score.md`)
 - `brand/BRAND.md` (brand narrative, voice, positioning, archetype)
 - `brand/DESIGN.md` (AI-readable design system with palettes, tokens, components)
 
@@ -33,7 +34,7 @@ Attribution and IMC Plan can read research artifacts for alignment:
 
 ## Multi-Agent Skills
 
-All 9 skills use a two-layer multi-agent orchestration pattern:
+All 10 skills use a two-layer multi-agent orchestration pattern:
 
 - `SKILL.md` = **orchestrator** — dispatch graph, routing logic, merge step, critic gate
 - `agents/` = **sub-agent instruction files** — each with role, input/output contracts, domain knowledge, self-check
@@ -56,6 +57,7 @@ All 9 skills use a two-layer multi-agent orchestration pattern:
 - `lp-optimization` — 7 agents (hero-audit, trust-audit, cta-audit, ux-audit, message-match, prioritization, critic). Layer 1 parallel (4 audit agents) → Layer 2 sequential (message-match→prioritization→critic).
 - `seo` — 11 agents across 4 modes (technical, AI, programmatic, competitor). Mode-based routing.
 - `attribution` — 7 agents (kpi-hierarchy, initiative-mapper, channel-attribution, content-mapper, gap-analysis, action, critic). Fully sequential.
+- `cold-outreach` — 8 agents (signal-analyst, strategist, proof-selector, composer, voice-auditor, critic, reply-classifier, reply-composer). Two-stage Layer 1 (signal-analyst solo → strategist + proof-selector parallel) → Layer 2 sequential (composer→voice-auditor→critic) → terminal humanize with specificity regression check. Reply route replaces Layer 1 with reply-classifier and Layer 2's composer slot with reply-composer.
 
 ### Reusable template
 `copywriting/agents/_template.md` defines the standard structure for agent instruction files.

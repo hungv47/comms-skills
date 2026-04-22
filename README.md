@@ -1,6 +1,6 @@
 # Marketing Skills
 
-Brand identity, content creation, campaign planning, optimization, localization polish, and performance attribution. 9 skills.
+Brand identity, content creation, campaign planning, optimization, localization polish, outbound, and performance attribution. 10 skills.
 
 ## Install
 
@@ -156,6 +156,21 @@ Strips AI patterns, injects brand voice, and compresses existing text. Targets 1
 
 ---
 
+### `cold-outreach` — write cold outbound messages
+
+Writes and evaluates cold outreach across email, LinkedIn (DM + connection note), Twitter/X (reply + DM), and platform proposals (Upwork, Fiverr, similar). Signal-based personalization, channel-specific craft, 5-dimension rubric scoring, automatic humanize terminal pass. Supports first-touch compose and inbound-reply handling.
+
+**Use when:**
+- You're writing a cold email, cold DM, or proposal and want it to read like a sharp human, not a template
+- You need a reply to an inbound response (not-interested / no-budget / send-info / curious / qualified / later / hostile / ambiguous)
+- You're doing services-sell, saas-sell, partnership-sell, or community-sell outbound
+
+**Not for:** sourcing or list-building (start at "here's who I'm reaching"), campaign orchestration across many prospects (compose touches individually with prior-touches context), fundraise/hiring outreach (different norms), lifecycle/nurture emails (use `content-create`).
+
+**Produces:** `.agents/mkt/cold-outreach/[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
+
+---
+
 ### `vn-tone` — polish translated Vietnamese into native register
 
 Post-translation polish for Vietnamese text. Detects translation giveaways (pronoun drift, missing sentence-final particles, literal idiom calques, passive-voice calques, corporate translationese, typography) and rewrites into one of four target registers: **báo chí** (news/formal), **semi-casual** (tech community/blogger), **bro** (Otofun or Voz forum casual), or **pop-marketing** (consumer marketing/lifestyle).
@@ -176,7 +191,8 @@ Uses a live-scraped corpus from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun
 
 ## Cross-Stack
 
-- `brand-system`, `imc-plan`, `content-create`, `copywriting`, `lp-optimization`, `seo` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
+- `brand-system`, `imc-plan`, `content-create`, `copywriting`, `lp-optimization`, `seo`, `cold-outreach` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
+- `cold-outreach` additionally reads `research/icp-research.md` for target persona pain language
 - `imc-plan` and `attribution` read `.agents/solution-design.md` and `.agents/targets.md` from research-skills
 
 ## License
