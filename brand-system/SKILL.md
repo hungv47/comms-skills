@@ -1,12 +1,12 @@
 ---
 name: brand-system
-description: "Builds brand identity systems as two artifacts — BRAND.md (story, voice, positioning, archetype) and DESIGN.md (AI-readable design system with palettes, tokens, components, motion). Not for writing marketing copy (use content-create) or mapping user flows (use user-flow). For campaign planning, see imc-plan. For audience research, see icp-research."
+description: "Builds brand identity systems as three artifacts — BRAND.md (story, voice, positioning, archetype), DESIGN.md (AI-readable design system with palettes, tokens, components, motion), and ASSETS.md (per-platform production inventory with auto-scanned checkboxes for what's done vs. still needed). Not for writing marketing copy (use content-create) or mapping user flows (use user-flow). For campaign planning, see imc-plan. For audience research, see icp-research."
 argument-hint: "[product or brand to design]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
 metadata:
   author: hungv47
-  version: "6.0.0"
+  version: "6.1.0"
   budget: deep
   estimated-cost: "$2-5"
 promptSignals:
@@ -43,6 +43,7 @@ routing:
   produces:
     - brand/BRAND.md
     - brand/DESIGN.md  # Route B (full) only. Quick Brand (Route A) produces BRAND.md only.
+    - brand/ASSETS.md  # Route B only. Production inventory projected from BRAND.md + DESIGN.md + declared platforms.
   consumes:
     - product-context.md
   requires: []
@@ -68,7 +69,11 @@ Output moved from `.agents/design/brand-system.md` → `brand/BRAND.md` + `brand
 
 **Duration scale change:** Timings shifted from (100, 200, 300, 500)ms to (75, 150, 250, 400, 600)ms with a new `--duration-emphasis` tier. Brands built on v5 will have different motion timing.
 
-**Quick Brand (Route A)** produces `brand/BRAND.md` only. DESIGN.md requires the full Route B pipeline.
+**Quick Brand (Route A)** produces `brand/BRAND.md` only. DESIGN.md and ASSETS.md require the full Route B pipeline.
+
+## v6.1 Addition — ASSETS.md
+
+Route B now produces a third artifact: `brand/ASSETS.md`. A production inventory projected deterministically from BRAND.md brand mark + DESIGN.md specs + declared platforms. Every row is a checkbox with a spec reference and a target file path under `brand/`. **Always-on auto-scan**: every brand-system run (fresh or re-run) walks the `brand/` tree and flips `[ ]` → `[x]` for any row whose target file exists. Human-set `[~]` (in progress) and `[!]` (blocked) markers are preserved across runs. No new agent; implemented as an orchestrator post-merge step (Step 8.5).
 
 ---
 
@@ -91,9 +96,9 @@ Output moved from `.agents/design/brand-system.md` → `brand/BRAND.md` + `brand
 - Target audience profile (demographics, psychographics, context of use)
 - Competitive context (who else serves this audience, how they're positioned)
 
-## Output — Two Files
+## Output — Three Files (Route B) / One File (Route A)
 
-The skill produces two complementary files, each serving a different audience:
+The skill produces up to three complementary files, each serving a different audience:
 
 ### `BRAND.md` — Brand Narrative & Voice
 **Audience:** Founders, marketers, copywriters, designers making brand decisions.
@@ -105,19 +110,25 @@ The skill produces two complementary files, each serving a different audience:
 **Register:** Specification. Tables, formulas, exact values. An AI agent should be able to read this file and produce on-brand UI without any other context.
 **Contains:** Visual atmosphere, complete color palettes per theme, typography rules, component stylings, layout principles, shadows & elevation, iconography, imagery direction, motion & animation, accessibility, do's and don'ts.
 
-**Output location:** `brand/BRAND.md` and `brand/DESIGN.md` in the project directory. Additionally, visual brand guideline artboards if Paper MCP is available.
+### `ASSETS.md` — Production Inventory (Route B only)
+**Audience:** Designers, art directors, asset producers, project managers tracking what to ship.
+**Register:** Checklist. Every row is a GFM checkbox with a spec reference and a target file path under `brand/`.
+**Contains:** Universal assets (logo variants, fonts, tokens) + social & sharing + favicon/web metadata + imagery/illustration + one per-declared-platform block. Auto-scanned on every run — `[x]` if the target file exists, `[ ]` if not. `[~]` in-progress and `[!]` blocked markers are human-owned and preserved across runs. Projected deterministically from BRAND.md + DESIGN.md + declared platforms — contains no new research, only production tracking.
+
+**Output location:** `brand/BRAND.md`, `brand/DESIGN.md`, and `brand/ASSETS.md` in the project directory. Additionally, visual brand guideline artboards if Paper MCP is available.
 
 ### Agent-to-File Routing
 
-| Agent Output | → BRAND.md | → DESIGN.md |
-|-------------|-----------|------------|
-| Strategy Agent | Origin story, naming, purpose/mission/vision, values, positioning, competitive landscape, product-specific sections, digital touchpoints (universal + per-declared-platform surfaces) | — |
-| Personality Agent | Archetype, personality traits, emotional journey map | — |
-| Voice Agent | Voice attributes (Do/Don't), tone range (3 contexts), tagline | — |
-| Visual Agent | Brand mark / logo system | Visual atmosphere, color system, per-theme palettes, typography, imagery, iconography (including **per-declared-platform icon specs**: sizes, safe zones, state variants), surface & material language, shadow system, z-index, do's and don'ts |
-| Token Architect Agent | — | Primitive scales, semantic token map, spacing, radius |
-| Component Token Agent | — | Component specs, product-specific components, motion tokens, named animations |
-| Accessibility Agent | — | Contrast audit, touch targets, focus states, dark mode, color independence, motion safety |
+| Agent Output | → BRAND.md | → DESIGN.md | → ASSETS.md |
+|-------------|-----------|------------|------------|
+| Strategy Agent | Origin story, naming, purpose/mission/vision, values, positioning, competitive landscape, product-specific sections, digital touchpoints (universal + per-declared-platform surfaces) | — | — |
+| Personality Agent | Archetype, personality traits, emotional journey map | — | — |
+| Voice Agent | Voice attributes (Do/Don't), tone range (3 contexts), tagline | — | — |
+| Visual Agent | Brand mark / logo system | Visual atmosphere, color system, per-theme palettes, typography, imagery, iconography (including **per-declared-platform icon specs**: sizes, safe zones, state variants), surface & material language, shadow system, z-index, do's and don'ts | — |
+| Token Architect Agent | — | Primitive scales, semantic token map, spacing, radius | — |
+| Component Token Agent | — | Component specs, product-specific components, motion tokens, named animations | — |
+| Accessibility Agent | — | Contrast audit, touch targets, focus states, dark mode, color independence, motion safety | — |
+| Orchestrator (Step 8.5) | — | — | Projects brand mark + DESIGN.md Platform Icon Specs + declared platforms into a checkable inventory. Deterministic — no new agent. |
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies both files:
@@ -150,9 +161,18 @@ Before delivering, the **critic agent** verifies both files:
 - [ ] **Platform Icon Specifications: one subsection per declared platform with sizes, safe-area rules, state variants (dark/tinted/themed/monochrome as applicable), and derivative size list. Zero undeclared platforms appear.**
 - [ ] Do's and Don'ts section with concrete rules
 
+**ASSETS.md checks (Route B only):**
+- [ ] One section per declared platform; zero undeclared platforms
+- [ ] Every row has a spec reference (BRAND.md / DESIGN.md / platform-surfaces.md) and a concrete, **fully-substituted** target path under `brand/` (no unfilled `{host}` / `{count}` / `{token}` placeholders remain in any emitted path)
+- [ ] No invented assets — every row traces to an upstream spec
+- [ ] No duplicated spec (pixel sizes, safe zones) — ASSETS.md cites, it does not re-define
+- [ ] Legend present; Summary counts present; `## Orphaned` block handled (present if platforms dropped, absent otherwise)
+- [ ] Prior `[~]` and `[!]` markers preserved from previous run (verify by diff if re-run)
+
 **Cross-file coherence:**
 - [ ] Cross-element coherence: radius maps to archetype, type personality matches archetype, color emotion aligns with brand personality, imagery direction reflects the archetype's visual world
 - [ ] Voice tone in BRAND.md matches the visual atmosphere described in DESIGN.md
+- [ ] ASSETS.md platform blocks exactly match BRAND.md Digital Touchpoints platforms and DESIGN.md Platform Icon Specifications platforms (same set, same order)
 - [ ] AI slop check: run `references/ai-slop-detection.md` — 0-1 clean, 2-3 review, 4+ regeneration
 
 **Reference quality bar:** Compare output against the annotated quality guides in `references/example-brand.md` and `references/example-design.md`. Every section should match the "good" pattern and avoid the "bad" pattern described in those guides. Use the overall quality tests in example-design.md (copy-paste test, blind build test, competitor swap test, implementation gap test) as final validation.
@@ -185,6 +205,7 @@ Previous: `icp-research` (product context) | Next: `imc-plan`, `copywriting`, `c
 | Critic Agent | 2 (final) | `agents/critic-agent.md` | Both | Cross-element coherence, **BRAND.md narrative quality, DESIGN.md AI-readability**, PASS/FAIL |
 
 ### Shared References (read by multiple agents)
+- `references/assets-inventory.md` — Per-platform asset templates, emission rules, and auto-scan protocol (read by orchestrator only, Step 8.5)
 - `references/brand-archetypes.md` — 12 Jungian archetypes with visual/verbal mappings
 - `references/brand-voice.md` — Voice frameworks, tone dimensions, messaging architecture
 - `references/visual-identity.md` — Logo systems, imagery, iconography, graphic elements
@@ -233,22 +254,25 @@ Ask: *"Full brand system or quick brand for MVP?"*
 **When:** Established product, full rebrand, comprehensive guidelines needed.
 
 ```
-1. Pre-dispatch: Gather context (Step 0)
-2. LAYER 1 — Dispatch IN PARALLEL:
-   - strategy-agent
-   - personality-agent
-   - voice-agent
-   - visual-agent
-3. MERGE: Assemble Layer 1 outputs into brand identity sections
-4. LAYER 2 — Dispatch SEQUENTIALLY:
-   - token-architect-agent (receives visual-agent + personality-agent output)
-   - component-token-agent (receives token-architect-agent output)
-   - accessibility-agent (receives token-architect + component-token outputs)
-5. Dispatch: critic-agent (receives complete brand system)
-6. If FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
-7. Artboard generation (Step 9 — if Paper MCP available)
-8. Deliver artifact
+Step 0    Pre-dispatch: Gather context
+Step 1    LAYER 1 — Dispatch IN PARALLEL:
+          - strategy-agent
+          - personality-agent
+          - voice-agent
+          - visual-agent
+Step 2    MERGE: Assemble Layer 1 outputs into brand identity sections
+Step 3    LAYER 2 — Dispatch SEQUENTIALLY:
+          - token-architect-agent (receives visual-agent + personality-agent output)
+          - component-token-agent (receives token-architect-agent output)
+          - accessibility-agent (receives token-architect + component-token outputs)
+Step 4    Dispatch: critic-agent (receives BRAND.md + DESIGN.md)
+Step 5    If FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
+Step 8.5  ASSETS.md projection — deterministic, no new agent, always-on auto-scan
+Step 9    Artboard generation — if Paper MCP available
+Step 10   Deliver artifacts (BRAND.md + DESIGN.md + ASSETS.md)
 ```
+
+*Why the jump from Step 5 to Step 8.5:* the label `8.5` is a **section header**, not a sequence index. It was chosen so ASSETS.md projection could slot after the critic gate but before the pre-existing Step 9 (artboards) without renumbering downstream references. Steps 6, 7, and 8 are intentionally absent — the legacy flow used the names "Critic Gate", "re-dispatch", "deliver" without numeric step labels, so no content maps to those slots. Reading order is: 0 → 1 → 2 → 3 → 4 → 5 → 8.5 → 9 → 10.
 
 ---
 
@@ -345,9 +369,9 @@ Wait for all to complete. Their outputs feed the merge step and Layer 2.
 
 ---
 
-## Merge Step — Two-File Assembly
+## Merge Step — Brand File Assembly (BRAND.md + DESIGN.md)
 
-Before assembling, read `references/artifact-templates.md` for the complete section structure, field specifications, and ordering for both files.
+Before assembling, read `references/artifact-templates.md` for the complete section structure, field specifications, and ordering for both files. **ASSETS.md is assembled separately in Step 8.5 after the critic gate passes — it does not merge in this step.**
 
 After Layer 1 completes, assemble outputs into **two separate files** simultaneously:
 
@@ -406,8 +430,32 @@ Dispatch **ONE AT A TIME, IN ORDER**:
 
 ## Critic Gate
 
-- **PASS:** Deliver the artifact. Proceed to artboard generation (Step 9) if Paper MCP available.
+- **PASS:** Proceed to ASSETS.md projection (Step 8.5), then artboard generation (Step 9) if Paper MCP available.
 - **FAIL:** Re-dispatch named agent(s) with critic feedback. Max 2 rewrite cycles. After 2 failures, deliver with critic annotations and flag to user.
+
+---
+
+## Step 8.5: ASSETS.md Projection (Route B only, always-on)
+
+**No sub-agent.** Deterministic orchestrator step executed after the critic passes and before artboards.
+
+Read `references/assets-inventory.md` for the full emission rules, per-platform templates, and file template. Summary of the procedure:
+
+1. **Load prior state (if any):** Read existing `brand/ASSETS.md`. Extract rows with status `[~]` (in progress) or `[!]` (blocked) — preserve verbatim. Note any platforms present in the old file that are no longer in the declared list — those rows go to `## Orphaned` on emit.
+2. **Project fresh inventory:** Using BRAND.md brand mark section, DESIGN.md §2/§3/§7/§8/§9, and the declared-platforms list, emit rows in this order — Universal → Social & Sharing → Favicon & Web Metadata (if Web declared) → Imagery & Illustration (if DESIGN.md §8 declares direction) → one per-platform block in declared order. Every row has: name, spec ref, target path, status. **Expand every `{placeholder}` before proceeding:** for each declared embedded host, emit one full row set with `{host}` substituted; for imagery rows, substitute `{count}` from DESIGN.md §8. No row may reach substep 3 with an unfilled placeholder in its target path.
+3. **Auto-scan for `[x]`:** For file-typed rows, `Bash: test -e <path>` → `[x]` if true, `[ ]` if false. For directory-typed rows (path ends in `/`), require at least one non-`.gitkeep` file: ``test -d <path> && [ -n "$(ls -A <path> 2>/dev/null | grep -v '^\.gitkeep$')" ]`` → `[x]` if true, `[ ]` if false. This prevents scaffolded-empty-directory false-completion.
+4. **Merge human markers:** Overlay preserved `[~]` and `[!]` rows from step 1 (matched by name) onto the fresh inventory. Human markers override auto-computed status.
+5. **Compute summary:** Total / Done / In progress / Blocked / Not started counts.
+6. **Write `brand/ASSETS.md`** with frontmatter (declared platforms, last scan ISO timestamp, BRAND.md version, DESIGN.md version), legend, sections, summary, and `## Orphaned` block if any.
+7. **Re-run versioning:** ASSETS.md is a **living file** — always updated in place. Dropped-platform rows move to `## Orphaned` (they are NOT removed), which preserves tracking state continuously. Only version (rename to `ASSETS.v[N].md`) when the user **explicitly** requests a fresh inventory, e.g., after a major product pivot. The Orphaned block mechanism, not versioning, is the primary handler for "platform dropped between runs."
+
+**Quality gate for this step (orchestrator self-check before writing the file):**
+- Every row has both a spec ref and a target path.
+- Platform block set in ASSETS.md === declared platforms === BRAND.md Digital Touchpoints platforms === DESIGN.md Platform Icon Specifications platforms.
+- No human-set `[~]` or `[!]` markers from the prior file were overwritten.
+- No invented rows (every row traces to `references/assets-inventory.md` templates).
+
+**Scope:** Route B only. Route A (Quick Brand) does not produce ASSETS.md — the platform list is captured but no inventory is emitted until the full pipeline runs.
 
 ---
 
@@ -425,9 +473,9 @@ Skip this step if Paper MCP tools are unavailable.
 
 ## Artifact Templates
 
-Save to `brand/BRAND.md` and `brand/DESIGN.md` in the project directory. Create the `brand/` directory if it doesn't exist. Also create `brand/logo/`, `brand/font/`, and `brand/inspiration/` subdirectories with `.gitkeep` files for future assets.
+Save to `brand/BRAND.md`, `brand/DESIGN.md`, and `brand/ASSETS.md` in the project directory. Create the `brand/` directory if it doesn't exist. Also create `brand/logo/`, `brand/font/`, `brand/inspiration/`, `brand/social/`, `brand/favicon/`, `brand/tokens/`, `brand/imagery/`, and `brand/platforms/` subdirectories with `.gitkeep` files for future assets.
 
-On re-run: rename existing artifacts to `BRAND.v[N].md` / `DESIGN.v[N].md` and create new with incremented version.
+On re-run: rename existing `BRAND.md` / `DESIGN.md` to `BRAND.v[N].md` / `DESIGN.v[N].md` and create new with incremented version. **`ASSETS.md` is always updated in place** — it's a living inventory. Dropped-platform rows move to the `## Orphaned` block (preserved, not deleted). Version ASSETS.md (`ASSETS.v[N].md`) only when the user explicitly requests a fresh inventory.
 
 **Full templates:** See [references/artifact-templates.md](references/artifact-templates.md) for the complete BRAND.md and DESIGN.md templates with all sections and field specifications.
 
@@ -436,6 +484,8 @@ On re-run: rename existing artifacts to `BRAND.v[N].md` / `DESIGN.v[N].md` and c
 **BRAND.md** (11 sections): Origin Story → Name → Purpose/Mission/Vision → Core Values ("X over Y" format) → Brand Positioning → Brand Archetype (Primary 70% + Secondary 30%) → Personality Traits → Emotional Journey Map → Brand Voice DNA (attributes + tone range + tagline with V/F/U scoring) → Brand Mark (logo system) → Digital Touchpoints.
 
 **DESIGN.md** (11 sections): Visual Theme & Atmosphere → Color Palette & Roles (OKLCH, themes, neutral scale, 60/30/10) → Typography Rules (font stack, type scale) → Component Stylings (core component + cards + buttons + inputs) → Layout Principles (spacing, radius) → Shadows & Elevation (z-index) → Iconography → Imagery & Visual Direction → Motion & Animation (duration, easing, spring physics) → Accessibility (contrast, focus, touch targets) → Do's and Don'ts.
+
+**ASSETS.md** (5 fixed sections + one subsection per declared platform): Universal → Social & Sharing → Favicon & Web Metadata (if Web declared) → Imagery & Illustration (if DESIGN.md §8 declares direction) → Platforms (one subsection per declared platform, in declared order) → Summary → Orphaned (only if platforms dropped between runs). Full template and per-platform row sets in [references/assets-inventory.md](references/assets-inventory.md).
 
 **Quality-bar examples:** [references/example-brand.md](references/example-brand.md) and [references/example-design.md](references/example-design.md) show the complete output at the expected quality level.
 
@@ -455,7 +505,7 @@ All 4 agents dispatched in parallel:
 - **Voice agent** returns: Voice DNA with 3 attributes (straight-talking, encouraging, honest) with real-context Do/Don't examples. Tone range across 3 contexts (marketing: inviting + confident, product UI: minimal + clear, errors: calm + honest). Tagline: "Money, minus the shame." V:3 F:2 U:3 = 8/9.
 - **Visual agent** returns: **For BRAND.md:** Logo system (4 variations, color combos, rules). **For DESIGN.md:** Visual atmosphere ("warm kitchen table, not bank lobby"). Primary warm teal `oklch(0.65 0.15 180)` / `#2cbaa0`. Complete light + dark theme palettes (18 tokens each). Neutral base: Stone. Display: Plus Jakarta Sans. Body: Inter. Shadow system (5 levels). Surface material: soft matte (no glass). Imagery: real people, natural light, warm tones. Do's and Don'ts (12 items each).
 
-### Merge — Two Files
+### Merge — Brand File Assembly (BRAND.md + DESIGN.md)
 **BRAND.md assembled** from strategy (origin/name/purpose/values/positioning/touchpoints) + personality (archetype/traits/journey) + voice (voice DNA/tone range/tagline) + visual (logo only).
 **DESIGN.md started** from visual (atmosphere/colors/typography/shadows/imagery/do's-don'ts). AI-readable header generated.
 
@@ -468,8 +518,11 @@ All outputs go to DESIGN.md:
 - **Accessibility** returns: All token pairs pass 4.5:1. Dark mode surface hierarchy (stone.950 → stone.900 → stone.800). Primary shifts to teal.400 in dark mode. Touch targets ≥44px.
 - **Critic** returns: PASS on both files. BRAND.md narrative quality strong, emotional journey touchpoint-level. DESIGN.md AI-readable, all themes complete. Cross-element coherence verified. AI slop score: 1 item (clean).
 
+### Step 8.5: ASSETS.md Projection
+Orchestrator projects declared platforms (iOS, Web, Email) against `references/assets-inventory.md` templates. Emits 18 Universal rows + 13 Social & Sharing + 8 Favicon/Web + 8 Imagery + 13 iOS + 7 Web-platform + 7 Email-platform = 74 rows. Auto-scans `brand/` — logo-full.svg exists → `[x]`; all others `[ ]` (fresh run). Writes `brand/ASSETS.md` with legend, sections, summary (Done: 1 / 74), no orphaned block (first run). On re-run, Done count rises as the designer drops files into `brand/` subdirs.
+
 ### Deliver
-`brand/BRAND.md` and `brand/DESIGN.md` saved.
+`brand/BRAND.md`, `brand/DESIGN.md`, and `brand/ASSETS.md` saved.
 
 ---
 
@@ -514,6 +567,12 @@ Quick Brand artifact saved as single `brand/BRAND.md` with note: "Run full brand
 
 **Dispatching all agents for Quick Brand** — Route A exists for MVPs. INSTEAD: Quick Brand uses only strategy + visual + critic. No archetype analysis, no tokens, no components.
 
+**Inventing ASSETS.md rows** — Adding checklist rows for assets not traceable to BRAND.md / DESIGN.md / `platform-surfaces.md`. INSTEAD: every row cites its spec. If you can't point to the spec, the asset doesn't belong in the inventory.
+
+**Overwriting human `[~]` or `[!]` markers in ASSETS.md** — The auto-scan only flips `[ ]` ↔ `[x]` based on file existence. In-progress and blocked markers are human-owned. INSTEAD: preserve them verbatim across re-runs; merge after the fresh projection.
+
+**Silently dropping ASSETS.md rows when a platform is un-declared** — Erases tracking state the user may have been maintaining. INSTEAD: move the dropped-platform rows to `## Orphaned (platform no longer declared)` on emit, so the user can review before losing status.
+
 ---
 
 ## Agent Files
@@ -529,6 +588,7 @@ Quick Brand artifact saved as single `brand/BRAND.md` with note: "Run full brand
 - [agents/critic-agent.md](agents/critic-agent.md) — Cross-element coherence, PASS/FAIL
 
 ### Shared References (references/)
+- [references/assets-inventory.md](references/assets-inventory.md) — ASSETS.md per-platform templates, emission rules, auto-scan protocol (orchestrator Step 8.5)
 - [references/brand-archetypes.md](references/brand-archetypes.md) — 12 Jungian archetypes with visual and verbal mappings
 - [references/brand-voice.md](references/brand-voice.md) — Voice frameworks, tone dimensions, messaging architecture
 - [references/visual-identity.md](references/visual-identity.md) — Logo systems, imagery direction, iconography, graphic elements
