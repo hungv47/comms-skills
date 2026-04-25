@@ -110,6 +110,7 @@ Score: [N] items flagged — [clean / needs review / needs regeneration]
 - [ ] **Voice attributes are actionable** — 3-5 voice attributes, each with Do/Don't examples using real brand contexts. Missing examples = FAIL. Attributes without examples are empty adjectives.
 - [ ] **Tone range defined** — 3 key contexts (marketing, product UI, errors) with tone shift AND example. These must show clear shift across the range. Identical tone across contexts = FAIL.
 - [ ] **Tagline is ownable** — 2-7 words, scored with V/F/U rubric (minimum 6/9). Fails the competitor swap test. Generic tagline = FAIL. NOTE: only a primary tagline belongs here — platform variants are copywriting's job.
+- [ ] **Lexicon Rules block present** — `forbidden_vocabulary` (5-15 specific terms, each with a `reason` value), `preferred_phrases` (5-12 brand-native strings), `casing` (per surface), `emoji_policy` (per surface). Missing block, "TBD" values, or category-not-term entries (e.g., `forbidden_vocabulary: ["jargon"]` instead of actual words) = FAIL.
 - [ ] **No scope creep into copywriting** — BRAND.md should NOT contain: elevator pitches, boilerplate, messaging pillars, platform-specific tagline variants, or per-context copy beyond the 3-5 tone range examples. If these appear, FAIL and instruct voice-agent to remove.
 - [ ] **Product-specific sections exist** — At least 1 section unique to this product with WHAT and WHY. Generic brand doc = FAIL.
 - [ ] **Digital touchpoints have specifics** — 5+ surfaces with concrete brand expression details. "Show the product" = FAIL.
@@ -119,6 +120,8 @@ Score: [N] items flagged — [clean / needs review / needs regeneration]
 
 - [ ] **AI-readable header** — Archetype, visual metaphor, typography, primary color summarized at the top. Missing = FAIL.
 - [ ] **Visual atmosphere** — 2-3 paragraphs of prose describing the feel. Adjectives only = FAIL.
+- [ ] **Font Loading & Licensing table present** — every font has source, license name, status, and a load method (`<link>` or `@font-face` block). Any unclear-license font flagged `[NEEDS LICENSING]`. Missing table or assumed-free fonts without verification = FAIL.
+- [ ] **Iconography source and forbidden glyphs** — source library named with CDN/npm link, substitution fallback library named, and a `forbidden_icons` YAML block with 3-8 entries (each with `glyph` + `reason` keys) OR an empty list with a one-line note explaining no taboos. Missing source library or missing forbidden block = FAIL.
 - [ ] **Complete theme palettes** — Every theme has a complete token table (~17 tokens). "Same as Light" = FAIL.
 - [ ] **Token correctness** — bg/fg pairs consistent. One global --radius. OKLCH primary format. Conventions violated = FAIL.
 - [ ] **WCAG AA contrast** — Every token pair meets 4.5:1 (normal text) or 3:1 (large text/UI). Failures without remediation = FAIL.

@@ -6,7 +6,7 @@ allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
 metadata:
   author: hungv47
-  version: "6.1.0"
+  version: "6.2.0"
   budget: deep
   estimated-cost: "$2-5"
 promptSignals:
@@ -71,6 +71,17 @@ Output moved from `.agents/design/brand-system.md` → `brand/BRAND.md` + `brand
 
 **Quick Brand (Route A)** produces `brand/BRAND.md` only. DESIGN.md and ASSETS.md require the full Route B pipeline.
 
+## v6.2 Additions
+
+- **voice-agent: Lexicon Rules block** — machine-readable `forbidden_vocabulary`, `preferred_phrases`, `casing`, and `emoji_policy`. Lints downstream copywriting / content-create / cold-outreach output.
+- **visual-agent: Font Loading & Licensing table** — every font has source, license, free/paid status, and `<link>`/`@font-face` block. Fonts with unclear licenses are flagged `[NEEDS LICENSING]`.
+- **visual-agent: Iconography source library + substitution + forbidden icons** — name the source library (Lucide / Tabler / etc.) with CDN/npm link, the fallback library when a glyph is missing, and a YAML list of forbidden glyphs (e.g., never 🔥).
+- **AI-slop self-check** — visual-agent and component-token-agent now self-check against `references/ai-slop-detection.md` before returning, instead of leaving every catch to the critic.
+- **Step 9 broadened to "Visual Renderings (optional)"** — Paper MCP (existing) + Claude Design (claude.ai/design handoff) + None. Spec stays canonical; rendering is derivative.
+- **Anti-pattern: don't round-trip Claude Design exports into `brand/`** — exports are presentation artifacts, not source of truth.
+- **Tightened example-design.md disclaimer** — added a paper/solid anti-glass excerpt for Surface & Material to prevent over-anchoring on glassmorphism.
+- **OKLCH/hex round-trip fix** — `oklch(0.65 0.15 180) / #2cbaa0` → `oklch(0.7 0.11 180) / #3eb8a4` in the worked example and visual-agent example.
+
 ## v6.1 Addition — ASSETS.md
 
 Route B now produces a third artifact: `brand/ASSETS.md`. A production inventory projected deterministically from BRAND.md brand mark + DESIGN.md specs + declared platforms. Every row is a checkbox with a spec reference and a target file path under `brand/`. **Always-on auto-scan**: every brand-system run (fresh or re-run) walks the `brand/` tree and flips `[ ]` → `[x]` for any row whose target file exists. Human-set `[~]` (in progress) and `[!]` (blocked) markers are preserved across runs. No new agent; implemented as an orchestrator post-merge step (Step 8.5).
@@ -115,7 +126,7 @@ The skill produces up to three complementary files, each serving a different aud
 **Register:** Checklist. Every row is a GFM checkbox with a spec reference and a target file path under `brand/`.
 **Contains:** Universal assets (logo variants, fonts, tokens) + social & sharing + favicon/web metadata + imagery/illustration + one per-declared-platform block. Auto-scanned on every run — `[x]` if the target file exists, `[ ]` if not. `[~]` in-progress and `[!]` blocked markers are human-owned and preserved across runs. Projected deterministically from BRAND.md + DESIGN.md + declared platforms — contains no new research, only production tracking.
 
-**Output location:** `brand/BRAND.md`, `brand/DESIGN.md`, and `brand/ASSETS.md` in the project directory. Additionally, visual brand guideline artboards if Paper MCP is available.
+**Output location:** `brand/BRAND.md`, `brand/DESIGN.md`, and `brand/ASSETS.md` in the project directory. Optionally, visual renderings via Paper MCP artboards (`brand/artboards/`) or a Claude Design handoff message pointing the user to `claude.ai/design` for interactive prototypes — see Step 9.
 
 ### Agent-to-File Routing
 
@@ -139,6 +150,7 @@ Before delivering, the **critic agent** verifies both files:
 - [ ] Voice attributes have Do/Don't examples using real brand contexts (not hypothetical)
 - [ ] Tone range covers 3 key contexts with clear shift across the range
 - [ ] Tagline scored with V/F/U (minimum 6/9), passes competitor swap test
+- [ ] **Lexicon Rules block present**: `forbidden_vocabulary` (5-15 entries, each a `term` + `reason` pair), `preferred_phrases` (5-12 brand-native strings), `casing`, `emoji_policy` — all values concrete, not "TBD". Reasons live in YAML keys, not comments.
 - [ ] No copywriting scope creep (no boilerplate, pillars, elevator pitch, tagline variants)
 - [ ] Emotional journey is touchpoint-level with design/interaction triggers (not copy triggers)
 - [ ] Brand mark described with enough detail to commission or generate
@@ -150,6 +162,8 @@ Before delivering, the **critic agent** verifies both files:
 
 **DESIGN.md checks:**
 - [ ] AI-readable header summarizes key decisions (archetype, metaphor, fonts, primary color)
+- [ ] **Font Loading & Licensing table present**: every font has source, license, status, load method. Any unclear-license font is flagged `[NEEDS LICENSING]`
+- [ ] **Iconography source library named** with CDN/npm link, **substitution fallback library named**, **Forbidden Icons YAML emitted** (3-8 entries with reasons, or empty list with explanation)
 - [ ] Complete color palette tables for every theme (not just primary + neutrals)
 - [ ] All semantic tokens have values for every theme
 - [ ] Every token pair meets WCAG AA contrast (4.5:1 normal text, 3:1 large/UI)
@@ -246,7 +260,7 @@ Ask: *"Full brand system or quick brand for MVP?"*
 5. Deliver Quick Brand artifact
 ```
 
-**Quick Brand scope:** Purpose/mission/vision, core values, positioning, primary color + neutrals, display + body font, basic type hierarchy. **Target platforms are still captured at intake** and recorded in BRAND.md as a one-line declaration ("Ships on: iOS, macOS, Web") so Route B can pick them up later. Defers: archetype analysis, voice/tone system, messaging architecture, full visual identity, token architecture, component tokens, accessibility audit, dark mode, artboards, **per-platform Digital Touchpoints surfaces, per-platform icon specifications**.
+**Quick Brand scope:** Purpose/mission/vision, core values, positioning, primary color + neutrals, display + body font, basic type hierarchy. **Target platforms are still captured at intake** and recorded in BRAND.md as a one-line declaration ("Ships on: iOS, macOS, Web") so Route B can pick them up later. Defers: archetype analysis, voice/tone system, messaging architecture, full visual identity, token architecture, component tokens, accessibility audit, dark mode, Visual Renderings (Step 9), **per-platform Digital Touchpoints surfaces, per-platform icon specifications**.
 
 **Quick Brand output includes a note:** "Run full brand-system when ready to build the design system."
 
@@ -268,11 +282,11 @@ Step 3    LAYER 2 — Dispatch SEQUENTIALLY:
 Step 4    Dispatch: critic-agent (receives BRAND.md + DESIGN.md)
 Step 5    If FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
 Step 8.5  ASSETS.md projection — deterministic, no new agent, always-on auto-scan
-Step 9    Artboard generation — if Paper MCP available
+Step 9    Visual Renderings (optional) — Paper MCP / Claude Design / none
 Step 10   Deliver artifacts (BRAND.md + DESIGN.md + ASSETS.md)
 ```
 
-*Why the jump from Step 5 to Step 8.5:* the label `8.5` is a **section header**, not a sequence index. It was chosen so ASSETS.md projection could slot after the critic gate but before the pre-existing Step 9 (artboards) without renumbering downstream references. Steps 6, 7, and 8 are intentionally absent — the legacy flow used the names "Critic Gate", "re-dispatch", "deliver" without numeric step labels, so no content maps to those slots. Reading order is: 0 → 1 → 2 → 3 → 4 → 5 → 8.5 → 9 → 10.
+*Why the jump from Step 5 to Step 8.5:* the label `8.5` is a **section header**, not a sequence index. It was chosen so ASSETS.md projection could slot after the critic gate but before the pre-existing Step 9 (Visual Renderings) without renumbering downstream references. Steps 6, 7, and 8 are intentionally absent — the legacy flow used the names "Critic Gate", "re-dispatch", "deliver" without numeric step labels, so no content maps to those slots. Reading order is: 0 → 1 → 2 → 3 → 4 → 5 → 8.5 → 9 → 10.
 
 ---
 
@@ -426,18 +440,20 @@ Dispatch **ONE AT A TIME, IN ORDER**:
 
 **Palette ownership rule:** Visual-agent is authoritative for color choices and theme palette values. Token-architect-agent systematizes those values into the three-layer architecture (primitive → semantic → component) and adds any missing infrastructure tokens (`--popover`, `--popover-foreground`). If values conflict, visual-agent wins.
 
+**Accessibility hand-back:** Accessibility-agent runs after shadow tokens are set, but if its audit demands changes to upstream values (a shadow color that fails contrast against the surface it sits on, a primary lightness that fails 3:1 against `--primary-foreground`), it does NOT edit the upstream table directly. Instead, it reports the failing pair to the critic, which fails the gate and re-dispatches the upstream owner — visual-agent for shadows / colors, token-architect-agent for semantic values, component-token-agent for component-level overrides. Accessibility-agent owns the audit, not the fix.
+
 ---
 
 ## Critic Gate
 
-- **PASS:** Proceed to ASSETS.md projection (Step 8.5), then artboard generation (Step 9) if Paper MCP available.
+- **PASS:** Proceed to ASSETS.md projection (Step 8.5), then optional Visual Renderings (Step 9 — Paper MCP / Claude Design / none).
 - **FAIL:** Re-dispatch named agent(s) with critic feedback. Max 2 rewrite cycles. After 2 failures, deliver with critic annotations and flag to user.
 
 ---
 
 ## Step 8.5: ASSETS.md Projection (Route B only, always-on)
 
-**No sub-agent.** Deterministic orchestrator step executed after the critic passes and before artboards.
+**No sub-agent.** Deterministic orchestrator step executed after the critic passes and before Visual Renderings (Step 9).
 
 Read `references/assets-inventory.md` for the full emission rules, per-platform templates, and file template. Summary of the procedure:
 
@@ -459,15 +475,37 @@ Read `references/assets-inventory.md` for the full emission rules, per-platform 
 
 ---
 
-## Step 9: Visual Artboard Generation (Paper MCP)
+## Step 9: Visual Renderings (optional)
 
-Render brand guidelines as 5 presentation-ready artboards if Paper MCP is available. Reference `references/artboard-generation.md` for complete specs, workflow, and prerequisites.
+The spec — BRAND.md / DESIGN.md / ASSETS.md — is the canonical artifact. Renderings are **derivative presentations** of that spec, not source of truth. Three renderer paths, all optional:
+
+### 9a. Paper MCP — programmatic artboards
+If Paper MCP tools are available, render the brand as 5 presentation artboards. Reference `references/artboard-generation.md` for complete specs, workflow, and prerequisites.
 
 After generating artboards, run the AI slop detection checklist (`references/ai-slop-detection.md`). Artboards are the highest-risk output for AI default patterns.
 
 Artboards: Color Palette | Typography System | Spacing & Tokens | UI Style Principles | Logo System
 
-Skip this step if Paper MCP tools are unavailable.
+Save to `brand/artboards/`.
+
+### 9b. Claude Design — interactive prototypes (claude.ai/design)
+Claude Design is an Anthropic Labs UI product available at `claude.ai/design` (Pro / Max / Team / Enterprise tiers). It produces designs, prototypes, slides, and one-pagers in collaboration with the user inside Claude. The product accepts text prompts, document/image uploads, and codebase context for design-system grounding.
+
+**This skill does not dispatch to Claude Design** — there is no API or MCP. It hands off, by giving the user precise instructions for what to share and how to scope the session:
+
+**Pre-flight check before instructing the user:**
+1. `brand/DESIGN.md` exists and contains complete theme palette tables for every theme.
+2. `brand/BRAND.md` Brand Mark section describes the logo at commission-grade detail.
+3. At least one of `brand/logo/logo-full.svg` or a placeholder logo asset exists.
+4. `brand/font/` contains either downloaded woff2s or a link comment for each declared font.
+
+If any pre-flight check fails, say so — do not send the user to Claude Design with an incomplete spec.
+
+**Handoff message to user (if checks pass):**
+> Your brand spec is ready for Claude Design. Open `claude.ai/design` (requires Pro / Max / Team / Enterprise) and start a session by sharing your `brand/` folder — at minimum paste `DESIGN.md` (so the design system tokens, theme palettes, and component specs ground the session) and `BRAND.md` (so voice and brand mark ground any copy or logo placement). `ASSETS.md` is useful for telling Claude Design which production assets already exist vs. still need to be made. Outputs (prototypes, slides, one-pagers, HTML/PPTX/Canva exports) are presentation artifacts — keep them in a separate location, not inside `brand/`. To update the brand source, re-run brand-system; share the updated spec with Claude Design in the next session.
+
+### 9c. None
+If neither renderer is available or wanted, skip — the spec stands alone. Downstream skills (user-flow, content-create) consume DESIGN.md directly without rendering.
 
 ---
 
@@ -503,7 +541,7 @@ All 4 agents dispatched in parallel:
 - **Strategy agent** returns: Origin story ("born from a founder's shame spiral at 24"), name ("FinLit — financial literacy, shortened to feel casual"), purpose "make finance empowering, not shameful." Positioning: "the only finance app that feels like a supportive friend." Values: transparency over comfort, simplicity over completeness, progress over perfection. Digital touchpoints mapped across 6 surfaces. Product-specific: "Streak System as brand expression" section.
 - **Personality agent** returns: Caregiver (70%) + Explorer (30%). Traits: encouraging but not patronizing, clear but not dumbed-down, warm but not saccharine. Emotional journey: 8-touchpoint map (first encounter → app store → onboarding → first budget → daily check → missed goal → annual review → telling a friend).
 - **Voice agent** returns: Voice DNA with 3 attributes (straight-talking, encouraging, honest) with real-context Do/Don't examples. Tone range across 3 contexts (marketing: inviting + confident, product UI: minimal + clear, errors: calm + honest). Tagline: "Money, minus the shame." V:3 F:2 U:3 = 8/9.
-- **Visual agent** returns: **For BRAND.md:** Logo system (4 variations, color combos, rules). **For DESIGN.md:** Visual atmosphere ("warm kitchen table, not bank lobby"). Primary warm teal `oklch(0.65 0.15 180)` / `#2cbaa0`. Complete light + dark theme palettes (18 tokens each). Neutral base: Stone. Display: Plus Jakarta Sans. Body: Inter. Shadow system (5 levels). Surface material: soft matte (no glass). Imagery: real people, natural light, warm tones. Do's and Don'ts (12 items each).
+- **Visual agent** returns: **For BRAND.md:** Logo system (4 variations, color combos, rules). **For DESIGN.md:** Visual atmosphere ("warm kitchen table, not bank lobby"). Primary warm teal `oklch(0.7 0.11 180)` / `#3eb8a4`. Complete light + dark theme palettes (18 tokens each). Neutral base: Stone. Display: Plus Jakarta Sans. Body: Inter. Shadow system (5 levels). Surface material: soft matte (no glass). Imagery: real people, natural light, warm tones. Do's and Don'ts (12 items each).
 
 ### Merge — Brand File Assembly (BRAND.md + DESIGN.md)
 **BRAND.md assembled** from strategy (origin/name/purpose/values/positioning/touchpoints) + personality (archetype/traits/journey) + voice (voice DNA/tone range/tagline) + visual (logo only).
@@ -572,6 +610,8 @@ Quick Brand artifact saved as single `brand/BRAND.md` with note: "Run full brand
 **Overwriting human `[~]` or `[!]` markers in ASSETS.md** — The auto-scan only flips `[ ]` ↔ `[x]` based on file existence. In-progress and blocked markers are human-owned. INSTEAD: preserve them verbatim across re-runs; merge after the fresh projection.
 
 **Silently dropping ASSETS.md rows when a platform is un-declared** — Erases tracking state the user may have been maintaining. INSTEAD: move the dropped-platform rows to `## Orphaned (platform no longer declared)` on emit, so the user can review before losing status.
+
+**Round-tripping Claude Design exports into `brand/`** — Claude Design produces interactive prototypes, slides, one-pagers, and HTML/PPTX/Canva exports. These are **derivative presentation artifacts**, not source of truth. Saving them into `BRAND.md` / `DESIGN.md` / `ASSETS.md` corrupts the spec. INSTEAD: Claude Design exports go to a separate location (e.g., `presentations/`, or a Claude Design folder/Canva account). To update the spec, re-run brand-system; Claude Design will re-render from the updated source on the next visit.
 
 ---
 

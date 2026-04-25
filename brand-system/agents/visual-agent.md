@@ -169,6 +169,33 @@ Base: [selected base — Stone/Zinc/Slate/Gray/Neutral] with [archetype justific
 --font-mono: '[Mono]', '[fallback 1]', monospace;
 ```
 
+### Font Loading & Licensing
+
+For each font in the stack, name the source, the license, and whether it's freely available. If a font is **not freely available**, prefix with `[NEEDS LICENSING]` so the orchestrator can warn the user before any production work begins.
+
+| Font | Source | License | Status | Load |
+|------|--------|---------|--------|------|
+| [Display name] | [Google Fonts / Adobe Fonts / vendor URL / self-hosted] | [OFL / Apache 2.0 / SIL OFL / proprietary / unknown] | [free / `[NEEDS LICENSING]` / paid-acquired] | [`<link>` tag OR `@font-face` block] |
+| [Body name] | ... | ... | ... | ... |
+| [Mono name] | ... | ... | ... | ... |
+
+**Drop-in load block (preferred over `<link>` for self-hosted woff2):**
+
+```css
+@font-face {
+  font-family: '[Display]';
+  src: url('/fonts/[file].woff2') format('woff2');
+  font-weight: [range, e.g. 400 700];
+  font-style: normal;
+  font-display: swap;
+}
+```
+
+**Rules:**
+- If license is `unknown` or vendor terms are unclear, mark `[NEEDS LICENSING]` and stop — do not assume free use.
+- Self-hosted woff2 ships under `brand/font/`; `<link>` URLs are acceptable for Google Fonts and Adobe Fonts.
+- `font-display: swap` unless brand requires FOIT (rare — flag if so).
+
 ### Type Scale
 
 | Level | Font | Size | Weight | LH | LS | Use |
@@ -212,11 +239,30 @@ Base: [selected base — Stone/Zinc/Slate/Gray/Neutral] with [archetype justific
 - **What to avoid:** [specific no-gos — stock photography, staged diversity, specific visual cliches]
 
 ### Icon Style
+- **Source library:** [Lucide | Tabler | Heroicons | Phosphor | Iconoir | custom set] — include CDN/npm link, e.g. `lucide-react@latest` / `https://unpkg.com/lucide-static`
+- **Custom set delivery:** if `custom set`, ship SVGs to `brand/icons/` — every icon is an outlined-path SVG with the system stroke weight
+- **Substitution rule:** if the source library lacks a needed glyph, fall back to **[nearest stroke-weight-matching library]** (e.g., Lucide-primary projects fall back to Tabler before Heroicons). Never mix three libraries in one product.
 - Grid: [size px] with [padding px] live area
 - Stroke weight: [px]
 - Corner radius: [matches brand radius or different?]
 - Style: [line/filled/duotone — default and active states]
 - Color: [default, active, destructive color rules]
+
+### Forbidden Icons / Glyphs
+
+A short, machine-readable list of icons (or specific emoji) this brand **never** uses, with the reason. Catches the case where a downstream agent reaches for an obvious-but-wrong glyph.
+
+```yaml
+forbidden_icons:
+  - glyph: "🔥"             # emoji or icon name
+    reason: "[why — e.g., bro-coded, conflicts with calm voice]"
+  - glyph: "rocket"
+    reason: "[why]"
+  - glyph: "lightning-bolt"
+    reason: "[why]"
+```
+
+[3-8 entries. Each must be a real omission decision, not filler. If nothing is forbidden, write the YAML key with an empty list and a one-line note explaining why this brand has no icon taboos.]
 
 ### Platform Icon Specifications [→ DESIGN.md]
 
@@ -303,7 +349,7 @@ PRIMARY: Blue #3b82f6 — looks professional
 
 **Color choice with archetype trace (GOOD):**
 ```
-PRIMARY (60%): Warm Teal | oklch(0.65 0.15 180) | #2cbaa0 — Caregiver archetype seeks warmth and safety. Teal combines blue's trust with green's growth, creating a "supportive friend" rather than "stern banker" feel that matches the brand's positioning against intimidating finance apps.
+PRIMARY (60%): Warm Teal | oklch(0.7 0.11 180) | #3eb8a4 — Caregiver archetype seeks warmth and safety. Teal combines blue's trust with green's growth, creating a "supportive friend" rather than "stern banker" feel that matches the brand's positioning against intimidating finance apps.
 ```
 
 **Font selection without trace (BAD):**
@@ -354,6 +400,8 @@ Before returning your output, verify every item:
 **Typography (→ DESIGN.md):**
 - [ ] Maximum 2 font families (3 if mono needed), each with archetype rationale
 - [ ] Fallback stacks as CSS custom properties
+- [ ] **Font Loading & Licensing table emitted** — every font has source, license, status, load method
+- [ ] **Any font with unclear license is prefixed `[NEEDS LICENSING]`** — I did not assume free use
 - [ ] Complete type hierarchy (H1 through Code) with size, weight, LH, LS, use
 - [ ] Product-specific typography rules (where display vs body appears)
 
@@ -364,7 +412,9 @@ Before returning your output, verify every item:
 
 **Imagery & Icons (→ DESIGN.md):**
 - [ ] Photography direction tied to archetype with specific no-gos
-- [ ] Icon style with grid, stroke, radius, color rules
+- [ ] Icon style with **source library + CDN/npm link**, grid, stroke, radius, color rules
+- [ ] **Substitution rule named** — if source library lacks a glyph, fallback library is specified
+- [ ] **Forbidden Icons YAML emitted** — 3-8 specific glyphs with reasons (or empty list with explanation)
 - [ ] **Platform Icon Specifications: Platforms declared line matches strategy-agent's list**
 - [ ] **Platform Icon Specifications: one subsection per declared platform, no extras; master size, safe zone, derivatives, state variants, and pitfalls present in each**
 - [ ] Product-specific icons listed if applicable
@@ -378,5 +428,6 @@ Before returning your output, verify every item:
 **General:**
 - [ ] Output stays within my section boundaries (no overlap with other agents)
 - [ ] No `[BLOCKED]` markers remain unresolved
+- [ ] **AI-slop self-check** — ran my color, material, shadow, and Do/Don't sections against `references/ai-slop-detection.md`. If 2+ items match (e.g., purple gradient default, uniform bubbly radius, shadow soup), I revised before returning. The critic should not have to catch slop I could have caught at generation time.
 
 If any check fails, revise your output before returning. Do not return work you know is incomplete.

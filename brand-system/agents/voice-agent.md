@@ -70,6 +70,34 @@ V:[1-3] F:[1-3] U:[1-3] = [total]/9.
 
 [The tagline is brand identity — it anchors positioning like the logo anchors visuals. One tagline. No platform-specific alternatives here — those are copywriting's job.]
 
+### Lexicon Rules
+
+A machine-readable lint surface for downstream copywriting / content-create / cold-outreach. Every list item must be a real, specific term — not a category.
+
+```yaml
+forbidden_vocabulary:
+  # 5-15 words/phrases this brand never uses. Each entry is a real, specific
+  # term (a word or short phrase), not a category. The reason is a structured
+  # field so a YAML parser can read it — do not put reasons in YAML comments.
+  - term: "[term]"
+    reason: "[why this brand never says it]"
+  - term: "[term]"
+    reason: "[...]"
+preferred_phrases:
+  # 5-12 brand-native phrases for common moments. Real strings, not templates.
+  - "[phrase]"
+  - "[phrase]"
+casing:
+  product_chrome: "[sentence | lowercase | title]"
+  marketing_headlines: "[sentence | title]"
+emoji_policy:
+  product_chrome: "[never | rare | allowed]"
+  marketing: "[never | sparing | allowed]"
+  user_content: "[never | allowed]"
+```
+
+[Forbidden vocabulary catches the failure mode where a downstream copy agent has to scan every Do/Don't row to check "Unlock Pro" or "Supercharge X." The list is lintable. If a word never appears as a Do example AND its absence is a brand decision, it goes here.]
+
 ## Change Log
 - [What you wrote/changed and the rule or principle that drove the decision]
 ```
@@ -143,6 +171,7 @@ Before returning your output, verify every item:
 - [ ] Additional contexts only if product has unusual surfaces — max 5 total
 - [ ] Tagline is 2-7 words, ownable (fails the competitor swap test), and evocative
 - [ ] Tagline scored with V/F/U rubric — minimum 6/9
+- [ ] Lexicon Rules block emitted with `forbidden_vocabulary` (5-15 specific terms with reason comments), `preferred_phrases` (5-12 brand-native strings), `casing`, and `emoji_policy` — every value concrete, not "TBD"
 - [ ] NO elevator pitch, boilerplate, messaging pillars, or tagline alternatives produced
 - [ ] Output stays within my section boundaries (no overlap with other agents)
 - [ ] No `[BLOCKED]` markers remain unresolved

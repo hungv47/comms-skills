@@ -2,7 +2,9 @@
 
 > Annotated reference showing what separates a strong DESIGN.md from a generic one. The core principle: **an AI coding agent should be able to read DESIGN.md and produce on-brand UI without any other context.** Each section shows a good excerpt, a bad counter-example, and the quality differentiator.
 >
-> **IMPORTANT: Match the STRUCTURAL QUALITY, not the specific content.** The good excerpts below are from an existing product (glass surfaces, amethyst palette, spring-physics notes). Your output will have completely different visual language, materials, and interactions. What should be identical is the PRECISION: complete per-theme token tables, CSS-level material formulas, named animations with exact physics values, testable do's/don'ts. The excerpts illustrate the depth bar, not the design direction.
+> **IMPORTANT: Match the STRUCTURAL QUALITY, not the specific content.** The primary good excerpts below are from an existing product (glass surfaces, amethyst palette, spring-physics notes). Your output will almost certainly have completely different visual language, materials, and interactions. What should be identical is the PRECISION: complete per-theme token tables, CSS-level material formulas, named animations with exact physics values, testable do's/don'ts. The excerpts illustrate the depth bar, not the design direction.
+>
+> **Do NOT copy the visual language.** If your archetype is Caregiver, Sage, or Hero, glass surfaces are likely the *wrong* material. Glassmorphism is the **single most over-applied AI-design pattern**. The Surface & Material section below shows two equally-precise good excerpts — one glass, one solid/paper — to make this concrete. Pick the material that fits the archetype, not the one that matches the example.
 
 ---
 
@@ -94,11 +96,21 @@
 **Bad:**
 > Use a frosted glass effect on cards and modals.
 
-**Why the good version works:**
+**Good — solid / paper variant (anti-glass, equal precision):**
+> The product's signature surface is **warm pressed paper**, not glass. Cards are fully opaque with a subtle off-white tint and a soft inner shadow that hints at fiber.
+>
+> | Theme | Background | Tint | Border | Inner shadow |
+> |-------|-----------|------|--------|--------------|
+> | Light | `oklch(0.985 0.004 60)` (warm cream) | none | `1px solid oklch(0.92 0.005 60)` | `inset 0 0 0 1px oklch(1 0 0 / 0.6), inset 0 -1px 0 oklch(0.88 0.01 60 / 0.4)` |
+> | Dark | `oklch(0.21 0.005 60)` (warm charcoal) | none | `1px solid oklch(0.28 0.006 60)` | `inset 0 1px 0 oklch(1 0 0 / 0.04)` |
+>
+> **No backdrop-filter. No translucency.** Depth comes from elevation shadows (see §6) and the paper border treatment, not from blur.
+
+**Why both good versions work:**
 - Per-theme CSS values — an engineer copies these directly
-- Opacity differs by theme (0.80 light vs 0.75 dark) — deliberate, not arbitrary
-- Implementation notes (saturate to prevent washout, noise grain for realism)
-- The material IS the brand — vague descriptions produce inconsistent implementations
+- Opacity / tint values differ by theme (deliberate, not arbitrary)
+- Implementation notes spell out *what's intentionally absent* (the paper variant explicitly bans backdrop-filter — that's the brand decision)
+- The material IS the brand — and there is no default material. Glass and paper are equally precise; the wrong one for the archetype is wrong however well it's specified.
 
 ---
 

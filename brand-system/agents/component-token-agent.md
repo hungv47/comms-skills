@@ -302,5 +302,6 @@ Before returning your output, verify every item:
 - [ ] All values reference semantic tokens — no hardcoded colors or sizes
 - [ ] Output stays within my section boundaries (no overlap with other agents)
 - [ ] No `[BLOCKED]` markers remain unresolved
+- [ ] **AI-slop self-check** — ran my component specs against `references/ai-slop-detection.md`. Specifically: not every component has the same border-radius (radius varies by role), shadow stacks aren't piled on every card, no decorative motion that fails the "what changed?" test. Revised before returning if 2+ matches.
 
 If any check fails, revise your output before returning. Do not return work you know is incomplete.
