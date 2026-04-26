@@ -6,7 +6,8 @@ Brand identity, content creation, campaign planning, optimization, outbound, and
 brand-system (visual identity foundation)
 content-research (research-skills) → imc-plan → content-create → attribution
 content-create + brand-system → design-create (visual creative for the copy)
-Horizontal: copywriting, lp-optimization, seo, humanize, vn-tone, cold-outreach
+lp-optimization (audit existing page) → lp-brief (redesign spec) → design-create (per asset slot)
+Horizontal: copywriting, seo, humanize, vn-tone, cold-outreach
 
 ## Recommended Starting Point
 Run `icp-research` (from [research-skills](https://github.com/hungv47/research-skills)) first — it creates `research/product-context.md`, the canonical cross-stack record consumed by 12+ downstream skills.
@@ -31,6 +32,9 @@ Pipeline outputs write to `.agents/mkt/`; cross-stack records live in the top-le
 - `.agents/mkt/design/[slug]/prompt.md` (generative AI prompt — from design-create route P)
 - `.agents/mkt/design/[slug]/figma-spec.md` (Figma handoff spec — from design-create route F)
 - `.agents/mkt/design/[slug]/critic.md` (visual rubric report — from design-create)
+- `.agents/mkt/lp-brief/[slug]/brief.md` (landing-page redesign brief — from lp-brief; rev versions at `v[N]/brief.md`)
+- `.agents/mkt/lp-brief/[slug]/handoff-*.md` (per-target hand-off prompts — from lp-brief)
+- `.agents/mkt/lp-brief/[slug]/asset-slots/*.prompt.md` (per-slot generative prompts — from lp-brief, consumed by design-create)
 
 ## Cross-Stack (Optional)
 Attribution and IMC Plan can read research artifacts for alignment:
@@ -40,7 +44,7 @@ Attribution and IMC Plan can read research artifacts for alignment:
 
 ## Multi-Agent Skills
 
-All 11 skills use a two-layer multi-agent orchestration pattern:
+All 12 skills use a two-layer multi-agent orchestration pattern:
 
 - `SKILL.md` = **orchestrator** — dispatch graph, routing logic, merge step, critic gate
 - `agents/` = **sub-agent instruction files** — each with role, input/output contracts, domain knowledge, self-check
@@ -65,6 +69,7 @@ All 11 skills use a two-layer multi-agent orchestration pattern:
 - `attribution` — 7 agents (kpi-hierarchy, initiative-mapper, channel-attribution, content-mapper, gap-analysis, action, critic). Fully sequential.
 - `cold-outreach` — 8 agents (signal-analyst, strategist, proof-selector, composer, voice-auditor, critic, reply-classifier, reply-composer). Two-stage Layer 1 (signal-analyst solo → strategist + proof-selector parallel) → Layer 2 sequential (composer→voice-auditor→critic) → terminal humanize with specificity regression check. Reply route replaces Layer 1 with reply-classifier and Layer 2's composer slot with reply-composer.
 - `design-create` — 9 agents (brand-anchor, concept, copy-anchor, brief-synth, prompt-craft, pencil-render, paper-render, figma-spec, critic). Layer 1 parallel (brand-anchor + concept + copy-anchor) → Layer 1.5 brief-synth → **Approval Gate 1** → Layer 2 route-specific renderer (P/PE/PA/F) → Layer 3 critic → **Approval Gate 2**. Visual analog of content-create — produces per-asset creative briefs and renders, gated by user approval at brief and output stages.
+- `lp-brief` — 9 agents (audit-anchor, brand-anchor, hypothesis, architecture, section-spec, asset-slot, handoff, conversion-critic, brand-voice-critic). Layer 1 parallel (audit-anchor + brand-anchor) → Layer 1.5 hypothesis → **Approval Gate 1** → Layer 2 architecture → **Approval Gate 2** → Layer 3 section-spec → Layer 3.5 asset-slot (consumes section-spec slot IDs) → Layer 4 handoff → Layer 5 parallel critics (conversion + brand-voice, both binary PASS/FAIL) → **Approval Gate 3**. Page-level orchestrator between strategy and design — produces a campaign-grade landing-page redesign brief with hypothesis, architecture, per-section spec, asset slots, and target-tool hand-off prompts. Internalizes lp-optimization conversion principles via cite-by-line reference (CP-01 → CP-13). Tier-1 only (primary + secondary conversion pages); programmatic SEO templates out of scope.
 
 ### Reusable template
 `copywriting/agents/_template.md` defines the standard structure for agent instruction files.

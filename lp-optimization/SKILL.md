@@ -48,6 +48,8 @@ routing:
       when: "need to write new copy, not audit existing page"
     - skill: seo
       when: "optimizing for search, not conversion"
+    - skill: lp-brief
+      when: "audit findings call for a full redesign, not incremental fixes — lp-brief consumes this skill's audit as Route B input"
   parallel-with:
     - seo
   interactive: false
