@@ -4,10 +4,16 @@ Brand identity, content creation, campaign planning, optimization, outbound, and
 
 ## Pipeline
 brand-system (visual identity foundation)
-content-research (research-skills) → imc-plan → content-create → attribution
-content-create + brand-system → design-create (visual creative for the copy)
+
+content-research (research-skills) → imc-plan → content-short → attribution
+content-research-long (research-skills) → imc-plan → content-long → attribution
+
+content-short / content-long + brand-system → design-create (visual creative for the copy)
 lp-optimization (audit existing page) → lp-brief (redesign spec) → design-create (per asset slot)
-Horizontal: copywriting, seo, humanize, vn-tone, cold-outreach
+
+Horizontal: copywriting, seo, humanize, vn-tone, cold-outreach, creator-brief
+
+Legacy (being retired): content-create — superseded by content-short + content-long + creator-brief.
 
 ## Recommended Starting Point
 Run `icp-research` (from [research-skills](https://github.com/hungv47/research-skills)) first — it creates `research/product-context.md`, the canonical cross-stack record consumed by 12+ downstream skills.
@@ -16,9 +22,11 @@ Run `icp-research` (from [research-skills](https://github.com/hungv47/research-s
 Pipeline outputs write to `.agents/mkt/`; cross-stack records live in the top-level `research/` folder:
 - `research/product-context.md` (cross-stack — created by icp-research in research-skills)
 - `research/icp-research.md` (canonical audience record — from icp-research in research-skills)
-- `.agents/mkt/content-research.md` (from content-research in research-skills)
+- `.agents/mkt/content-research.md` (from content-research in research-skills — short-form)
+- `.agents/mkt/content-research-long.md` (from content-research-long in research-skills — long-form)
 - `.agents/mkt/imc-plan.md`
-- `.agents/mkt/content/[slug].md`
+- `.agents/mkt/content/[slug].md` (from content-short or content-long)
+- `.agents/mkt/content/[slug].meta.md` (title + meta variants + schema + distribution checklist — from content-long)
 - `.agents/mkt/content/[slug].copy.md`
 - `.agents/mkt/attribution.md`
 - `.agents/mkt/seo-[mode].md` (mode = audit | ai | programmatic | competitor)
@@ -44,7 +52,7 @@ Attribution and IMC Plan can read research artifacts for alignment:
 
 ## Multi-Agent Skills
 
-All 12 skills use a two-layer multi-agent orchestration pattern:
+All 13 skills use a two-layer multi-agent orchestration pattern:
 
 - `SKILL.md` = **orchestrator** — dispatch graph, routing logic, merge step, critic gate
 - `agents/` = **sub-agent instruction files** — each with role, input/output contracts, domain knowledge, self-check
@@ -60,7 +68,8 @@ All 12 skills use a two-layer multi-agent orchestration pattern:
 ### Skills using this pattern
 - `brand-system` — 8 agents (strategy, personality, voice, visual, token-architect, component-token, accessibility, critic). Layer 1 parallel (strategy + personality) → Layer 2 sequential (voice→visual→token-architect→component-token→accessibility→critic).
 - `copywriting` — 9 agents (hook, body, CTA, social-proof, variant, voice, psychology, zero-risk, critic)
-- `content-create` — 8 agents (format, voc-extraction, hook, body, CTA, platform-compliance, ab-variant, critic). Layer 1→1.5→2 pattern (format resolves first, then writers parallel).
+- `content-create` — 8 agents (format, voc-extraction, hook, body, CTA, platform-compliance, ab-variant, critic). Layer 1→1.5→2 pattern. **Legacy — being retired in favor of content-short + content-long + creator-brief.**
+- `content-long` — 8 agents (format, voc-extraction, lede, body, cta, seo-compliance, title-variant, critic). Layer 1 parallel (format + voc-extraction) → Layer 1.5 parallel writers (lede + body + cta) → Layer 2 sequential (seo-compliance → title-variant) → critic. Long-form analog of content-create — produces blog, pillar, case study, byline, PR, newsletter, app store/G2 listings. Consumes content-research-long briefs.
 - `imc-plan` — 6 agents (pillar, angle, channel, timeline, launch-sequencing, critic). Primarily sequential.
 - `humanize` — 6 agents (pattern-scanner, voice-extractor, strip, soul-injection, compression, critic). Layer 1 parallel (scan + extract) → Layer 2 sequential (strip→inject→compress→critic).
 - `vn-tone` — 3 agents (diagnostic, polisher, critic). Layer 1 (diagnostic) → Layer 2 sequential (polisher→critic). Post-translation Vietnamese register polish across 4 registers (báo chí, semi-casual, bro, pop-marketing) backed by a live-scraped corpus reference.
