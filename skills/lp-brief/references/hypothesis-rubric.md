@@ -81,7 +81,7 @@ If a hypothesis can't trace, it's a vibe. Score it 0 on Falsifiable (Q2) — vib
 
 ## Relationship to Copywriting's Hook 3Q
 
-Copywriting's hook 3Q (defined in `marketing-skills/copywriting/agents/hook-agent.md` and scored 1–5 in `marketing-skills/copywriting/agents/critic-agent.md`) uses the **same three axes**: Visual / Falsifiable / Uniquely Ours. The reuse is deliberate — it's the same craft test applied at a different scale.
+Copywriting's hook 3Q (defined in `marketing-skills/skills/copywriting/agents/hook-agent.md` and scored 1–5 in `marketing-skills/skills/copywriting/agents/critic-agent.md`) uses the **same three axes**: Visual / Falsifiable / Uniquely Ours. The reuse is deliberate — it's the same craft test applied at a different scale.
 
 | Rubric | Unit of analysis | Output |
 |--------|-----------------|--------|

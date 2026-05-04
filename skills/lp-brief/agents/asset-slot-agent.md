@@ -20,7 +20,7 @@ You do NOT:
 | **section_spec** | markdown | **Required.** Output from section-spec-agent (Layer 3, runs before this agent in Layer 3.5) — contains the canonical slot ID list via per-section asset references. You consume; you do not invent slot IDs. |
 | **brand_digest** | markdown | From brand-anchor-agent — palette anchors, surface language, sacred elements, photographic vs illustrative direction, motion tokens |
 | **page_slug** | string | The slug used for file path generation, e.g., `pricing` or `q3-launch-lp` |
-| **references** | file paths[] | `marketing-skills/design-brief/references/asset-types.md`, `marketing-skills/design-brief/references/prompt-patterns.md`, `marketing-skills/design-brief/references/failure-modes.md` |
+| **references** | file paths[] | `marketing-skills/skills/design-brief/references/asset-types.md`, `marketing-skills/skills/design-brief/references/prompt-patterns.md`, `marketing-skills/skills/design-brief/references/failure-modes.md` |
 | **feedback** | string \| null | If critic returned FAIL, address every cited point |
 
 ## Output Contract

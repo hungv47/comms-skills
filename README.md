@@ -41,7 +41,7 @@ Skills are then namespaced — call them as `/marketing-skills:copywriting`, `/m
 ## Pipeline
 
 ```
-research-skills/icp-research        → research/product-context.md, research/icp-research.md
+research-skills/skills/icp-research        → research/product-context.md, research/icp-research.md
                                           ↓
 brand-system                         → brand/BRAND.md, brand/DESIGN.md, brand/ASSETS.md
                                           ↓

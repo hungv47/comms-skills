@@ -207,7 +207,7 @@ For each agent below, use the **Agent tool**:
 
 1. **Read** the agent instruction file (e.g., `agents/diagnostic-agent.md`) — include its FULL content in the Agent prompt
 2. **Append** the brief and pre-writing context after the instructions
-3. **Resolve reference paths to absolute** — replace relative paths with absolute paths rooted at this skill's directory (e.g., `references/vn-tone-corpus.md` becomes `/Users/you/marketing-skills/vn-tone/references/vn-tone-corpus.md`)
+3. **Resolve reference paths to absolute** — replace relative paths with absolute paths rooted at this skill's directory (e.g., `references/vn-tone-corpus.md` becomes `/Users/you/marketing-skills/skills/vn-tone/references/vn-tone-corpus.md`)
 4. **Pass original text as `brief`**, not as a file path — the agent should operate on text directly
 5. If **feedback** exists (critic FAIL cycle), append it at the end with header "## Critic Feedback — Address Every Point"
 

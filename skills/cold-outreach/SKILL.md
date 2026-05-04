@@ -326,7 +326,7 @@ For each agent dispatched below, use the **Agent tool** (general-purpose or Expl
 
 1. **Read** the agent instruction file (e.g., `agents/strategist.md`) — include its FULL content in the Agent prompt
 2. **Append** the pre-writing context and any prior layer's output after the instructions
-3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory. Example: `references/channels/email.md` → `<skill-root>/references/channels/email.md` where `<skill-root>` resolves to wherever this skill is installed (typically `marketing-skills/cold-outreach/` in the repo, or the equivalent install path). Tell the agent which reference files to read.
+3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory. Example: `references/channels/email.md` → `<skill-root>/references/channels/email.md` where `<skill-root>` resolves to wherever this skill is installed (typically `marketing-skills/skills/cold-outreach/` in the repo, or the equivalent install path). Tell the agent which reference files to read.
 4. **Pass upstream artifacts by content, not path**: the orchestrator reads `research/*.md` and `.agents/mkt/*.md` FIRST, then includes relevant excerpts (VoC quotes, voice adjectives, pain language) in the pre-writing object. Sub-agents do NOT read artifact files directly.
 5. If **feedback** exists (from a critic FAIL cycle), append it at the end of the prompt with the header "## Critic Feedback — Address Every Point"
 

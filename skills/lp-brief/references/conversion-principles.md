@@ -1,8 +1,8 @@
 # Conversion Principles — lp-brief Reference
 
-> **This file does not duplicate.** It is a curated index into `marketing-skills/lp-optimization/references/*` so updates to the audit principles automatically propagate to lp-brief. Sub-agents (section-spec-agent, conversion-critic-agent) read this file, then read the cited source ranges as needed. If a principle here disagrees with the cited source, the source wins — fix the citation in the same commit per the Update Protocol below.
+> **This file does not duplicate.** It is a curated index into `marketing-skills/skills/lp-optimization/references/*` so updates to the audit principles automatically propagate to lp-brief. Sub-agents (section-spec-agent, conversion-critic-agent) read this file, then read the cited source ranges as needed. If a principle here disagrees with the cited source, the source wins — fix the citation in the same commit per the Update Protocol below.
 >
-> **Path convention:** all citations are relative to `marketing-skills/lp-optimization/references/`.
+> **Path convention:** all citations are relative to `marketing-skills/skills/lp-optimization/references/`.
 
 ---
 

@@ -63,8 +63,8 @@ routing:
 Output moved from `.agents/design/brand-system.md` → `brand/BRAND.md` + `brand/DESIGN.md`.
 
 **Downstream consumers to update:**
-- `product-skills/user-flow` — consumes `design/brand-system.md` → update to `brand/DESIGN.md`
-- `product-skills/docs-writing` — consumes `.agents/design/brand-system.md` → update to `brand/BRAND.md` (voice/terminology) and `brand/DESIGN.md` (tokens)
+- `product-skills/skills/user-flow` — consumes `design/brand-system.md` → update to `brand/DESIGN.md`
+- `product-skills/skills/docs-writing` — consumes `.agents/design/brand-system.md` → update to `brand/BRAND.md` (voice/terminology) and `brand/DESIGN.md` (tokens)
 - Root `README.md` artifact table → update path
 
 **Duration scale change:** Timings shifted from (100, 200, 300, 500)ms to (75, 150, 250, 400, 600)ms with a new `--duration-emphasis` tier. Brands built on v5 will have different motion timing.

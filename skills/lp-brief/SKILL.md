@@ -358,7 +358,7 @@ User responses:
 
 | Agent | Pass These Inputs | Reference Files |
 |-------|-------------------|-----------------|
-| Asset-Slot Agent | architecture + section-spec output (canonical source of slot IDs) + brand digest | `marketing-skills/design-brief/references/asset-types.md` |
+| Asset-Slot Agent | architecture + section-spec output (canonical source of slot IDs) + brand digest | `marketing-skills/skills/design-brief/references/asset-types.md` |
 
 Asset-slot-agent runs **after** section-spec because slot IDs originate in section-spec's per-section asset references. Running them in parallel guarantees ID drift.
 

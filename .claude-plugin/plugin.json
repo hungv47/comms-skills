@@ -1,22 +1,22 @@
 {
   "name": "marketing-skills",
   "description": "Brand, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, and outbound — 10 skills.",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "author": { "name": "hungv47" },
   "homepage": "https://github.com/hungv47/marketing-skills",
   "repository": "https://github.com/hungv47/marketing-skills",
   "license": "MIT",
   "keywords": ["marketing", "brand", "copywriting", "design-brief", "lp-brief", "seo", "humanize", "cold-outreach"],
   "skills": [
-    "./brand-system/",
-    "./cold-outreach/",
-    "./copywriting/",
-    "./design-brief/",
-    "./humanize/",
-    "./campaign-plan/",
-    "./lp-brief/",
-    "./lp-optimization/",
-    "./seo/",
-    "./vn-tone/"
+    "./skills/brand-system/",
+    "./skills/cold-outreach/",
+    "./skills/copywriting/",
+    "./skills/design-brief/",
+    "./skills/humanize/",
+    "./skills/campaign-plan/",
+    "./skills/lp-brief/",
+    "./skills/lp-optimization/",
+    "./skills/seo/",
+    "./skills/vn-tone/"
   ]
 }
