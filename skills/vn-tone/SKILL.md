@@ -23,7 +23,10 @@ promptSignals:
     - "bro tone"
     - "báo chí"
     - "localization"
-  noneOf: []
+  noneOf:
+    - "english copy"
+    - "humanize this"
+    - "translate"
   minScore: 6
 routing:
   intent-tags:

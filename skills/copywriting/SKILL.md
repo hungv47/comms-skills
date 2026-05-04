@@ -22,12 +22,13 @@ promptSignals:
     - [write, copy]
     - [craft, headline]
   anyOf:
-    - "copy"
     - "headline"
     - "cta"
     - "tagline"
     - "hook"
     - "persuasive"
+    - "ad copy"
+    - "long-form copy"
   noneOf:
     - "social media post"
     - "blog post"

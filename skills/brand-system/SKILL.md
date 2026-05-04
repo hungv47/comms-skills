@@ -21,15 +21,18 @@ promptSignals:
     - [brand, identity]
     - [design, system]
   anyOf:
-    - "brand"
-    - "voice"
     - "typography"
     - "color system"
     - "design tokens"
-    - "logo"
+    - "brand voice"
+    - "brand identity"
+    - "visual system"
+    - "design language"
   noneOf:
     - "landing page audit"
     - "conversion rate"
+    - "asset brief"
+    - "single asset"
   minScore: 6
 routing:
   intent-tags:

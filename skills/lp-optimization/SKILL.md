@@ -11,7 +11,6 @@ metadata:
   estimated-cost: "$1-3"
 promptSignals:
   phrases:
-    - "landing page"
     - "conversion rate optimization"
     - "page optimization"
     - "cro audit"
@@ -21,14 +20,16 @@ promptSignals:
     - [landing, page]
     - [conversion, audit]
   anyOf:
-    - "landing page"
     - "conversion"
     - "cro"
     - "bounce rate"
     - "above the fold"
+    - "page audit"
   noneOf:
     - "write copy"
     - "brand identity"
+    - "redesign"
+    - "page brief"
   minScore: 6
 routing:
   intent-tags:

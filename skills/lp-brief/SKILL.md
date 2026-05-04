@@ -22,16 +22,18 @@ promptSignals:
     - [landing, redesign]
     - [draft, brief]
   anyOf:
-    - "landing page"
     - "redesign"
     - "page-brief"
     - "lp-brief"
     - "hero section"
     - "page architecture"
+    - "section spec"
   noneOf:
     - "blog post"
     - "docs page"
     - "single asset"
+    - "audit"
+    - "cro audit"
   minScore: 6
 routing:
   intent-tags:

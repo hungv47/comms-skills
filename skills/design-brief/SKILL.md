@@ -16,7 +16,6 @@ promptSignals:
     - "design brief"
     - "graphic brief"
     - "asset brief"
-    - "design a"
     - "create graphic"
     - "design asset"
     - "social graphic"
@@ -35,8 +34,6 @@ promptSignals:
     - [generate, image]
   anyOf:
     - "graphic"
-    - "creative"
-    - "visual"
     - "illustration"
     - "carousel"
     - "banner"
@@ -46,6 +43,7 @@ promptSignals:
     - "dall-e"
     - "claude design"
     - "figma"
+    - "ad creative"
   noneOf:
     - "brand identity"
     - "design system"
