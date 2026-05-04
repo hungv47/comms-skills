@@ -77,18 +77,18 @@ routing:
 
 ## Critical Gates — Read First
 
-- **Do NOT generate a brief without brand artifacts.** Missing `brand/BRAND.md` or `brand/DESIGN.md` → return `NEEDS_CONTEXT`. The brief depends on tokens, voice rules, and sacred elements; it cannot be generated without them.
-- **Do NOT skip the conversion rubric.** Every section spec is gated by lp-optimization's craft rules (4-U headline, message match, CTA psychology, social proof placement, objection handling, form-field discipline). A brief that scores brand-good but conversion-bad is a failure.
-- **Do NOT propose changing sacred elements.** Logo geometry, primary palette anchor, tagline wording, signature treatments are listed as "do not touch" in the brief — they're rails, not options.
-- **Do NOT exceed the brief length envelope.** A useful brief is 250–500 lines. Below 250 = insufficient depth (designer will ask follow-ups). Above 500 = bloat (designer skims and misses spec). Critic enforces.
-- **Do NOT inline the full skill chain.** If the project uses a shared skill chain doc (e.g., `growth/page-redesigns/_prompts.md`), the brief references it by section header and adds page-specific overrides only.
-- **Do NOT inject placeholder testimonials, fake logos, or pretend numbers.** If a proof asset isn't real, the brief specifies the spec ("Customer logo grid, 6 cells × 60px") and notes "delete cell if not real" — never fabricates.
+- **Do NOT generate a brief without brand artifacts.** Missing `brand/BRAND.md` or `brand/DESIGN.md` → return `NEEDS_CONTEXT`. Brief depends on tokens, voice rules, sacred elements.
+- **Do NOT skip the conversion rubric.** Every section spec is gated by lp-optimization's craft rules (4-U headline, message match, CTA psychology, social proof placement, objection handling, form-field discipline). Brand-good but conversion-bad = failure.
+- **Do NOT propose changing sacred elements.** Logo geometry, primary palette anchor, tagline wording, signature treatments are "do not touch" rails, not options.
+- **Do NOT exceed the brief length envelope.** Useful brief is 250–500 lines. <250 = insufficient depth (designer asks follow-ups). >500 = bloat (designer skims, misses spec). Critic enforces.
+- **Do NOT inline the full skill chain.** If project has a shared chain doc (e.g., `growth/page-redesigns/_prompts.md`), reference by section header; add page-specific overrides only.
+- **Do NOT inject placeholder testimonials, fake logos, or pretend numbers.** If a proof asset isn't real, spec it ("Customer logo grid, 6 cells × 60px") and note "delete cell if not real" — never fabricate.
 
 ## Philosophy
 
-This skill operates between strategy and design. By the time it runs, the WHY (hypothesis) and WHO (audience) should be stable; the brief turns those into a HOW (architecture + section spec + asset slots) precise enough for execution. The conversion rubric from lp-optimization is internalized — every section is evaluated against the same craft rules used to audit existing pages, but applied at brief time so the page is *built* right rather than *audited* later.
+Operates between strategy and design. By invocation, WHY (hypothesis) and WHO (audience) should be stable; the brief turns those into HOW (architecture + section spec + asset slots) precise enough for execution. Conversion rubric from lp-optimization is internalized — every section evaluated against the same craft rules used to audit existing pages, but applied at brief time so the page is *built* right rather than *audited* later.
 
-Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity > flexibility. Designer should not have to interpret — only execute.
+Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity > flexibility. Designer executes, doesn't interpret.
 
 ## Inputs
 
@@ -124,18 +124,18 @@ Verdict logic: see `## Layer 5: Critic Gate` below.
 
 ## Chain Position
 
-Previous: `lp-optimization` (optional — if existing page being redesigned), `campaign-plan` (optional — campaign context), `brand-system` (required) | Next: `design-brief` per asset slot (optional — for detailed graphic-design briefs), then implementation (Claude Design / image-gen tool / human designer)
+Previous: `lp-optimization` (optional — existing page redesign), `campaign-plan` (optional — campaign context), `brand-system` (required) | Next: `design-brief` per asset slot (optional), then implementation (Claude Design / image-gen / human designer)
 
 **Re-run triggers:** new audit revision, BRAND.md/DESIGN.md update, ICP refresh, traffic source pivot. Increment `--rev=N`.
 
 ### Skill Deference
 
-- **Page exists; need to know what to fix?** → `lp-optimization` first. Its output (`.agents/mkt/lp-optimization.md`) feeds this skill as anchored signal.
+- **Page exists; need to know what to fix?** → `lp-optimization` first. Output (`.agents/mkt/lp-optimization.md`) feeds this skill.
 - **Single visual asset spec, not whole page?** → `design-brief`.
 - **No brand?** → `brand-system` first.
-- **Need only headline variations?** → `copywriting` for variation work.
-- **Non-LP page (blog, docs, navigation hub)?** → Out of scope. The conversion rubric doesn't apply. Use a different brief workflow or commission one.
-- **Programmatic-SEO templates (industries/:slug, workflows/:slug, compare/:vs:)?** → **Out of scope for v1.** This skill targets single-purpose conversion pages (tier 1). Programmatic templates need a different rubric (template-fillability, slug-coverage, dedup) and would dilute the conversion-critic. Treat as a future skill.
+- **Need only headline variations?** → `copywriting`.
+- **Non-LP page (blog, docs, navigation hub)?** → Out of scope. Conversion rubric doesn't apply.
+- **Programmatic-SEO templates (industries/:slug, workflows/:slug, compare/:vs:)?** → **Out of scope for v1.** Targets single-purpose conversion pages (tier 1). Programmatic templates need a different rubric (template-fillability, slug-coverage, dedup) and would dilute the conversion-critic. Future skill.
 
 ---
 
@@ -181,9 +181,9 @@ Per-layer details, contracts, and references are in the layer sections below.
 
 ### Route B: Existing LP redesign (audit-anchored — audit REQUIRED)
 
-Triggered when an existing page is being redesigned. **Requires `.agents/mkt/lp-optimization.md`.** If absent, Step 0 blocks and prompts the user to run lp-optimization first or explicitly downgrade to Route A.
+Existing page redesign. **Requires `.agents/mkt/lp-optimization.md`.** If absent, Step 0 blocks; user runs lp-optimization first or explicitly downgrades to Route A.
 
-Same dispatch as Route A, but Layer 1 audit-anchor-agent reads the audit. Hypothesis is anchored in audit findings ("rev N → rev N+1: what changed and why"). Architecture and section spec address audit's failure modes explicitly. The brief's "What Changed from rev N-1" section becomes mandatory.
+Same dispatch as Route A, but Layer 1 audit-anchor-agent reads the audit. Hypothesis anchored in audit findings ("rev N → rev N+1: what changed and why"). Architecture and section spec address audit failure modes explicitly. "What Changed from rev N-1" section becomes mandatory.
 
 ### Route C: Re-run with `--rev=N`
 
@@ -208,35 +208,35 @@ Same dispatch as Route A, but Layer 1 audit-anchor-agent reads the audit. Hypoth
 ### Audit Artifact Check (Route B)
 
 - `.agents/mkt/lp-optimization.md` present? If yes → Route B.
-- **Page exists but no audit?** Route B is **blocked**. Stop and present two options to the user:
+- **Page exists but no audit?** Route B is **blocked**. Present two options:
   1. Run `lp-optimization` first, then re-invoke `lp-brief` (recommended).
-  2. Explicitly downgrade to Route A and proceed without audit anchoring (the brief will not address known failure modes; user accepts the risk).
-- The skill must not silently treat an existing-page redesign as Route A. The whole point of Route B is the audit signal — guessing what's broken when you could measure it is a quality failure.
+  2. Explicitly downgrade to Route A — proceeds without audit anchoring; brief won't address known failure modes; user accepts risk.
+- Never silently treat an existing-page redesign as Route A. The point of Route B is the audit signal — guessing what's broken when you could measure it is a quality failure.
 
 ### Required & Optional Artifacts
 
-See `## Inputs` table at top of this file for the canonical list. Step 0's job is to verify presence and route accordingly:
+See `## Inputs` table for canonical list. Step 0 verifies and routes:
 - Both brand artifacts present → continue
 - Either missing → **NEEDS_CONTEXT** (run brand-system)
 - Audit present + page exists → Route B
-- Audit absent + page exists → Route B blocked (see Audit Artifact Check above)
-- No existing page → Route A (audit not applicable)
+- Audit absent + page exists → Route B blocked (see above)
+- No existing page → Route A
 
 ### Project-Specific Workflows
 
 This skill **does not ship a default skill-chain doc.** Two paths:
 
-1. **Project has one** (e.g., `growth/page-redesigns/_prompts.md`) — read it once at orchestrator level. The brief REFERENCES it by section header in the "Skill Chain" section. Never inline-duplicate. Add page-specific overrides only.
-2. **Project does not** — the brief generates a per-page chain inline: a "Skill Chain" section listing the skills/prompts a downstream operator should run (e.g., `design-brief` per asset slot, `copywriting` for headline polish, `humanize` for any AI-flavored copy). Page-scoped only — no project-level default is created.
+1. **Project has one** (e.g., `growth/page-redesigns/_prompts.md`) — read once at orchestrator level. Brief REFERENCES by section header; never inline-duplicate. Add page-specific overrides only.
+2. **Project does not** — brief generates a per-page chain inline: "Skill Chain" section listing downstream skills/prompts (`design-brief` per asset slot, `copywriting` for headline polish, `humanize` for AI-flavored copy). Page-scoped only — no project-level default created.
 
-Rationale: shipping a project-level default would lock teams into our chain. Generating per-page is correct because the chain depends on which slots are generative, which copy needs polish, and which assets need rendering — all page-specific.
+Rationale: project-level default locks teams into our chain. Per-page is correct because the chain depends on generative slots, copy polish needs, and asset rendering — all page-specific.
 
 ### Context to Pass to All Agents
 
 1. **Page identity** — route, name, current state (URL/screenshot/code if exists)
-2. **Tier** — conversion-primary (hero LP, /pricing, /services) or conversion-secondary (/about, /story). Programmatic templates are **out of scope** — see "Skill Deference" above.
+2. **Tier** — conversion-primary (hero LP, /pricing, /services) or conversion-secondary (/about, /story). Programmatic templates **out of scope** (see Skill Deference).
 3. **Audit signals** — from lp-optimization.md if present
-4. **Brand digest** — palette, type, motion, sacred, voice rules (from brand-anchor-agent after L1)
+4. **Brand digest** — palette, type, motion, sacred, voice rules (from brand-anchor after L1)
 5. **Audience digest** — top 3 ICP objections, top 5 VoC phrases, awareness stage (from audit-anchor after L1)
 6. **Campaign context** — traffic source, awareness stage, conversion target
 
@@ -248,13 +248,13 @@ Rationale: shipping a project-level default would lock teams into our chain. Gen
 
 1. Read agent instruction file — include FULL content in Agent prompt
 2. Append context (digest excerpts, prior layer outputs, asset slot list, etc.)
-3. Resolve all file paths to absolute (rooted at this skill's directory)
-4. Pass upstream artifacts by content — orchestrator reads `.agents/mkt/lp-optimization.md`, `research/icp-research.md`, etc. FIRST and includes excerpts; sub-agents do not read these directly
-5. If feedback exists (from critic FAIL), append with `## Critic Feedback — Address Every Point`
+3. Resolve all file paths to absolute (rooted at skill directory)
+4. Pass upstream artifacts by content — orchestrator reads `.agents/mkt/lp-optimization.md`, `research/icp-research.md`, etc. FIRST and includes excerpts; sub-agents don't read these directly
+5. If critic feedback exists, append with `## Critic Feedback — Address Every Point`
 
 ### Single-agent fallback
 
-If multi-agent dispatch is unavailable, execute each layer sequentially. The approval gates remain — single-agent mode does not bypass user gates.
+If multi-agent dispatch is unavailable, execute layers sequentially. Approval gates remain — single-agent mode does not bypass user gates.
 
 ---
 
@@ -265,7 +265,7 @@ If multi-agent dispatch is unavailable, execute each layer sequentially. The app
 | Audit-Anchor Agent | page identity + tier + lp-optimization.md (if present) + ICP + content-research | — |
 | Brand-Anchor Agent | full BRAND.md + DESIGN.md + page identity | — |
 
-Wait for both. Their outputs become inputs for Layer 1.5.
+Wait for both — outputs feed Layer 1.5.
 
 ---
 
@@ -275,7 +275,7 @@ Wait for both. Their outputs become inputs for Layer 1.5.
 |-------|-------------------|-----------------|
 | Hypothesis Agent | audit digest + brand digest + page tier + campaign context | `references/hypothesis-rubric.md`, `references/conversion-principles.md` |
 
-Output: 3 hypothesis candidates, each scored on 3Q (Visual / Falsifiable / Uniquely Ours).
+Output: 3 candidates, each scored 3Q (Visual / Falsifiable / Uniquely Ours).
 
 ---
 
@@ -315,7 +315,7 @@ User responses:
 |-------|-------------------|-----------------|
 | Architecture Agent | approved hypothesis + brand digest + audit digest + tier | `references/surface-rhythm.md`, `references/section-templates.md` |
 
-Output: surface rhythm plan + section list + ASCII page diagram + scroll velocity notes (where the eye accelerates / decelerates / pauses).
+Output: surface rhythm plan + section list + ASCII diagram + scroll velocity notes (where eye accelerates/decelerates/pauses).
 
 ---
 
@@ -362,7 +362,7 @@ User responses:
 |-------|-------------------|-----------------|
 | Asset-Slot Agent | architecture + section-spec output (canonical source of slot IDs) + brand digest | `marketing-skills/skills/design-brief/references/asset-types.md` |
 
-Asset-slot-agent runs **after** section-spec because slot IDs originate in section-spec's per-section asset references. Running them in parallel guarantees ID drift.
+Asset-slot-agent runs **after** section-spec because slot IDs originate in section-spec's per-section asset references. Parallel execution guarantees ID drift.
 
 ---
 
@@ -372,7 +372,7 @@ Asset-slot-agent runs **after** section-spec because slot IDs originate in secti
 |-------|-------------------|-----------------|
 | Hand-Off Agent | full assembled brief (architecture + section spec + asset slots) + target tool (Claude Design / Figma / designer) | `references/handoff-formats.md` |
 
-Output: hand-off prompt block, ready to paste into the target tool.
+Output: hand-off prompt block, ready to paste into target tool.
 
 ---
 
@@ -390,16 +390,16 @@ Both run in parallel. Orchestrator merges reports.
 | Cycle 1 outcome | Action |
 |-----------------|--------|
 | Both PASS | DONE — write brief |
-| Mixed or both FAIL | Re-dispatch each agent named in the failing critic(s)' Failures Summary `fix direction` field. (Critics emit per-FAIL routing — orchestrator does not hardcode it.) Combine feedback per receiving agent. Cycle 2. |
+| Mixed or both FAIL | Re-dispatch each agent named in failing critics' Failures Summary `fix direction` field. (Critics emit per-FAIL routing — orchestrator does not hardcode it.) Combine feedback per receiving agent. Cycle 2. |
 
 | Cycle 2 outcome | Action |
 |-----------------|--------|
 | Both PASS | DONE — write brief |
-| Either or both FAIL | DONE_WITH_CONCERNS — write brief with all FAIL notes pinned at the **top** of `brief.md` under a `## Concerns` block above the artifact body. Critic scores recorded in frontmatter. The user is shown the failing critic reports at Approval Gate 3 and decides whether to ship, revise manually, or kill. |
+| Either or both FAIL | DONE_WITH_CONCERNS — write brief with all FAIL notes pinned at **top** of `brief.md` under `## Concerns` above body. Critic scores in frontmatter. User sees failing reports at Approval Gate 3 and decides: ship, revise manually, or kill. |
 
-DONE_WITH_CONCERNS is the floor. The skill does not produce silent FAIL outputs — every critic concern is visible in the artifact.
+DONE_WITH_CONCERNS is the floor. No silent FAIL outputs — every critic concern visible in the artifact.
 
-**Per-FAIL routing comes from the critics, not this table.** Each FAIL the critic emits includes a `fix direction` naming the responsible agent (section-spec for copy/structure/checklist failures, asset-slot for asset failures, handoff for hand-off-only issues, brand-anchor for digest correction). Orchestrator follows that direction; do not assume failure-class → agent mappings.
+**Per-FAIL routing comes from critics, not this table.** Each FAIL includes `fix direction` naming the responsible agent (section-spec for copy/structure/checklist, asset-slot for asset, handoff for hand-off-only, brand-anchor for digest correction). Orchestrator follows that direction; do not assume failure-class → agent mappings.
 
 ---
 
@@ -657,9 +657,9 @@ See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP
 
 ## Completion Status Protocol
 
-- **DONE** — both critics PASS (cycle 1 or cycle 2), brief approved, artifacts written
-- **DONE_WITH_CONCERNS** — after 2 cycles, ≥1 critic still FAIL or mixed; concerns pinned at top of brief.md AND recorded in frontmatter. The user is shown both critic reports at Approval Gate 3 and ships consciously.
-- **BLOCKED** — user rejected at a gate, or Route B audit missing without explicit downgrade, or required input missing mid-flow
+- **DONE** — both critics PASS (cycle 1 or 2), brief approved, artifacts written
+- **DONE_WITH_CONCERNS** — after 2 cycles, ≥1 critic still FAIL or mixed; concerns pinned at top of brief.md AND in frontmatter. User sees both reports at Approval Gate 3 and ships consciously.
+- **BLOCKED** — user rejected at a gate, Route B audit missing without explicit downgrade, or required input missing mid-flow
 - **NEEDS_CONTEXT** — BRAND.md or DESIGN.md missing; cannot proceed
 
 ---

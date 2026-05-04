@@ -73,18 +73,18 @@ routing:
 
 ## Philosophy
 
-SEO combines hard technical constraints (Google's CWV thresholds, character limits) with strategic judgment. This skill distinguishes between the two. Technical specs from platform documentation are constraints. Strategic recommendations are defaults with context for when to deviate.
+SEO mixes hard technical constraints (CWV thresholds, character limits) with strategic judgment. Platform specs are constraints; strategic recommendations are defaults with deviation context.
 
 ---
 
 ## Critical Gates
 
-Before delivering any SEO artifact, these must be true:
+Before delivering, all must hold:
 
-1. **Every recommendation has a specific fix.** No "consider improving" or "you might want to." If a finding cannot name the exact page, the exact change, and the expected impact, it is not ready.
-2. **AI SEO is additive, not alternative.** Do the technical audit too. There is no point optimizing for AI citations if crawlers cannot reach your content.
-3. **Source recency matters.** AI platform behavior changes fast. Verify all data and recommendations are current — not citing deprecated practices, outdated crawlers, or stale metrics.
-4. **Mode is explicitly chosen based on diagnosis.** Not a generic "do SEO" deliverable.
+1. **Every recommendation names exact page, exact change, expected impact.** No "consider" / "you might."
+2. **AI SEO is additive, not alternative.** No point optimizing for AI citations if crawlers can't reach content.
+3. **Source recency.** AI platform behavior shifts fast — verify no deprecated practices, outdated crawlers, stale metrics.
+4. **Mode is diagnosis-driven**, not a generic "do SEO" deliverable.
 
 ---
 
@@ -122,41 +122,36 @@ Before delivering any SEO artifact, these must be true:
 
 ## Chain Position
 
-Previous: `icp-research` + `campaign-plan` (reads audience questions and content pillars) | Next: content production / site updates / re-audit after 30 days
+Previous: `icp-research` + `campaign-plan` | Next: content production / site updates / re-audit after 30 days. Horizontal — invokable independently or post-IMC.
 
-Horizontal skill — can be invoked independently or after IMC planning.
-
-**Re-run triggers:** Technical audit quarterly, AI SEO monthly (AI landscape changes fast), after Google core updates, when entering new keyword territories.
+**Re-run triggers:** Technical audit quarterly, AI SEO monthly, after Google core updates, when entering new keyword territories.
 
 ### Skill Deference
-- **Need production-quality copy for comparison pages?** → Run `copywriting` after SEO defines the page structure and keyword targets.
-- **Content pillar prioritization?** → Defer to `campaign-plan` for audience-driven prioritization; SEO provides search demand data.
+- **Production copy for comparison pages?** → `copywriting` after SEO defines structure/keywords.
+- **Content pillar prioritization?** → `campaign-plan` for audience-driven; SEO supplies search demand.
 
 ### Coordination with IMC Plan
 
-When both `seo` and `campaign-plan` are in use, they should coordinate:
-
 | Situation | Who Leads | How They Coordinate |
 |-----------|----------|-------------------|
-| Content pillar has search demand | SEO leads topic selection | IMC provides angles and audience language; SEO provides keyword clusters and structure |
-| Content pillar is novel/contrarian | IMC leads topic selection | IMC creates shareable content; SEO optimizes for related informational queries |
-| Existing content needs both reach types | Both | Tag angles as Searchable/Shareable in IMC; SEO optimizes searchable angles for AI+traditional |
-| Angles include competitor comparisons | IMC leads prioritization | IMC decides which comparisons to produce and when; SEO owns technical optimization (schema, structure, internal linking) of those pages |
+| Pillar has search demand | SEO leads topic | IMC provides angles/audience language; SEO provides keyword clusters/structure |
+| Pillar is novel/contrarian | IMC leads topic | IMC creates shareable content; SEO optimizes related informational queries |
+| Content needs both reach types | Both | Tag angles Searchable/Shareable in IMC; SEO optimizes searchable for AI+traditional |
+| Competitor comparisons | IMC leads prioritization | IMC picks which/when; SEO owns technical optimization (schema, structure, internal linking) |
 
-**Rule:** Don't let SEO keyword data override IMC audience insights or vice versa. The best content addresses a real audience pain (IMC) AND has search demand (SEO). When they conflict, audience pain wins — you can promote great content through non-search channels, but you can't make irrelevant content convert even if it ranks.
+**Rule:** Don't let SEO keyword data override IMC audience insights (or vice versa). Best content addresses real audience pain (IMC) AND has search demand (SEO). On conflict, audience pain wins — non-search channels can promote great content, but ranking can't make irrelevant content convert.
 
 ---
 
 ## Before Starting
 
 ### Step 0: Product Context
-Check for `research/product-context.md`. If available, read for product positioning context.
-If `research/icp-research.md` or `.agents/mkt/campaign-plan.md` `date` fields are older than 30 days, recommend re-running upstream skills — stale audience data weakens SEO strategy.
+Read `research/product-context.md` if present. If `icp-research.md` or `campaign-plan.md` `date` fields exceed 30 days, recommend re-running upstream — stale audience data weakens strategy.
 
 ### Required Artifacts
 | Artifact | Source | If Missing |
 |----------|--------|------------|
-| `icp-research.md` | icp-research | **RECOMMENDED.** Audience search behavior drives SEO strategy. Can proceed without, but recommendations will be less targeted. |
+| `icp-research.md` | icp-research | **RECOMMENDED.** Audience search behavior drives strategy. Proceed without is allowed but less targeted. |
 
 ### Optional Artifacts
 | Artifact | Source | Benefit |
@@ -170,18 +165,18 @@ If `research/icp-research.md` or `.agents/mkt/campaign-plan.md` `date` fields ar
 
 ### Step 1: Determine Mode
 
-Not every SEO problem needs the same solution. Diagnose first, then enter the right mode.
+Diagnose first, then enter the right mode.
 
 | Situation | Mode | Route |
 |-----------|------|-------|
-| "Our site has technical issues / traffic dropped / we've never done an SEO audit" | **Technical Audit** | Route A |
-| "We want to be cited by ChatGPT / Perplexity / AI search engines" | **AI SEO (AEO)** | Route B |
-| "We have structured data and want to generate pages at scale" | **Programmatic SEO** | Route C |
-| "We want to rank for competitor comparison queries" | **Competitor Pages** | Route D |
-| "We need a comprehensive SEO strategy" | **Full SEO** (Technical + AI) | Route E |
-| "We distribute via app stores / listing platforms (App Store, Play Store, G2, Capterra, Product Hunt)" | **ASO (App Store Optimization)** | Route F |
+| Technical issues / traffic dropped / never audited | **Technical Audit** | Route A |
+| Want citations from ChatGPT / Perplexity / AI search | **AI SEO (AEO)** | Route B |
+| Structured data, want to generate pages at scale | **Programmatic SEO** | Route C |
+| Rank for competitor comparison queries | **Competitor Pages** | Route D |
+| Comprehensive SEO strategy | **Full SEO** (Technical + AI) | Route E |
+| Distribute via app stores / listings (App Store, Play Store, G2, Capterra, Product Hunt) | **ASO** | Route F |
 
-Multiple modes can run sequentially. Start with Technical Audit if the site has never been audited — no point optimizing for AI citations if crawlers can't reach your content.
+Modes can run sequentially. Start with Technical Audit if never audited — no point optimizing for AI citations if crawlers can't reach content.
 
 ### Step 2: Dispatch per Route
 
@@ -233,45 +228,43 @@ Layer 2 (sequential): prioritization-agent → critic-agent
 
 ### Multi-Agent Dispatch (default)
 
-1. **Gather context:** Read available artifacts (product-context, icp-research, campaign-plan). Identify site type, CMS/framework, and known issues.
-2. **Determine mode:** Apply the routing table from Step 1. If unclear, ask the user. If "comprehensive SEO," use Route E.
+1. **Gather context:** Read product-context, icp-research, campaign-plan. Identify site type, CMS/framework, known issues.
+2. **Determine mode:** Apply the Step 1 routing table. Ask if unclear; "comprehensive SEO" → Route E.
 3. **Prepare pre-writing object:**
    ```
    {
      site_url: "[URL]",
-     site_type: "[SaaS / E-commerce / Content-Blog / Local Business / Hybrid]",
+     site_type: "[SaaS / E-commerce / Content-Blog / Local / Hybrid]",
      cms_framework: "[WordPress / Next.js / Webflow / etc.]",
      mode: "[audit / ai / programmatic / competitor / aso / full]",
-     known_issues: "[any issues the user mentioned]",
-     icp_data: "[audience questions, pain points from icp-research if available]",
-     competitors: "[competitor domains if available]",
-     brand_name: "[brand name]",
+     known_issues: "[user-mentioned issues]",
+     icp_data: "[audience questions, pains from icp-research]",
+     competitors: "[competitor domains]",
+     brand_name: "[brand]",
      category: "[product category for AI search testing]"
    }
    ```
-4. **Dispatch Layer 1 agents** in parallel with the pre-writing object and relevant reference file paths (resolved to absolute paths).
-5. **Merge Layer 1 outputs** into the artifact template. Each agent's output maps to its designated sections.
-6. **Dispatch prioritization-agent** with the merged document as upstream.
-7. **Dispatch critic-agent** with the prioritized document as upstream.
-8. **Apply critic verdict:**
-   - PASS → deliver the artifact
-   - FAIL → re-dispatch the named agents with the critic's feedback (max 2 cycles)
+4. **Dispatch Layer 1 agents** in parallel with the pre-writing object and absolute reference paths.
+5. **Merge Layer 1 outputs** into the artifact template — each agent maps to designated sections.
+6. **Dispatch prioritization-agent** with the merged doc.
+7. **Dispatch critic-agent** with the prioritized doc.
+8. **Apply verdict:** PASS → deliver. FAIL → re-dispatch named agents with feedback (max 2 cycles).
 
 ### Single-Agent Fallback
 
-If multi-agent dispatch is unavailable, execute the full skill as a single agent:
+If multi-agent dispatch is unavailable:
 
-1. Read this SKILL.md completely (including all referenced sections below)
-2. Read the reference files for the active mode
-3. Follow the mode's audit steps (documented in the Reference Knowledge sections below)
-4. Apply the quality gate: every finding must have Issue, Impact, Evidence, Fix, and Priority
-5. Produce the artifact using the template at the end of this file
+1. Read this SKILL.md fully (including referenced sections)
+2. Read reference files for the active mode
+3. Follow the mode's audit steps (in Reference Knowledge sections)
+4. Quality gate: every finding has Issue, Impact, Evidence, Fix, Priority
+5. Produce the artifact using the template below
 
 ---
 
 ## Layer 1: Mode-Specific Agents
 
-Domain knowledge for each mode lives in the agent instruction files. The orchestrator dispatches agents; agents contain the techniques, checklists, and anti-patterns.
+Domain knowledge lives in agent files. Orchestrator dispatches; agents hold techniques, checklists, anti-patterns.
 
 | Mode | Agents | Domain Focus |
 |------|--------|-------------|
@@ -283,13 +276,13 @@ Domain knowledge for each mode lives in the agent instruction files. The orchest
 
 **Reference files** (passed to agents at dispatch, not read by orchestrator):
 - `references/technical-audit.md` — Full audit template and checklists
-- `references/ai-seo.md` — Platform-specific AI optimization, citation data, AEO techniques (answer passage optimization, AI crawler access, structured data for AI, freshness signals)
+- `references/ai-seo.md` — Platform-specific AI optimization, citation data, AEO techniques (answer passages, AI crawler access, structured data, freshness signals)
 - `references/programmatic-seo.md` — pSEO template patterns and implementation
 - `references/competitor-pages.md` — Comparison page templates and keyword targeting
 - `references/schema-reference.md` — Schema types, implementation contexts, validation
-- `references/aso.md` — App Store / Play Store optimization, marketplace SEO (G2, Capterra, Product Hunt), keyword research, listing optimization, review management, competitive analysis
+- `references/aso.md` — App Store / Play Store + marketplace SEO (G2, Capterra, Product Hunt) — keyword research, listing optimization, review management, competitive analysis
 
-**Key principle for single-agent fallback:** If executing without multi-agent dispatch, read the reference files for the active mode and follow the audit steps documented there. Apply the quality gate: every finding must have Issue, Impact, Evidence, Fix, and Priority.
+**Single-agent fallback principle:** Read the active mode's reference files, follow documented steps, apply the quality gate (Issue, Impact, Evidence, Fix, Priority).
 
 ---
 
@@ -297,32 +290,27 @@ Domain knowledge for each mode lives in the agent instruction files. The orchest
 
 ### Prioritization (all modes)
 
-The **prioritization-agent** takes all Layer 1 findings and produces a single ranked action plan:
+**prioritization-agent** ranks all Layer 1 findings into one action plan:
 
 1. **Quick Wins** (High Impact, Low Effort) — execute first
-2. **Strategic Investments** (High Impact, High Effort) — plan for next
-3. **Low-Hanging Fruit** (Medium Impact, Low Effort) — fill gaps
-4. **Backlog** (Low Impact or High Effort) — defer
+2. **Strategic Investments** (High, High) — plan next
+3. **Low-Hanging Fruit** (Medium, Low) — fill gaps
+4. **Backlog** (Low or High Effort) — defer
 
-Implementation phases with timelines: Phase 1 (Week 1-2), Phase 2 (Month 1), Phase 3 (Month 2-3), Phase 4 (Ongoing).
-
-Dependencies are mapped — no action recommended before its prerequisite.
+Phases: P1 (Week 1-2), P2 (Month 1), P3 (Month 2-3), P4 (Ongoing). Dependencies mapped — no action recommended before its prerequisite.
 
 ### Critic Gate (all modes)
 
-The **critic-agent** evaluates the full document against these standards:
+**critic-agent** evaluates against:
 
-- Every finding has Issue, Impact, Evidence, and Fix
-- Every Fix is specific enough to implement without further research
-- No vague language: "consider," "might want to," "could potentially"
-- Actions are force-ranked (not flat "High priority" lists)
-- Mode-appropriate coverage is complete
-- Technical specs reference correct thresholds
+- Every finding has Issue, Impact, Evidence, Fix
+- Every Fix is implementable without further research
+- No vague language ("consider," "might want to," "could potentially")
+- Actions force-ranked (not flat "High priority" lists)
+- Mode-appropriate coverage complete
+- Technical specs cite correct thresholds
 
-**Verdict:** PASS or FAIL (binary — no conditional pass).
-**Max cycles:** 2 rewrites. If the document fails after 2 cycles, deliver with a note explaining what remains unresolved.
-
-On FAIL, the critic names which agent to re-dispatch with specific fix instructions.
+**Verdict:** PASS or FAIL (binary). **Max:** 2 rewrites; after that, deliver with unresolved-items note. On FAIL, critic names the agent to re-dispatch with fix instructions.
 
 ---
 
@@ -473,35 +461,35 @@ Strategic Investments:
 
 ## Anti-Patterns
 
-**"Do SEO" without diagnosis** — Running a generic checklist without determining whether the problem is technical, content, authority, or AI visibility. Different problems need different modes.
-INSTEAD: Diagnose first using the routing table. Ask the user what triggered the SEO request.
+**"Do SEO" without diagnosis** — Generic checklist without identifying technical vs content vs authority vs AI visibility. Different problems, different modes.
+INSTEAD: Diagnose via the routing table. Ask what triggered the request.
 
-**Keyword stuffing (traditional or AI)** — Reduces AI visibility by ~10% (Princeton GEO/AEO study) and triggers Google's spam detection.
-INSTEAD: Write for humans, structure for machines. Use natural language headings that match audience questions.
+**Keyword stuffing (traditional or AI)** — Cuts AI visibility ~10% (Princeton GEO/AEO study) and triggers Google spam detection.
+INSTEAD: Write for humans, structure for machines. Natural-language headings matching audience questions.
 
-**pSEO as a content farm** — Generating thousands of thin pages with no unique value per page. Google's Helpful Content Update specifically targets this.
-INSTEAD: Better to have 100 great pages than 10,000 thin ones. Apply the 60% uniqueness threshold.
+**pSEO as a content farm** — Thousands of thin pages, no unique per-page value. Helpful Content Update targets this.
+INSTEAD: 100 great pages beat 10,000 thin ones. Enforce 60% uniqueness threshold.
 
-**Ignoring third-party presence for AI SEO** — Optimizing only your own site while ignoring review sites and publications. Third-party sources drive 6.5x more AI citations.
+**Ignoring third-party presence for AI SEO** — Optimizing only own site. Third-party drives 6.5x more AI citations.
 INSTEAD: Build G2/Capterra profiles, pursue industry mentions, manage review responses.
 
-**Blocking AI crawlers then expecting citations** — If GPTBot is blocked in robots.txt, ChatGPT can't cite your content.
-INSTEAD: Audit robots.txt for all 5 AI crawler directives. Allow crawlers for platforms where you want citations.
+**Blocking AI crawlers then expecting citations** — GPTBot blocked → ChatGPT can't cite.
+INSTEAD: Audit robots.txt for all 5 AI crawler directives. Allow crawlers for target platforms.
 
-**Flat competitor comparison tables** — Listing features with checkmarks tells the reader nothing about context.
-INSTEAD: Compare by use case and audience. Every cell has specific data, not checkmarks.
+**Flat competitor comparison tables** — Checkmark feature lists give no context.
+INSTEAD: Compare by use case and audience. Cells carry specific data, not checkmarks.
 
-**Schema false positives** — Flagging missing schema based on raw HTML when CMS plugins inject JSON-LD via client-side JavaScript.
-INSTEAD: Verify schema with Google Rich Results Test or browser DevTools.
+**Schema false positives** — Flagging missing schema from raw HTML when CMS plugins inject JSON-LD client-side.
+INSTEAD: Verify with Google Rich Results Test or browser DevTools.
 
-**One-and-done audits** — SEO is ongoing. Technical issues resurface, competitors change, algorithms update.
-INSTEAD: Set re-audit cadence: quarterly for technical, monthly for AI visibility.
+**One-and-done audits** — SEO is ongoing; issues resurface, competitors shift, algorithms update.
+INSTEAD: Quarterly technical re-audit; monthly AI visibility.
 
-**"Consider improving" recommendations** — Vague hedge language that gives the reader nothing to act on.
-INSTEAD: Every recommendation names the exact page, the exact change, and the expected impact.
+**"Consider improving" recommendations** — Hedge language gives nothing to act on.
+INSTEAD: Every recommendation names exact page, exact change, expected impact.
 
 ---
 
 ## References
 
-Agent instruction files and reference catalogs live in `agents/` and `references/` respectively. See the Agent Manifest table for the complete inventory.
+Agent instruction files and reference catalogs live in `agents/` and `references/`. See the Agent Manifest for the complete inventory.

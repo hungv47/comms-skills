@@ -61,36 +61,6 @@ routing:
   estimated-complexity: heavy
 ---
 
-## ⚠ v6 Breaking Change
-
-Output moved from `.agents/design/brand-system.md` → `brand/BRAND.md` + `brand/DESIGN.md`.
-
-**Downstream consumers to update:**
-- `product-skills/skills/user-flow` — consumes `design/brand-system.md` → update to `brand/DESIGN.md`
-- `product-skills/skills/docs-writing` — consumes `.agents/design/brand-system.md` → update to `brand/BRAND.md` (voice/terminology) and `brand/DESIGN.md` (tokens)
-- Root `README.md` artifact table → update path
-
-**Duration scale change:** Timings shifted from (100, 200, 300, 500)ms to (75, 150, 250, 400, 600)ms with a new `--duration-emphasis` tier. Brands built on v5 will have different motion timing.
-
-**Quick Brand (Route A)** produces `brand/BRAND.md` only. DESIGN.md and ASSETS.md require the full Route B pipeline.
-
-## v6.2 Additions
-
-- **voice-agent: Lexicon Rules block** — machine-readable `forbidden_vocabulary`, `preferred_phrases`, `casing`, and `emoji_policy`. Lints downstream copywriting / cold-outreach output.
-- **visual-agent: Font Loading & Licensing table** — every font has source, license, free/paid status, and `<link>`/`@font-face` block. Fonts with unclear licenses are flagged `[NEEDS LICENSING]`.
-- **visual-agent: Iconography source library + substitution + forbidden icons** — name the source library (Lucide / Tabler / etc.) with CDN/npm link, the fallback library when a glyph is missing, and a YAML list of forbidden glyphs (e.g., never 🔥).
-- **AI-slop self-check** — visual-agent and component-token-agent now self-check against `references/ai-slop-detection.md` before returning, instead of leaving every catch to the critic.
-- **Step 9 broadened to "Visual Renderings (optional)"** — Paper MCP (existing) + Claude Design (claude.ai/design handoff) + None. Spec stays canonical; rendering is derivative.
-- **Anti-pattern: don't round-trip Claude Design exports into `brand/`** — exports are presentation artifacts, not source of truth.
-- **Tightened example-design.md disclaimer** — added a paper/solid anti-glass excerpt for Surface & Material to prevent over-anchoring on glassmorphism.
-- **OKLCH/hex round-trip fix** — `oklch(0.65 0.15 180) / #2cbaa0` → `oklch(0.7 0.11 180) / #3eb8a4` in the worked example and visual-agent example.
-
-## v6.1 Addition — ASSETS.md
-
-Route B now produces a third artifact: `brand/ASSETS.md`. A production inventory projected deterministically from BRAND.md brand mark + DESIGN.md specs + declared platforms. Every row is a checkbox with a spec reference and a target file path under `brand/`. **Always-on auto-scan**: every brand-system run (fresh or re-run) walks the `brand/` tree and flips `[ ]` → `[x]` for any row whose target file exists. Human-set `[~]` (in progress) and `[!]` (blocked) markers are preserved across runs. No new agent; implemented as an orchestrator post-merge step (Step 8.5).
-
----
-
 # Brand Identity & Design System — Orchestrator
 
 *Design — Step 1 of 2. Coordinates specialized agents to transform product artifacts into a complete brand narrative and AI-readable design system.*
@@ -99,11 +69,11 @@ Route B now produces a third artifact: `brand/ASSETS.md`. A production inventory
 
 ## Critical Gates — Read First
 
-- **Do NOT choose colors or fonts before strategy.** Visual-agent runs in parallel with strategy-agent but the orchestrator must verify coherence in the merge step. Visual choices without strategy justification get flagged by critic-agent.
-- **Do NOT dispatch Layer 2 before Layer 1 completes.** Token-architect-agent needs visual-agent output. Component-token-agent needs token-architect-agent output. The chain is strict.
-- **Do NOT skip the critic's cross-element coherence check.** Radius must map to archetype. Typography must match personality. Color must align with brand emotion. The critic checks the matrix that no individual agent can see.
-- **Stale upstream data (>30 days) produces generic archetypes.** Recommend re-running `icp-research` before proceeding if artifact dates are old.
-- **BRAND.md is prose, DESIGN.md is specification.** BRAND.md reads like a brand book — narrative, story, voice. DESIGN.md reads like an API reference — tables, formulas, exact values. Never mix the registers.
+- **No colors/fonts before strategy.** Visual-agent runs parallel with strategy-agent; orchestrator verifies coherence in merge. Unjustified visual choices get flagged by critic.
+- **No Layer 2 before Layer 1 completes.** Token-architect needs visual-agent output; component-token needs token-architect output. Chain is strict.
+- **Don't skip critic's cross-element coherence check.** Radius↔archetype, type↔personality, color↔emotion — the critic checks the matrix no individual agent can see.
+- **Stale upstream data (>30 days) → generic archetypes.** Recommend re-running `icp-research` if artifact dates are old.
+- **BRAND.md is prose, DESIGN.md is specification.** BRAND.md = brand book (narrative, story, voice). DESIGN.md = API reference (tables, formulas, exact values). Never mix registers.
 
 ## Inputs Required
 - Product description or PRD (what the product does, who it serves)
@@ -112,24 +82,18 @@ Route B now produces a third artifact: `brand/ASSETS.md`. A production inventory
 
 ## Output — Three Files (Route B) / One File (Route A)
 
-The skill produces up to three complementary files, each serving a different audience:
+Up to three complementary files, each serving a different audience:
 
 ### `BRAND.md` — Brand Narrative & Voice
-**Audience:** Founders, marketers, copywriters, designers making brand decisions.
-**Register:** Prose. Reads like a brand book — narrative, story, voice examples.
-**Contains:** Origin story, naming, purpose/mission/vision, values, positioning, archetype, personality traits, emotional journey, voice chart, tone spectrum, messaging architecture, brand mark, product-specific brand sections, digital touchpoints.
+**Audience:** founders, marketers, copywriters, designers. **Register:** prose — reads like a brand book. **Contains:** origin story, naming, purpose/mission/vision, values, positioning, archetype, personality traits, emotional journey, voice chart, tone spectrum, messaging architecture, brand mark, product-specific sections, digital touchpoints.
 
 ### `DESIGN.md` — AI-Readable Design System
-**Audience:** AI coding agents, frontend engineers, design system consumers.
-**Register:** Specification. Tables, formulas, exact values. An AI agent should be able to read this file and produce on-brand UI without any other context.
-**Contains:** Visual atmosphere, complete color palettes per theme, typography rules, component stylings, layout principles, shadows & elevation, iconography, imagery direction, motion & animation, accessibility, do's and don'ts.
+**Audience:** AI coding agents, frontend engineers, design system consumers. **Register:** specification — tables, formulas, exact values; an AI reading this alone should produce on-brand UI. **Contains:** visual atmosphere, per-theme color palettes, typography rules, component stylings, layout principles, shadows & elevation, iconography, imagery direction, motion & animation, accessibility, do's and don'ts.
 
 ### `ASSETS.md` — Production Inventory (Route B only)
-**Audience:** Designers, art directors, asset producers, project managers tracking what to ship.
-**Register:** Checklist. Every row is a GFM checkbox with a spec reference and a target file path under `brand/`.
-**Contains:** Universal assets (logo variants, fonts, tokens) + social & sharing + favicon/web metadata + imagery/illustration + one per-declared-platform block. Auto-scanned on every run — `[x]` if the target file exists, `[ ]` if not. `[~]` in-progress and `[!]` blocked markers are human-owned and preserved across runs. Projected deterministically from BRAND.md + DESIGN.md + declared platforms — contains no new research, only production tracking.
+**Audience:** designers, art directors, asset producers, PMs tracking what to ship. **Register:** checklist — every row is a GFM checkbox with spec ref and target path under `brand/`. **Contains:** Universal assets (logo, fonts, tokens) + social & sharing + favicon/web metadata + imagery/illustration + one per-declared-platform block. Auto-scanned each run (`[x]` if target exists, `[ ]` if not). Human-owned `[~]` (in-progress) and `[!]` (blocked) markers preserved across runs. Deterministically projected from BRAND.md + DESIGN.md + declared platforms — no new research, only production tracking.
 
-**Output location:** `brand/BRAND.md`, `brand/DESIGN.md`, and `brand/ASSETS.md` in the project directory. Optionally, visual renderings via Paper MCP artboards (`brand/artboards/`) or a Claude Design handoff message pointing the user to `claude.ai/design` for interactive prototypes — see Step 9.
+**Output location:** `brand/BRAND.md`, `brand/DESIGN.md`, `brand/ASSETS.md`. Optional visual renderings via Paper MCP artboards (`brand/artboards/`) or a Claude Design handoff — see Step 9.
 
 ### Agent-to-File Routing
 
@@ -145,66 +109,66 @@ The skill produces up to three complementary files, each serving a different aud
 | Orchestrator (Step 8.5) | — | — | Projects brand mark + DESIGN.md Platform Icon Specs + declared platforms into a checkable inventory. Deterministic — no new agent. |
 
 ## Quality Gate
-Before delivering, the **critic agent** verifies both files:
+Before delivery, the **critic agent** verifies both files:
 
 **BRAND.md checks:**
-- [ ] Origin story and naming have cultural/etymological depth — not just "we named it X"
+- [ ] Origin story and naming have cultural/etymological depth (not just "we named it X")
 - [ ] Values have real tradeoffs (not generic "innovation, quality, integrity")
-- [ ] Voice attributes have Do/Don't examples using real brand contexts (not hypothetical)
+- [ ] Voice attributes have Do/Don't examples from real brand contexts
 - [ ] Tone range covers 3 key contexts with clear shift across the range
-- [ ] Tagline scored with V/F/U (minimum 6/9), passes competitor swap test
-- [ ] **Lexicon Rules block present**: `forbidden_vocabulary` (5-15 entries, each a `term` + `reason` pair), `preferred_phrases` (5-12 brand-native strings), `casing`, `emoji_policy` — all values concrete, not "TBD". Reasons live in YAML keys, not comments.
+- [ ] Tagline scored V/F/U (min 6/9), passes competitor swap test
+- [ ] **Lexicon Rules block present:** `forbidden_vocabulary` (5-15 `term`+`reason` pairs), `preferred_phrases` (5-12 brand-native strings), `casing`, `emoji_policy` — all concrete, not "TBD". Reasons live in YAML keys, not comments.
 - [ ] No copywriting scope creep (no boilerplate, pillars, elevator pitch, tagline variants)
 - [ ] Emotional journey is touchpoint-level with design/interaction triggers (not copy triggers)
-- [ ] Brand mark described with enough detail to commission or generate
+- [ ] Brand mark described in commission/generation-ready detail
 - [ ] Digital touchpoints scoped to visual expression (not verbal)
-- [ ] **Route B — Platform coverage:** Universal Surfaces table filled + one Digital Touchpoints subsection per declared platform; every surface within each subsection has a brand-expression entry (not blank, not "TBD"). Zero undeclared platforms appear.
-- [ ] **Route A — Platform coverage:** Digital Touchpoints contains only the `Platforms declared at intake` line plus deferral note. Per-platform tables are ABSENT (not empty, not TBD — absent).
-- [ ] **Register separation:** Digital Touchpoints surface rows describe brand expression (mood, motion cue, color role, density), never geometry (pixel sizes, masks, safe zones, framework APIs). Geometry lives in DESIGN.md Platform Icon Specifications only.
+- [ ] **Route B platform coverage:** Universal Surfaces table filled + one Digital Touchpoints subsection per declared platform; every surface entry concrete (no blanks/TBDs). Zero undeclared platforms.
+- [ ] **Route A platform coverage:** Digital Touchpoints contains only the `Platforms declared at intake` line + deferral note. Per-platform tables ABSENT.
+- [ ] **Register separation:** Digital Touchpoints rows describe brand expression (mood, motion cue, color role, density) — never geometry. Geometry lives in DESIGN.md Platform Icon Specifications.
 - [ ] Prose quality: reads like a brand book, not fill-in-the-blank templates
 
 **DESIGN.md checks:**
 - [ ] AI-readable header summarizes key decisions (archetype, metaphor, fonts, primary color)
-- [ ] **Font Loading & Licensing table present**: every font has source, license, status, load method. Any unclear-license font is flagged `[NEEDS LICENSING]`
-- [ ] **Iconography source library named** with CDN/npm link, **substitution fallback library named**, **Forbidden Icons YAML emitted** (3-8 entries with reasons, or empty list with explanation)
-- [ ] Complete color palette tables for every theme (not just primary + neutrals)
+- [ ] **Font Loading & Licensing table:** every font has source, license, status, load method. Unclear licenses flagged `[NEEDS LICENSING]`
+- [ ] **Iconography source library named** (with CDN/npm link), **fallback library named**, **Forbidden Icons YAML emitted** (3-8 entries with reasons, or empty list with explanation)
+- [ ] Complete color palette tables per theme (not just primary + neutrals)
 - [ ] All semantic tokens have values for every theme
-- [ ] Every token pair meets WCAG AA contrast (4.5:1 normal text, 3:1 large/UI)
-- [ ] Background/foreground convention used consistently (`bg-primary text-primary-foreground`)
-- [ ] One global `--radius` value — archetype-justified
+- [ ] Every token pair meets WCAG AA (4.5:1 normal text, 3:1 large/UI)
+- [ ] Bg/fg convention used consistently (`bg-primary text-primary-foreground`)
+- [ ] One global `--radius` — archetype-justified
 - [ ] Surface/material language documented with CSS formulas
 - [ ] Shadow system with multiple elevation levels
 - [ ] Named animations with physics values (spring stiffness, damping, mass)
-- [ ] **Platform Icon Specifications: one subsection per declared platform with sizes, safe-area rules, state variants (dark/tinted/themed/monochrome as applicable), and derivative size list. Zero undeclared platforms appear.**
+- [ ] **Platform Icon Specifications:** one subsection per declared platform with sizes, safe-area rules, state variants (dark/tinted/themed/monochrome as applicable), derivative size list. Zero undeclared platforms.
 - [ ] Do's and Don'ts section with concrete rules
 
 **ASSETS.md checks (Route B only):**
 - [ ] One section per declared platform; zero undeclared platforms
-- [ ] Every row has a spec reference (BRAND.md / DESIGN.md / platform-surfaces.md) and a concrete, **fully-substituted** target path under `brand/` (no unfilled `{host}` / `{count}` / `{token}` placeholders remain in any emitted path)
-- [ ] No invented assets — every row traces to an upstream spec
-- [ ] No duplicated spec (pixel sizes, safe zones) — ASSETS.md cites, it does not re-define
-- [ ] Legend present; Summary counts present; `## Orphaned` block handled (present if platforms dropped, absent otherwise)
+- [ ] Every row has spec ref (BRAND.md / DESIGN.md / platform-surfaces.md) and **fully-substituted** target path under `brand/` (no unfilled `{host}`/`{count}`/`{token}` placeholders)
+- [ ] No invented assets — every row traces to upstream spec
+- [ ] No duplicated spec (sizes, safe zones) — ASSETS.md cites, doesn't re-define
+- [ ] Legend present; Summary counts present; `## Orphaned` handled (present if platforms dropped, absent otherwise)
 - [ ] Prior `[~]` and `[!]` markers preserved from previous run (verify by diff if re-run)
 
 **Cross-file coherence:**
-- [ ] Cross-element coherence: radius maps to archetype, type personality matches archetype, color emotion aligns with brand personality, imagery direction reflects the archetype's visual world
-- [ ] Voice tone in BRAND.md matches the visual atmosphere described in DESIGN.md
-- [ ] ASSETS.md platform blocks exactly match BRAND.md Digital Touchpoints platforms and DESIGN.md Platform Icon Specifications platforms (same set, same order)
-- [ ] AI slop check: run `references/ai-slop-detection.md` — 0-1 clean, 2-3 review, 4+ regeneration
+- [ ] Cross-element coherence: radius↔archetype, type personality↔archetype, color emotion↔brand personality, imagery direction↔archetype's visual world
+- [ ] Voice tone (BRAND.md) matches visual atmosphere (DESIGN.md)
+- [ ] ASSETS.md platform blocks === BRAND.md Digital Touchpoints platforms === DESIGN.md Platform Icon Specifications platforms (same set, same order)
+- [ ] AI slop check via `references/ai-slop-detection.md` — 0-1 clean, 2-3 review, 4+ regenerate
 
-**Reference quality bar:** Compare output against the annotated quality guides in `references/example-brand.md` and `references/example-design.md`. Every section should match the "good" pattern and avoid the "bad" pattern described in those guides. Use the overall quality tests in example-design.md (copy-paste test, blind build test, competitor swap test, implementation gap test) as final validation.
+**Reference quality bar:** Compare against `references/example-brand.md` and `references/example-design.md`. Match "good" patterns, avoid "bad" patterns. Use example-design.md tests (copy-paste, blind build, competitor swap, implementation gap) as final validation.
 
 ## Chain Position
 Previous: `icp-research` (product context) | Next: `campaign-plan`, `copywriting`, `lp-brief`, `design-brief`
 
-**Re-run triggers:** After major product pivots, when entering new markets, after significant audience shifts, or annually for brand refresh.
+**Re-run triggers:** Major product pivots, new markets, audience shifts, or annual brand refresh.
 
-**Related skills (non-chain):** `icp-research` (audience data for brand strategy), `copywriting` (consumes voice guidelines), `humanize` (uses voice adjectives), `design-brief` (consumes DESIGN.md)
+**Related (non-chain):** `icp-research` (audience data), `copywriting` (consumes voice guidelines), `humanize` (uses voice adjectives), `design-brief` (consumes DESIGN.md)
 
 ### Skill Deference
-- **Need audience research first?** Run `icp-research` (from marketing-skills) — brand strategy without audience research produces generic archetypes.
-- **Need user flows after brand?** Run `user-flow` next — it consumes design tokens and component context.
-- **Need marketing copy?** Run `copywriting` — it consumes voice guidelines.
+- **Need audience research first?** Run `icp-research` — brand without audience research → generic archetypes.
+- **Need user flows after brand?** Run `user-flow` — consumes design tokens and component context.
+- **Need marketing copy?** Run `copywriting` — consumes voice guidelines.
 
 ---
 
@@ -263,9 +227,9 @@ Ask: *"Full brand system or quick brand for MVP?"*
 5. Deliver Quick Brand artifact
 ```
 
-**Quick Brand scope:** Purpose/mission/vision, core values, positioning, primary color + neutrals, display + body font, basic type hierarchy. **Target platforms are still captured at intake** and recorded in BRAND.md as a one-line declaration ("Ships on: iOS, macOS, Web") so Route B can pick them up later. Defers: archetype analysis, voice/tone system, messaging architecture, full visual identity, token architecture, component tokens, accessibility audit, dark mode, Visual Renderings (Step 9), **per-platform Digital Touchpoints surfaces, per-platform icon specifications**.
+**Quick Brand scope:** Purpose/mission/vision, core values, positioning, primary color + neutrals, display + body font, basic type hierarchy. **Target platforms still captured at intake** and recorded in BRAND.md as one line ("Ships on: iOS, macOS, Web") so Route B picks them up later. Defers: archetype analysis, voice/tone system, messaging architecture, full visual identity, token architecture, component tokens, accessibility audit, dark mode, Visual Renderings (Step 9), per-platform Digital Touchpoints surfaces and icon specs.
 
-**Quick Brand output includes a note:** "Run full brand-system when ready to build the design system."
+**Output includes note:** "Run full brand-system when ready to build the design system."
 
 ### Route B: Full Brand System
 **When:** Established product, full rebrand, comprehensive guidelines needed.
@@ -289,7 +253,7 @@ Step 9    Visual Renderings (optional) — Paper MCP / Claude Design / none
 Step 10   Deliver artifacts (BRAND.md + DESIGN.md + ASSETS.md)
 ```
 
-*Why the jump from Step 5 to Step 8.5:* the label `8.5` is a **section header**, not a sequence index. It was chosen so ASSETS.md projection could slot after the critic gate but before the pre-existing Step 9 (Visual Renderings) without renumbering downstream references. Steps 6, 7, and 8 are intentionally absent — the legacy flow used the names "Critic Gate", "re-dispatch", "deliver" without numeric step labels, so no content maps to those slots. Reading order is: 0 → 1 → 2 → 3 → 4 → 5 → 8.5 → 9 → 10.
+*Why 5 → 8.5:* `8.5` is a **section header**, not a sequence index — chosen so ASSETS.md projection slots after the critic gate but before pre-existing Step 9 (Visual Renderings) without renumbering downstream refs. Steps 6/7/8 are intentionally absent (legacy flow used unnumbered "Critic Gate", "re-dispatch", "deliver" labels). Reading order: 0 → 1 → 2 → 3 → 4 → 5 → 8.5 → 9 → 10.
 
 ---
 
@@ -302,7 +266,7 @@ Check for `research/product-context.md` and `research/icp-research.md`. If `date
 - Product description or PRD
 - Target audience profile
 - Competitive context
-- **Target platforms** — which surfaces the brand ships on. Multi-select. Ask explicitly; do not assume "a web app." Canonical set:
+- **Target platforms** — which surfaces the brand ships on. Multi-select; ask explicitly, don't assume "a web app." Canonical set:
   - **Web** (marketing site, in-product web UI, PWA)
   - **iOS / iPadOS**
   - **Android**
@@ -314,10 +278,10 @@ Check for `research/product-context.md` and `research/icp-research.md`. If `date
   - **CarPlay / Android Auto**
   - **Browser extension** (Chrome / Firefox / Safari / Edge — ask which)
   - **CLI / terminal**
-  - **Email** (as a first-class brand channel — transactional + newsletter)
-  - **Embedded app** (Slack / Notion / Discord / Microsoft Teams / Linear / GitHub — ask which host)
+  - **Email** (first-class brand channel — transactional + newsletter)
+  - **Embedded app** (Slack / Notion / Discord / Teams / Linear / GitHub — ask which host)
 
-  **Disambiguate common vagueness:** "mobile app" → iOS, Android, or both? "desktop app" → native or Electron? "web app" → marketing site + product, or just one? If the user names a cross-platform shell (Electron, Tauri, Flutter, RN, Capacitor), still enumerate the host OSes — each OS gets its own surface set.
+  **Disambiguate vagueness:** "mobile app" → iOS, Android, or both? "desktop app" → native or Electron? "web app" → marketing site + product, or one? If user names a cross-platform shell (Electron, Tauri, Flutter, RN, Capacitor), still enumerate host OSes — each gets its own surface set.
 
 ### Strongly Recommended
 - Existing brand assets (logos, colors, fonts, past guidelines)
@@ -338,10 +302,10 @@ Check for `research/product-context.md` and `research/icp-research.md`. If `date
 
 ### Context to Pass to All Agents
 1. **Product:** description, audience, competitive landscape
-2. **Existing assets:** any logos, colors, fonts, guidelines to preserve or evolve
+2. **Existing assets:** logos, colors, fonts, guidelines to preserve or evolve
 3. **Positioning intent:** premium, accessible, disruptive, trusted
 4. **Upstream artifacts:** excerpts from product-context.md and icp-research.md if available
-5. **Target platforms:** declared platform list from intake — **strategy-agent renders a Digital Touchpoints subsection per declared platform; visual-agent renders per-platform icon specs. Undeclared platforms MUST NOT appear in output.** If the user declared "iOS + web" only, do not pad the artifact with Android/Windows sections.
+5. **Target platforms:** declared platform list from intake. **Strategy-agent renders a Digital Touchpoints subsection per declared platform; visual-agent renders per-platform icon specs. Undeclared platforms MUST NOT appear.** If user declared "iOS + web" only, do not pad with Android/Windows sections.
 
 Missing product details are not guessable — interview for them.
 
@@ -351,16 +315,16 @@ Missing product details are not guessable — interview for them.
 
 ### How to spawn a sub-agent
 
-1. **Read** the agent instruction file — include its FULL content in the Agent prompt
-2. **Append** the context (product, audience, competitive landscape, existing assets) after the instructions
-3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory
-4. **Pass upstream artifacts by content**: the orchestrator reads `.agents/` files FIRST, then includes relevant excerpts in context. Sub-agents should NOT read artifact files directly.
+1. **Read** the agent instruction file — include FULL content in the Agent prompt
+2. **Append** context (product, audience, competitive landscape, existing assets) after instructions
+3. **Resolve file paths to absolute** — rooted at this skill's directory
+4. **Pass upstream artifacts by content** — orchestrator reads `.agents/` files FIRST, includes excerpts in context. Sub-agents do NOT read artifact files directly.
 5. If **feedback** exists (from critic FAIL), append with header "## Critic Feedback — Address Every Point"
 
 ### Conventions
 
-- **Source citation:** When stating facts about brand psychology, color theory, or archetype effectiveness, cite the source. If from a web search, include the URL. If a fact cannot be attributed, flag it as `[UNVERIFIED]`.
-- **Context loaded:** When producing the artifact, include which upstream artifacts were read and their versions/dates in the artifact body. This creates an audit trail for downstream skills.
+- **Source citation:** Cite sources for brand psychology, color theory, archetype effectiveness facts. Web search → include URL. Unattributable → flag `[UNVERIFIED]`.
+- **Context loaded:** Include which upstream artifacts were read (with versions/dates) in the artifact body. Creates audit trail for downstream skills.
 
 ### Single-agent fallback
 
@@ -441,9 +405,9 @@ Dispatch **ONE AT A TIME, IN ORDER**:
 | 3 | Accessibility Agent | `agents/accessibility-agent.md` | Token-architect + component-token outputs |
 | 4 | Critic Agent | `agents/critic-agent.md` | Complete assembled brand system (both BRAND.md and DESIGN.md) |
 
-**Palette ownership rule:** Visual-agent is authoritative for color choices and theme palette values. Token-architect-agent systematizes those values into the three-layer architecture (primitive → semantic → component) and adds any missing infrastructure tokens (`--popover`, `--popover-foreground`). If values conflict, visual-agent wins.
+**Palette ownership rule:** Visual-agent is authoritative for color choices and theme palette values. Token-architect systematizes them into the three-layer architecture (primitive → semantic → component) and adds missing infrastructure tokens (`--popover`, `--popover-foreground`). On conflict, visual-agent wins.
 
-**Accessibility hand-back:** Accessibility-agent runs after shadow tokens are set, but if its audit demands changes to upstream values (a shadow color that fails contrast against the surface it sits on, a primary lightness that fails 3:1 against `--primary-foreground`), it does NOT edit the upstream table directly. Instead, it reports the failing pair to the critic, which fails the gate and re-dispatches the upstream owner — visual-agent for shadows / colors, token-architect-agent for semantic values, component-token-agent for component-level overrides. Accessibility-agent owns the audit, not the fix.
+**Accessibility hand-back:** Accessibility-agent runs after shadow tokens are set. If its audit demands changes to upstream values (shadow color failing contrast against its surface, primary lightness failing 3:1 against `--primary-foreground`), it does NOT edit the upstream table directly. It reports the failing pair to the critic, which fails the gate and re-dispatches the upstream owner — visual-agent (shadows/colors), token-architect (semantic values), or component-token (component-level overrides). Accessibility-agent owns the audit, not the fix.
 
 ---
 
@@ -456,79 +420,77 @@ Dispatch **ONE AT A TIME, IN ORDER**:
 
 ## Step 8.5: ASSETS.md Projection (Route B only, always-on)
 
-**No sub-agent.** Deterministic orchestrator step executed after the critic passes and before Visual Renderings (Step 9).
+**No sub-agent.** Deterministic orchestrator step, after critic passes, before Step 9.
 
-Read `references/assets-inventory.md` for the full emission rules, per-platform templates, and file template. Summary of the procedure:
+Read `references/assets-inventory.md` for full emission rules, per-platform templates, and file template. Procedure summary:
 
-1. **Load prior state (if any):** Read existing `brand/ASSETS.md`. Extract rows with status `[~]` (in progress) or `[!]` (blocked) — preserve verbatim. Note any platforms present in the old file that are no longer in the declared list — those rows go to `## Orphaned` on emit.
-2. **Project fresh inventory:** Using BRAND.md brand mark section, DESIGN.md §2/§3/§7/§8/§9, and the declared-platforms list, emit rows in this order — Universal → Social & Sharing → Favicon & Web Metadata (if Web declared) → Imagery & Illustration (if DESIGN.md §8 declares direction) → one per-platform block in declared order. Every row has: name, spec ref, target path, status. **Expand every `{placeholder}` before proceeding:** for each declared embedded host, emit one full row set with `{host}` substituted; for imagery rows, substitute `{count}` from DESIGN.md §8. No row may reach substep 3 with an unfilled placeholder in its target path.
-3. **Auto-scan for `[x]`:** For file-typed rows, `Bash: test -e <path>` → `[x]` if true, `[ ]` if false. For directory-typed rows (path ends in `/`), require at least one non-`.gitkeep` file: ``test -d <path> && [ -n "$(ls -A <path> 2>/dev/null | grep -v '^\.gitkeep$')" ]`` → `[x]` if true, `[ ]` if false. This prevents scaffolded-empty-directory false-completion.
-4. **Merge human markers:** Overlay preserved `[~]` and `[!]` rows from step 1 (matched by name) onto the fresh inventory. Human markers override auto-computed status.
+1. **Load prior state:** Read existing `brand/ASSETS.md`. Preserve `[~]` (in progress) and `[!]` (blocked) rows verbatim. Note platforms present in old file but no longer declared — those rows go to `## Orphaned` on emit.
+2. **Project fresh inventory:** Using BRAND.md brand mark section, DESIGN.md §2/§3/§7/§8/§9, and declared-platforms list, emit rows in order: Universal → Social & Sharing → Favicon & Web Metadata (if Web declared) → Imagery & Illustration (if DESIGN.md §8 declares direction) → one per-platform block in declared order. Every row: name, spec ref, target path, status. **Expand every `{placeholder}` first:** for each declared embedded host emit one full row set with `{host}` substituted; for imagery rows substitute `{count}` from DESIGN.md §8. No row reaches substep 3 with an unfilled placeholder.
+3. **Auto-scan for `[x]`:** File-typed rows — `Bash: test -e <path>` → `[x]`/`[ ]`. Directory-typed rows (path ends `/`) require at least one non-`.gitkeep` file: ``test -d <path> && [ -n "$(ls -A <path> 2>/dev/null | grep -v '^\.gitkeep$')" ]`` → `[x]`/`[ ]`. Prevents scaffolded-empty-directory false-completion.
+4. **Merge human markers:** Overlay preserved `[~]`/`[!]` rows (matched by name) onto fresh inventory. Human markers override auto-computed status.
 5. **Compute summary:** Total / Done / In progress / Blocked / Not started counts.
-6. **Write `brand/ASSETS.md`** with frontmatter (declared platforms, last scan ISO timestamp, BRAND.md version, DESIGN.md version), legend, sections, summary, and `## Orphaned` block if any.
-7. **Re-run versioning:** ASSETS.md is a **living file** — always updated in place. Dropped-platform rows move to `## Orphaned` (they are NOT removed), which preserves tracking state continuously. Only version (rename to `ASSETS.v[N].md`) when the user **explicitly** requests a fresh inventory, e.g., after a major product pivot. The Orphaned block mechanism, not versioning, is the primary handler for "platform dropped between runs."
+6. **Write `brand/ASSETS.md`** with frontmatter (declared platforms, last scan ISO timestamp, BRAND.md/DESIGN.md versions), legend, sections, summary, and `## Orphaned` block if any.
+7. **Re-run versioning:** ASSETS.md is a **living file** — always updated in place. Dropped-platform rows move to `## Orphaned` (NOT removed), preserving tracking state. Only version (`ASSETS.v[N].md`) when the user **explicitly** requests a fresh inventory (e.g., after major product pivot). The Orphaned block, not versioning, is the primary handler for "platform dropped between runs."
 
-**Quality gate for this step (orchestrator self-check before writing the file):**
-- Every row has both a spec ref and a target path.
-- Platform block set in ASSETS.md === declared platforms === BRAND.md Digital Touchpoints platforms === DESIGN.md Platform Icon Specifications platforms.
-- No human-set `[~]` or `[!]` markers from the prior file were overwritten.
+**Quality gate (orchestrator self-check before write):**
+- Every row has spec ref and target path.
+- ASSETS.md platform block set === declared platforms === BRAND.md Digital Touchpoints === DESIGN.md Platform Icon Specifications.
+- No human-set `[~]`/`[!]` markers overwritten.
 - No invented rows (every row traces to `references/assets-inventory.md` templates).
 
-**Scope:** Route B only. Route A (Quick Brand) does not produce ASSETS.md — the platform list is captured but no inventory is emitted until the full pipeline runs.
+**Scope:** Route B only. Route A captures platform list but emits no inventory until the full pipeline runs.
 
 ---
 
 ## Step 9: Visual Renderings (optional)
 
-The spec — BRAND.md / DESIGN.md / ASSETS.md — is the canonical artifact. Renderings are **derivative presentations** of that spec, not source of truth. Three renderer paths, all optional:
+The spec — BRAND.md / DESIGN.md / ASSETS.md — is canonical. Renderings are **derivative presentations**, not source of truth. Three optional paths:
 
 ### 9a. Paper MCP — programmatic artboards
-If Paper MCP tools are available, render the brand as 5 presentation artboards. Reference `references/artboard-generation.md` for complete specs, workflow, and prerequisites.
+If Paper MCP is available, render 5 presentation artboards. See `references/artboard-generation.md` for specs, workflow, prerequisites.
 
-After generating artboards, run the AI slop detection checklist (`references/ai-slop-detection.md`). Artboards are the highest-risk output for AI default patterns.
+After generating, run AI slop detection (`references/ai-slop-detection.md`) — artboards are highest-risk for AI default patterns.
 
-Artboards: Color Palette | Typography System | Spacing & Tokens | UI Style Principles | Logo System
-
-Save to `brand/artboards/`.
+Artboards: Color Palette | Typography System | Spacing & Tokens | UI Style Principles | Logo System. Save to `brand/artboards/`.
 
 ### 9b. Claude Design — interactive prototypes (claude.ai/design)
-Claude Design is an Anthropic Labs UI product available at `claude.ai/design` (Pro / Max / Team / Enterprise tiers). It produces designs, prototypes, slides, and one-pagers in collaboration with the user inside Claude. The product accepts text prompts, document/image uploads, and codebase context for design-system grounding.
+Claude Design is an Anthropic Labs UI product at `claude.ai/design` (Pro/Max/Team/Enterprise tiers). Produces designs, prototypes, slides, one-pagers via text prompts, document/image uploads, and codebase context for design-system grounding.
 
-**This skill does not dispatch to Claude Design** — there is no API or MCP. It hands off, by giving the user precise instructions for what to share and how to scope the session:
+**This skill does not dispatch to Claude Design** (no API/MCP). It hands off by giving the user precise sharing/scoping instructions.
 
-**Pre-flight check before instructing the user:**
-1. `brand/DESIGN.md` exists and contains complete theme palette tables for every theme.
-2. `brand/BRAND.md` Brand Mark section describes the logo at commission-grade detail.
+**Pre-flight checks (all must pass):**
+1. `brand/DESIGN.md` exists with complete theme palette tables.
+2. `brand/BRAND.md` Brand Mark section is commission-grade.
 3. At least one of `brand/logo/logo-full.svg` or a placeholder logo asset exists.
-4. `brand/font/` contains either downloaded woff2s or a link comment for each declared font.
+4. `brand/font/` has downloaded woff2s or link comments for each declared font.
 
-If any pre-flight check fails, say so — do not send the user to Claude Design with an incomplete spec.
+If any check fails, say so — don't send the user to Claude Design with an incomplete spec.
 
-**Handoff message to user (if checks pass):**
-> Your brand spec is ready for Claude Design. Open `claude.ai/design` (requires Pro / Max / Team / Enterprise) and start a session by sharing your `brand/` folder — at minimum paste `DESIGN.md` (so the design system tokens, theme palettes, and component specs ground the session) and `BRAND.md` (so voice and brand mark ground any copy or logo placement). `ASSETS.md` is useful for telling Claude Design which production assets already exist vs. still need to be made. Outputs (prototypes, slides, one-pagers, HTML/PPTX/Canva exports) are presentation artifacts — keep them in a separate location, not inside `brand/`. To update the brand source, re-run brand-system; share the updated spec with Claude Design in the next session.
+**Handoff message (if checks pass):**
+> Your brand spec is ready for Claude Design. Open `claude.ai/design` (requires Pro/Max/Team/Enterprise) and start a session by sharing your `brand/` folder — at minimum paste `DESIGN.md` (grounds tokens, theme palettes, component specs) and `BRAND.md` (grounds voice and brand mark). `ASSETS.md` tells Claude Design what already exists vs. still needs making. Outputs (prototypes, slides, one-pagers, HTML/PPTX/Canva exports) are presentation artifacts — keep them outside `brand/`. To update the brand source, re-run brand-system; share the updated spec with Claude Design next session.
 
 ### 9c. None
-If neither renderer is available or wanted, skip — the spec stands alone. Downstream skills (user-flow, design-brief) consume DESIGN.md directly without rendering.
+If neither renderer is available/wanted, skip — the spec stands alone. Downstream skills (user-flow, design-brief) consume DESIGN.md directly without rendering.
 
 ---
 
 ## Artifact Templates
 
-Save to `brand/BRAND.md`, `brand/DESIGN.md`, and `brand/ASSETS.md` in the project directory. Create the `brand/` directory if it doesn't exist. Also create `brand/logo/`, `brand/font/`, `brand/inspiration/`, `brand/social/`, `brand/favicon/`, `brand/tokens/`, `brand/imagery/`, and `brand/platforms/` subdirectories with `.gitkeep` files for future assets.
+Save to `brand/BRAND.md`, `brand/DESIGN.md`, `brand/ASSETS.md`. Create `brand/` if missing, plus `brand/logo/`, `brand/font/`, `brand/inspiration/`, `brand/social/`, `brand/favicon/`, `brand/tokens/`, `brand/imagery/`, `brand/platforms/` subdirs with `.gitkeep` files.
 
-On re-run: rename existing `BRAND.md` / `DESIGN.md` to `BRAND.v[N].md` / `DESIGN.v[N].md` and create new with incremented version. **`ASSETS.md` is always updated in place** — it's a living inventory. Dropped-platform rows move to the `## Orphaned` block (preserved, not deleted). Version ASSETS.md (`ASSETS.v[N].md`) only when the user explicitly requests a fresh inventory.
+On re-run: rename existing `BRAND.md`/`DESIGN.md` to `BRAND.v[N].md`/`DESIGN.v[N].md` and create new with incremented version. **`ASSETS.md` is always updated in place** — living inventory. Dropped-platform rows move to `## Orphaned` (preserved, not deleted). Only version ASSETS.md (`ASSETS.v[N].md`) when explicitly requested.
 
-**Full templates:** See [references/artifact-templates.md](references/artifact-templates.md) for the complete BRAND.md and DESIGN.md templates with all sections and field specifications.
+**Full templates:** See [references/artifact-templates.md](references/artifact-templates.md).
 
 **Template summary:**
 
-**BRAND.md** (11 sections): Origin Story → Name → Purpose/Mission/Vision → Core Values ("X over Y" format) → Brand Positioning → Brand Archetype (Primary 70% + Secondary 30%) → Personality Traits → Emotional Journey Map → Brand Voice DNA (attributes + tone range + tagline with V/F/U scoring) → Brand Mark (logo system) → Digital Touchpoints.
+**BRAND.md** (11 sections): Origin Story → Name → Purpose/Mission/Vision → Core Values ("X over Y") → Brand Positioning → Brand Archetype (Primary 70% + Secondary 30%) → Personality Traits → Emotional Journey Map → Brand Voice DNA (attributes + tone range + tagline with V/F/U) → Brand Mark → Digital Touchpoints.
 
-**DESIGN.md** (11 sections): Visual Theme & Atmosphere → Color Palette & Roles (OKLCH, themes, neutral scale, 60/30/10) → Typography Rules (font stack, type scale) → Component Stylings (core component + cards + buttons + inputs) → Layout Principles (spacing, radius) → Shadows & Elevation (z-index) → Iconography → Imagery & Visual Direction → Motion & Animation (duration, easing, spring physics) → Accessibility (contrast, focus, touch targets) → Do's and Don'ts.
+**DESIGN.md** (11 sections): Visual Theme & Atmosphere → Color Palette & Roles (OKLCH, themes, neutral scale, 60/30/10) → Typography Rules (font stack, type scale) → Component Stylings (core + cards + buttons + inputs) → Layout Principles (spacing, radius) → Shadows & Elevation (z-index) → Iconography → Imagery & Visual Direction → Motion & Animation (duration, easing, spring physics) → Accessibility (contrast, focus, touch targets) → Do's and Don'ts.
 
-**ASSETS.md** (5 fixed sections + one subsection per declared platform): Universal → Social & Sharing → Favicon & Web Metadata (if Web declared) → Imagery & Illustration (if DESIGN.md §8 declares direction) → Platforms (one subsection per declared platform, in declared order) → Summary → Orphaned (only if platforms dropped between runs). Full template and per-platform row sets in [references/assets-inventory.md](references/assets-inventory.md).
+**ASSETS.md** (5 fixed + per-platform): Universal → Social & Sharing → Favicon & Web Metadata (if Web declared) → Imagery & Illustration (if DESIGN.md §8 declares direction) → Platforms (one subsection per declared, in order) → Summary → Orphaned (only if platforms dropped). Full template in [references/assets-inventory.md](references/assets-inventory.md).
 
-**Quality-bar examples:** [references/example-brand.md](references/example-brand.md) and [references/example-design.md](references/example-design.md) show the complete output at the expected quality level.
+**Quality-bar examples:** [references/example-brand.md](references/example-brand.md), [references/example-design.md](references/example-design.md).
 
 ---
 
