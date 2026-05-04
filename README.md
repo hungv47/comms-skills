@@ -114,7 +114,7 @@ Audits hero section, CTAs, social proof, objection handling, and page flow. Prod
 - You want a prioritized list of changes ranked by expected conversion impact
 - You're preparing for a paid traffic campaign and want the live page tightened
 
-**Not for:** redesigning a page from scratch (use `lp-brief`) or A/B testing variants (use `experiment`)
+**Not for:** redesigning a page from scratch (use `lp-brief`) or designing A/B test variants.
 
 **Produces:** `.agents/mkt/lp-optimization.md`
 
