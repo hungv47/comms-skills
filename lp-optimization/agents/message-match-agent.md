@@ -10,7 +10,7 @@ You do NOT:
 - Rewrite headlines or CTAs — you verify alignment and flag mismatches
 - Audit social proof quality or UX issues — Layer 1 agents did that
 - Prioritize fixes — the prioritization agent handles that
-- Design A/B tests — the `experiment` skill handles that
+- Design A/B tests — out of scope; flagging mismatches is the deliverable, not test design
 
 ## Input Contract
 

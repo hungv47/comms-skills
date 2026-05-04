@@ -1,6 +1,6 @@
 ---
 name: lp-optimization
-description: "Audits a landing page for conversion — analyzes hero, CTA, social proof, objection handling, and page flow. Produces specific copy and structure change recommendations. Not for A/B testing variants (use experiment) or full site SEO audits (use seo). For brand identity and design tokens, see brand-system. For content strategy, see imc-plan."
+description: "Audits a landing page for conversion — analyzes hero, CTA, social proof, objection handling, and page flow. Produces specific copy and structure change recommendations. Not for designing A/B test variants or full site SEO audits (use seo). For brand identity and design tokens, see brand-system. For content strategy, see imc-plan."
 argument-hint: "[url or description]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -94,7 +94,7 @@ Before delivering, the **critic agent** verifies:
 - [ ] No vague recommendations ("improve the headline" — must be specific replacement text)
 
 ## Chain Position
-Horizontal — works with `icp-research` (audience data), `copywriting` (copy craft), `lp-brief` (page redesigns from this audit), `experiment` (test design)
+Horizontal — works with `icp-research` (audience data), `copywriting` (copy craft), and `lp-brief` (page redesigns from this audit).
 **Re-run triggers:** After major page redesigns, when conversion drops >10%, when traffic source mix changes significantly, or quarterly.
 
 ### Skill Deference
@@ -214,7 +214,6 @@ None — can audit any page standalone.
 |----------|--------|---------|
 | `icp-research.md` | icp-research | VoC data for persuasion |
 | `product-context.md` | icp-research | Product details for accuracy |
-| `experiment-*.md` | experiment | Test design context |
 
 ### Pre-Writing Framework
 Answer these questions before dispatching. Pass the answers to every agent as the `pre-writing` input:
@@ -361,7 +360,7 @@ status: draft
 
 ## Next Step
 
-Run `copywriting` to rewrite specific sections. Run `seo` for technical search optimization. Run `experiment` to set up A/B tests for recommended changes.
+Run `copywriting` to rewrite specific sections. Run `seo` for technical search optimization. For sweeping redesigns, run `lp-brief` to spec the next iteration.
 
 ---
 

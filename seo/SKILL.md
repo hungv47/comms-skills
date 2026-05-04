@@ -122,7 +122,7 @@ Before delivering any SEO artifact, these must be true:
 
 ## Chain Position
 
-Previous: `icp-research` + `imc-plan` (reads audience questions and content pillars) | Next: content production / site updates / `experiment` (to test SEO changes)
+Previous: `icp-research` + `imc-plan` (reads audience questions and content pillars) | Next: content production / site updates / re-audit after 30 days
 
 Horizontal skill — can be invoked independently or after IMC planning.
 
