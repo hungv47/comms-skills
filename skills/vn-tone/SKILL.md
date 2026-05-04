@@ -464,14 +464,5 @@ Bạn ơi, chào mừng bạn đến với Acme nha! Chúng mình sẽ đồng h
 - [agents/critic-agent.md](agents/critic-agent.md) — Three-pass audit, 36-point scoring, PASS/FAIL with re-dispatch feedback
 
 ### Shared References (references/)
-- [references/vn-tone-corpus.md](references/vn-tone-corpus.md) — Annotated corpus of 4 VN registers with pronouns, particles, vocabulary, rhythm, typography, and real examples from live-scraped sources (VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun, Voz, Kenh14)
-- [references/translation-artifacts.md](references/translation-artifacts.md) — 28 EN→VN translation giveaways across 10 categories, Hard/Soft severity, fix rules
-
----
-
-## References
-
-| Reference | Use For |
-|---|---|
-| [vn-tone-corpus.md](references/vn-tone-corpus.md) | Register profiles, pronoun pair system, particle cheat sheets, real annotated examples per register |
-| [translation-artifacts.md](references/translation-artifacts.md) | 28 Hard/Soft tells to detect and fix — calques, passives, corporate translationese, typography |
+- [references/vn-tone-corpus.md](references/vn-tone-corpus.md) — Annotated corpus of 4 VN registers: register profiles, pronoun pair system, particle cheat sheets, vocabulary, rhythm, typography; real annotated examples from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun, Voz, Kenh14
+- [references/translation-artifacts.md](references/translation-artifacts.md) — 28 EN→VN translation giveaways across 10 categories (calques, passives, corporate translationese, typography); Hard/Soft severity, fix rules

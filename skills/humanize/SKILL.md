@@ -466,16 +466,6 @@ User confirms. Proceed to Layer 2.
 - [agents/_template.md](agents/_template.md) — Reusable template for creating new agent files
 
 ### Shared References (references/)
-- [references/ai-patterns.md](references/ai-patterns.md) — 37 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists
+- [references/ai-patterns.md](references/ai-patterns.md) — 37 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists; detection, examples, fixes, severity
 - [references/voice-injection.md](references/voice-injection.md) — Voice adjective framework, rhythm, specificity, personality injection
 - [references/conciseness-rules.md](references/conciseness-rules.md) — Compression techniques at sentence, paragraph, and section level
-
----
-
-## References
-
-| Reference | Use For |
-|-----------|---------|
-| [ai-patterns.md](references/ai-patterns.md) | 37 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists — detection, examples, fixes, severity |
-| [conciseness-rules.md](references/conciseness-rules.md) | Compression techniques at sentence, paragraph, and section level |
-| [voice-injection.md](references/voice-injection.md) | Voice adjective framework, rhythm, specificity, personality injection |
