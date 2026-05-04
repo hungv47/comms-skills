@@ -69,7 +69,7 @@ User approves at Approval Gate 2.
 **section-spec-agent** writes 5 section specs, each with 3 copy candidates, conversion checklist, asset slot references. Total: ~280 lines.
 
 **asset-slot-agent** writes 4 slots:
-- `hero-receipt` (1920×1080, WebP, generative via design-create P)
+- `hero-receipt` (1920×1080, WebP, generative via design-brief → image-gen)
 - `og-image` (1200×630, PNG, generative)
 - `tier-icon-set` (3 SVG, manual)
 - `founder-portrait` (600×600, WebP, real photo)

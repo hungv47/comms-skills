@@ -1,6 +1,6 @@
 ---
 name: lp-brief
-description: "Generates a campaign-grade brief for a landing-page redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts. Internalizes lp-optimization conversion principles as evaluation rubric. Produces `.agents/mkt/lp-brief/[slug]/brief.md` ready to hand to Claude Design, a designer in Figma, or design-create for per-asset rendering. Not for auditing an existing page (use lp-optimization first — its output feeds this skill). Not for non-conversion pages like blogs or docs hubs (those use different rubrics). Not for single-asset creative (use design-create)."
+description: "Generates a campaign-grade brief for a landing-page redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts. Internalizes lp-optimization conversion principles as evaluation rubric. Produces `.agents/mkt/lp-brief/[slug]/brief.md` ready to hand to Claude Design, a designer in Figma, or `design-brief` for per-asset spec. Not for auditing an existing page (use lp-optimization first — its output feeds this skill). Not for non-conversion pages like blogs or docs hubs (those use different rubrics). Not for spec'ing a single visual asset in isolation (use design-brief)."
 argument-hint: "[page route or campaign name, e.g. '/pricing' or 'q3-launch-lp']"
 allowed-tools: Read Edit Write Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -56,8 +56,8 @@ routing:
   defers-to:
     - skill: lp-optimization
       when: "page exists and the task is diagnosis, not redesign"
-    - skill: design-create
-      when: "rendering an individual asset slot from this brief (per-asset creative)"
+    - skill: design-brief
+      when: "spec'ing an individual asset slot from this brief in detail (per-asset graphic-design brief)"
     - skill: brand-system
       when: "no brand identity defined yet"
     - skill: copywriting
@@ -122,14 +122,14 @@ Verdict logic: see `## Layer 5: Critic Gate` below.
 
 ## Chain Position
 
-Previous: `lp-optimization` (optional — if existing page being redesigned), `imc-plan` (optional — campaign context), `brand-system` (required) | Next: `design-create` per asset slot, then implementation (Claude Design / human designer)
+Previous: `lp-optimization` (optional — if existing page being redesigned), `imc-plan` (optional — campaign context), `brand-system` (required) | Next: `design-brief` per asset slot (optional — for detailed graphic-design briefs), then implementation (Claude Design / image-gen tool / human designer)
 
 **Re-run triggers:** new audit revision, BRAND.md/DESIGN.md update, ICP refresh, traffic source pivot. Increment `--rev=N`.
 
 ### Skill Deference
 
 - **Page exists; need to know what to fix?** → `lp-optimization` first. Its output (`.agents/mkt/lp-optimization.md`) feeds this skill as anchored signal.
-- **Single visual asset, not whole page?** → `design-create`.
+- **Single visual asset spec, not whole page?** → `design-brief`.
 - **No brand?** → `brand-system` first.
 - **Need only headline variations?** → `copywriting` for variation work.
 - **Non-LP page (blog, docs, navigation hub)?** → Out of scope. The conversion rubric doesn't apply. Use a different brief workflow or commission one.
@@ -225,7 +225,7 @@ See `## Inputs` table at top of this file for the canonical list. Step 0's job i
 This skill **does not ship a default skill-chain doc.** Two paths:
 
 1. **Project has one** (e.g., `growth/page-redesigns/_prompts.md`) — read it once at orchestrator level. The brief REFERENCES it by section header in the "Skill Chain" section. Never inline-duplicate. Add page-specific overrides only.
-2. **Project does not** — the brief generates a per-page chain inline: a "Skill Chain" section listing the skills/prompts a downstream operator should run (e.g., `design-create` per asset slot, `copywriting` for headline polish, `humanize` for any AI-flavored copy). Page-scoped only — no project-level default is created.
+2. **Project does not** — the brief generates a per-page chain inline: a "Skill Chain" section listing the skills/prompts a downstream operator should run (e.g., `design-brief` per asset slot, `copywriting` for headline polish, `humanize` for any AI-flavored copy). Page-scoped only — no project-level default is created.
 
 Rationale: shipping a project-level default would lock teams into our chain. Generating per-page is correct because the chain depends on which slots are generative, which copy needs polish, and which assets need rendering — all page-specific.
 
@@ -358,7 +358,7 @@ User responses:
 
 | Agent | Pass These Inputs | Reference Files |
 |-------|-------------------|-----------------|
-| Asset-Slot Agent | architecture + section-spec output (canonical source of slot IDs) + brand digest | `marketing-skills/design-create/references/asset-types.md` |
+| Asset-Slot Agent | architecture + section-spec output (canonical source of slot IDs) + brand digest | `marketing-skills/design-brief/references/asset-types.md` |
 
 Asset-slot-agent runs **after** section-spec because slot IDs originate in section-spec's per-section asset references. Running them in parallel guarantees ID drift.
 
@@ -567,7 +567,7 @@ N. **CTA Block** — [purpose]
 | Logo grid | Social proof | 6 cells × 60px | SVG | `growth/[slug]/logos.svg` | "delete cell if not real" | — |
 | Founder portrait | Story | 600×600 | WebP | `growth/[slug]/founder.webp` | spot illustration | [link if generative] |
 
-**Generation prompts** for asset slots that use generative AI live at `.agents/mkt/lp-brief/[slug]/asset-slots/[slot-name].prompt.md`. Each follows design-create Route P prompt-craft conventions.
+**Generation prompts** for asset slots that use generative AI live at `.agents/mkt/lp-brief/[slug]/asset-slots/[slot-name].prompt.md`. Each is written by `design-brief` against the slot's spec — the prompt is the actionable handoff to an image-generation tool.
 
 ## What NOT to Do
 
@@ -600,7 +600,7 @@ N. **CTA Block** — [purpose]
 
 **If project does not:** generate a per-page chain inline — list the downstream skills/prompts in execution order, each with one-line scope:
 
-1. `design-create` — render hero asset (slot: `hero-image`, prompt at `asset-slots/hero-image.prompt.md`)
+1. `design-brief` — spec hero asset (slot: `hero-image`), then run image-gen against the produced prompt at `asset-slots/hero-image.prompt.md`
 2. `copywriting` — polish 3 headline candidates against 4-U + voice
 3. [implementation step — Claude Design / Figma / designer]
 4. `humanize` — final pass on any AI-generated body copy

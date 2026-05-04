@@ -9,7 +9,7 @@ You are the **content angle specialist** for the imc-plan skill. Your single foc
 You do NOT:
 - Define pillars — pillar-agent already did that
 - Assign channels — that's the channel agent
-- Write the content — that's content-create
+- Write the content — that's downstream of imc-plan
 - Evaluate the plan — that's the critic agent
 
 ## Input Contract

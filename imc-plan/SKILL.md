@@ -1,6 +1,6 @@
 ---
 name: imc-plan
-description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/mkt/imc-plan.md`. Not for writing actual content (use content-create) or setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing page optimization, see lp-optimization."
+description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/mkt/imc-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing page optimization, see lp-optimization."
 argument-hint: "[product or campaign to plan]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -53,10 +53,6 @@ routing:
     - solution-design.md
   requires: []
   defers-to:
-    - skill: content-create
-      when: "need to write actual content assets, not plan the campaign"
-    - skill: attribution
-      when: "measuring results, not planning channels"
     - skill: content-research
       when: "need pre-creation content intelligence before planning"
   parallel-with:
@@ -104,14 +100,13 @@ Before delivering, the **critic agent** verifies:
 - [ ] Launch sequence follows ORB (Owned → Rented → Borrowed)
 
 ## Chain Position
-Previous: `icp-research` | Next: `content-create`
-**Re-run triggers:** When ICP research is updated, when launching a new product/campaign, or when attribution reveals underperforming channels.
+Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search strategy), `cold-outreach` (outbound execution)
+**Re-run triggers:** When ICP research is updated, when launching a new product/campaign, or when channel performance data suggests reallocation.
 
 ### Skill Deference
-- **Need actual content written?** → Use `content-create` — this skill plans, not writes.
 - **Need numeric targets (CAC, LTV, conversion rates)?** → Use `funnel-planner`.
 - **Need to compare pages for SEO?** → Coordinate with `seo` for keyword targeting and content structure.
-- **Need to attribute results to initiatives?** → Use `attribution` after execution.
+- **Need a landing page for a campaign?** → Use `lp-brief`.
 
 ---
 
@@ -167,7 +162,7 @@ Previous: `icp-research` | Next: `content-create`
 ```
 
 ### Route C: Called by Another Skill
-**When:** `content-create` or `attribution` needs plan context.
+**When:** `lp-brief`, `cold-outreach`, or another downstream skill needs plan context.
 
 ```
 1. Read existing .agents/mkt/imc-plan.md if available
@@ -352,7 +347,7 @@ For offline channels (IRL, SMS), include execution notes:
 
 ## Next Step
 
-Run `content-create` to produce the content assets from this plan. Run `attribution` to set up measurement. If content-research was not run before this plan, consider running it now to validate content angles with market data before creating assets.
+Run `lp-brief` for any campaign landing pages, `seo` for search-channel execution, `cold-outreach` for outbound. If content-research was not run before this plan, consider running it now to validate content angles with market data before execution.
 
 ---
 

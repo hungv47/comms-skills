@@ -1,6 +1,6 @@
 ---
 name: brand-system
-description: "Builds brand identity systems as three artifacts — BRAND.md (story, voice, positioning, archetype), DESIGN.md (AI-readable design system with palettes, tokens, components, motion), and ASSETS.md (per-platform production inventory with auto-scanned checkboxes for what's done vs. still needed). Not for writing marketing copy (use content-create) or mapping user flows (use user-flow). For campaign planning, see imc-plan. For audience research, see icp-research."
+description: "Builds brand identity systems as three artifacts — BRAND.md (story, voice, positioning, archetype), DESIGN.md (AI-readable design system with palettes, tokens, components, motion), and ASSETS.md (per-platform production inventory with auto-scanned checkboxes for what's done vs. still needed). Not for writing marketing copy (use copywriting) or mapping user flows (use user-flow). For campaign planning, see imc-plan. For audience research, see icp-research."
 argument-hint: "[product or brand to design]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -73,7 +73,7 @@ Output moved from `.agents/design/brand-system.md` → `brand/BRAND.md` + `brand
 
 ## v6.2 Additions
 
-- **voice-agent: Lexicon Rules block** — machine-readable `forbidden_vocabulary`, `preferred_phrases`, `casing`, and `emoji_policy`. Lints downstream copywriting / content-create / cold-outreach output.
+- **voice-agent: Lexicon Rules block** — machine-readable `forbidden_vocabulary`, `preferred_phrases`, `casing`, and `emoji_policy`. Lints downstream copywriting / cold-outreach output.
 - **visual-agent: Font Loading & Licensing table** — every font has source, license, free/paid status, and `<link>`/`@font-face` block. Fonts with unclear licenses are flagged `[NEEDS LICENSING]`.
 - **visual-agent: Iconography source library + substitution + forbidden icons** — name the source library (Lucide / Tabler / etc.) with CDN/npm link, the fallback library when a glyph is missing, and a YAML list of forbidden glyphs (e.g., never 🔥).
 - **AI-slop self-check** — visual-agent and component-token-agent now self-check against `references/ai-slop-detection.md` before returning, instead of leaving every catch to the critic.
@@ -192,16 +192,16 @@ Before delivering, the **critic agent** verifies both files:
 **Reference quality bar:** Compare output against the annotated quality guides in `references/example-brand.md` and `references/example-design.md`. Every section should match the "good" pattern and avoid the "bad" pattern described in those guides. Use the overall quality tests in example-design.md (copy-paste test, blind build test, competitor swap test, implementation gap test) as final validation.
 
 ## Chain Position
-Previous: `icp-research` (product context) | Next: `imc-plan`, `copywriting`, `content-create`
+Previous: `icp-research` (product context) | Next: `imc-plan`, `copywriting`, `lp-brief`, `design-brief`
 
 **Re-run triggers:** After major product pivots, when entering new markets, after significant audience shifts, or annually for brand refresh.
 
-**Related skills (non-chain):** `icp-research` (audience data for brand strategy), `content-create` (consumes voice guidelines), `humanize` (uses voice adjectives)
+**Related skills (non-chain):** `icp-research` (audience data for brand strategy), `copywriting` (consumes voice guidelines), `humanize` (uses voice adjectives), `design-brief` (consumes DESIGN.md)
 
 ### Skill Deference
 - **Need audience research first?** Run `icp-research` (from marketing-skills) — brand strategy without audience research produces generic archetypes.
 - **Need user flows after brand?** Run `user-flow` next — it consumes design tokens and component context.
-- **Need marketing copy?** Run `content-create` or `copywriting` — they consume voice guidelines.
+- **Need marketing copy?** Run `copywriting` — it consumes voice guidelines.
 
 ---
 
@@ -505,7 +505,7 @@ If any pre-flight check fails, say so — do not send the user to Claude Design 
 > Your brand spec is ready for Claude Design. Open `claude.ai/design` (requires Pro / Max / Team / Enterprise) and start a session by sharing your `brand/` folder — at minimum paste `DESIGN.md` (so the design system tokens, theme palettes, and component specs ground the session) and `BRAND.md` (so voice and brand mark ground any copy or logo placement). `ASSETS.md` is useful for telling Claude Design which production assets already exist vs. still need to be made. Outputs (prototypes, slides, one-pagers, HTML/PPTX/Canva exports) are presentation artifacts — keep them in a separate location, not inside `brand/`. To update the brand source, re-run brand-system; share the updated spec with Claude Design in the next session.
 
 ### 9c. None
-If neither renderer is available or wanted, skip — the spec stands alone. Downstream skills (user-flow, content-create) consume DESIGN.md directly without rendering.
+If neither renderer is available or wanted, skip — the spec stands alone. Downstream skills (user-flow, design-brief) consume DESIGN.md directly without rendering.
 
 ---
 

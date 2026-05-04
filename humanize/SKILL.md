@@ -1,6 +1,6 @@
 ---
 name: humanize
-description: "Strips AI patterns, injects brand voice, and compresses existing text so it reads human-written. Targets 15%+ word reduction with zero idea loss. Produces `.agents/mkt/content/[slug].humanized.md`. Not for writing new content (use content-create). For brand voice reference, see brand-system. For SEO compliance, see seo."
+description: "Strips AI patterns, injects brand voice, and compresses existing text so it reads human-written. Targets 15%+ word reduction with zero idea loss. Produces `.agents/mkt/content/[slug].humanized.md`. Not for writing new copy (use copywriting). For brand voice reference, see brand-system. For SEO compliance, see seo."
 argument-hint: "[content file or text]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -47,8 +47,6 @@ routing:
   defers-to:
     - skill: copywriting
       when: "need to write new copy from scratch"
-    - skill: content-create
-      when: "need to create a new content asset"
   parallel-with: []
   interactive: false
   estimated-complexity: medium
@@ -72,7 +70,7 @@ routing:
 AI-generated content fails in three ways: it reads like AI wrote it (patterns), it sounds like nobody wrote it (no voice), and it says too much with too little (bloat). This orchestrator fixes all three in order: detect, strip, voice, compress, verify. Each concern gets a specialist agent. The critic ensures nothing ships below the bar.
 
 ## Inputs Required
-- Any content artifact (from `content-create`, `lp-optimization`, or any other skill) or raw text
+- Any content artifact (from `copywriting`, `lp-optimization`, or any other skill) or raw text
 
 ## Output
 - `.agents/mkt/content/[slug].humanized.md`
@@ -101,10 +99,10 @@ These patterns are so strongly associated with AI that a single instance ruins c
 
 ## Chain Position
 Horizontal — works on output from any skill. If content passed the `copywriting` skill, humanize focuses on compression + residual patterns. For external or AI-generated content, full pipeline applies.
-**Re-run triggers:** When brand voice adjectives change, when content-create output consistently triggers AI detection, or when voice injection guidance is updated.
+**Re-run triggers:** When brand voice adjectives change, when upstream copy consistently triggers AI detection, or when voice injection guidance is updated.
 
 ### Skill Deference
-- **Need new content written from scratch?** Use `content-create` — this skill cleans existing content, not creates new.
+- **Need new copy written from scratch?** Use `copywriting` — this skill cleans existing content, not creates new.
 - **Conversion optimization needed?** Use `lp-optimization` — this skill focuses on voice and AI pattern removal, not conversion mechanics.
 - **Content already passed the copywriting skill?** Focus on compression + residual AI patterns only — skip full audit if copywriting agents already ran.
 
@@ -168,7 +166,7 @@ Classify the task, then follow the matching route.
 ```
 
 ### Route C: Called by Another Skill
-**When:** Invoked by `content-create`, `lp-optimization`, `copywriting`, or another skill for inline humanization.
+**When:** Invoked by `lp-optimization`, `copywriting`, or another skill for inline humanization.
 
 ```
 1. Pre-dispatch: Read context from calling skill's artifacts
@@ -220,7 +218,7 @@ None — can humanize any text standalone.
 |----------|--------|---------|
 | `product-context.md` | icp-research | Voice adjectives for personality injection |
 | `icp-research.md` | icp-research | Audience register calibration |
-| `content/[slug].md` | content-create | Original content with copywriting agents applied |
+| `content/[slug].md` | upstream copy skill | Original content with copywriting agents applied |
 
 ### Pre-Writing Assembly
 Compile these fields and pass to every agent in the `pre-writing` input:
@@ -359,7 +357,7 @@ compression: [X]%
 
 ## Next Step
 
-Content is ready for publishing. Run `attribution` to set up tracking before launch.
+Content is ready for publishing.
 
 ---
 

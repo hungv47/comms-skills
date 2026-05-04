@@ -1,6 +1,6 @@
 ---
 name: copywriting
-description: "Writes and evaluates persuasive copy — headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring, annotations, and ranked alternatives. Produces inline annotations or `.agents/mkt/content/[slug].copy.md`. Not for content format selection (use content-create) or editing AI-sounding text (use humanize). For brand voice guidelines, see brand-system. For landing page conversion audits, see lp-optimization."
+description: "Writes and evaluates persuasive copy — headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring, annotations, and ranked alternatives. Produces inline annotations or `.agents/mkt/content/[slug].copy.md`. Not for editing AI-sounding text (use humanize). For brand voice guidelines, see brand-system. For landing page conversion audits, see lp-optimization."
 argument-hint: "[copy task or text to evaluate]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -52,8 +52,6 @@ routing:
     - mkt/content-research.md
   requires: []
   defers-to:
-    - skill: content-create
-      when: "need full content asset (carousel, thread, email)"
     - skill: humanize
       when: "AI-sounding text needs cleanup"
     - skill: lp-optimization
@@ -94,11 +92,10 @@ Before delivering, the **critic agent** verifies:
 - [ ] Every headline/hook contains concrete nouns or specific numbers (no abstract "better," "innovative," "leading")
 
 ## Chain Position
-Horizontal — called by `content-create`, `lp-optimization`, `imc-plan`. Can run standalone.
+Horizontal — called by `lp-optimization`, `imc-plan`, `lp-brief`. Can run standalone.
 **Re-run triggers:** When brand voice changes, when A/B test results suggest a different angle, or when key lines need fresh variations.
 
 ### Skill Deference
-- **Need a full content asset (carousel, thread, email, video)?** → Use `content-create`
 - **Content reads as AI-generated?** → Run `humanize` after
 - **Diagnosing a live page's conversion problem?** → Use `lp-optimization`
 - **Optimizing for search/AI citations?** → Coordinate with `seo`
@@ -166,7 +163,7 @@ Classify the task, then follow the matching route.
 ```
 
 ### Route C: Called by Another Skill
-**When:** Invoked by `content-create`, `lp-optimization`, or `imc-plan` for inline copy work.
+**When:** Invoked by `lp-optimization`, `imc-plan`, or `lp-brief` for inline copy work.
 
 ```
 1. Pre-dispatch: Read context from calling skill's artifacts
@@ -380,7 +377,7 @@ status: draft
 
 ## Next Step
 
-Run `humanize` to refine voice and compress. Run `lp-optimization` if this copy is for a landing page. Run `attribution` to track performance.
+Run `humanize` to refine voice and compress. Run `lp-optimization` if this copy is for a landing page.
 
 ---
 

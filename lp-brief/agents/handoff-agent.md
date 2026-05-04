@@ -135,7 +135,7 @@ When the target benefits from per-asset detail:
 - `handoff-claude-design.md` — full prompt block alone (so user can paste without scrolling brief.md)
 - `handoff-figma.md` — structured spec for designer file
 - `handoff-designer.md` — narrative brief
-- `asset-slots/{slot-id}.prompt.md` — per-asset generative prompts (when design-create P is the route)
+- `asset-slots/{slot-id}.prompt.md` — per-asset generative prompts (written by `design-brief` when the slot routes to image-gen)
 
 These live alongside `brief.md` at `.agents/mkt/lp-brief/[slug]/`.
 

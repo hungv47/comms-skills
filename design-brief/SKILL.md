@@ -1,16 +1,21 @@
 ---
-name: design-create
-description: "Drafts visual creative assets — social posts, ads, OG images, banners, hero illustrations, spot graphics — by pulling brand-system tokens, generating concept briefs for approval, then either rendering directly (Pencil/Paper MCP) or producing prompts for generative tools (Claude Design, Midjourney, Imagen, DALL·E, Veo). Produces `.agents/mkt/design/[slug]/` with brief, render-or-prompt, and critic report. Not for brand identity definition (use brand-system) or whole-page redesigns (page-level briefs are separate). Not for writing copy (use content-create or copywriting). For copy IN a creative, pipe content-create output as input."
+name: design-brief
+description: "Produces graphic-design briefs for individual visual assets — social posts (IG carousel/post/story, LinkedIn doc/single, FB ad), thumbnails (YouTube, X card), banners/display ads, OOH/billboard, OG/share cards, hero illustrations. Pulls brand-system tokens, generates concept directions, and writes a per-asset brief with platform-aware specs (aspect ratio, safe zones, type scale, contrast, file format, anti-patterns) plus an image-gen prompt or designer-handoff spec. Produces `.agents/mkt/design-briefs/[slug].md`. Does NOT render the asset — rendering happens downstream via image-gen tool, vector tool, or human designer. Not for brand identity definition (use brand-system) or whole-page redesigns (use lp-brief). Not for writing the copy that goes IN the asset (use copywriting)."
 argument-hint: "[asset description, e.g. 'instagram carousel about pricing tiers']"
 allowed-tools: Read Edit Grep Glob Bash WebSearch WebFetch
 license: MIT
 metadata:
   author: hungv47
-  version: "1.0.0"
+  version: "2.0.0"
   budget: standard
   estimated-cost: "$1-2"
+  status: done_with_concerns
+  notes: "Re-scoped from design-create (brief-only, no rendering). Platform-aware module content for IG/LinkedIn/FB/YT/X/OOH/banner is skeleton-only — needs a follow-up build pass with practitioner-grade specs (aspect ratios, safe zones, mobile type scales, thumb-stop contrast, file conventions, anti-patterns) per platform."
 promptSignals:
   phrases:
+    - "design brief"
+    - "graphic brief"
+    - "asset brief"
     - "design a"
     - "create graphic"
     - "design asset"
@@ -21,9 +26,11 @@ promptSignals:
     - "banner design"
     - "carousel design"
     - "thumbnail"
-    - "illustration for"
+    - "illustration brief"
   allOf:
-    - [design, asset]
+    - [design, brief]
+    - [graphic, brief]
+    - [asset, brief]
     - [create, graphic]
     - [generate, image]
   anyOf:
@@ -38,7 +45,6 @@ promptSignals:
     - "imagen"
     - "dall-e"
     - "claude design"
-    - "pencil"
     - "figma"
   noneOf:
     - "brand identity"
@@ -46,27 +52,25 @@ promptSignals:
     - "design tokens"
     - "user flow"
     - "wireframe"
+    - "landing page redesign"
   minScore: 6
 routing:
   intent-tags:
-    - visual-asset
-    - graphic-design
-    - ad-creative
-    - social-graphic
-    - og-image
-    - illustration-prompt
+    - graphic-design-brief
+    - visual-asset-brief
+    - ad-creative-brief
+    - social-graphic-brief
+    - og-image-brief
+    - thumbnail-brief
     - generative-prompt
   position: pipeline
   produces:
-    - mkt/design/[slug]/brief.md
-    - mkt/design/[slug]/render.* (when direct-render route)
-    - mkt/design/[slug]/prompt.md (when generative-AI route)
-    - mkt/design/[slug]/critic.md
+    - mkt/design-briefs/[slug].md
   consumes:
     - brand/BRAND.md
     - brand/DESIGN.md
     - brand/ASSETS.md
-    - mkt/content/[slug].md
+    - mkt/lp-brief/[slug]/asset-slots/*.md
     - mkt/content-research.md
   requires:
     - brand/BRAND.md
@@ -74,56 +78,61 @@ routing:
   defers-to:
     - skill: brand-system
       when: "need to define brand identity, logo, palette, or full design system"
-    - skill: content-create
-      when: "need to write the copy that goes IN the creative"
     - skill: copywriting
-      when: "need craft-quality headline or CTA copy"
+      when: "need craft-quality headline / CTA copy that goes IN the asset"
+    - skill: lp-brief
+      when: "redesigning a whole page, not a single asset"
   parallel-with: []
   interactive: true
   estimated-complexity: medium
 ---
 
-# Design Creation — Orchestrator
+# Design Brief — Orchestrator
 
-*Communication — visual layer. Coordinates concept generation, brand anchoring, tool routing, and critic gates to produce per-asset creative.*
+*Communication — visual layer. Produces a graphic-design brief for a single visual asset; rendering is downstream.*
 
-**Core Question:** "Would this asset be unmistakable as ours, and does it land the message in one glance?"
+**Core Question:** "Could a designer or image-gen tool execute this asset on-brand and on-platform without follow-up questions?"
 
 ## Critical Gates — Read First
 
-- **Do NOT render before brief approval.** Visual revision is expensive (Midjourney credits, Pencil edits, designer time). The user picks ONE concept of three before any rendering happens.
-- **Do NOT proceed without brand anchors.** Missing `brand/BRAND.md` or `brand/DESIGN.md` → return `NEEDS_CONTEXT` with a recommendation to run `brand-system` first. Generic-AI-aesthetic output is the failure mode this skill exists to prevent.
+- **Do NOT render. This skill produces the brief, not the asset.** The brief contains everything a designer or image-gen tool needs (spec + reference direction + image-gen prompt where applicable). Rendering happens downstream — via image-gen (Midjourney / Imagen / DALL·E / Claude Design), vector tooling (Pencil / Figma), or a human designer.
+- **Do NOT proceed without brand anchors.** Missing `brand/BRAND.md` or `brand/DESIGN.md` → return `NEEDS_CONTEXT` with a recommendation to run `brand-system` first.
 - **Do NOT invent tokens, fonts, or motion specs.** Every visual decision must trace to DESIGN.md. If DESIGN.md doesn't cover what's needed (e.g. illustration style), call it out in the brief — don't guess.
 - **Do NOT use stock-AI defaults.** No default purple-blue gradients, no centered isolated subjects on white, no faux-3D bevels, no glassmorphism unless DESIGN.md specifies it. The critic agent scores generic-AI smell explicitly.
-- **Do NOT skip the second approval gate.** Render/prompt is a candidate, not a delivery. The user reviews and accepts/rejects/iterates.
+- **Do NOT skip the brief approval gate.** The brief is a candidate, not a delivery. The user reviews before downstream rendering.
+- **Platform spec is mandatory.** Every brief includes the asset's platform context: aspect ratio, safe zones, mobile readability checks (type scale, contrast for thumb-stop), file format, file-size limits where applicable. See `references/platform-modules.md`.
 
 ## Philosophy
 
-This skill is the visual analog of `content-create`. Where content-create produces copy, design-create produces visual creative — bound to the same brand system, same audience, same campaign. Output is either a directly rendered file (vector, layout, branded template) or a generation-prompt artifact (for Claude Design / Midjourney / Imagen / DALL·E / Veo / Suno) that the user runs in the external tool.
+A great design brief eliminates downstream ambiguity. Render quality is bounded by brief quality — a vague brief produces drift no matter how good the renderer. This skill treats the brief as the deliverable and binds every visual decision to a brand anchor and a platform constraint.
 
-Brand fidelity > aesthetic novelty. A boring on-brand asset beats a striking off-brand one every time.
+Brand fidelity > aesthetic novelty. Platform fitness > generic polish. A boring on-brand brief beats a striking off-brand one every time.
 
 ## Inputs Required
 
-- **Asset request** — type (e.g. Instagram carousel, OG image, banner ad), platform/format if relevant, purpose (announce, educate, convert, recruit), copy if available
+- **Asset request** — type (e.g. Instagram carousel, OG image, banner ad), platform/format, purpose (announce, educate, convert, recruit), copy if available
 - **`brand/BRAND.md`** — voice, archetype, sacred elements
 - **`brand/DESIGN.md`** — palette, typography, surface language, motion (if applicable)
 
 ## Inputs Optional
 
-- **`brand/ASSETS.md`** — if the asset request matches a row in the production inventory, pre-fills format/dimensions and ticks the box on completion
-- **`.agents/mkt/content/[slug].md`** — copy to use IN the asset (headline, body, CTA)
+- **`brand/ASSETS.md`** — pre-fills format/dimensions if the asset matches a row in the production inventory; ticks the box on completion
+- **`.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md`** — slot spec from lp-brief (when this brief is for a landing-page asset)
+- **`.agents/mkt/content/[slug].copy.md`** — copy to use IN the asset (headline, body, CTA)
 - **`.agents/mkt/content-research.md`** — winning visual patterns from competitor scan
 - **`.agents/mkt/imc-plan.md`** — campaign context, channel placement, awareness stage
 
 ## Output
 
-`.agents/mkt/design/[slug]/` containing:
-- `brief.md` — approved concept brief (artifact of record)
-- `render.[ext]` — direct render if Route PE/PA/C (.pen / Paper artboard / Canva spec)
-- `prompt.md` — generation prompt artifact if Route P (Claude Design / Midjourney / Imagen / DALL·E / Veo / Suno)
-- `figma-spec.md` — design spec doc if Route F (Figma handoff for human designer)
-- `critic.md` — visual rubric score + concerns
+`.agents/mkt/design-briefs/[slug].md` containing:
+- Approved concept (visual direction, references)
+- Brand anchors (palette/typography/sacred elements pulled from DESIGN.md)
+- Platform spec (aspect ratio, safe zones, type scale, contrast, file format, file-size cap)
+- Asset slots (if compound, e.g. carousel slides)
+- Copy placement (when copy lives in the asset)
+- Failure modes to avoid (platform-specific + generic-AI)
+- Downstream handoff: image-gen prompt block (when generative) OR Figma/designer spec block (when human-built) OR vector-tool spec (when Pencil-bound)
+- Critic report (rubric + generic-AI-aesthetic check)
 
 ## Quality Gate
 
@@ -131,25 +140,25 @@ Before delivering, the **critic agent** verifies:
 - [ ] Brand fidelity — palette, typography, motion all trace to DESIGN.md
 - [ ] Sacred elements respected (no proposed change to logo, primary palette anchor, tagline, etc. unless brief explicitly authorizes)
 - [ ] Hierarchy — clear focal point, scannable in 1 second
-- [ ] Composition — balance, rule of thirds, intentional white space
+- [ ] Composition — balance, intentional white space
 - [ ] Typography — pairing/sizing/leading consistent with DESIGN.md
 - [ ] Contrast — text passes WCAG AA (≥4.5:1 normal, ≥3:1 large) on its actual background
-- [ ] Format fit — dimensions, safe zones, platform crop behavior verified
+- [ ] **Platform fit** — dimensions, safe zones, platform crop behavior, mobile thumb-stop readability, file format, file-size cap all verified against the asset's platform module
 - [ ] CTA clarity (if applicable) — readable at preview size, action verb visible
 - [ ] **Generic-AI-aesthetic check — score 0-3 on each: default-gradient smell, centered-isolated-on-white, stock-3D bevels, faux-glass, AI-uncanny-photo. Total ≥4 = FAIL.**
+- [ ] Downstream-handoff completeness — image-gen prompt is specific (lens / lighting / mood / era / composition / color cast), or designer spec covers placement/typography/color tokens, or vector-tool spec specifies layout grid
 
 ## Chain Position
 
-Previous: `brand-system` (required), `content-create` (optional, supplies copy) | Next: external rendering or human handoff
+Previous: `brand-system` (required), `lp-brief` (optional — supplies slot spec), `copywriting` (optional — supplies copy) | Next: external rendering (image-gen / Pencil / Figma / human designer)
 
-**Re-run triggers:** When BRAND.md or DESIGN.md updates, when a new asset row is added to ASSETS.md, when content-create produces copy that needs visual treatment, when a campaign launches.
+**Re-run triggers:** When BRAND.md or DESIGN.md updates, when a new asset row is added to ASSETS.md, when an lp-brief slot needs an explicit per-asset brief, when a campaign launches.
 
 ### Skill Deference
 
-- **No brand system yet?** → Run `brand-system` first. design-create hard-blocks without it.
-- **Need the copy that goes in the creative?** → Run `content-create` first or in parallel.
-- **Whole-page redesign brief, not single asset?** → Out of scope. Use a page-level brief workflow (see project's `growth/page-redesigns/` if it exists).
-- **Generic asset that doesn't need brand fidelity?** → Question whether you actually need this skill. If yes, run with `--ungrounded` flag (see Routing below).
+- **No brand system yet?** → Run `brand-system` first. design-brief hard-blocks without it.
+- **Need the copy that goes in the asset?** → Run `copywriting` first or in parallel.
+- **Whole-page redesign brief, not single asset?** → Use `lp-brief`.
 
 ---
 
@@ -159,107 +168,56 @@ Previous: `brand-system` (required), `content-create` (optional, supplies copy) 
 |-------|-------|------|-------|
 | Brand-Anchor Agent | 1 (parallel) | `agents/brand-anchor-agent.md` | Pulls relevant tokens, sacred elements, lexicon, motion spec from BRAND.md + DESIGN.md |
 | Concept Agent | 1 (parallel) | `agents/concept-agent.md` | Generates 3 distinct concept directions (mood, composition, references) |
-| Copy-Anchor Agent | 1 (parallel) | `agents/copy-anchor-agent.md` | Resolves copy that appears IN the asset (from content-create artifact, or interview the user) |
-| Brief Synthesizer | 1.5 (after L1) | `agents/brief-synth-agent.md` | Merges anchor + 3 concepts + copy into 3 candidate briefs with format spec, hierarchy, asset slots |
-| Prompt-Craft Agent | 2P (route P) | `agents/prompt-craft-agent.md` | Produces tool-specific generation prompts (Claude Design / Midjourney / Imagen / DALL·E / Veo / Suno) |
-| Pencil-Render Agent | 2PE (route PE) | `agents/pencil-render-agent.md` | Renders directly to `.pen` via Pencil MCP |
-| Paper-Render Agent | 2PA (route PA) | `agents/paper-render-agent.md` | Renders artboard via Paper MCP using brand-system Paper conventions |
-| Figma-Spec Agent | 2F (route F) | `agents/figma-spec-agent.md` | Produces design spec markdown for human designer in Figma |
-| Critic Agent | 3 (final) | `agents/critic-agent.md` | Visual rubric scoring + generic-AI-aesthetic detection |
+| Copy-Anchor Agent | 1 (parallel) | `agents/copy-anchor-agent.md` | Resolves copy that appears IN the asset (from copywriting artifact, or interview the user) |
+| Brief Synthesizer | 1.5 (after L1) | `agents/brief-synth-agent.md` | Merges anchor + 3 concepts + copy into 3 candidate briefs with platform spec, hierarchy, asset slots |
+| Prompt-Craft Agent | 2P (downstream-route: image-gen) | `agents/prompt-craft-agent.md` | Produces image-gen prompts (Claude Design / Midjourney / Imagen / DALL·E / Veo / Suno) for the chosen brief |
+| Figma-Spec Agent | 2F (downstream-route: human designer) | `agents/figma-spec-agent.md` | Produces design spec markdown for human designer in Figma |
+| Critic Agent | 3 (final) | `agents/critic-agent.md` | Visual rubric scoring + generic-AI-aesthetic detection + platform-fit check |
 
 ### Shared References (read by multiple agents)
 
-- `references/asset-types.md` — Dimensions, safe zones, format conventions per asset type (IG carousel, OG, banner, etc.)
-- `references/prompt-patterns.md` — Generative AI prompt structures, parameter cheatsheets, model strengths
+- `references/asset-types.md` — Dimensions, safe zones, format conventions per asset type
+- `references/platform-modules.md` — Per-platform brief checklists: IG carousel, IG post, IG story, LinkedIn document, LinkedIn single-image, FB ad, YouTube thumbnail, X/Twitter card, OOH/billboard, banner display. **Status: skeleton — see notes in file.**
+- `references/prompt-patterns.md` — Image-gen prompt structures, parameter cheatsheets, model strengths
 - `references/visual-rubric.md` — Critic scoring dimensions with worked examples
 - `references/failure-modes.md` — Generic-AI-aesthetic catalog, brand-drift patterns, accessibility violations
-- `references/tool-routing.md` — Which tool for which asset type, decision tree
-- `references/examples.md` — End-to-end worked examples per route
+- `references/examples.md` — End-to-end worked examples per downstream route
 
 ---
 
 ## Routing Logic
 
-**Tool selection happens BEFORE concept generation** — concept must respect tool constraints (Pencil = vector/layout; generative = photo/illustration/abstract).
+The skill always produces a brief. The brief carries a **downstream-route** tag that indicates which renderer the brief is being handed to. This tag drives which optional sub-agent runs after the brief is approved.
 
-### Route P — Prompt artifact (generative AI)
+### Downstream routes
 
-**When:** Photographic, illustrative, abstract, or compositionally complex creative. Hero images, OG images, blog illustrations, ad backgrounds, video thumbnails. Anything that benefits from generative diversity.
+| Route | When | Optional Layer 2 agent | Output addition |
+|-------|------|------------------------|------------------|
+| `image-gen` | Photographic, illustrative, abstract, or compositionally complex creative. Hero images, OG images, blog illustrations, ad backgrounds, video thumbnails. | `prompt-craft-agent` | Image-gen prompt + 2 variant prompts |
+| `vector-tool` | Vector layouts, UI mockups, branded social templates, multi-format size variants, infographics. Pencil/Figma execution. | (none — brief stands alone with vector-tool spec block) | Layout grid spec + token references |
+| `designer-handoff` | Asset will be executed by a human designer in Figma or a print shop. Print-grade, OOH, complex composition. | `figma-spec-agent` | Structured design spec for designer file |
+| `template-pack` | Multi-format social packs (Instagram + LinkedIn + Twitter variants of one asset). | `prompt-craft-agent` per format | Per-format prompts in one brief |
 
-**Targets:** Claude Design (claude.ai/design), Midjourney, Imagen, DALL·E, Ideogram, Veo (video), Suno (audio).
+User can override the auto-detected downstream route with `--route=image-gen|vector-tool|designer-handoff|template-pack`.
 
-```
-1. Pre-dispatch: Gather brand artifacts + brief
-2. LAYER 1 — Dispatch IN PARALLEL:
-   - brand-anchor-agent
-   - concept-agent (3 concepts)
-   - copy-anchor-agent (if copy goes in the asset)
-3. LAYER 1.5 — brief-synth-agent (merges into 3 candidate briefs)
-4. APPROVAL GATE 1 — Present 3 briefs. User selects 1 (or revises, or kills all).
-5. LAYER 2P — prompt-craft-agent (tool-specific prompt + variant prompts)
-6. LAYER 3 — critic-agent (scores prompt against rubric)
-7. APPROVAL GATE 2 — Present prompt artifact. User approves to copy/run, or requests revision.
-8. Deliver: brief.md + prompt.md + critic.md to .agents/mkt/design/[slug]/
-```
-
-### Route PE — Pencil direct render
-
-**When:** Vector layouts, UI mockups, branded social templates, multi-format size variants, infographics with strict typographic hierarchy. Anything where Pencil's flex-based vector engine fits.
-
-```
-1-4. Same as Route P (brief approval first)
-5. LAYER 2PE — pencil-render-agent (writes .pen via Pencil MCP)
-6. LAYER 3 — critic-agent (scores rendered output)
-7. APPROVAL GATE 2 — Present render. User approves, requests revision, or kills.
-8. Deliver: brief.md + render.pen + critic.md
-```
-
-### Route PA — Paper direct render
-
-**When:** Brand guideline artboards, identity rendering aligned with brand-system Paper conventions (flex-only, inline-only, hex-only). Use when the asset is a brand-system extension piece (e.g. a new ASSETS.md row that fits the artboard pattern).
-
-```
-1-4. Same as Route P
-5. LAYER 2PA — paper-render-agent (writes Paper artboard)
-6. LAYER 3 — critic-agent
-7. APPROVAL GATE 2
-8. Deliver: brief.md + render.html (Paper-compatible) + critic.md
-```
-
-### Route F — Figma handoff spec
-
-**When:** Asset will be executed by a human designer in Figma. Skill produces a design-spec markdown precise enough for Figma execution without further clarification.
-
-```
-1-4. Same as Route P
-5. LAYER 2F — figma-spec-agent (produces structured design spec)
-6. LAYER 3 — critic-agent
-7. APPROVAL GATE 2 — Present spec. User approves and hands to designer.
-8. Deliver: brief.md + figma-spec.md + critic.md
-```
-
-### Route C — Canva direct (DEFERRED to v1.1)
-
-Canva MCP currently exposes only authentication. When `mcp__claude_ai_Canva__*` adds template tools, add `canva-template-agent.md` and route here for multi-format social packs. For now, route Canva-style requests through Route P (prompt artifact) or Route F (spec).
-
-### Tool Routing Decision Tree
+### Auto-detection (asset type → default downstream route)
 
 | Asset Type | Default Route | Why |
 |-----------|--------------|-----|
-| OG image / blog hero / ad photo | P | Generative gives photo/illustration diversity |
-| Instagram carousel (typographic) | PE | Vector + multi-slide layout = Pencil |
-| Instagram carousel (image-led) | P (per slide) | Generate slides, assemble |
-| Banner / display ad (text-heavy) | PE | Pencil's vector text + crop variants |
-| Banner / display ad (visual-led) | P | Generate the visual, overlay text |
-| Brand guideline artboard | PA | Paper conventions exist in brand-system |
-| Hero illustration (custom) | P | Generative or human-designer |
-| Logo variant / mark | PE or PA | Vector — Pencil for free-form, Paper for brand-system aligned |
-| OOH / billboard | F | Print-grade, needs human designer in Figma |
-| Email hero | P or PE | Depends on photo vs. typographic |
-| YouTube thumbnail | P | Photo-based + bold text overlay |
-| Spot icon / decoration | PE | Vector |
-
-User can override with `--route=P|PE|PA|F`.
+| OG image / blog hero / ad photo | image-gen | Generative gives photo/illustration diversity |
+| Instagram carousel (typographic) | vector-tool | Vector + multi-slide layout |
+| Instagram carousel (image-led) | image-gen (per slide) | Generate slides, assemble |
+| Instagram post / story | image-gen or vector-tool | Depends on photo vs typographic |
+| LinkedIn document post | vector-tool | Multi-slide typographic |
+| LinkedIn single-image | image-gen or vector-tool | Depends on photo vs typographic |
+| FB / display banner (text-heavy) | vector-tool | Vector text + crop variants |
+| FB / display banner (visual-led) | image-gen | Generate visual, overlay text |
+| YouTube thumbnail | image-gen | Photo-based + bold text overlay |
+| X/Twitter card | image-gen or vector-tool | Depends on photo vs typographic |
+| OOH / billboard / print | designer-handoff | Print-grade, needs human designer |
+| Email hero | image-gen or vector-tool | Depends on photo vs typographic |
+| Hero illustration (custom) | image-gen or designer-handoff | Generative or human-designer |
+| Spot icon / decoration | vector-tool | Vector |
 
 ---
 
@@ -271,7 +229,7 @@ Check for `brand/BRAND.md` and `brand/DESIGN.md`. If missing → **NEEDS_CONTEXT
 
 If `brand/ASSETS.md` exists, scan for a row matching the requested asset. If found, pre-fill format/dimensions/file path from the spec and prepare to tick the box on completion.
 
-If artifact dates are >60 days old (brand systems update less often than IMC plans) and the user hasn't explicitly confirmed they're current, **warn** and ask before proceeding.
+If artifact dates are >60 days old and the user hasn't explicitly confirmed they're current, **warn** and ask before proceeding.
 
 ### Required Artifacts
 
@@ -285,59 +243,26 @@ If artifact dates are >60 days old (brand systems update less often than IMC pla
 | Artifact | Source | Benefit |
 |----------|--------|---------|
 | `brand/ASSETS.md` | brand-system Route B | Auto-fill dimensions, tick checkbox on completion |
-| `.agents/mkt/content/[slug].md` | content-create | Copy to use in the creative |
+| `.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Slot spec when this brief is for an LP asset |
+| `.agents/mkt/content/[slug].copy.md` | copywriting | Copy to use in the asset |
 | `.agents/mkt/content-research.md` | content-research | Winning visual patterns |
 | `.agents/mkt/imc-plan.md` | imc-plan | Campaign context, awareness stage |
 | `research/icp-research.md` | icp-research | Audience visual preferences |
 
 ---
 
-## Step 0.5: Route Selection (Orchestrator)
+## Step 0.5: Route Detection (Orchestrator)
 
-Before dispatching Layer 1, the orchestrator picks a route AND (for Route P) a target generative tool. Sub-agents downstream require both as input.
+Before dispatching Layer 1, the orchestrator picks a downstream route AND (for `image-gen`) a target generative tool. Sub-agents downstream require both.
 
-1. **If user passed `--route=P|PE|PA|F`** → honor override. Warn if asset-type default differs (e.g., user requests Route P for a logo variant — note that vector mark is better in Pencil but proceed).
-2. **Else, walk the decision tree** in `references/tool-routing.md` against the asset request. The asset-type → default route table is the fast path; the decision tree handles edge cases.
-3. **State the route + rationale in 1 line to the user** before Layer 1 dispatches:
-   > "Route auto-selected: P (photographic OG image). Target tool: midjourney-v6 (editorial mood, MJ stronger here than Imagen). Override with `--route=` if needed."
-4. **For Route P, also pick `target_tool`** from `references/prompt-patterns.md` "Quick reference: tool → asset type" table — record both. Pass `target_tool` (e.g., `claude-design`, `midjourney-v6`, `imagen-3`, `dall-e-3`, `ideogram`, `veo`, `suno`) into the context object that Layer 1 agents and Layer 2P (prompt-craft-agent) receive.
-5. **For Routes PE/PA/F**, `target_tool` = the route's renderer (Pencil / Paper / Figma-as-handoff-target). No sub-tool selection needed.
-6. **If the asset is in `references/tool-routing.md` Out of Scope (v1)** (code-driven generative art, Lottie/AE animation, glTF, standalone audio), return **NEEDS_CONTEXT** with the right destination — do not silently dispatch.
+1. **If user passed `--route=`** → honor override. Warn if asset-type default differs.
+2. **Else, walk the asset-type → default route table** above.
+3. **State the route + rationale in 1 line** to the user before Layer 1 dispatches:
+   > "Downstream route: image-gen (photographic OG image). Target tool: midjourney-v6 (editorial mood). Override with `--route=` if needed."
+4. **For `image-gen`, also pick `target_tool`** from `references/prompt-patterns.md` "tool → asset type" table — record both. Pass `target_tool` (e.g., `claude-design`, `midjourney-v6`, `imagen-3`, `dall-e-3`, `ideogram`, `veo`, `suno`) into the context object.
+5. **Pull the platform module** from `references/platform-modules.md` for the asset's platform. Pass the module's spec checklist (aspect, safe zones, type scale, contrast, file format, file-size cap, anti-patterns) to brief-synth-agent and critic-agent.
 
-The selected `route` and `target_tool` are part of the context every agent receives.
-
----
-
-### Context to Pass to All Agents
-
-1. **Asset request** — type, platform/format, purpose, dimensions if known
-2. **Brand anchor digest** — palette, type, motion, sacred elements (from brand-anchor-agent after L1)
-3. **Copy** — if any goes IN the asset (from copy-anchor-agent after L1)
-4. **Tool route** — selected route determines downstream agent
-5. **Awareness stage** — affects density, complexity, CTA prominence
-6. **Reference patterns** — winning visuals from content-research if available
-
----
-
-## Dispatch Protocol
-
-### How to spawn a sub-agent
-
-1. **Read** the agent instruction file — include its FULL content in the Agent prompt
-2. **Append** context (asset request, brand digest, copy, route)
-3. **Resolve file paths to absolute** — replace relative paths with absolute paths rooted at this skill's directory
-4. **Pass upstream artifacts by content** — orchestrator reads `brand/BRAND.md`, `brand/DESIGN.md`, `brand/ASSETS.md`, content artifacts FIRST, then includes relevant excerpts in context. Sub-agents should NOT read brand files directly (lexicon and sacred elements must pass through brand-anchor-agent for consistency).
-5. If **feedback** exists (from critic FAIL), append with header "## Critic Feedback — Address Every Point"
-
-### Single-agent fallback
-
-If multi-agent dispatch is unavailable, execute each agent's instructions sequentially:
-- Layer 1: pull brand anchors, generate 3 concepts, resolve copy
-- Layer 1.5: synthesize 3 briefs
-- Approval gate 1
-- Layer 2 (route-specific): produce render or prompt
-- Layer 3: critic scoring
-- Approval gate 2
+The selected `route`, `target_tool`, and `platform_module` are part of the context every agent receives.
 
 ---
 
@@ -348,8 +273,8 @@ Spawn **IN PARALLEL**:
 | Agent | Instruction File | Pass These Inputs | Reference Files |
 |-------|-----------------|-------------------|-----------------|
 | Brand-Anchor Agent | `agents/brand-anchor-agent.md` | full BRAND.md + DESIGN.md content + asset request | — |
-| Concept Agent | `agents/concept-agent.md` | asset request + brand digest excerpt + content-research patterns (if available) | `references/asset-types.md`, `references/failure-modes.md` |
-| Copy-Anchor Agent | `agents/copy-anchor-agent.md` | asset request + content-create artifact (if exists) + brand voice rules | — |
+| Concept Agent | `agents/concept-agent.md` | asset request + brand digest excerpt + content-research patterns (if available) | `references/asset-types.md`, `references/platform-modules.md`, `references/failure-modes.md` |
+| Copy-Anchor Agent | `agents/copy-anchor-agent.md` | asset request + copywriting artifact (if exists) + brand voice rules | — |
 
 Wait for all to complete. Their outputs become inputs for Layer 1.5.
 
@@ -359,15 +284,15 @@ Wait for all to complete. Their outputs become inputs for Layer 1.5.
 
 | Agent | Instruction File | Pass These Inputs | Reference Files |
 |-------|-----------------|-------------------|-----------------|
-| Brief Synthesizer | `agents/brief-synth-agent.md` | brand anchor + 3 concepts + copy + route + asset request | `references/asset-types.md` |
+| Brief Synthesizer | `agents/brief-synth-agent.md` | brand anchor + 3 concepts + copy + downstream route + platform module + asset request | `references/asset-types.md`, `references/platform-modules.md` |
 
-Output: 3 candidate briefs, each with concept name, visual direction, hierarchy, asset slot specs (dimensions/format/safe zones), copy placement, motion notes (if applicable), failure modes to avoid.
+Output: 3 candidate briefs, each with concept name, visual direction, hierarchy, platform spec (resolved against the platform module), copy placement, failure modes to avoid.
 
 ---
 
 ## Approval Gate 1 — Brief Selection
 
-**STOP and present** the 3 candidate briefs to the user. Do not proceed to rendering.
+**STOP and present** the 3 candidate briefs to the user. Do not proceed to image-gen prompt or designer spec.
 
 Format:
 
@@ -392,21 +317,21 @@ User responses handled:
 - **"A" / "B" / "C"** → proceed with that brief to Layer 2.
 - **"Revise X"** → re-dispatch concept-agent with feedback, regenerate briefs, re-present.
 - **"None of these"** → ask one clarifying question (what's missing?), regenerate.
-- **"Switch route to X"** → user wants the same concept rendered via a different route (e.g., "B is good but I want Figma handoff, not generative"). Re-dispatch Layer 1.5 brief-synth with the new route. Concept-agent's tool-feasibility lines drive whether the chosen concept survives the route change — if a concept's feasibility was RETHINK for the new route, re-run concept-agent for that concept before brief synthesis.
-- **"Stop"** → save brief candidates as `.agents/mkt/design/[slug]/brief-candidates.md`, exit with status BLOCKED.
+- **"Switch route to X"** → re-dispatch brief-synth with the new downstream route. Concept-agent's tool-feasibility lines drive whether the chosen concept survives — if a concept's feasibility was RETHINK for the new route, re-run concept-agent for that concept.
+- **"Stop"** → save brief candidates as `.agents/mkt/design-briefs/[slug]-candidates.md`, exit with status BLOCKED.
 
 ---
 
-## Layer 2: Tool-Specific Render or Prompt
+## Layer 2: Downstream Handoff Augmentation
 
-Dispatch ONE based on route:
+Dispatch ONE based on downstream route:
 
-| Route | Agent | Output |
+| Route | Agent | Output addition |
 |-------|-------|--------|
-| P | `agents/prompt-craft-agent.md` | `prompt.md` — generation prompt + 2 variant prompts |
-| PE | `agents/pencil-render-agent.md` | `render.pen` (via Pencil MCP `batch_design`) |
-| PA | `agents/paper-render-agent.md` | `render.html` (Paper artboard, brand-system conventions) |
-| F | `agents/figma-spec-agent.md` | `figma-spec.md` — design spec for human designer |
+| `image-gen` | `agents/prompt-craft-agent.md` | Image-gen prompt block (primary + 2 variants) appended to brief |
+| `vector-tool` | (none — brief synth already wrote the vector spec block) | — |
+| `designer-handoff` | `agents/figma-spec-agent.md` | Designer-handoff spec block appended to brief |
+| `template-pack` | `agents/prompt-craft-agent.md` per format | Per-format prompt blocks |
 
 ---
 
@@ -414,60 +339,60 @@ Dispatch ONE based on route:
 
 | Agent | Instruction File | Receives |
 |-------|-----------------|----------|
-| Critic Agent | `agents/critic-agent.md` | Approved brief + Layer 2 output |
+| Critic Agent | `agents/critic-agent.md` | Approved brief + Layer 2 output + platform module |
 
-Critic produces `critic.md` with rubric scores and PASS / FAIL.
+Critic produces an inline rubric report with PASS / FAIL.
 
 - **PASS** → proceed to Approval Gate 2
-- **FAIL** → re-dispatch Layer 2 agent with critic feedback. Max 2 rewrite cycles. After 2 failures, deliver with critic annotations and flag to user as DONE_WITH_CONCERNS.
+- **FAIL** → re-dispatch the relevant Layer 2 agent or brief-synth with critic feedback. Max 2 rewrite cycles. After 2 failures, deliver with critic annotations and flag to user as DONE_WITH_CONCERNS.
 
 ---
 
-## Approval Gate 2 — Output Acceptance
+## Approval Gate 2 — Brief Acceptance
 
-**STOP and present** the rendered output (or prompt artifact) + critic report.
+**STOP and present** the assembled brief + critic report.
 
 Format:
 
 ```
-## [Asset Name] — [Route]
+## [Asset Name] — Design Brief — [Downstream route]
 
-**Brief:** [concept name selected]
+**Concept:** [name selected at Gate 1]
 **Critic:** [PASS / DONE_WITH_CONCERNS]
 **Score:** [/40 with sub-scores]
 
-[Render preview, prompt text, or spec link]
+[Brief preview — concept, anchors, platform spec, copy placement, failure modes, handoff block]
 
 [Critic notes — concerns to monitor]
 
-**Approve, revise, or reject.**
+**Approve to write artifact, revise, or reject.**
 ```
 
 User responses:
 - **"Approve"** →
-  1. Write artifact files to `.agents/mkt/design/[slug]/` (brief.md + render/prompt + critic.md per route).
-  2. **ASSETS.md auto-tick:** if a render is exported to a path that matches a `brand/ASSETS.md` row's path field (literal string match against the row's `path` — never auto-tick on slug or asset-type heuristic), use the Edit tool to flip the row's `[ ]` checkbox to `[x]` and append a date stamp. If no path match (campaign-specific asset, ad-hoc), skip — design-create does not own ASSETS.md row creation; that belongs to brand-system.
+  1. Write artifact to `.agents/mkt/design-briefs/[slug].md`.
+  2. **ASSETS.md auto-tick:** if the brief is for an asset whose path matches a `brand/ASSETS.md` row's path field (literal string match — never auto-tick on slug or asset-type heuristic), use the Edit tool to flip the row's `[ ]` checkbox to `[x]` and append a date stamp. If no path match, skip — design-brief does not own ASSETS.md row creation; that belongs to brand-system.
   3. Status DONE.
-- **"Revise X"** → re-dispatch Layer 2 agent with user feedback (1 cycle), re-present.
+- **"Revise X"** → re-dispatch brief-synth or Layer 2 agent with feedback (1 cycle), re-present.
 - **"Reject"** →
-  1. **Preserve `brief.md`** — it was approved at Gate 1 and remains the artifact of record.
-  2. Save Layer 2 output as `[slug]/v1-rejected.[ext]` (the rejected render or prompt — kept for diagnostic).
-  3. Append `[slug]/rejection-notes.md` with the user's reason.
-  4. Exit BLOCKED. On re-run with the same slug, brief.md is reused; only Layer 2 re-runs (skip Layer 1 + Gate 1).
+  1. Save brief as `.agents/mkt/design-briefs/[slug]-rejected.md`.
+  2. Append a `Rejection Notes` block with the user's reason.
+  3. Exit BLOCKED.
 
 ---
 
-## Artifact Template — `.agents/mkt/design/[slug]/brief.md`
+## Artifact Template — `.agents/mkt/design-briefs/[slug].md`
 
 ```markdown
 ---
-skill: design-create
+skill: design-brief
 version: 1
 date: [today]
 status: [done | done_with_concerns | blocked | needs_context]
-route: [P | PE | PA | F]
-asset_type: [og-image | ig-carousel | banner | ...]
-platform: [instagram | linkedin | web | print | ...]
+downstream_route: [image-gen | vector-tool | designer-handoff | template-pack]
+target_tool: [claude-design | midjourney-v6 | imagen-3 | dall-e-3 | ideogram | pencil | figma | print | ...]
+asset_type: [og-image | ig-carousel | ig-post | ig-story | li-doc | li-single | fb-ad | yt-thumbnail | x-card | ooh | banner | ...]
+platform: [instagram | linkedin | facebook | youtube | x | print | web | email | ...]
 dimensions: [WxH or per-format list]
 brand_anchors:
   primary_color: [hex]
@@ -481,7 +406,7 @@ sacred_respected: [list of sacred elements honored]
 **Asset:** [type + platform]
 **Purpose:** [announce | educate | convert | recruit | brand-build]
 **Source copy:** [path or "none"]
-**Tool route:** [P / PE / PA / F]
+**Downstream route:** [image-gen / vector-tool / designer-handoff / template-pack]
 
 ## Concept (Approved)
 
@@ -496,16 +421,19 @@ sacred_respected: [list of sacred elements honored]
 - **Sacred elements respected:** [list — what was preserved]
 - **Lexicon:** [forbidden phrases avoided, preferred phrases used if copy is in asset]
 
-## Format Spec
+## Platform Spec
 
-| Field | Value |
-|-------|-------|
-| Dimensions | [WxH px] |
-| Safe zone | [px from edges, platform-specific] |
-| File format | [PNG / SVG / .pen / WebP / MP4] |
-| Color mode | [sRGB / DCI-P3] |
-| File size cap | [KB if platform enforces] |
-| Background | [hex or "transparent"] |
+| Field | Value | Source (platform module) |
+|-------|-------|--------------------------|
+| Aspect ratio | [X:Y] | [platform module name] |
+| Dimensions | [WxH px] | [platform module] |
+| Safe zone | [px from edges, platform-specific] | [platform module] |
+| Type scale (mobile readability floor) | [min px at 1x] | [platform module] |
+| Contrast (thumb-stop) | [WCAG ratio min for the asset's smallest text on its actual background] | platform module |
+| File format | [PNG / SVG / WebP / MP4 / ...] | [platform module] |
+| File-size cap | [KB/MB] | [platform module] |
+| Color mode | [sRGB / DCI-P3 / CMYK] | [platform module] |
+| Anti-patterns flagged | [list specific to this platform] | [platform module] |
 
 ## Hierarchy
 
@@ -513,12 +441,12 @@ sacred_respected: [list of sacred elements honored]
 2. **Supporting:** [secondary element]
 3. **Tertiary:** [text body, fine detail]
 
-## Asset Slots
+## Asset Slots (compound assets only — e.g., carousel)
 
-| Slot | Dimensions | Format | Fallback | Generation prompt template (if Route P) |
-|------|-----------|--------|----------|---|
-| [Hero image] | [WxH] | [PNG] | [solid hex if missing] | [link to prompt.md] |
-| [Spot illustration] | [WxH] | [SVG] | [emoji or icon ref] | — |
+| Slot | Dimensions | Format | Fallback |
+|------|-----------|--------|----------|
+| [Slide 1] | [WxH] | [PNG] | [...] |
+| [Slide 2] | [WxH] | [PNG] | [...] |
 
 ## Copy Placement (if any)
 
@@ -528,83 +456,59 @@ sacred_respected: [list of sacred elements honored]
 
 ## Failure Modes to Avoid
 
-- [Page-specific or asset-specific traps — generic-AI smell, brand drift, etc.]
+- [Platform-specific traps — from platform module]
+- [Generic-AI smell — from failure-modes.md]
+- [Brand drift — from brand_anchors]
 
 ## What NOT to Do
 
 - [Sacred elements: do not propose changing X, Y, Z]
 - [Off-brand defaults to reject]
+
+## Downstream Handoff Block
+
+### When `downstream_route: image-gen`
+- **Primary prompt** ([target_tool]): [full prompt with lens / lighting / mood / era / composition / color cast / aspect-ratio flag]
+- **Variant 1:** [specific deviation]
+- **Variant 2:** [specific deviation]
+- **Post-processing note:** [overlay copy, logo placement, export profile]
+
+### When `downstream_route: vector-tool`
+- **Layout grid:** [columns × rows, gutters, baseline]
+- **Component references:** [DESIGN.md tokens used]
+- **Multi-format crops** (if applicable): [per-format dimensions and reflow rules]
+
+### When `downstream_route: designer-handoff`
+- **Spec sheet** for the designer (Figma file or print shop): [section list, type scale, palette, asset bundle paths]
+- **Open questions for designer:** [decisions deferred to designer judgment]
+
+### When `downstream_route: template-pack`
+- **Per-format prompt blocks:** [one per platform variant]
+
+## Critic Report
+
+[rubric scores, PASS / FAIL, concerns to monitor]
 ```
 
-(Full template includes references to `prompt.md`, `figma-spec.md`, `critic.md` per route.)
-
-> On re-run with same slug: rename existing artifact to `[slug]/v[N]/` and create new with incremented version. Preserves history for A/B comparison.
-
----
-
-## Worked Example — OG image for blog post (Route P)
-
-**Brief:** OG image for blog post "Why we killed standups"
-**Audience:** Engineering managers, problem-aware
-**Route:** P (generative — photo-like aesthetic better than vector)
-
-### Step 0: Pre-Dispatch
-- BRAND.md present (forsvn brand). DESIGN.md present (Deep Forest #004700, Signal Lime #B7FF6E, Geist Sans).
-- ASSETS.md row matches: `brand/og/blog/standups-killed.png — 1200x630 — [ ]`
-- Awareness: problem-aware. Channel: Twitter/LinkedIn share preview.
-
-### Layer 1 (parallel)
-- **Brand-anchor-agent** returns: palette anchor #004700, accent #B7FF6E, type Geist Sans Bold for headline, sacred = logo bottom-right at 60px height, motion = N/A (static)
-- **Concept-agent** returns 3 concepts:
-  - **A. Empty meeting room** — wide shot, abandoned chairs, low light, lime accent on "12 hours" callout
-  - **B. Time-loss receipt** — photographic receipt with hours stacking, type-led
-  - **C. Calendar emptied** — overhead photo of calendar with "STANDUP" entries crossed out in lime
-- **Copy-anchor-agent** returns: headline "12 hours/week. Gone." — pulled from blog title rephrase, voice-checked.
-
-### Layer 1.5
-- **Brief-synth-agent** merges into 3 candidate briefs with format spec (1200x630, sRGB, ≤500KB), hierarchy, copy placement.
-
-### Approval Gate 1
-User picks **A** ("Empty meeting room").
-
-### Layer 2P — Prompt-Craft
-Returns:
-- **Primary prompt (Midjourney v6):** "wide-angle photograph of an empty corporate conference room at dusk, abandoned ergonomic chairs scattered around an oval table, low-key lighting, deep forest green accent wall, single shaft of cold daylight from blinds, melancholic mood, editorial photography style, shot on Hasselblad, 35mm, --ar 1200:630 --style raw --v 6"
-- **Variant 1:** [tighter framing variant]
-- **Variant 2:** [warmer light variant]
-- Post-processing note: "Add 'Geist Sans Bold 96px headline "12 hours/week. Gone." in #B7FF6E, bottom-left, 60px from edges; logo #FFFFFF bottom-right 60px from edges' as Pencil overlay or Photoshop step."
-
-### Layer 3 — Critic
-- Brand fidelity: 4/4 (palette + type traceable)
-- Sacred respected: 4/4
-- Hierarchy: 3/4 (focal point clear, but text overlay risk if MJ output is busy)
-- Composition: 3/4
-- Typography: N/A (overlay step)
-- Contrast: 4/4 (lime on dark green = WCAG AA pass)
-- Format fit: 4/4
-- Generic-AI: 3/4 (slight risk of "stock corporate" feel — variant 1 mitigates)
-- **Score: 25/28 → PASS with note**
-
-### Approval Gate 2
-User approves. Artifact saved to `.agents/mkt/design/standups-killed-og/`. ASSETS.md row ticked once render exists at `brand/og/blog/standups-killed.png`.
+> On re-run with same slug: rename existing artifact to `[slug].v[N].md` and create new with incremented version. Preserves history for A/B comparison.
 
 ---
 
 ## Anti-Patterns
 
-**Skipping the brief approval gate** — Going straight to render burns Midjourney credits or Pencil time on a misaligned concept. INSTEAD: 3 briefs, user picks one, then render.
+**Skipping the brief approval gate** — Going straight to image-gen burns credits or designer time on a misaligned concept. INSTEAD: 3 briefs, user picks one, then handoff.
 
 **Inventing tokens** — Using a color or font not in DESIGN.md because it "fits the mood." INSTEAD: If DESIGN.md is incomplete for this asset's needs, flag it in the brief and ask the user — either expand DESIGN.md (re-run brand-system) or accept the limitation.
 
-**Stock-AI defaults** — Default purple-blue gradient, centered isolated subject on white, glassmorphism, faux-3D bevels. INSTEAD: Critic-agent's generic-AI rubric explicitly catches these. If a concept relies on them, score it down before rendering.
+**Stock-AI defaults** — Default purple-blue gradient, centered isolated subject on white, glassmorphism, faux-3D bevels. INSTEAD: Critic-agent's generic-AI rubric explicitly catches these. If a concept relies on them, score it down before delivering.
 
-**Generic-photo prompts** — "Modern office, professional, 4k, hyperrealistic." Looks like every other AI-stock-photo. INSTEAD: Specific lens, lighting, mood, era, composition, color cast. Make the prompt specific enough that two generations look like the same photographer's work.
+**Generic-photo prompts** — "Modern office, professional, 4k, hyperrealistic." Looks like every other AI-stock-photo. INSTEAD: Specific lens, lighting, mood, era, composition, color cast.
 
-**Ignoring safe zones** — Designing edge-to-edge for Instagram and losing CTA to the crop. INSTEAD: Asset-types.md defines safe zones per platform — concept must fit them.
+**Ignoring safe zones** — Designing edge-to-edge for Instagram and losing CTA to the crop. INSTEAD: Platform module defines safe zones — concept must fit them.
 
-**Round-tripping AI renders into brand/** — Treating a Midjourney output as a brand asset of record. INSTEAD: Renders are presentation artifacts; brand/ holds source-of-truth specs only. Generated images live under `.agents/mkt/design/[slug]/` or per-campaign asset folders.
+**Treating the brief as a render** — Writing a fluffy concept paragraph and calling it done. The brief must be specific enough that a downstream tool/designer can execute without follow-up.
 
-**Treating Claude Design output as design system** — claude.ai/design generates exploration. It's a starting point, not a brand commitment.
+**Treating Claude Design output as brand-system input** — claude.ai/design generates exploration. It's a starting point downstream of this brief, not a brand commitment.
 
 ---
 
@@ -612,9 +516,9 @@ User approves. Artifact saved to `.agents/mkt/design/standups-killed-og/`. ASSET
 
 Per project standard, every run ends with explicit status:
 
-- **DONE** — brief approved, render/prompt approved, critic PASS, artifacts written
-- **DONE_WITH_CONCERNS** — approved but critic flagged issues; concerns documented in artifact frontmatter
-- **BLOCKED** — user rejected at a gate, or external dependency missing (Pencil MCP unavailable for Route PE, etc.)
+- **DONE** — brief approved, critic PASS, artifact written
+- **DONE_WITH_CONCERNS** — approved but critic flagged issues; concerns documented in artifact frontmatter. **Currently the skill itself ships in this state until platform-modules.md is fully populated.**
+- **BLOCKED** — user rejected at a gate, or external dependency missing
 - **NEEDS_CONTEXT** — BRAND.md or DESIGN.md missing; cannot proceed without brand-system
 
 ---
@@ -627,17 +531,15 @@ Per project standard, every run ends with explicit status:
 - [agents/concept-agent.md](agents/concept-agent.md) — 3 concept directions
 - [agents/copy-anchor-agent.md](agents/copy-anchor-agent.md) — In-asset copy resolution
 - [agents/brief-synth-agent.md](agents/brief-synth-agent.md) — 3 candidate briefs
-- [agents/prompt-craft-agent.md](agents/prompt-craft-agent.md) — Generative AI prompts
-- [agents/pencil-render-agent.md](agents/pencil-render-agent.md) — Pencil .pen render
-- [agents/paper-render-agent.md](agents/paper-render-agent.md) — Paper artboard render
-- [agents/figma-spec-agent.md](agents/figma-spec-agent.md) — Figma handoff spec
-- [agents/critic-agent.md](agents/critic-agent.md) — Visual rubric + AI-aesthetic check
+- [agents/prompt-craft-agent.md](agents/prompt-craft-agent.md) — Image-gen prompts
+- [agents/figma-spec-agent.md](agents/figma-spec-agent.md) — Designer handoff spec
+- [agents/critic-agent.md](agents/critic-agent.md) — Visual rubric + AI-aesthetic + platform-fit check
 
 ### Shared References (references/)
 
 - [references/asset-types.md](references/asset-types.md) — Per-asset format specs
-- [references/prompt-patterns.md](references/prompt-patterns.md) — Generative AI prompt structures
+- [references/platform-modules.md](references/platform-modules.md) — Per-platform brief checklists (skeleton — needs follow-up build pass)
+- [references/prompt-patterns.md](references/prompt-patterns.md) — Image-gen prompt structures
 - [references/visual-rubric.md](references/visual-rubric.md) — Critic scoring dimensions
 - [references/failure-modes.md](references/failure-modes.md) — Generic-AI catalog, brand drift
-- [references/tool-routing.md](references/tool-routing.md) — Decision tree
 - [references/examples.md](references/examples.md) — End-to-end worked examples

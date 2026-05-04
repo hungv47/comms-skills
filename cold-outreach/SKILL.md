@@ -61,8 +61,6 @@ routing:
   defers-to:
     - skill: copywriting
       when: "need headline, hook, or landing-page copy (not an outbound message)"
-    - skill: content-create
-      when: "need a full content asset (thread, carousel, newsletter)"
     - skill: imc-plan
       when: "need channel strategy or multi-channel campaign orchestration across paid/owned/earned"
   parallel-with: []
@@ -171,11 +169,10 @@ Horizontal — can run standalone or be called by `imc-plan` when outbound is pa
 
 ### Skill Deference
 - **Writing a landing page headline, tagline, or CTA for an ad?** → Use `copywriting` (horizontal writing craft, not outbound)
-- **Building a full content asset (carousel, thread, newsletter)?** → Use `content-create`
 - **Need a multi-channel campaign plan across paid/owned/earned?** → Use `imc-plan` first, then invoke this skill for the outbound touches
 - **No persona defined, or ICP data stale (>30 days)?** → Run `icp-research` first
 - **Sequence is underperforming, need diagnosis?** → Not in this skill; open question for a future `outbound-diagnose` skill
-- **Lifecycle / nurture / drip emails?** → NOT this skill. Those are warm, consent-based, and have different craft. Use `content-create`.
+- **Lifecycle / nurture / drip emails?** → NOT this skill. Those are warm, consent-based, and have different craft.
 
 ---
 

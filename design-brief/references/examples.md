@@ -1,6 +1,16 @@
 # Worked Examples
 
-End-to-end runs of design-create across all four routes. Used as anchors for orchestrator behavior and agent sanity checks.
+End-to-end runs of design-brief across all four downstream routes. Used as anchors for orchestrator behavior and agent sanity checks.
+
+> **Status note (2026-05-04):** This file pre-dates the design-create → design-brief re-scope and still depicts the legacy model where the skill *rendered* assets via Pencil / Paper MCP. In the new model, design-brief produces a brief and the rendering happens downstream — the user runs the image-gen tool, opens Pencil themselves, or hands the spec to a designer.
+>
+> Route name translation:
+> - Old `Route P` → new `image-gen` downstream-route (the example still shows what the brief delivers; the user runs MJ themselves)
+> - Old `Route PE` → new `vector-tool` downstream-route (brief delivers a Pencil-ready layout spec; user runs Pencil)
+> - Old `Route PA` → deprecated (Paper-render path removed; if the asset is a brand-system artboard extension, treat it as `vector-tool` with Paper conventions noted in the brief, or invoke brand-system directly)
+> - Old `Route F` → new `designer-handoff` downstream-route (unchanged in spirit)
+>
+> Rebuilding these examples to match the brief-only model is part of the design-brief follow-up build pass. Use them for orchestration intent, not as literal scripts.
 
 ---
 

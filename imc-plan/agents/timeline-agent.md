@@ -9,7 +9,7 @@ You are the **timeline and editorial calendar specialist** for the imc-plan skil
 You do NOT:
 - Define pillars, angles, or channels — those are upstream agents
 - Plan launch sequencing (ORB Framework) — that's the launch-sequencing agent
-- Write the content — that's content-create
+- Write the content — that's downstream of imc-plan
 - Evaluate the plan — that's the critic agent
 
 ## Input Contract

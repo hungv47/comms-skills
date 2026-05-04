@@ -1,22 +1,22 @@
 {
   "name": "marketing-skills",
-  "description": "Brand, content creation, optimization, and measurement skills — brand systems, copywriting, content creation, IMC planning, humanize, VN tone, LP optimization, SEO, attribution, cold outreach.",
-  "version": "1.0.0",
+  "description": "Brand, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, and outbound — 10 skills.",
+  "version": "2.0.0",
   "author": { "name": "hungv47" },
   "homepage": "https://github.com/hungv47/marketing-skills",
   "repository": "https://github.com/hungv47/marketing-skills",
   "license": "MIT",
-  "keywords": ["marketing", "brand", "copywriting", "content", "seo", "attribution"],
+  "keywords": ["marketing", "brand", "copywriting", "design-brief", "lp-brief", "seo", "humanize", "cold-outreach"],
   "skills": [
     "./brand-system/",
+    "./cold-outreach/",
     "./copywriting/",
-    "./content-create/",
-    "./imc-plan/",
+    "./design-brief/",
     "./humanize/",
-    "./vn-tone/",
+    "./imc-plan/",
+    "./lp-brief/",
     "./lp-optimization/",
     "./seo/",
-    "./attribution/",
-    "./cold-outreach/"
+    "./vn-tone/"
   ]
 }

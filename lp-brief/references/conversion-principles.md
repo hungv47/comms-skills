@@ -114,7 +114,7 @@
 These principles from lp-optimization are valuable for diagnosis but produce noisy gates at brief-time. They appear in section spec **as guidance**, not in the critic checklist:
 
 - **Advanced psychology stack** (`advanced-psychology.md`) — useful for narrative tone-setting but too subjective to FAIL on.
-- **UX micro-interactions** (`ux-design.md`) — most belong in design-create's critic, not lp-brief's.
+- **UX micro-interactions** (`ux-design.md`) — most belong in a UX-detail review pass, not lp-brief's critic.
 - **A/B testing protocols** (`testing-optimization.md`) — post-launch concern, surfaced in brief's "Launch Plan" section.
 
 If a critic wants to flag one of these, use a **note** (advisory) not a **FAIL** (blocking).

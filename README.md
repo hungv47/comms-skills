@@ -1,6 +1,6 @@
 # Marketing Skills
 
-Brand identity, content creation, campaign planning, optimization, localization polish, outbound, and performance attribution. 10 skills.
+Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, and outbound. 10 skills.
 
 ## Install
 
@@ -40,9 +40,23 @@ Skills are then namespaced — call them as `/marketing-skills:copywriting`, `/m
 
 ## Pipeline
 
-<picture>
-  <img src="./assets/pipeline.svg" alt="Marketing pipeline: brand-system → imc-plan → content-create → attribution, plus horizontal copywriting, lp-optimization, seo, humanize, vn-tone" width="100%">
-</picture>
+```
+research-skills/icp-research        → research/product-context.md, research/icp-research.md
+                                          ↓
+brand-system                         → brand/BRAND.md, brand/DESIGN.md, brand/ASSETS.md
+                                          ↓
+imc-plan                             → .agents/mkt/imc-plan.md
+                                          ↓
+                            ┌─────────────┼─────────────┐
+                            ↓             ↓             ↓
+                       lp-brief        seo         cold-outreach
+                       (per page)   (per mode)    (per touch)
+                            ↓
+                       design-brief
+                       (per slot)
+
+Horizontal: copywriting, lp-optimization, humanize, vn-tone — invoked at any stage.
+```
 
 ## Skills
 
@@ -53,11 +67,11 @@ Creates brand identity systems — color palettes, typography, design tokens, lo
 **Use when:**
 - You're launching a product and need a cohesive visual identity before any marketing
 - You want design tokens that ensure consistency across all touchpoints
-- You need brand voice guidelines that content creators can follow
+- You need brand voice guidelines that downstream copy and design skills can follow
 
-**Not for:** writing marketing copy (use `content-create`) or mapping user flows (use `user-flow`)
+**Not for:** writing marketing copy (use `copywriting`) or mapping user flows (use `user-flow`)
 
-**Produces:** `brand/BRAND.md` + `brand/DESIGN.md`
+**Produces:** `brand/BRAND.md` + `brand/DESIGN.md` + `brand/ASSETS.md`
 
 ---
 
@@ -67,57 +81,74 @@ Creates integrated marketing plans — channel strategy, positioning, content ca
 
 **Use when:**
 - You're planning a product launch and need to decide where, when, and how much to spend
-- You want a structured content calendar with channel-specific tactics
+- You want a structured calendar with channel-specific tactics
 - You need to allocate budget across PLG and SLG channels
 
-**Not for:** writing actual content (use `content-create`) or setting numeric targets (use `funnel-planner`)
+**Not for:** setting numeric targets (use `funnel-planner`)
 
 **Produces:** `.agents/mkt/imc-plan.md`
 
 ---
 
-### `content-create` — draft marketing content
-
-Drafts social posts, ads, emails, newsletters, blog posts, case studies, video scripts, and launch announcements in platform-native formats with A/B variants.
-
-**Use when:**
-- You need a specific content asset — a LinkedIn carousel, email sequence, blog post, or video script
-- You want content drafted in the correct format for the target platform
-- You need A/B variants for testing
-
-**Not for:** editing existing text (use `humanize`) or persuasive headlines and CTAs (use `copywriting`)
-
-**Produces:** `.agents/mkt/content/[slug].md`
-
----
-
 ### `copywriting` — write persuasive copy
 
-Headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring, annotations, and ranked alternatives.
+Headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring, annotations, and ranked alternatives. Horizontal — composes inside any other skill that needs sharp copy on a specific surface.
 
 **Use when:**
 - You need a headline that stops scrolling or a CTA that converts
 - You have existing copy that needs to be sharper, more specific, or more persuasive
 - You want copy evaluated with a rubric and scored alternatives
 
-**Not for:** full content assets like blog posts or emails (use `content-create`) or AI pattern removal (use `humanize`)
+**Not for:** AI pattern removal (use `humanize`)
 
 **Produces:** `.agents/mkt/content/[slug].copy.md`
 
 ---
 
-### `lp-optimization` — improve landing page conversion
+### `lp-optimization` — audit a live landing page for conversion
 
-Audits hero section, CTAs, social proof, objection handling, and page flow. Produces specific copy and structure change recommendations.
+Audits hero section, CTAs, social proof, objection handling, and page flow. Produces specific copy and structure change recommendations on the existing page. Diagnostic, not redesign.
 
 **Use when:**
 - Your landing page isn't converting and you need a diagnostic
 - You want a prioritized list of changes ranked by expected conversion impact
-- You're preparing for a paid traffic campaign and want the page ready
+- You're preparing for a paid traffic campaign and want the live page tightened
 
-**Not for:** A/B testing variants (use `experiment`) or full site SEO audits (use `seo`)
+**Not for:** redesigning a page from scratch (use `lp-brief`) or A/B testing variants (use `experiment`)
 
 **Produces:** `.agents/mkt/lp-optimization.md`
+
+---
+
+### `lp-brief` — architect a landing-page redesign
+
+Generates a campaign-grade brief for a landing-page redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts. Internalizes lp-optimization's conversion principles as evaluation rubric.
+
+**Use when:**
+- The audit said "redesign the page" — now you need a brief precise enough for a designer or AI tool to execute
+- You're shipping a new campaign landing page and want one document that holds hypothesis + architecture + per-section spec + asset routing
+- You want copy candidates and design-tool handoff prompts in one artifact
+
+**Not for:** auditing an existing page (run `lp-optimization` first — its output feeds this skill) or single-asset creative (use `design-brief`)
+
+**Produces:** `.agents/mkt/lp-brief/[slug]/brief.md` + per-target handoff prompts + per-slot prompts
+
+---
+
+### `design-brief` — write a graphic-design brief for a single visual asset
+
+Produces graphic-design briefs for individual visuals — IG carousel/post/story, LinkedIn doc/single, FB ad, YouTube thumbnail, X card, banner/display ad, OOH/billboard, OG share card, hero illustration. Pulls brand-system tokens, generates concept directions, writes a per-asset brief with platform-aware specs (aspect, safe zones, type scale, contrast, file format, anti-patterns) and the downstream handoff (image-gen prompt, vector-tool spec, or designer-handoff). **Does NOT render the asset — rendering is downstream via image-gen / Pencil / Figma / human designer.**
+
+**Use when:**
+- You need a brief that lets a designer or image-gen tool execute a single asset on-brand and on-platform without follow-up
+- You're consuming an `lp-brief` slot spec and need a per-asset brief for the slot
+- You want a generative-AI prompt that respects brand tokens, platform safe zones, and CTA hierarchy
+
+**Not for:** rendering the asset (run an image-gen tool / Pencil / Figma against the brief), defining brand identity (use `brand-system`), redesigning a whole page (use `lp-brief`), or writing the copy that goes IN the asset (use `copywriting`).
+
+**Status note:** Re-scoped from a previous render-focused skill. Per-platform module specs (IG/LinkedIn/FB/YT/X/OOH/banner) currently ship as a skeleton — practitioner-grade specs need a follow-up build pass.
+
+**Produces:** `.agents/mkt/design-briefs/[slug].md`
 
 ---
 
@@ -131,24 +162,9 @@ Technical audit, keyword research, AI/AEO optimization, programmatic SEO, compet
 - You want to build programmatic SEO pages at scale
 - You need app store optimization for iOS or Android
 
-**Not for:** landing page conversion (use `lp-optimization`) or writing content (use `content-create`)
+**Not for:** landing page conversion (use `lp-optimization`) or writing copy (use `copywriting`)
 
 **Produces:** `.agents/mkt/seo-[mode].md`
-
----
-
-### `attribution` — measure what's working
-
-Maps marketing activities to business outcomes, evaluates channel ROI, identifies gaps in measurement, and recommends where to double down or cut spend.
-
-**Use when:**
-- You're spending on marketing and need to know what's actually driving results
-- You want a KPI-to-initiative-to-content mapping for accountability
-- You need to identify measurement gaps before scaling spend
-
-**Not for:** setting new KPIs (use `funnel-planner`) or creating new content (use `content-create`)
-
-**Produces:** `.agents/mkt/attribution.md`
 
 ---
 
@@ -161,24 +177,9 @@ Strips AI patterns, injects brand voice, and compresses existing text. Targets 1
 - You want to inject a specific brand voice into existing text
 - You need to compress text for density without losing meaning
 
-**Not for:** writing new content from scratch (use `content-create`) or crafting new copy (use `copywriting`)
+**Not for:** writing new copy from scratch (use `copywriting`)
 
 **Produces:** `.agents/mkt/content/[slug].humanized.md`
-
----
-
-### `cold-outreach` — write cold outbound messages
-
-Writes and evaluates cold outreach across email, LinkedIn (DM + connection note), Twitter/X (reply + DM), and platform proposals (Upwork, Fiverr, similar). Signal-based personalization, channel-specific craft, 5-dimension rubric scoring, automatic humanize terminal pass. Supports first-touch compose and inbound-reply handling.
-
-**Use when:**
-- You're writing a cold email, cold DM, or proposal and want it to read like a sharp human, not a template
-- You need a reply to an inbound response (not-interested / no-budget / send-info / curious / qualified / later / hostile / ambiguous)
-- You're doing services-sell, saas-sell, partnership-sell, or community-sell outbound
-
-**Not for:** sourcing or list-building (start at "here's who I'm reaching"), campaign orchestration across many prospects (compose touches individually with prior-touches context), fundraise/hiring outreach (different norms), lifecycle/nurture emails (use `content-create`).
-
-**Produces:** `.agents/mkt/cold-outreach/[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
 
 ---
 
@@ -200,11 +201,26 @@ Uses a live-scraped corpus from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun
 
 ---
 
+### `cold-outreach` — write cold outbound messages
+
+Writes and evaluates cold outreach across email, LinkedIn (DM + connection note), Twitter/X (reply + DM), and platform proposals (Upwork, Fiverr, similar). Signal-based personalization, channel-specific craft, 5-dimension rubric scoring, automatic humanize terminal pass. Supports first-touch compose and inbound-reply handling.
+
+**Use when:**
+- You're writing a cold email, cold DM, or proposal and want it to read like a sharp human, not a template
+- You need a reply to an inbound response (not-interested / no-budget / send-info / curious / qualified / later / hostile / ambiguous)
+- You're doing services-sell, saas-sell, partnership-sell, or community-sell outbound
+
+**Not for:** sourcing or list-building (start at "here's who I'm reaching"), campaign orchestration across many prospects (compose touches individually with prior-touches context), fundraise/hiring outreach (different norms), or lifecycle/nurture emails (those are warm, consent-based, different craft).
+
+**Produces:** `.agents/mkt/cold-outreach/[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
+
+---
+
 ## Cross-Stack
 
-- `brand-system`, `imc-plan`, `content-create`, `copywriting`, `lp-optimization`, `seo`, `cold-outreach` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
+- `brand-system`, `imc-plan`, `copywriting`, `lp-optimization`, `lp-brief`, `seo`, `cold-outreach`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
 - `cold-outreach` additionally reads `research/icp-research.md` for target persona pain language
-- `imc-plan` and `attribution` read `.agents/solution-design.md` and `.agents/targets.md` from research-skills
+- `imc-plan` and `lp-brief` can read `.agents/solution-design.md` and `.agents/targets.md` from research-skills
 
 ## License
 

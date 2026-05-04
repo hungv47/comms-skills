@@ -71,7 +71,7 @@
 **Fix direction:** Asset-slot re-dispatch to source real assets or apply "delete cell if not real" pattern.
 
 ### FM-10 — Generative AI Used for Proof
-**Symptom:** Asset slot routes a logo or testimonial portrait through `design-create P` (generative AI).
+**Symptom:** Asset slot routes a logo or testimonial portrait through generative image-gen (`design-brief` → image-gen path).
 **Why it kills:** CP-09 violation. Proof must be real.
 **Where it appears:** Asset-slot Inventory generation route column.
 **Fix direction:** Asset-slot re-dispatch with manual-sourcing route.

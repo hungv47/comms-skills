@@ -1,6 +1,6 @@
 ---
 name: seo
-description: "Audits and plans search visibility — keyword research, on-page optimization, technical SEO, link building strategy, and AI search optimization. Produces `.agents/mkt/seo-[mode].md`. Not for landing page conversion (use lp-optimization) or writing content (use content-create)."
+description: "Audits and plans search visibility — keyword research, on-page optimization, technical SEO, link building strategy, and AI search optimization. Produces `.agents/mkt/seo-[mode].md`. Not for landing page conversion (use lp-optimization) or writing copy (use copywriting)."
 argument-hint: "[url or mode]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -55,8 +55,8 @@ routing:
     - mkt/imc-plan.md
   requires: []
   defers-to:
-    - skill: content-create
-      when: "need to write content, not optimize for search"
+    - skill: copywriting
+      when: "need to write headlines/copy for SEO-targeted pages"
     - skill: lp-optimization
       when: "optimizing for conversion, not search"
   parallel-with:
@@ -129,7 +129,7 @@ Horizontal skill — can be invoked independently or after IMC planning.
 **Re-run triggers:** Technical audit quarterly, AI SEO monthly (AI landscape changes fast), after Google core updates, when entering new keyword territories.
 
 ### Skill Deference
-- **Need production-quality copy for comparison pages?** → Run `content-create` after SEO defines the page structure and keyword targets.
+- **Need production-quality copy for comparison pages?** → Run `copywriting` after SEO defines the page structure and keyword targets.
 - **Content pillar prioritization?** → Defer to `imc-plan` for audience-driven prioritization; SEO provides search demand data.
 
 ### Coordination with IMC Plan

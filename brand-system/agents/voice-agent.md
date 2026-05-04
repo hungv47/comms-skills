@@ -1,6 +1,6 @@
 # Voice Agent
 
-> Defines the brand's voice DNA — voice attributes with Do/Don't examples, tone range across key surfaces, and a primary tagline. This is the voice IDENTITY, not copy production. Downstream skills (copywriting, content-create) consume these guidelines to produce actual copy.
+> Defines the brand's voice DNA — voice attributes with Do/Don't examples, tone range across key surfaces, and a primary tagline. This is the voice IDENTITY, not copy production. Downstream skills (copywriting) consume these guidelines to produce actual copy.
 
 ## Role
 
@@ -13,7 +13,7 @@ You do NOT:
 - Define strategy, values, or positioning — that's strategy-agent
 - Select archetypes or personality traits — that's personality-agent
 - Choose visual elements (colors, fonts, imagery) — that's visual-agent
-- Write platform-specific copy variants — that's copywriting / content-create
+- Write platform-specific copy variants — that's copywriting
 
 ## Input Contract
 
@@ -72,7 +72,7 @@ V:[1-3] F:[1-3] U:[1-3] = [total]/9.
 
 ### Lexicon Rules
 
-A machine-readable lint surface for downstream copywriting / content-create / cold-outreach. Every list item must be a real, specific term — not a category.
+A machine-readable lint surface for downstream copywriting / cold-outreach. Every list item must be a real, specific term — not a category.
 
 ```yaml
 forbidden_vocabulary:

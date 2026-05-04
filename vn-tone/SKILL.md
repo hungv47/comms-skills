@@ -155,7 +155,7 @@ Small skill, two routes.
 ```
 
 ### Route B: Called by Another Skill
-**When:** Invoked by `content-create`, `copywriting`, `humanize`, or any pipeline that produces Vietnamese output.
+**When:** Invoked by `copywriting`, `humanize`, or any pipeline that produces Vietnamese output.
 
 ```
 1. Pre-dispatch: Read context from calling skill's brief — pull target register from brand voice or user directive
@@ -185,7 +185,7 @@ None — polishes any Vietnamese text standalone.
 | Artifact | Source | Benefit |
 |---|---|---|
 | `product-context.md` | icp-research | Brand voice for register mapping, glossary |
-| `content/[slug].md` | content-create | Original Vietnamese content |
+| `content/[slug].md` | upstream copy skill | Original Vietnamese content |
 | `content/[slug].humanized.md` | humanize | Pre-humanized content to polish further |
 
 ### Pre-Writing Assembly
@@ -336,7 +336,7 @@ critic_score: [N]/36
 
 ## Next Step
 
-Polished Vietnamese text is ready for publication. If the content is marketing copy, consider running `lp-optimization` for conversion checks on the Vietnamese landing-page version, or `attribution` to set tracking before launch.
+Polished Vietnamese text is ready for publication. If the content is for a landing page, run `lp-optimization` for conversion checks on the Vietnamese version.
 
 ---
 
