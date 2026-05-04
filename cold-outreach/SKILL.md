@@ -56,12 +56,12 @@ routing:
     - product-context.md
     - icp-research.md
     - mkt/content-research.md
-    - mkt/imc-plan.md
+    - mkt/campaign-plan.md
   requires: []
   defers-to:
     - skill: copywriting
       when: "need headline, hook, or landing-page copy (not an outbound message)"
-    - skill: imc-plan
+    - skill: campaign-plan
       when: "need channel strategy or multi-channel campaign orchestration across paid/owned/earned"
   parallel-with: []
   interactive: false
@@ -163,13 +163,13 @@ After critic PASS, `humanize` runs as the terminal pass. After humanize returns,
 
 ## Chain Position
 
-Horizontal — can run standalone or be called by `imc-plan` when outbound is part of a broader channel mix.
+Horizontal — can run standalone or be called by `campaign-plan` when outbound is part of a broader channel mix.
 
 **Re-run triggers:** ICP changes materially, a new trigger signal appears for the same prospect, prior sequence got no reply and angle needs refresh.
 
 ### Skill Deference
 - **Writing a landing page headline, tagline, or CTA for an ad?** → Use `copywriting` (horizontal writing craft, not outbound)
-- **Need a multi-channel campaign plan across paid/owned/earned?** → Use `imc-plan` first, then invoke this skill for the outbound touches
+- **Need a multi-channel campaign plan across paid/owned/earned?** → Use `campaign-plan` first, then invoke this skill for the outbound touches
 - **No persona defined, or ICP data stale (>30 days)?** → Run `icp-research` first
 - **Sequence is underperforming, need diagnosis?** → Not in this skill; open question for a future `outbound-diagnose` skill
 - **Lifecycle / nurture / drip emails?** → NOT this skill. Those are warm, consent-based, and have different craft.
@@ -270,7 +270,7 @@ Classify the task, then follow the matching route.
 
 ### Route C: Called by Another Skill
 
-**When:** Invoked by `imc-plan` for outbound touches in a broader campaign.
+**When:** Invoked by `campaign-plan` for outbound touches in a broader campaign.
 
 ```
 1. Pre-dispatch: Read campaign context from calling skill's artifact
@@ -292,7 +292,7 @@ Read these if present (do NOT block if missing):
 | `research/product-context.md` | icp-research | What you're selling, voice adjectives, accuracy constraints |
 | `research/icp-research.md` | icp-research | Target persona pain points, VoC language, context |
 | `.agents/mkt/content-research.md` | content-research | Audience language map, winning hook patterns |
-| `.agents/mkt/imc-plan.md` | imc-plan | Broader campaign context, angle positioning |
+| `.agents/mkt/campaign-plan.md` | campaign-plan | Broader campaign context, angle positioning |
 
 If `research/icp-research.md` or `research/product-context.md` is older than 30 days, warn the user and recommend re-running `icp-research` before proceeding. Soft gate — proceed if confirmed, note "stale ICP" in artifact header.
 

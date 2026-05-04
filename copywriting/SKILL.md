@@ -48,7 +48,7 @@ routing:
   consumes:
     - product-context.md
     - icp-research.md
-    - mkt/imc-plan.md
+    - mkt/campaign-plan.md
     - mkt/content-research.md
   requires: []
   defers-to:
@@ -92,7 +92,7 @@ Before delivering, the **critic agent** verifies:
 - [ ] Every headline/hook contains concrete nouns or specific numbers (no abstract "better," "innovative," "leading")
 
 ## Chain Position
-Horizontal — called by `lp-optimization`, `imc-plan`, `lp-brief`. Can run standalone.
+Horizontal — called by `lp-optimization`, `campaign-plan`, `lp-brief`. Can run standalone.
 **Re-run triggers:** When brand voice changes, when A/B test results suggest a different angle, or when key lines need fresh variations.
 
 ### Skill Deference
@@ -163,7 +163,7 @@ Classify the task, then follow the matching route.
 ```
 
 ### Route C: Called by Another Skill
-**When:** Invoked by `lp-optimization`, `imc-plan`, or `lp-brief` for inline copy work.
+**When:** Invoked by `lp-optimization`, `campaign-plan`, or `lp-brief` for inline copy work.
 
 ```
 1. Pre-dispatch: Read context from calling skill's artifacts
@@ -194,7 +194,7 @@ Default: English. If the user specifies another language, note it in pre-writing
 |----------|--------|---------|
 | `icp-research.md` | icp-research | VoC language for copy |
 | `product-context.md` | icp-research | Product details, voice adjectives |
-| `imc-plan.md` | imc-plan | Angle, awareness stage, channel context |
+| `campaign-plan.md` | campaign-plan | Angle, awareness stage, channel context |
 | `mkt/content-research.md` | content-research (research-skills) | Audience language map, winning hook patterns, competitor positioning gaps — directly informs hook and voice agents |
 
 ### Pre-Writing Framework

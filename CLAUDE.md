@@ -5,7 +5,7 @@ Brand identity, persuasive copy, campaign planning, landing-page architecture, d
 ## Pipeline
 brand-system (visual identity foundation)
   ↓
-imc-plan (channel strategy + calendar)
+campaign-plan (channel strategy + calendar)
   ↓
   ├─ lp-brief (per landing page) → design-brief (per asset slot)
   ├─ seo (per mode: audit / ai / programmatic / competitor / aso)
@@ -24,7 +24,7 @@ Pipeline outputs write to `.agents/mkt/`; cross-stack records live in the top-le
 - `research/icp-research.md` (canonical audience record — from icp-research in research-skills)
 - `.agents/mkt/content-research.md` (from content-research in research-skills — short-form)
 - `.agents/mkt/content-research-long.md` (from content-research-long in research-skills — long-form)
-- `.agents/mkt/imc-plan.md`
+- `.agents/mkt/campaign-plan.md`
 - `.agents/mkt/content/[slug].copy.md` (from copywriting)
 - `.agents/mkt/seo-[mode].md` (mode = audit | ai | programmatic | competitor | aso)
 - `.agents/mkt/content/[slug].humanized.md`
@@ -39,8 +39,8 @@ Pipeline outputs write to `.agents/mkt/`; cross-stack records live in the top-le
 - `.agents/mkt/design-briefs/[slug].md` (per-asset graphic-design brief — from design-brief)
 
 ## Cross-Stack (Optional)
-imc-plan and lp-brief can read research artifacts for alignment:
-- `.agents/solution-design.md` (from solution-design in research-skills)
+campaign-plan and lp-brief can read research artifacts for alignment:
+- `.agents/prioritize.md` (from prioritize in research-skills)
 - `.agents/targets.md` (from funnel-planner in research-skills)
 `npx skills add hungv47/research-skills`
 
@@ -62,7 +62,7 @@ All 10 skills use a two-layer multi-agent orchestration pattern:
 ### Skills using this pattern
 - `brand-system` — 8 agents (strategy, personality, voice, visual, token-architect, component-token, accessibility, critic). Layer 1 parallel (strategy + personality) → Layer 2 sequential (voice→visual→token-architect→component-token→accessibility→critic).
 - `copywriting` — 9 agents (hook, body, CTA, social-proof, variant, voice, psychology, zero-risk, critic).
-- `imc-plan` — 6 agents (pillar, angle, channel, timeline, launch-sequencing, critic). Primarily sequential.
+- `campaign-plan` — 6 agents (pillar, angle, channel, timeline, launch-sequencing, critic). Primarily sequential.
 - `humanize` — 6 agents (pattern-scanner, voice-extractor, strip, soul-injection, compression, critic). Layer 1 parallel (scan + extract) → Layer 2 sequential (strip→inject→compress→critic).
 - `vn-tone` — 3 agents (diagnostic, polisher, critic). Layer 1 (diagnostic) → Layer 2 sequential (polisher→critic). Post-translation Vietnamese register polish across 4 registers (báo chí, semi-casual, bro, pop-marketing) backed by a live-scraped corpus reference.
 - `lp-optimization` — 7 agents (hero-audit, trust-audit, cta-audit, ux-audit, message-match, prioritization, critic). Layer 1 parallel (4 audit agents) → Layer 2 sequential (message-match→prioritization→critic).

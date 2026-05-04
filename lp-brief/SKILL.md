@@ -48,7 +48,7 @@ routing:
     - mkt/lp-optimization.md
     - research/icp-research.md
     - research/product-context.md
-    - mkt/imc-plan.md
+    - mkt/campaign-plan.md
     - mkt/content-research.md
   requires:
     - brand/BRAND.md
@@ -98,7 +98,7 @@ Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity
 | `.agents/mkt/lp-optimization.md` | **required for Route B** (existing-page redesign blocks without it; user can downgrade to Route A) | Audit-anchored hypothesis basis |
 | `research/icp-research.md` | optional | Objections + VoC for copy candidates |
 | `research/product-context.md` | optional | Product accuracy in features/proof |
-| `.agents/mkt/imc-plan.md` | optional | Traffic source, awareness stage, role in funnel |
+| `.agents/mkt/campaign-plan.md` | optional | Traffic source, awareness stage, role in funnel |
 | `.agents/mkt/content-research.md` | optional | Winning patterns, audience language map |
 | `.agents/targets.md` | optional | Conversion target informs CTA aggressiveness |
 
@@ -122,7 +122,7 @@ Verdict logic: see `## Layer 5: Critic Gate` below.
 
 ## Chain Position
 
-Previous: `lp-optimization` (optional — if existing page being redesigned), `imc-plan` (optional — campaign context), `brand-system` (required) | Next: `design-brief` per asset slot (optional — for detailed graphic-design briefs), then implementation (Claude Design / image-gen tool / human designer)
+Previous: `lp-optimization` (optional — if existing page being redesigned), `campaign-plan` (optional — campaign context), `brand-system` (required) | Next: `design-brief` per asset slot (optional — for detailed graphic-design briefs), then implementation (Claude Design / image-gen tool / human designer)
 
 **Re-run triggers:** new audit revision, BRAND.md/DESIGN.md update, ICP refresh, traffic source pivot. Increment `--rev=N`.
 

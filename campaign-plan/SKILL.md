@@ -1,6 +1,6 @@
 ---
-name: imc-plan
-description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/mkt/imc-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing page optimization, see lp-optimization."
+name: campaign-plan
+description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/mkt/campaign-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing page optimization, see lp-optimization."
 argument-hint: "[product or campaign to plan]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -45,12 +45,12 @@ routing:
     - 9-channel-map
   position: pipeline
   produces:
-    - mkt/imc-plan.md
+    - mkt/campaign-plan.md
   consumes:
     - product-context.md
     - icp-research.md
     - mkt/content-research.md
-    - solution-design.md
+    - prioritize.md
   requires: []
   defers-to:
     - skill: content-research
@@ -84,7 +84,7 @@ Frameworks (ORB, 3D Angles, Pillar Types) are proven defaults — not mandatory 
 - ICP research from `research/icp-research.md` + `research/product-context.md` (or user-provided)
 
 ## Output
-- `.agents/mkt/imc-plan.md`
+- `.agents/mkt/campaign-plan.md`
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
@@ -165,7 +165,7 @@ Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search st
 **When:** `lp-brief`, `cold-outreach`, or another downstream skill needs plan context.
 
 ```
-1. Read existing .agents/mkt/imc-plan.md if available
+1. Read existing .agents/mkt/campaign-plan.md if available
 2. If not available, run Route B
 3. Return plan to calling skill
 ```
@@ -186,7 +186,7 @@ Check for `research/product-context.md` and `research/icp-research.md`. If `date
 | Artifact | Source | Benefit |
 |----------|--------|---------|
 | `product-context.md` | icp-research | Product details, voice adjectives |
-| `solution-design.md` | solution-design | Strategic initiatives for alignment |
+| `prioritize.md` | prioritize | Strategic initiatives for alignment |
 | `mkt/content-research.md` | content-research (research-skills) | Competitor content patterns, audience language, trending topics — informs channel selection and angle priorities |
 
 ### Growth Motion Identification
@@ -280,7 +280,7 @@ pillar-agent → angle-agent → channel-agent → timeline-agent → launch-seq
 
 ```markdown
 ---
-skill: imc-plan
+skill: campaign-plan
 version: 1
 date: [today's date]
 status: draft
@@ -289,7 +289,7 @@ status: draft
 # IMC Plan: [Campaign / Product Name]
 
 **Date:** [today]
-**Skill:** imc-plan
+**Skill:** campaign-plan
 **Goal:** [campaign objective]
 **Audience:** [primary persona]
 
@@ -342,7 +342,7 @@ For offline channels (IRL, SMS), include execution notes:
 |-------|--------|----------|--------|
 | Internal | T-4w | ... | ... |
 
-> On re-run: rename existing artifact to `imc-plan.v[N].md` and create new with incremented version.
+> On re-run: rename existing artifact to `campaign-plan.v[N].md` and create new with incremented version.
 ```
 
 ## Next Step

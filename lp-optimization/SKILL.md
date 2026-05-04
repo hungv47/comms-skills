@@ -1,6 +1,6 @@
 ---
 name: lp-optimization
-description: "Audits a landing page for conversion — analyzes hero, CTA, social proof, objection handling, and page flow. Produces specific copy and structure change recommendations. Not for designing A/B test variants or full site SEO audits (use seo). For brand identity and design tokens, see brand-system. For content strategy, see imc-plan."
+description: "Audits a landing page for conversion — analyzes hero, CTA, social proof, objection handling, and page flow. Produces specific copy and structure change recommendations. Not for designing A/B test variants or full site SEO audits (use seo). For brand identity and design tokens, see brand-system. For content strategy, see campaign-plan."
 argument-hint: "[url or description]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT

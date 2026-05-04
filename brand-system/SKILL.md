@@ -1,6 +1,6 @@
 ---
 name: brand-system
-description: "Builds brand identity systems as three artifacts — BRAND.md (story, voice, positioning, archetype), DESIGN.md (AI-readable design system with palettes, tokens, components, motion), and ASSETS.md (per-platform production inventory with auto-scanned checkboxes for what's done vs. still needed). Not for writing marketing copy (use copywriting) or mapping user flows (use user-flow). For campaign planning, see imc-plan. For audience research, see icp-research."
+description: "Builds brand identity systems as three artifacts — BRAND.md (story, voice, positioning, archetype), DESIGN.md (AI-readable design system with palettes, tokens, components, motion), and ASSETS.md (per-platform production inventory with auto-scanned checkboxes for what's done vs. still needed). Not for writing marketing copy (use copywriting) or mapping user flows (use user-flow). For campaign planning, see campaign-plan. For audience research, see icp-research."
 argument-hint: "[product or brand to design]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -53,7 +53,7 @@ routing:
     - skill: copywriting
       when: "need copy craft, not brand voice definition"
   parallel-with:
-    - imc-plan
+    - campaign-plan
   interactive: false
   estimated-complexity: heavy
 ---
@@ -64,7 +64,7 @@ Output moved from `.agents/design/brand-system.md` → `brand/BRAND.md` + `brand
 
 **Downstream consumers to update:**
 - `product-skills/user-flow` — consumes `design/brand-system.md` → update to `brand/DESIGN.md`
-- `product-skills/technical-writer` — consumes `.agents/design/brand-system.md` → update to `brand/BRAND.md` (voice/terminology) and `brand/DESIGN.md` (tokens)
+- `product-skills/docs-writing` — consumes `.agents/design/brand-system.md` → update to `brand/BRAND.md` (voice/terminology) and `brand/DESIGN.md` (tokens)
 - Root `README.md` artifact table → update path
 
 **Duration scale change:** Timings shifted from (100, 200, 300, 500)ms to (75, 150, 250, 400, 600)ms with a new `--duration-emphasis` tier. Brands built on v5 will have different motion timing.
@@ -192,7 +192,7 @@ Before delivering, the **critic agent** verifies both files:
 **Reference quality bar:** Compare output against the annotated quality guides in `references/example-brand.md` and `references/example-design.md`. Every section should match the "good" pattern and avoid the "bad" pattern described in those guides. Use the overall quality tests in example-design.md (copy-paste test, blind build test, competitor swap test, implementation gap test) as final validation.
 
 ## Chain Position
-Previous: `icp-research` (product context) | Next: `imc-plan`, `copywriting`, `lp-brief`, `design-brief`
+Previous: `icp-research` (product context) | Next: `campaign-plan`, `copywriting`, `lp-brief`, `design-brief`
 
 **Re-run triggers:** After major product pivots, when entering new markets, after significant audience shifts, or annually for brand refresh.
 

@@ -45,7 +45,7 @@ research-skills/icp-research        → research/product-context.md, research/ic
                                           ↓
 brand-system                         → brand/BRAND.md, brand/DESIGN.md, brand/ASSETS.md
                                           ↓
-imc-plan                             → .agents/mkt/imc-plan.md
+campaign-plan                             → .agents/mkt/campaign-plan.md
                                           ↓
                             ┌─────────────┼─────────────┐
                             ↓             ↓             ↓
@@ -75,7 +75,7 @@ Creates brand identity systems — color palettes, typography, design tokens, lo
 
 ---
 
-### `imc-plan` — plan the campaign
+### `campaign-plan` — plan the campaign
 
 Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines.
 
@@ -86,7 +86,7 @@ Creates integrated marketing plans — channel strategy, positioning, content ca
 
 **Not for:** setting numeric targets (use `funnel-planner`)
 
-**Produces:** `.agents/mkt/imc-plan.md`
+**Produces:** `.agents/mkt/campaign-plan.md`
 
 ---
 
@@ -218,9 +218,9 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 
 ## Cross-Stack
 
-- `brand-system`, `imc-plan`, `copywriting`, `lp-optimization`, `lp-brief`, `seo`, `cold-outreach`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
+- `brand-system`, `campaign-plan`, `copywriting`, `lp-optimization`, `lp-brief`, `seo`, `cold-outreach`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
 - `cold-outreach` additionally reads `research/icp-research.md` for target persona pain language
-- `imc-plan` and `lp-brief` can read `.agents/solution-design.md` and `.agents/targets.md` from research-skills
+- `campaign-plan` and `lp-brief` can read `.agents/prioritize.md` and `.agents/targets.md` from research-skills
 
 ## License
 

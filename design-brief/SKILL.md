@@ -120,7 +120,7 @@ Brand fidelity > aesthetic novelty. Platform fitness > generic polish. A boring 
 - **`.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md`** — slot spec from lp-brief (when this brief is for a landing-page asset)
 - **`.agents/mkt/content/[slug].copy.md`** — copy to use IN the asset (headline, body, CTA)
 - **`.agents/mkt/content-research.md`** — winning visual patterns from competitor scan
-- **`.agents/mkt/imc-plan.md`** — campaign context, channel placement, awareness stage
+- **`.agents/mkt/campaign-plan.md`** — campaign context, channel placement, awareness stage
 
 ## Output
 
@@ -246,7 +246,7 @@ If artifact dates are >60 days old and the user hasn't explicitly confirmed they
 | `.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Slot spec when this brief is for an LP asset |
 | `.agents/mkt/content/[slug].copy.md` | copywriting | Copy to use in the asset |
 | `.agents/mkt/content-research.md` | content-research | Winning visual patterns |
-| `.agents/mkt/imc-plan.md` | imc-plan | Campaign context, awareness stage |
+| `.agents/mkt/campaign-plan.md` | campaign-plan | Campaign context, awareness stage |
 | `research/icp-research.md` | icp-research | Audience visual preferences |
 
 ---

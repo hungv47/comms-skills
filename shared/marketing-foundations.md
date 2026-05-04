@@ -102,14 +102,14 @@ How marketing skills connect — each skill's output feeds the next:
 ```
 icp-research (research-skills)
   └─ product-context.md → consumed by ALL skills below
-  └─ icp-research.md → consumed by imc-plan, copywriting, content-research
+  └─ icp-research.md → consumed by campaign-plan, copywriting, content-research
 
 brand-system → BRAND.md + DESIGN.md → consumed by copywriting, humanize, design-brief, lp-brief
 
 content-research (research-skills)
-  └─ content-research.md → consumed by imc-plan, copywriting, lp-brief
+  └─ content-research.md → consumed by campaign-plan, copywriting, lp-brief
 
-imc-plan → imc-plan.md → consumed by lp-brief, cold-outreach, seo
+campaign-plan → campaign-plan.md → consumed by lp-brief, cold-outreach, seo
 
 copywriting → content/[slug].copy.md → consumed by humanize, vn-tone
 humanize → content/[slug].humanized.md → final-stage polish
@@ -118,7 +118,7 @@ vn-tone → content/[slug].vn-tone.md → Vietnamese register polish
 lp-optimization → audit + inline recommendations → consumed by lp-brief (when redesign warranted)
 lp-brief → mkt/lp-brief/[slug]/brief.md → consumed by design-brief (per asset slot) and external designer/image-gen
 design-brief → mkt/design-briefs/[slug].md → consumed by external designer or image-gen tool
-seo → seo-[mode].md → consumed by copywriting (SEO content), imc-plan
+seo → seo-[mode].md → consumed by copywriting (SEO content), campaign-plan
 
 cold-outreach → mkt/cold-outreach/[slug].md → standalone outbound execution
 ```
@@ -139,8 +139,8 @@ All marketing skills follow the same re-run protocol:
 
 | Term | Definition | Used By |
 |------|-----------|---------|
-| **Pillar** | A core messaging theme (3-5 per brand) | imc-plan |
-| **Angle** | A specific perspective within a pillar (3D: hook × trigger × stage) | imc-plan, copywriting |
+| **Pillar** | A core messaging theme (3-5 per brand) | campaign-plan |
+| **Angle** | A specific perspective within a pillar (3D: hook × trigger × stage) | campaign-plan, copywriting |
 | **Hook** | The opening line/visual that captures attention | copywriting, cold-outreach |
 | **CTA** | Call-to-action: specific next step for the audience | copywriting, lp-optimization, lp-brief |
 | **VoC** | Voice of Customer: authentic audience language | icp-research, copywriting |

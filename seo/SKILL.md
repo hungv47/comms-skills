@@ -52,7 +52,7 @@ routing:
   consumes:
     - product-context.md
     - icp-research.md
-    - mkt/imc-plan.md
+    - mkt/campaign-plan.md
   requires: []
   defers-to:
     - skill: copywriting
@@ -113,7 +113,7 @@ Before delivering any SEO artifact, these must be true:
 ## Inputs Required
 
 - ICP research from `research/icp-research.md` (audience questions, pain points, search behavior)
-- IMC plan from `.agents/mkt/imc-plan.md` (content pillars and angles)
+- IMC plan from `.agents/mkt/campaign-plan.md` (content pillars and angles)
 - OR: User describes their SEO situation / site to audit
 
 ## Output
@@ -122,7 +122,7 @@ Before delivering any SEO artifact, these must be true:
 
 ## Chain Position
 
-Previous: `icp-research` + `imc-plan` (reads audience questions and content pillars) | Next: content production / site updates / re-audit after 30 days
+Previous: `icp-research` + `campaign-plan` (reads audience questions and content pillars) | Next: content production / site updates / re-audit after 30 days
 
 Horizontal skill — can be invoked independently or after IMC planning.
 
@@ -130,11 +130,11 @@ Horizontal skill — can be invoked independently or after IMC planning.
 
 ### Skill Deference
 - **Need production-quality copy for comparison pages?** → Run `copywriting` after SEO defines the page structure and keyword targets.
-- **Content pillar prioritization?** → Defer to `imc-plan` for audience-driven prioritization; SEO provides search demand data.
+- **Content pillar prioritization?** → Defer to `campaign-plan` for audience-driven prioritization; SEO provides search demand data.
 
 ### Coordination with IMC Plan
 
-When both `seo` and `imc-plan` are in use, they should coordinate:
+When both `seo` and `campaign-plan` are in use, they should coordinate:
 
 | Situation | Who Leads | How They Coordinate |
 |-----------|----------|-------------------|
@@ -151,7 +151,7 @@ When both `seo` and `imc-plan` are in use, they should coordinate:
 
 ### Step 0: Product Context
 Check for `research/product-context.md`. If available, read for product positioning context.
-If `research/icp-research.md` or `.agents/mkt/imc-plan.md` `date` fields are older than 30 days, recommend re-running upstream skills — stale audience data weakens SEO strategy.
+If `research/icp-research.md` or `.agents/mkt/campaign-plan.md` `date` fields are older than 30 days, recommend re-running upstream skills — stale audience data weakens SEO strategy.
 
 ### Required Artifacts
 | Artifact | Source | If Missing |
@@ -161,7 +161,7 @@ If `research/icp-research.md` or `.agents/mkt/imc-plan.md` `date` fields are old
 ### Optional Artifacts
 | Artifact | Source | Benefit |
 |----------|--------|---------|
-| `imc-plan.md` | imc-plan | Content pillars inform topic clusters |
+| `campaign-plan.md` | campaign-plan | Content pillars inform topic clusters |
 | `product-context.md` | icp-research | Product positioning context |
 
 ---
@@ -233,7 +233,7 @@ Layer 2 (sequential): prioritization-agent → critic-agent
 
 ### Multi-Agent Dispatch (default)
 
-1. **Gather context:** Read available artifacts (product-context, icp-research, imc-plan). Identify site type, CMS/framework, and known issues.
+1. **Gather context:** Read available artifacts (product-context, icp-research, campaign-plan). Identify site type, CMS/framework, and known issues.
 2. **Determine mode:** Apply the routing table from Step 1. If unclear, ask the user. If "comprehensive SEO," use Route E.
 3. **Prepare pre-writing object:**
    ```
