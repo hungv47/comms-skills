@@ -604,8 +604,7 @@ N. **CTA Block** — [purpose]
 2. `copywriting` — polish 3 headline candidates against 4-U + voice
 3. [implementation step — Claude Design / Figma / designer]
 4. `humanize` — final pass on any AI-generated body copy
-5. `deploy-verify` — post-deploy health check on the page
-6. [post-launch] re-run `lp-optimization` 30d after launch → next rev
+5. [post-launch] re-run `lp-optimization` 30d after launch → next rev
 
 Page-scoped only. No project-level default is created.
 

@@ -205,7 +205,7 @@ Before dispatching any agent, the orchestrator gathers context that ALL agents w
 
 ### Product Context Check
 Check for `research/product-context.md`. If available, read for voice adjectives and brand personality. Voice injection (soul-injection-agent) requires these adjectives — without them, output will be clean but generic.
-If `research/product-context.md`'s `date` field is older than 30 days, recommend re-running `icp-research` to refresh voice adjectives — brand voice evolves. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+If `research/product-context.md`'s `date` field is older than 30 days, recommend re-running `icp-research` to refresh voice adjectives — brand voice evolves.
 
 ### Content Type Classification
 Determine the content type from the brief or the source artifact. This governs strip intensity, voice injection level, and compression targets per the Content Type Calibration table above.

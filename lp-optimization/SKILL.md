@@ -204,7 +204,7 @@ Before dispatching any agent, the orchestrator gathers context that ALL agents w
 
 ### Product Context Check
 Check for `research/product-context.md`. If available, read for product details and accuracy. If missing, strongly recommend running `icp-research` first — this skill works without it but produces significantly better output with it.
-If `research/product-context.md` or `research/icp-research.md` `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research` before proceeding. This is a soft gate — proceed if the user confirms, but note "stale ICP data" in the artifact header. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+If `research/product-context.md` or `research/icp-research.md` `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research` before proceeding. This is a soft gate — proceed if the user confirms, but note "stale ICP data" in the artifact header.
 
 ### Required Artifacts
 None — can audit any page standalone.

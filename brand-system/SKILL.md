@@ -293,7 +293,7 @@ Step 10   Deliver artifacts (BRAND.md + DESIGN.md + ASSETS.md)
 ## Step 0: Pre-Dispatch Context Gathering
 
 ### Product Context Check
-Check for `research/product-context.md` and `research/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills. Tip: `/navigate status` (from meta-skills) gives a single-pass freshness report across all upstream artifacts.
+Check for `research/product-context.md` and `research/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills.
 
 ### Required Inputs — Interview If Missing
 - Product description or PRD
