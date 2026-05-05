@@ -186,29 +186,72 @@ Same dispatch as Route A, but Layer 1 audit-anchor-agent reads the audit. Hypoth
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-### Brand Artifact Check
+This skill has **hard gates** before any cold-start questioning — brand artifacts and audit availability gate routing. Cold-start questions are bundled after gates pass. Approval Gates 1/2/3 (mid-flow user reviews) are separate from Pre-Dispatch and happen after Layer 1.5 / Layer 2 / Layer 5. Full Pre-Dispatch protocol pattern: `meta-skills/references/pre-dispatch-protocol.md`.
 
-- `brand/BRAND.md` and `brand/DESIGN.md` present? If not → **NEEDS_CONTEXT**.
-- Date check: if either is >60 days stale and user hasn't confirmed, warn and ask before proceeding.
+### Hard gates (before any questioning)
 
-### Audit Artifact Check (Route B)
+1. **Brand artifacts.** `brand/BRAND.md` AND `brand/DESIGN.md` must be present. If either missing → return **NEEDS_CONTEXT**, recommend `brand-system`. If either >60 days stale, warn and ask before proceeding.
+2. **Audit availability gate (existing-page redesign).** `.agents/mkt/lp-optimization.md` present? If yes → Route B. Page exists but no audit → Route B **blocked**; offer: (a) run `lp-optimization` first then re-invoke (recommended), or (b) explicitly downgrade to Route A. Never silently treat existing-page redesign as Route A — guessing what's broken when you could measure it is a quality failure.
+3. No existing page (greenfield) → Route A.
 
-- `.agents/mkt/lp-optimization.md` present? If yes → Route B.
-- **Page exists but no audit?** Route B is **blocked**. Present two options:
-  1. Run `lp-optimization` first, then re-invoke `lp-brief` (recommended).
-  2. Explicitly downgrade to Route A — proceeds without audit anchoring; brief won't address known failure modes; user accepts risk.
-- Never silently treat an existing-page redesign as Route A. The point of Route B is the audit signal — guessing what's broken when you could measure it is a quality failure.
+If hard gates pass, proceed to Pre-Dispatch flows.
 
-### Required & Optional Artifacts
+### Needed dimensions
+- Page identity — route + name (always supplied as input — not asked)
+- Tier — conversion-primary (hero LP, /pricing, /services) or conversion-secondary (/about, /story). Programmatic out of scope.
+- Hypothesis intent — what's the redesign trying to prove?
+- Goal — leads / signups / purchases / demos
+- Route (A or B) — already resolved by hard gates above
 
-See `## Inputs` table for canonical list. Step 0 verifies and routes:
-- Both brand artifacts present → continue
-- Either missing → **NEEDS_CONTEXT** (run brand-system)
-- Audit present + page exists → Route B
-- Audit absent + page exists → Route B blocked (see above)
-- No existing page → Route A
+### Read order
+1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (both confirmed by hard gate). `.agents/mkt/lp-optimization.md` if Route B. `research/icp-research.md`, `research/product-context.md`, `.agents/mkt/campaign-plan.md`, `.agents/targets.md` (all optional, read when present).
+2. Experience: `.agents/experience/goals.md` for prior hypothesis/goal context. `.agents/experience/audience.md` for ICP fallback if no `icp-research.md`.
+
+### Warm Start (page identity supplied + goal/hypothesis derivable)
+
+Common when invoked from a campaign-plan that already declared the page's role:
+
+```
+Hard gates passed: brand artifacts present, [Route A | Route B with audit].
+Found:
+- page → "[route, tier]"
+- goal → "[from experience/goals.md or campaign context]"
+- hypothesis seed → "[from prior brief if rev > 1, or audit if Route B]"
+
+Anything to override, or proceed to Layer 1?
+```
+
+### Cold Start (no campaign context, no prior rev, fresh hypothesis)
+
+```
+lp-brief produces a campaign-grade redesign brief — hypothesis, surface rhythm,
+section spec, asset slots, hand-off prompts. Before I dispatch, I need:
+
+1. **Page route + tier** — e.g., "/pricing, conversion-primary" or
+   "/about, conversion-secondary". (Programmatic templates out of scope.)
+2. **Hypothesis intent** — what's this redesign trying to prove or fix?
+   One sentence. (Examples: "show pricing above the fold drives more
+   trial starts" / "add objection-handling to address scaling concerns".)
+3. **Goal** — what does the redesigned page need to do? Generate leads,
+   drive trial signups, drive purchases, book demos, or other?
+4. **Route confirmation** — [A: greenfield, no existing page] or
+   [B: existing-page redesign with audit at .agents/mkt/lp-optimization.md].
+
+Answer 1-4 in one response. I'll confirm and dispatch Layer 1.
+```
+
+### Write-back
+
+After cold-start answers, append to experience/:
+
+| Question | File | Key |
+|---|---|---|
+| 1. Page route + tier | (not persisted — page-specific, not stable cross-skill) |
+| 2. Hypothesis intent | `goals.md` | `Goals — page hypothesis: [route]` |
+| 3. Goal | `goals.md` | `Goals — page conversion goal: [route]` |
+| 4. Route | (resolved by hard gates, not persisted) |
 
 ### Project-Specific Workflows
 
@@ -221,9 +264,10 @@ Rationale: project-level default locks teams into our chain. Per-page is correct
 
 ### Context to Pass to All Agents
 
+After Pre-Dispatch resolves:
 1. **Page identity** — route, name, current state (URL/screenshot/code if exists)
-2. **Tier** — conversion-primary (hero LP, /pricing, /services) or conversion-secondary (/about, /story). Programmatic templates **out of scope** (see Skill Deference).
-3. **Audit signals** — from lp-optimization.md if present
+2. **Tier** — conversion-primary or conversion-secondary
+3. **Audit signals** — from lp-optimization.md if Route B
 4. **Brand digest** — palette, type, motion, sacred, voice rules (from brand-anchor after L1)
 5. **Audience digest** — top 3 ICP objections, top 5 VoC phrases, awareness stage (from audit-anchor after L1)
 6. **Campaign context** — traffic source, awareness stage, conversion target

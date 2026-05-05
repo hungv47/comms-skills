@@ -194,35 +194,71 @@ This skill's examples are marketing-focused, but it works on any content type. A
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-Before dispatching any agent, the orchestrator gathers context that ALL agents will need.
+Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Start** (most context resolvable, summarize and dispatch) or **Cold Start** (bundle 3-question prompt). Full pattern + anti-patterns: `meta-skills/references/pre-dispatch-protocol.md`.
 
-### Product Context Check
-Check for `research/product-context.md`. If available, read for voice adjectives and brand personality. Voice injection (soul-injection-agent) requires these adjectives — without them, output will be clean but generic.
-If `research/product-context.md`'s `date` field is older than 30 days, recommend re-running `icp-research` to refresh voice adjectives — brand voice evolves.
+### Needed dimensions
+- Original text + content type (always required as input — not asked)
+- Target voice — adjectives or a brand reference (decides soul-injection-agent's lever)
+- Compression target — light / moderate / heavy (decides compression-agent's lever)
+- Register preservation — keep formal vs neutralize (decides strip-agent's intensity)
 
-### Content Type Classification
-Determine the content type from the brief or the source artifact. This governs strip intensity, voice injection level, and compression targets per the Content Type Calibration table above.
+### Read order
+1. Pipeline: `brand/BRAND.md` → voice rules + lexicon. `research/product-context.md` → voice adjectives.
+2. Experience: `.agents/experience/brand.md` → voice notes from prior runs.
+3. Conversation context: brief from upstream skill (e.g., copywriting handed text directly).
 
-### Required Artifacts
-None — can humanize any text standalone.
+If `research/product-context.md` `date` is >30 days, warn and recommend re-running `icp-research` for fresh voice adjectives — brand voice evolves.
 
-### Optional Artifacts
-| Artifact | Source | Benefit |
-|----------|--------|---------|
-| `product-context.md` | icp-research | Voice adjectives for personality injection |
-| `icp-research.md` | icp-research | Audience register calibration |
-| `content/[slug].md` | upstream copy skill | Original content with copywriting agents applied |
+### Warm Start (most dimensions resolvable)
+
+```
+Found:
+- brand voice → "[3 adjectives from BRAND.md]"
+- content type → "[blog | landing page | docs | email | social]"
+
+Defaults applied: compression=moderate, register=preserve.
+Override anything, or proceed?
+```
+
+If user proceeds, dispatch. Optional inline probe only if the content type genuinely couldn't be inferred from the input.
+
+### Cold Start (no voice context)
+
+```
+Humanize strips AI patterns and injects voice. To make the output sound like
+*you* (not generic-clean), I need a quick read on:
+
+1. **Target voice** — 3 adjectives (e.g., "blunt, specific, dry") OR a reference
+   brand whose voice you'd want to match OR point me at `brand/BRAND.md` if it
+   exists.
+2. **Preserve register?** — If the source is technical/formal/legal, keep it
+   that way (yes), or neutralize toward a more conversational baseline (no)?
+3. **Compression target** — Light (10-15%, light-touch), Moderate (20-30%,
+   default), or Heavy (30%+, aggressive).
+
+Answer 1-3 in one response. I'll dispatch.
+```
+
+### Write-back
+
+After cold-start answers, append to experience/:
+
+| Question | File | Key |
+|---|---|---|
+| 1. Target voice | `brand.md` | `Voice — adjectives` (only if 3-adjective form, not when pointing at BRAND.md) |
+| 2-3. Routing only | (not persisted) | — |
 
 ### Pre-Writing Assembly
-Compile these fields and pass to every agent in the `pre-writing` input:
-- **Content type** — blog, landing page, docs, email, social, etc.
-- **Voice adjectives** — from product-context.md (or defaults: "clear, specific, human")
+
+After Pre-Dispatch resolves, compile these fields and pass to every agent in the `pre-writing` input:
+- **Content type** — blog, landing page, docs, email, social
+- **Voice adjectives** — from BRAND.md / experience / cold-start (or defaults: "clear, specific, human")
 - **Audience register** — formal, professional, conversational, casual
 - **Original word count** — for compression tracking
 - **Source** — which skill or external source produced the content
-- **User directives** — any patterns the user wants to keep, or intensity preferences
+- **User directives** — patterns to keep, intensity preferences
 
 ---
 

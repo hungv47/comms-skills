@@ -164,40 +164,93 @@ Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search st
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-### Product Context Check
-Check for `research/product-context.md` and `research/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research`.
+Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Start** (most context resolvable, summarize and dispatch) or **Cold Start** (bundle 5-question prompt). Full pattern + anti-patterns: `meta-skills/references/pre-dispatch-protocol.md`.
 
-### Required Artifacts
-| Artifact | Source | If Missing |
-|----------|--------|------------|
-| `icp-research.md` | icp-research | **INTERVIEW.** Gather: audience, pains, habitats, awareness stage. |
+### Needed dimensions
+- Product (what it does, who pays)
+- Audience primary persona (role + company size + 1-2 pains)
+- Campaign goal (what this 90 days needs to do)
+- Growth motion (PLG / SLG / Hybrid — drives channel weighting)
+- Duration + cadence (e.g., 60 days, 3 posts/week)
+- Constraints (team size, budget tier, channels off-limits)
 
-### Optional Artifacts
-| Artifact | Source | Benefit |
-|----------|--------|---------|
-| `product-context.md` | icp-research | Product details, voice adjectives |
-| `prioritize.md` | prioritize | Strategic initiatives for alignment |
+### Read order
+1. Pipeline: `research/product-context.md` → product. `research/icp-research.md` → audience, habitats, VoC. `.agents/prioritize.md` → strategic initiatives (optional, alignment only).
+2. Experience: `.agents/experience/{product,audience,business,goals}.md` for any dimension not covered by pipeline artifacts.
 
-### Growth Motion Identification
+If pipeline artifact `date` fields are >30 days, warn and recommend re-running upstream — audience and pains evolve.
 
-Before dispatching any agent, determine the growth motion:
+### Warm Start (most dimensions resolvable)
 
-| Signal | Motion | Channel Priority |
-|--------|--------|-----------------|
-| Free tier/trial exists, self-serve signup, product virality | **PLG** | Search engines/AEO, Forums/Communities, Social media (organic), Mailbox (onboarding), Store/Listing platforms, Bounty/Info platforms |
-| Sales team, high ACV, demos required, paid channels primary | **SLG** | Search engines/AEO (paid), Social media (paid), Mailbox (outbound), SMS, IRL (events/OOH), News |
-| Both motions coexist (e.g., self-serve SMB + sales enterprise) | **Hybrid** | Blend both — designate primary motion per audience segment |
+```
+Found:
+- product → "[1-line summary from product-context.md]"
+- audience → "[primary persona from icp-research.md]"
+- growth motion → "[PLG / SLG / Hybrid from experience/business.md]"
 
-If growth motion is unclear from upstream artifacts, ask: "Does your product grow through self-serve adoption (PLG), outbound/paid performance (SLG), or both?"
+Need before dispatching:
+- Campaign goal — acquire leads / drive trial signups / launch a feature / awareness?
+- Duration + cadence — e.g., "60 days, 3 posts/week"
+- Any constraints — team size, budget tier, channels off-limits?
+
+Answer in one response. I'll confirm and dispatch.
+```
+
+If all six dimensions are resolvable (rare on first run, common after experience/ has been seeded), skip the inline probes and just summarize, asking "Override or proceed?"
+
+### Cold Start (3+ dimensions missing)
+
+```
+Campaign-plan turns audience + product + offer into a 90-day plan with pillars,
+angles, channels, and timeline. To make it specific to you, I need a few things.
+(For richer output later, run `icp-research` first — but I can work from your
+answers now.)
+
+1. **Product** in one sentence — what does it do, who pays for it?
+2. **Audience** — primary buyer (role + company size + top 1-2 pain points)
+3. **Campaign goal** — acquire leads / drive trial signups / launch a feature / 
+   warm cold leads / awareness?
+4. **Growth motion** — does the product sell itself with free trial or signup
+   (PLG), require sales conversations or paid performance (SLG), or both
+   (Hybrid)?
+5. **Duration + constraints** — campaign window (30/60/90 days), cadence
+   (posts per week), team size, budget tier, channels off-limits.
+
+Answer 1-5 in one response. I'll confirm and dispatch.
+```
+
+### Write-back
+
+After cold-start answers, append each Q+A to experience/:
+
+| Question | File | Key |
+|---|---|---|
+| 1. Product | `product.md` | `Product — one-line` |
+| 2. Audience | `audience.md` | `Audience — primary persona` + `Audience — pain points (primary)` |
+| 3. Campaign goal | `goals.md` | `Goals — current campaign focus` |
+| 4. Growth motion | `business.md` | `Business — growth motion` |
+| 5. Duration + constraints | `business.md` | `Business — team + budget` and `goals.md` `Goals — campaign cadence` |
+
+### Reference: Growth Motion → Channel Priority
+
+Used by channel-agent. Available regardless of how growth motion was resolved (warm-start lookup or cold-start answer):
+
+| Motion | Channel Priority |
+|--------|-----------------|
+| **PLG** | Search engines/AEO, Forums/Communities, Social media (organic), Mailbox (onboarding), Store/Listing platforms, Bounty/Info platforms |
+| **SLG** | Search engines/AEO (paid), Social media (paid), Mailbox (outbound), SMS, IRL (events/OOH), News |
+| **Hybrid** | Blend both — designate primary motion per audience segment |
 
 ### Context to Pass to All Agents
-1. **Growth motion:** PLG, SLG, or Hybrid (determines channel weighting)
-2. **Campaign goal:** what success looks like
-3. **ICP summary:** persona, pains, habitats, awareness levels
-4. **VoC quotes:** top buyer-language phrases
-5. **Constraints:** team size, budget, timeline
+
+After Pre-Dispatch resolves:
+1. **Growth motion** — drives channel weighting
+2. **Campaign goal** — what success looks like
+3. **ICP summary** — persona, pains, habitats, awareness levels
+4. **VoC quotes** — top buyer-language phrases
+5. **Constraints** — team size, budget, timeline
 
 ---
 
