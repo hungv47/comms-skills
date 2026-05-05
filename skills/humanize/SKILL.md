@@ -318,7 +318,7 @@ The critic returns specific failures with:
 skill: humanize
 version: 1
 date: [today's date]
-status: draft
+status: done | done_with_concerns | blocked | needs_context
 compression: [X]%
 ---
 
@@ -446,6 +446,16 @@ User confirms. Proceed to Layer 2.
 **Destroying structure in the name of conciseness** — Removing all subheadings, merging all sections, eliminating all lists because "shorter is better." Structure aids scanning. INSTEAD: compress within structure before eliminating structure.
 
 **Over-compressing introductions** — The opening carries disproportionate weight. A 50% compressed intro that loses its hook is worse than a 20% compressed intro that keeps it. INSTEAD: compress introductions last and most carefully.
+
+---
+
+## Completion Status
+
+Every run ends with explicit status:
+- **DONE** — patterns stripped, voice injected (Route B), compression applied, critic 5-dimension PASS
+- **DONE_WITH_CONCERNS** — humanized but critic flagged a dimension under threshold (voice consistency, specificity, or rhythm); annotations preserved in artifact
+- **BLOCKED** — original text contains structural problems beyond pattern removal (factual errors, broken logic, missing claims); humanize cannot fix what isn't there
+- **NEEDS_CONTEXT** — voice reference unavailable for Route B (no brand voice file or sample, user can't describe target voice); recommend `brand-system` or supply samples
 
 ---
 

@@ -322,7 +322,7 @@ skill: seo
 mode: [audit | ai | programmatic | competitor | aso]
 version: 1
 date: [today's date]
-status: draft
+status: done | done_with_concerns | blocked | needs_context
 ---
 
 # SEO: [Mode Name]
@@ -487,6 +487,16 @@ INSTEAD: Quarterly technical re-audit; monthly AI visibility.
 
 **"Consider improving" recommendations** — Hedge language gives nothing to act on.
 INSTEAD: Every recommendation names exact page, exact change, expected impact.
+
+---
+
+## Completion Status
+
+Every run ends with explicit status:
+- **DONE** — selected mode (audit / ai / programmatic / competitor / aso) executed end-to-end, recommendations specific and prioritized, critic PASS
+- **DONE_WITH_CONCERNS** — analysis delivered but with data gaps (rank tracker unavailable, GSC not connected, competitor data scraped at low confidence); recommendations annotated
+- **BLOCKED** — site/property inaccessible (auth wall, robots block, no URL provided); cannot scan
+- **NEEDS_CONTEXT** — audience or product context missing for relevance scoring; recommend `icp-research` or proceed with explicit scope reduction
 
 ---
 

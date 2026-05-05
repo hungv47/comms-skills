@@ -563,6 +563,16 @@ Quick Brand artifact saved as single `brand/BRAND.md` with note: "Run full brand
 
 ---
 
+## Completion Status
+
+Every run ends with explicit status:
+- **DONE** — Route A: BRAND.md written, critic PASS. Route B: BRAND.md + DESIGN.md + ASSETS.md written, cross-element critic PASS, ASSETS.md auto-scan complete
+- **DONE_WITH_CONCERNS** — artifacts written but critic flagged secondary issues (token coverage thin, archetype blend ambiguous, ASSETS.md Orphaned rows surfaced for review)
+- **BLOCKED** — product context contradictory across audience and positioning (e.g., enterprise positioning + consumer voice cues); needs user reconciliation before strategy can converge
+- **NEEDS_CONTEXT** — no audience/product description provided and `research/product-context.md` absent; recommend `icp-research` or rich brief before dispatching
+
+---
+
 ## Agent Files
 
 ### Sub-Agent Instructions (agents/)

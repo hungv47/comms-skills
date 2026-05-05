@@ -278,7 +278,7 @@ pillar-agent → angle-agent → channel-agent → timeline-agent → launch-seq
 skill: campaign-plan
 version: 1
 date: [today's date]
-status: draft
+status: done | done_with_concerns | blocked | needs_context
 ---
 
 # IMC Plan: [Campaign / Product Name]
@@ -390,6 +390,16 @@ All quality gates met. Pillar-angle-channel traces verified. Timeline realistic 
 **Timeline without capacity check** — 10 pieces/week for a solo marketer. INSTEAD: Match cadence to team size. 3 pieces/week is realistic for one person.
 
 **Too many pillars** — 7 pillars dilute the message. INSTEAD: 3-5. If you can't cut, you haven't committed to a strategy.
+
+---
+
+## Completion Status
+
+Every run ends with explicit status:
+- **DONE** — pillars + angles + channels + timeline + launch sequence written, critic PASS
+- **DONE_WITH_CONCERNS** — plan complete but with capacity-vs-cadence mismatch or thin habitat data; flagged in artifact
+- **BLOCKED** — ICP and product context incompatible (different audiences imply different campaigns); needs user scope decision
+- **NEEDS_CONTEXT** — `research/icp-research.md` and `research/product-context.md` missing; recommend `icp-research` first
 
 ---
 

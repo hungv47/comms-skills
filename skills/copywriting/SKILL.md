@@ -332,7 +332,7 @@ The critic returns specific failures with:
 skill: copywriting
 version: 1
 date: [today's date]
-status: draft
+status: done | done_with_concerns | blocked | needs_context
 ---
 
 # Copy: [Title / Brief Description]
@@ -449,6 +449,16 @@ Receives zero-risk output. Scores all key lines. All average ≥3.5. Annotated a
 **Skipping the pre-writing** — Dispatching agents without answering the 4 pre-writing questions. Every agent needs this context to write relevant copy.
 
 **Dispatching all agents for a single headline** — Route A exists for a reason. A single key line only needs one Layer 1 agent + critic.
+
+---
+
+## Completion Status
+
+Every run ends with explicit status:
+- **DONE** — copy written for the requested surface (Route A or B), critic PASS, voice consistent with brand
+- **DONE_WITH_CONCERNS** — copy delivered but critic flagged secondary issues (specificity thin, social-proof weak, voice slightly off); concerns annotated
+- **BLOCKED** — brief is fundamentally contradictory (e.g., audience and offer don't align); needs user reconciliation before any agent dispatch
+- **NEEDS_CONTEXT** — brand voice or audience undefined and not derivable from the brief; recommend `brand-system` or `icp-research`
 
 **Ignoring the critic's FAIL** — If the critic fails the copy, the orchestrator MUST re-dispatch. Delivering failed copy to the user breaks the quality contract.
 

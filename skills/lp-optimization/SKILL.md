@@ -345,7 +345,7 @@ When saving optimization artifacts, use this frontmatter:
 skill: lp-optimization
 version: 1
 date: [today's date]
-status: draft
+status: done | done_with_concerns | blocked | needs_context
 ---
 ```
 
@@ -399,7 +399,7 @@ Scores: Completeness 5, Specificity 5, Evidence 4, Prioritization 5, Actionabili
 skill: lp-optimization
 version: 1
 date: 2026-03-17
-status: draft
+status: done
 ---
 
 # LP Audit — Acme Analytics Free Trial Page
@@ -455,6 +455,16 @@ Expected impact: ~40% form completion improvement
 **Vague audit recommendations** — "Improve the headline" or "Add social proof" without specifics. **INSTEAD:** Every recommendation must include: what was observed, which principle it violates, and exact replacement text or action.
 
 **Skipping message match** — Optimizing page copy without checking if it matches the traffic source. **INSTEAD:** Always verify message match first. A perfectly written headline that doesn't match the ad will still bounce visitors.
+
+---
+
+## Completion Status
+
+Every run ends with explicit status:
+- **DONE** — audit complete (Route A or B), findings prioritized by ICE, critic PASS, recommendations specific and actionable
+- **DONE_WITH_CONCERNS** — audit delivered but with limited evidence (page rendered but analytics unavailable, traffic source unclear); recommendations note evidence gaps
+- **BLOCKED** — page URL inaccessible or behind auth wall the agent cannot pass; needs user-supplied screenshots or paste
+- **NEEDS_CONTEXT** — audit useful but `research/icp-research.md` missing for audience-fit checks; recommend `icp-research` or proceed with reduced scope
 
 ---
 

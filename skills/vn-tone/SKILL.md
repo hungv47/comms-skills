@@ -452,6 +452,16 @@ Bạn ơi, chào mừng bạn đến với Acme nha! Chúng mình sẽ đồng h
 
 ---
 
+## Completion Status
+
+Every run ends with explicit status:
+- **DONE** — register hit cleanly, all Hard Tells fixed, critic 36-point PASS
+- **DONE_WITH_CONCERNS** — register polished but Soft Tells remain or critic score 30-34 (below ceiling but above floor); concerns annotated for user review
+- **BLOCKED** — original text contains untranslatable claims or structural problems beyond register polish (e.g., factually broken passages); fix upstream first
+- **NEEDS_CONTEXT** — target register not specified and not derivable from brand voice; ask user (báo chí / semi-casual / bro / pop-marketing) before dispatching
+
+---
+
 ## Agent Files
 
 ### Sub-Agent Instructions (agents/)
