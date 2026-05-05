@@ -2,7 +2,7 @@
 name: brand-system
 description: "Builds brand identity systems as three artifacts — BRAND.md (story, voice, positioning, archetype), DESIGN.md (AI-readable design system with palettes, tokens, components, motion), and ASSETS.md (per-platform production inventory with auto-scanned checkboxes for what's done vs. still needed). Not for writing marketing copy (use copywriting) or mapping user flows (use user-flow). For campaign planning, see campaign-plan. For audience research, see icp-research."
 argument-hint: "[product or brand to design]"
-allowed-tools: Read Grep Glob Bash WebSearch WebFetch mcp__paper__* mcp__pencil__*
+allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
 metadata:
   author: hungv47
