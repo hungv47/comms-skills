@@ -1,5 +1,7 @@
 # Marketing Skills
 
+![Marketing Skills](./assets/banner.png)
+
 Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, and outbound. 10 skills.
 
 ## Install
