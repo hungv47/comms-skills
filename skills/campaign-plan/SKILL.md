@@ -121,11 +121,6 @@ Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search st
 | Launch Sequencing Agent | 2 (sequential) | `agents/launch-sequencing-agent.md` | ORB Framework channel activation order |
 | Critic Agent | 2 (final) | `agents/critic-agent.md` | Alignment, scoring rigor, completeness |
 
-### Shared References (read by agents)
-- `references/3d-angle-framework.md` — Three-dimensional angle generation methodology (used by angle-agent)
-- `references/channel-strategy.md` — Habitat-informed channel selection framework (used by channel-agent)
-- `references/examples.md` — Complete worked examples across 5 business types
-
 **Note:** This skill is primarily sequential — each agent depends on the previous. Pillar-agent is the only Layer 1 agent. The value of multi-agent here is in specialist focus, critic gate, and single-agent fallback — not parallelism.
 
 ---
@@ -409,6 +404,6 @@ All quality gates met. Pillar-angle-channel traces verified. Timeline realistic 
 - [agents/critic-agent.md](agents/critic-agent.md) — Alignment, rigor, and completeness
 
 ### Shared References (references/)
-- [references/3d-angle-framework.md](references/3d-angle-framework.md) — Three-dimensional angle generation methodology
-- [references/channel-strategy.md](references/channel-strategy.md) — Habitat-informed channel selection
+- [references/3d-angle-framework.md](references/3d-angle-framework.md) — Three-dimensional angle generation methodology (angle-agent)
+- [references/channel-strategy.md](references/channel-strategy.md) — Habitat-informed channel selection (channel-agent)
 - [references/examples.md](references/examples.md) — 5 complete worked examples

@@ -117,14 +117,6 @@ Horizontal — works with `icp-research` (audience data), `copywriting` (copy cr
 | Prioritization | 2 (sequential) | `agents/prioritization-agent.md` | Ranks findings by conversion impact, ICE scoring |
 | Critic | 2 (final) | `agents/critic-agent.md` | Quality gate — PASS/FAIL with rewrite routing |
 
-### Shared References (read by multiple agents)
-- `references/core-principles.md` — Headlines, value props, CTAs, forms, message match, PAS
-- `references/social-proof-trust.md` — Social proof hierarchy, biases, trust signals
-- `references/ux-design.md` — Visual hierarchy, mobile optimization
-- `references/advanced-psychology.md` — Headline formulas, close sequences, pricing, urgency
-- `references/testing-optimization.md` — A/B testing, tracking, ICE framework
-- `references/implementation-checklist.md` — Pre-launch checklists
-
 ---
 
 ## Routing Logic

@@ -172,15 +172,6 @@ Previous: `brand-system` (required), `lp-brief` (optional — slot spec), `copyw
 | Figma-Spec Agent | 2F (downstream-route: human designer) | `agents/figma-spec-agent.md` | Produces design spec markdown for human designer in Figma |
 | Critic Agent | 3 (final) | `agents/critic-agent.md` | Visual rubric scoring + generic-AI-aesthetic detection + platform-fit check |
 
-### Shared References (read by multiple agents)
-
-- `references/asset-types.md` — Dimensions, safe zones, format conventions per asset type
-- `references/platform-modules.md` — Per-platform brief checklists: IG carousel, IG post, IG story, LinkedIn document, LinkedIn single-image, FB ad, YouTube thumbnail, X/Twitter card, OOH/billboard, banner display. **Status: skeleton — see notes in file.**
-- `references/prompt-patterns.md` — Image-gen prompt structures, parameter cheatsheets, model strengths
-- `references/visual-rubric.md` — Critic scoring dimensions with worked examples
-- `references/failure-modes.md` — Generic-AI-aesthetic catalog, brand-drift patterns, accessibility violations
-- `references/examples.md` — End-to-end worked examples per downstream route
-
 ---
 
 ## Routing Logic

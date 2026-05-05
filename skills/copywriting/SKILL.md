@@ -117,10 +117,6 @@ Horizontal — called by `lp-optimization`, `campaign-plan`, `lp-brief`. Can run
 | Zero-Risk Agent | 2 (sequential) | `agents/zero-risk-agent.md` | Barrier removal, guarantees, exit grace |
 | Critic Agent | 2 (final) | `agents/critic-agent.md` | Rubric scoring, 3Q test, annotation, PASS/FAIL |
 
-### Shared References (read by multiple agents)
-- `references/headline-formulas.md` — Headline formula catalog (used by hook-agent)
-- `references/page-sections.md` — Page section specs and testimonial criteria (used by body-agent, social-proof-agent)
-
 ---
 
 ## Routing Logic
@@ -433,8 +429,8 @@ Receives zero-risk output. Scores all key lines. All average ≥3.5. Annotated a
 - [agents/_template.md](agents/_template.md) — Reusable template for creating new agent files
 
 ### Shared References (references/)
-- [references/headline-formulas.md](references/headline-formulas.md) — Headline formula catalog
-- [references/page-sections.md](references/page-sections.md) — Page section types, templates, testimonial selection
+- [references/headline-formulas.md](references/headline-formulas.md) — Headline formula catalog (hook-agent)
+- [references/page-sections.md](references/page-sections.md) — Page section types, templates, testimonial selection (body-agent, social-proof-agent)
 
 ### Page-Specific Guidance
 

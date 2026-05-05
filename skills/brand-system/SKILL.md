@@ -185,23 +185,6 @@ Previous: `icp-research` (product context) | Next: `campaign-plan`, `copywriting
 | Accessibility Agent | 2 (sequential) | `agents/accessibility-agent.md` | DESIGN.md | WCAG AA contrast, touch targets, dark mode audit, focus states |
 | Critic Agent | 2 (final) | `agents/critic-agent.md` | Both | Cross-element coherence, **BRAND.md narrative quality, DESIGN.md AI-readability**, PASS/FAIL |
 
-### Shared References (read by multiple agents)
-- `references/assets-inventory.md` — Per-platform asset templates, emission rules, and auto-scan protocol (read by orchestrator only, Step 8.5)
-- `references/brand-archetypes.md` — 12 Jungian archetypes with visual/verbal mappings
-- `references/brand-voice.md` — Voice frameworks, tone dimensions, messaging architecture
-- `references/visual-identity.md` — Logo systems, imagery, iconography, graphic elements
-- `references/color-emotion.md` — Color psychology, OKLCH values, audience palettes
-- `references/typography-psychology.md` — Font personality mappings and pairing rules
-- `references/token-architecture.md` — Three-layer token system, semantic token map
-- `references/token-templates.md` — Primitive scales, radius-archetype mapping, mapping example
-- `references/component-tokens.md` — Component token map, button/input/card specs, motion tokens
-- `references/component-patterns.md` — Extended UI component patterns with token consumption maps
-- `references/implementation-rules.md` — Accessibility baseline, dark mode rules, brand applications
-- `references/platform-surfaces.md` — Per-platform brand-expression surfaces + icon specifications (strategy-agent reads the Brand expression tables, visual-agent reads the Icon specifications blocks)
-- `references/artboard-generation.md` — Paper MCP artboard specs and workflow
-- `references/paper-artboard-templates.md` — Paper MCP HTML/CSS templates
-- `references/ai-slop-detection.md` — AI-generated design anti-patterns checklist
-
 ### Quality-Bar Reference Examples
 - `references/example-brand.md` — Annotated quality guide: good vs bad excerpts for every BRAND.md section
 - `references/example-design.md` — Annotated quality guide: good vs bad excerpts for every DESIGN.md section

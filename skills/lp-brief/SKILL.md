@@ -153,16 +153,6 @@ Previous: `lp-optimization` (optional — existing page redesign), `campaign-pla
 | Conversion Critic | 5 (parallel) | `agents/conversion-critic-agent.md` | Scores brief against lp-optimization rubric |
 | Brand-Voice Critic | 5 (parallel) | `agents/brand-voice-critic-agent.md` | Scores brand fidelity + voice + envelope |
 
-### Shared References (read by multiple agents)
-
-- `references/conversion-principles.md` — Curated from lp-optimization (4-U, above-fold, CTA, message-match, objection handling, social proof). Cites lp-optimization references.
-- `references/surface-rhythm.md` — Page-architecture patterns (scroll velocity, section beats, breathing room)
-- `references/section-templates.md` — Hero, value prop, social proof, features, objection, FAQ, CTA — each with conversion-checklist
-- `references/hypothesis-rubric.md` — 3Q scoring (Visual / Falsifiable / Uniquely Ours)
-- `references/handoff-formats.md` — Claude Design / Pencil MCP / Figma spec hand-off patterns
-- `references/failure-modes.md` — Page-level failures (thin hero, weak CTA, no objection handling, brief bloat)
-- `references/examples.md` — Worked LP-brief examples
-
 ---
 
 ## Routing Logic
@@ -680,10 +670,10 @@ See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP
 
 ### Shared References (references/)
 
-- [references/conversion-principles.md](references/conversion-principles.md) — Curated from lp-optimization
-- [references/surface-rhythm.md](references/surface-rhythm.md) — Page architecture patterns
-- [references/section-templates.md](references/section-templates.md) — Per-section templates with checklists
-- [references/hypothesis-rubric.md](references/hypothesis-rubric.md) — 3Q scoring
-- [references/handoff-formats.md](references/handoff-formats.md) — Tool-specific hand-off patterns
-- [references/failure-modes.md](references/failure-modes.md) — Page-level failures
-- [references/examples.md](references/examples.md) — Worked examples
+- [references/conversion-principles.md](references/conversion-principles.md) — Curated from lp-optimization (4-U, above-fold, CTA, message-match, objection handling, social proof); cites lp-optimization references
+- [references/surface-rhythm.md](references/surface-rhythm.md) — Page-architecture patterns (scroll velocity, section beats, breathing room)
+- [references/section-templates.md](references/section-templates.md) — Hero, value prop, social proof, features, objection, FAQ, CTA — each with conversion-checklist
+- [references/hypothesis-rubric.md](references/hypothesis-rubric.md) — 3Q scoring (Visual / Falsifiable / Uniquely Ours)
+- [references/handoff-formats.md](references/handoff-formats.md) — Claude Design / Pencil MCP / Figma spec hand-off patterns
+- [references/failure-modes.md](references/failure-modes.md) — Page-level failures (thin hero, weak CTA, no objection handling, brief bloat)
+- [references/examples.md](references/examples.md) — Worked LP-brief examples

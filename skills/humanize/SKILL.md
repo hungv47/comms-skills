@@ -119,11 +119,6 @@ Horizontal — works on output from any skill. If content passed the `copywritin
 | Compression | 2 (sequential) | `agents/compression-agent.md` | Systematic 15-30% compression at sentence, paragraph, section levels |
 | Critic | 2 (final) | `agents/critic-agent.md` | Three-pass audit, 5-dimension scoring, PASS/FAIL with re-dispatch routing |
 
-### Shared References (read by multiple agents)
-- `references/ai-patterns.md` — 37 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists (used by pattern-scanner-agent, strip-agent, critic-agent)
-- `references/voice-injection.md` — Voice adjective framework, rhythm, specificity, personality injection (used by voice-extractor-agent, soul-injection-agent)
-- `references/conciseness-rules.md` — Compression techniques at sentence, paragraph, and section level (used by compression-agent)
-
 ---
 
 ## Routing Logic
@@ -466,6 +461,6 @@ User confirms. Proceed to Layer 2.
 - [agents/_template.md](agents/_template.md) — Reusable template for creating new agent files
 
 ### Shared References (references/)
-- [references/ai-patterns.md](references/ai-patterns.md) — 37 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists; detection, examples, fixes, severity
-- [references/voice-injection.md](references/voice-injection.md) — Voice adjective framework, rhythm, specificity, personality injection
-- [references/conciseness-rules.md](references/conciseness-rules.md) — Compression techniques at sentence, paragraph, and section level
+- [references/ai-patterns.md](references/ai-patterns.md) — 37 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists; detection, examples, fixes, severity (pattern-scanner, strip, critic)
+- [references/voice-injection.md](references/voice-injection.md) — Voice adjective framework, rhythm, specificity, personality injection (voice-extractor, soul-injection)
+- [references/conciseness-rules.md](references/conciseness-rules.md) — Compression techniques at sentence, paragraph, and section level (compression-agent)

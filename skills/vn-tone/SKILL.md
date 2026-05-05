@@ -131,10 +131,6 @@ Horizontal — polishes the output of any skill that produced Vietnamese text. T
 | Polisher | 2 (sequential) | `agents/polisher-agent.md` | Applies register-correct rewriting based on violation log; preserves meaning and structure |
 | Critic | 2 (final) | `agents/critic-agent.md` | Three-pass audit, 36-point scoring, PASS/FAIL with specific re-dispatch feedback |
 
-### Shared References (read by multiple agents)
-- `references/vn-tone-corpus.md` — Annotated corpus of 4 primary registers (báo chí, semi-casual, bro, pop-marketing) with pronoun systems, particles, vocabulary, rhythm, typography, real examples from live-scraped sources (VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun, Voz, Kenh14). Used by all three agents.
-- `references/translation-artifacts.md` — 28 common EN→VN translation giveaways across 10 categories, ranked Hard/Soft. Used by diagnostic (detection) and polisher (fixing) and critic (verification).
-
 ---
 
 ## Routing Logic
@@ -464,5 +460,5 @@ Bạn ơi, chào mừng bạn đến với Acme nha! Chúng mình sẽ đồng h
 - [agents/critic-agent.md](agents/critic-agent.md) — Three-pass audit, 36-point scoring, PASS/FAIL with re-dispatch feedback
 
 ### Shared References (references/)
-- [references/vn-tone-corpus.md](references/vn-tone-corpus.md) — Annotated corpus of 4 VN registers: register profiles, pronoun pair system, particle cheat sheets, vocabulary, rhythm, typography; real annotated examples from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun, Voz, Kenh14
-- [references/translation-artifacts.md](references/translation-artifacts.md) — 28 EN→VN translation giveaways across 10 categories (calques, passives, corporate translationese, typography); Hard/Soft severity, fix rules
+- [references/vn-tone-corpus.md](references/vn-tone-corpus.md) — Annotated corpus of 4 VN registers: register profiles, pronoun pair system, particle cheat sheets, vocabulary, rhythm, typography; real annotated examples from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun, Voz, Kenh14 (read by all three agents)
+- [references/translation-artifacts.md](references/translation-artifacts.md) — 28 EN→VN translation giveaways across 10 categories (calques, passives, corporate translationese, typography); Hard/Soft severity, fix rules (diagnostic detection, polisher fixing, critic verification)
