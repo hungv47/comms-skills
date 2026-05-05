@@ -44,6 +44,10 @@ campaign-plan and lp-brief can read research artifacts for alignment:
 - `.agents/targets.md` (from funnel-planner in research-skills)
 `npx skills add hungv47/research-skills`
 
+## Pre-Dispatch Protocol
+
+All 10 skills follow the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Cold Start (3-7 bundled questions, one round-trip) when context is missing; Warm Start (summary + optional probe) when artifacts/experience cover what's needed. Answers persist to `.agents/experience/{product,audience,brand,business,goals}.md` so subsequent skills never re-ask. Hard-gated skills (`design-brief`, `lp-brief`) gate before cold-start questioning — recommend `brand-system` / `lp-optimization` when gates fail. `cold-outreach` has the most-elaborate cold-start (7 questions + Missing-Input Hard Blocks for mode/channel/target/proof). `brand-system` carries the canonical 13-platform target list as a catalog inside its Pre-Dispatch.
+
 ## Multi-Agent Skills
 
 All 10 skills use a two-layer multi-agent orchestration pattern:
