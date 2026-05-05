@@ -222,6 +222,10 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 - `cold-outreach` additionally reads `research/icp-research.md` for target persona pain language
 - `campaign-plan` and `lp-brief` can read `.agents/prioritize.md` and `.agents/targets.md` from research-skills
 
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release notes.
+
 ## License
 
 MIT
