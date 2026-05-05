@@ -277,38 +277,67 @@ Classify the task, then follow the matching route.
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-Before dispatching any agent, gather context all agents will need.
+Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). cold-outreach has the most elaborate Pre-Dispatch in the stack (5 questions + missing-input protocol with hard blocks for un-faithfulness).
 
-### Artifact Check
-Read if present (do NOT block if missing):
+**Needed dimensions:** mode (services-sell / saas-sell / partnership-sell / community-sell), channel (email / LinkedIn / Twitter DM / other), target (name + role + company), trigger (specific signal + strength 1-5), desired outcome (reply / call / resource open / connection accept), bridge (problem we solve that connects to trigger), proof (case studies + logos + metrics + testimonials).
 
-| Artifact | Source | Benefit |
-|----------|--------|---------|
-| `research/product-context.md` | icp-research | What you're selling, voice adjectives, accuracy constraints |
-| `research/icp-research.md` | icp-research | Target persona pain, VoC language, context |
-| `.agents/mkt/campaign-plan.md` | campaign-plan | Broader campaign context, angle positioning |
+**Read order:**
+1. Pipeline: `research/product-context.md`, `research/icp-research.md`, `.agents/mkt/campaign-plan.md`. Read if present, do not block on missing.
+2. Experience: `.agents/experience/{audience,product,business}.md`.
 
-If `research/icp-research.md` or `research/product-context.md` is >30 days old, warn user and recommend re-running `icp-research`. Soft gate — proceed if confirmed, note "stale ICP" in artifact header.
+If `icp-research.md` / `product-context.md` >30 days old, warn and recommend re-running `icp-research` (soft gate — proceed with "stale ICP" header note).
 
-### Missing-Input Protocol
-- **Mode missing** → ask (AskUserQuestion: services-sell / saas-sell / partnership-sell / community-sell)
-- **Channel missing** → ask (AskUserQuestion with channel options)
-- **Target missing + no ICP artifact** → ask for name/role/company; block if both blank
-- **Signal missing** → proceed with weak-signal flag; strategist defaults to pain-first instead of trigger-first; critic weights Signal Connection more strictly
-- **Proof missing + no product-context** → ask for one concrete result; block if user insists "no proof" (uncheckable claims fail Specificity)
-- **Follow-up with no prior_touches** → if touch 2+ or slug ends `-t2`/`-t3`/etc., ask for verbatim prior text. BLOCK if missing (composer needs them to avoid repetition).
+**Warm Start** (target supplied + ICP exists + product proof in context):
 
-### Pre-Writing Framework
+```
+Found:
+- ICP context → "[primary persona from icp-research.md]"
+- product proof → "[from product-context.md or experience/product.md]"
 
-Answer these 5 questions before dispatching. Pass answers to every agent as `pre-writing`:
+Need before dispatching: target (name + role + company), trigger
+(specific signal + strength), and channel?
+```
 
-1. **Who is this going to?** Name, role, company, seniority. What do they care about most?
-2. **What's the trigger?** Why them, why now? (Signal strength 1-5 — 5 = individual post/quote, 1 = generic "companies like yours")
-3. **What do we want them to do?** Single outcome — reply with interest, short call, open a resource, accept a connection
-4. **What's the bridge?** Problem we solve that connects to their trigger + situation
-5. **What proof do you have?** List ALL candidates — case studies, named logos + metrics, specific claims, testimonials, credentials. Builds `available_proof[]`. Proof-selector picks one primary + one backup.
+**Cold Start** (no upstream context, fresh outreach):
+
+```
+cold-outreach writes touch-based outbound that earns a reply, not a delete.
+The composer needs precise inputs — generic prompts produce generic outreach.
+
+1. **Mode** — services-sell / saas-sell / partnership-sell / community-sell?
+2. **Channel** — email / LinkedIn (DM or InMail) / Twitter DM / other?
+3. **Target** — name, role, company, seniority. What do they care about most?
+4. **Trigger** — specific signal + strength (1-5 scale where 5 = individual
+   post/quote/news, 1 = generic "companies like yours"). Why them, why now?
+5. **Desired outcome** — single, specific: reply with interest / short call /
+   open a resource / accept a connection?
+6. **Bridge** — the problem we solve that connects to their trigger + situation.
+7. **Proof** — list ALL candidates: case studies, named logos + metrics,
+   specific claims, testimonials, credentials. Composer's proof-selector picks
+   one primary + one backup. (No proof = uncheckable claims = critic fail.)
+
+Answer 1-7 in one response. I'll dispatch.
+```
+
+### Missing-Input Hard Blocks
+
+These dimensions cannot be substituted via fallback — composer fails without them:
+
+- **Mode missing** → ask explicitly
+- **Channel missing** → ask explicitly
+- **Target missing + no ICP artifact** → ask for name/role/company; **BLOCK** if both blank
+- **Signal missing** → proceed with weak-signal flag (strategist defaults to pain-first instead of trigger-first; critic weights Signal Connection more strictly)
+- **Proof missing + no product-context** → ask for one concrete result; **BLOCK** if user insists "no proof" (uncheckable claims fail Specificity rubric)
+- **Follow-up touch (touch 2+ or slug ends -t2/-t3) with no prior_touches** → ask for verbatim prior text; **BLOCK** if missing (composer needs them to avoid repetition)
+
+**Write-back:**
+
+| Q | File | Key |
+|---|---|---|
+| 7. Proof points | `product.md` | `Product — proof points` (durable across cold-outreach + copywriting + lp-brief runs) |
+| 1, 2, 3, 4, 5, 6. Mode + channel + per-target dimensions | (run-specific, lives in the rationale.md artifact) |
 
 If `research/icp-research.md` exists, pull VoC pain language. If `research/product-context.md` exists, pull voice adjectives + accuracy constraints. If prior touches exist, include verbatim so strategist avoids repetition and composer maintains tone.
 

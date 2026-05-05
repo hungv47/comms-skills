@@ -120,6 +120,58 @@ Before delivering, all must hold:
 
 - `.agents/mkt/seo-[mode].md` (mode = audit | ai | programmatic | competitor | aso)
 
+---
+
+## Pre-Dispatch
+
+Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
+
+**Needed dimensions:** mode (audit / ai / programmatic / competitor / aso), site or property (domain or app store listing), audience, geographic + language scope.
+
+**Read order:**
+1. Pipeline: `research/icp-research.md` for audience + search behavior. `.agents/mkt/campaign-plan.md` for pillars/angles. `research/product-context.md` for category context.
+2. Experience: `.agents/experience/{audience,product,business}.md`.
+
+**Warm Start** (mode + site supplied, audience known):
+
+```
+Found:
+- mode → "[audit | ai | programmatic | competitor | aso]"
+- site → "[domain]"
+- audience → "[from icp-research.md]"
+
+Need before dispatching: geographic + language scope (US-en / global / specific)?
+```
+
+**Cold Start** (mode unclear or no audience context):
+
+```
+seo runs in 4 modes — each dispatches different agents. Pick the mode first:
+
+1. **Mode** — pick one:
+   - **audit** — technical foundations + Core Web Vitals + on-page review
+   - **ai** — AI/agent engine optimization (LLMs as discovery channel)
+   - **programmatic** — page templates for high-volume keyword targeting
+   - **competitor** — comparison content + share-of-voice analysis
+   - **aso** — App Store Optimization (Apple App Store + Google Play)
+2. **Site or property** — domain (for audit/ai/programmatic/competitor)
+   OR app store listing URL (for aso).
+3. **Audience** — primary buyer + their search behavior. Or point me at
+   `research/icp-research.md` if it exists.
+4. **Geographic + language scope** — US-en / global-en / multi-language /
+   specific market (e.g., "VN, north dialect, Tiếng Việt").
+
+Answer 1-4 in one response. I'll dispatch the agents for that mode.
+```
+
+**Write-back:**
+
+| Q | File | Key |
+|---|---|---|
+| 3. Audience (if novel) | `audience.md` | `Audience — search behavior` |
+| 4. Geo + language | `audience.md` | `Audience — geo + language scope` |
+| 1, 2. Mode + site | (run-specific, not persisted) |
+
 ## Chain Position
 
 Previous: `icp-research` + `campaign-plan` | Next: content production / site updates / re-audit after 30 days. Horizontal — invokable independently or post-IMC.

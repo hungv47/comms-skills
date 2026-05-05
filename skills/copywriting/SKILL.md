@@ -174,33 +174,60 @@ Classify the task, then follow the matching route.
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-Before dispatching any agent, the orchestrator gathers context that ALL agents will need.
+Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
 
-### Product Context Check
-Check for `research/product-context.md`. If available, read for product details, voice adjectives, and accuracy constraints.
-If `research/product-context.md` or `research/icp-research.md` `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research` before proceeding. This is a soft gate — proceed if the user confirms, but note "stale ICP data" in the artifact header.
+**Needed dimensions:** surface (page / email / social / headline / CTA / etc.), audience, the one shift (what should reader believe after?), unique proof (what can you say nobody else can?), traffic source (if applicable).
 
-### Language
-Default: English. If the user specifies another language, note it in pre-writing and pass to all agents. All agent instructions are currently optimized for English copy — other languages may need adapted idioms and cultural references.
+**Read order:**
+1. Pipeline: `research/icp-research.md` for VoC + pain language. `research/product-context.md` for product details and voice adjectives. `.agents/mkt/campaign-plan.md` for angle + awareness stage.
+2. Experience: `.agents/experience/{audience,product,goals}.md`.
 
-### Optional Artifacts
-| Artifact | Source | Benefit |
-|----------|--------|---------|
-| `icp-research.md` | icp-research | VoC language for copy |
-| `product-context.md` | icp-research | Product details, voice adjectives |
-| `campaign-plan.md` | campaign-plan | Angle, awareness stage, channel context |
+If `research/icp-research.md` or `product-context.md` `date` fields >30 days old, warn and recommend re-running `icp-research`. Soft gate — proceed if user confirms, note "stale ICP" in artifact header.
 
-### Pre-Writing Framework
-Answer these 4 questions before dispatching. Pass the answers to every agent as the `pre-writing` input:
+**Language:** default English. If another language specified, note in pre-writing — agent instructions are optimized for English copy; other languages may need adapted idioms and cultural references.
 
-1. **Who am I talking to?** What do they currently believe? What language do they use?
-2. **What should they believe after reading this?** What's the one shift?
-3. **What can I say that nobody else can?** What's our unique proof?
-4. **Where is the traffic coming from?** (Ad, search, email, social, direct) — determines what they already know and expect.
+**Warm Start** (icp-research + product-context + campaign-plan exist):
 
-If `research/icp-research.md` exists, pull VoC quotes and pain language. Write how the buyer talks, not how the brand talks.
+```
+Found:
+- audience → "[VoC summary from icp-research.md]"
+- product/voice → "[adjectives from product-context.md]"
+- campaign angle → "[from campaign-plan.md if present]"
+
+Need before dispatching: surface (page/email/headline/CTA/etc.) + the
+one shift this copy should produce.
+```
+
+**Cold Start** (no upstream artifacts):
+
+```
+copywriting writes for a specific surface, a specific audience, with a
+specific shift in mind. Generic prompts produce generic copy. Before I dispatch:
+
+1. **Surface** — landing page (full) / homepage section / email / social post
+   / headline only / CTA only / tagline / subject line / other?
+2. **Audience** — primary buyer (role + situation + 1-2 pains they articulate).
+   Or point me at `research/icp-research.md` if it exists.
+3. **The one shift** — what should the reader believe after reading this
+   that they don't believe now? One sentence.
+4. **Unique proof** — what can you say that nobody else can? Specific
+   client + number, named feature with results, or domain credentials.
+5. **Traffic source** (only if Q1 is page or email) — ad / search / email /
+   social / direct? Determines what the reader already knows and expects.
+
+Answer 1-5 (or 1-4 if no traffic source) in one response. I'll dispatch.
+```
+
+**Write-back:**
+
+| Q | File | Key |
+|---|---|---|
+| 2. Audience | `audience.md` | `Audience — primary persona` (only if novel; pre-existing icp-research takes precedence) |
+| 3. The one shift | `goals.md` | `Goals — copy shift: [surface]` |
+| 4. Unique proof | `product.md` | `Product — proof points` |
+| 1, 5. Surface + traffic source | (routing only) |
 
 ---
 

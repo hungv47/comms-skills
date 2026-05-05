@@ -165,34 +165,67 @@ Small skill, two routes.
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-### Register Resolution
-Determine target register from (in priority order):
-1. Explicit `--register` argument from user
-2. Brand voice from `research/product-context.md` (if present) — map brand voice adjectives to register: "authoritative/institutional" → bao-chi; "warm/community" → semi-casual; "in-group/community" → bro; "young/lifestyle/consumer" → pop-marketing
-3. Content type inferred from upstream artifact (news article → bao-chi; blog post → semi-casual; landing page → pop-marketing)
+Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
+
+**Needed dimensions:** target register (báo chí / semi-casual / bro / pop-marketing), dialect (north / south / neutral), subvariant (only if bro: bro-otofun / bro-voz).
+
+**Read order:**
+1. Pipeline: `research/product-context.md` for brand voice + dialect/glossary preferences. Existing `.agents/mkt/content/[slug].md` if polishing a prior artifact.
+2. Experience: `.agents/experience/brand.md` for register-mapping notes.
+3. Conversation: explicit `--register` arg from user always wins.
+
+### Register Resolution (used in both warm and cold flows)
+
+Priority order:
+1. Explicit `--register` argument
+2. Brand voice from `research/product-context.md` — adjective→register map:
+   - "authoritative/institutional" → báo chí
+   - "warm/community" → semi-casual
+   - "in-group/community" → bro
+   - "young/lifestyle/consumer" → pop-marketing
+3. Content type inferred from upstream artifact (news article → báo chí; blog post → semi-casual; landing page → pop-marketing)
 4. Ask the user — do not guess silently
 
-### Product Context Check
-Check for `research/product-context.md`. If available, read for brand voice and any dialect/register preferences. Note in pre-writing if the brand specifies Northern/Southern dialect or has a glossary of terms to preserve.
+**Warm Start** (register inferable from priority 1-3):
 
-### Required Artifacts
-None — polishes any Vietnamese text standalone.
+```
+Inferred register: [báo chí | semi-casual | bro | pop-marketing] from [source].
+Dialect default: neutral. Override either, or proceed?
+```
 
-### Optional Artifacts
-| Artifact | Source | Benefit |
+**Cold Start** (priority 4 — register cannot be inferred):
+
+```
+vn-tone polishes Vietnamese text to a specific register. Register choice
+changes pronouns, particles, vocabulary, and rhythm — getting it wrong
+makes the text feel off-key.
+
+1. **Target register** — báo chí (institutional, news, formal),
+   semi-casual (warm, community, blog), bro (in-group, niche tech/auto/forum),
+   or pop-marketing (young, lifestyle, consumer)?
+2. **Dialect** — north, south, or neutral (default)?
+3. **Subvariant** (only if Q1 = bro) — bro-otofun (auto enthusiast) or
+   bro-voz (tech enthusiast)?
+
+Answer 1-3 (or 1-2 if not bro) in one response. I'll dispatch.
+```
+
+**Write-back:**
+
+| Q | File | Key |
 |---|---|---|
-| `product-context.md` | icp-research | Brand voice for register mapping, glossary |
-| `content/[slug].md` | upstream copy skill | Original Vietnamese content |
-| `content/[slug].humanized.md` | humanize | Pre-humanized content to polish further |
+| 1. Register | `brand.md` | `Brand — VN target register` (only if user wants this stable cross-run; otherwise routing-only) |
+| 2-3. Dialect, subvariant | (routing only — content-specific) |
 
 ### Pre-Writing Assembly
-Compile and pass to every agent:
-- **target_register** — `bao-chi` \| `semi-casual` \| `bro` \| `pop-marketing` (with optional subvariant)
+
+After Pre-Dispatch resolves, compile and pass to every agent:
+- **target_register** — `bao-chi` | `semi-casual` | `bro` | `pop-marketing` (with optional subvariant)
 - **source_language** — usually "en" or "unknown" (for diagnosis context)
-- **brand_glossary** — list of terms to preserve unchanged
-- **dialect_preference** — `north` \| `south` \| `neutral` (default: neutral)
+- **brand_glossary** — list of terms to preserve unchanged (from product-context.md if present)
+- **dialect_preference** — `north` | `south` | `neutral` (default: neutral)
 - **user_directives** — explicit overrides
 - **original_text** — the Vietnamese input, exactly as provided
 

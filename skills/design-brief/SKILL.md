@@ -208,32 +208,79 @@ Override auto-detection with `--route=image-gen|vector-tool|designer-handoff|tem
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-### Brand Artifact Check
+This skill is **hard-gated** on brand artifacts. Cold-start questioning happens after the gate. Full Pre-Dispatch protocol pattern: `meta-skills/references/pre-dispatch-protocol.md`.
 
-Check for `brand/BRAND.md` and `brand/DESIGN.md`. Missing → **NEEDS_CONTEXT**, recommend `brand-system`.
+### Hard gate (before any questioning)
 
-If `brand/ASSETS.md` exists, scan for a row matching the requested asset. If found, pre-fill format/dimensions/path and prepare to tick the box on completion.
+`brand/BRAND.md` AND `brand/DESIGN.md` must be present. If either missing → return **NEEDS_CONTEXT**, recommend `brand-system` (Route A for BRAND only, Route B for full design tokens). If either >60 days stale and user hasn't confirmed, warn before proceeding.
 
-If artifact dates are >60 days old and unconfirmed by user, **warn** and ask before proceeding.
+If `brand/ASSETS.md` exists, scan for a row matching the requested asset. If found, pre-fill format/dimensions/path and prepare to tick the checkbox on completion.
 
-### Required Artifacts
+### Needed dimensions
+- Asset type (OG image / IG carousel / banner / hero / OOH / etc.)
+- Downstream route (image-gen / vector-tool / designer-handoff / template-pack — drives Layer 2)
+- Brand reference (resolved by hard gate to `brand/DESIGN.md`)
+- Copy/headline if any (to render IN the asset)
+- Constraints (dimensions, deadline, must-include elements)
 
-| Artifact | Source | If Missing |
-|----------|--------|------------|
-| `brand/BRAND.md` | brand-system | **NEEDS_CONTEXT.** Run brand-system Route A or B first. |
-| `brand/DESIGN.md` | brand-system Route B | **NEEDS_CONTEXT.** Run brand-system Route B for full design tokens. |
+### Read order (post-gate)
+1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (confirmed by hard gate). `brand/ASSETS.md` for dimension pre-fill. `.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` if invoked from lp-brief. `.agents/mkt/content/[slug].copy.md` if copy supplied separately. `.agents/mkt/campaign-plan.md` for campaign context. `research/icp-research.md` for audience visual preferences.
+2. Experience: `.agents/experience/{brand,goals}.md`.
 
-### Optional Artifacts
+### Optional Artifacts (read if present)
 
 | Artifact | Source | Benefit |
 |----------|--------|---------|
 | `brand/ASSETS.md` | brand-system Route B | Auto-fill dimensions, tick checkbox on completion |
-| `.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Slot spec when this brief is for an LP asset |
+| `.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Slot spec when brief is for an LP asset |
 | `.agents/mkt/content/[slug].copy.md` | copywriting | Copy to use in the asset |
 | `.agents/mkt/campaign-plan.md` | campaign-plan | Campaign context, awareness stage |
 | `research/icp-research.md` | icp-research | Audience visual preferences |
+
+**Warm Start** (invoked from lp-brief or campaign-plan with asset spec):
+
+```
+Hard gate passed: brand/BRAND.md + brand/DESIGN.md present.
+Found:
+- asset spec → "[from upstream slot or campaign-plan]"
+- copy → "[from copywriting if present]"
+- ASSETS.md row → "[matched / no match]"
+
+Auto-detecting downstream route from asset type. Override or proceed?
+```
+
+**Cold Start** (standalone invocation, asset request from user):
+
+```
+design-brief produces a per-asset brief that downstream renderers (Claude
+Design / Pencil MCP / Figma / human designer) execute. Before I dispatch:
+
+1. **Asset type** — what's being designed? (OG image / IG carousel / IG post /
+   IG story / LinkedIn document / LinkedIn single-image / FB ad / YouTube
+   thumbnail / X card / OOH / banner / hero / other.)
+2. **Downstream route** — image-gen (generative for photos/illustrations) /
+   vector-tool (Pencil/Figma for layouts and variants) / designer-handoff
+   (human designer for print or complex composition) / template-pack
+   (multi-format social packs from one brief). Auto-detected from asset
+   type by default — override here.
+3. **Copy/headline** — what text appears IN the asset? Headline, body,
+   CTA, brand mark text. Reference `.agents/mkt/content/[slug].copy.md`
+   if supplied separately.
+4. **Constraints** — dimensions (if non-standard), deadline, must-include
+   elements (logo placement, brand mark, legal disclaimer, etc.).
+
+Answer 1-4 in one response. (Brand reference is auto-resolved from
+brand/BRAND.md + brand/DESIGN.md.) I'll dispatch.
+```
+
+**Write-back:**
+
+| Q | File | Key |
+|---|---|---|
+| 4. Constraints (durable: legal disclaimer policies, logo placement rules) | `brand.md` | `Brand — design constraints` (only if user expresses durable rule) |
+| 1, 2, 3. Asset-specific dimensions | (per-asset, lives in design-brief artifact) |
 
 ---
 

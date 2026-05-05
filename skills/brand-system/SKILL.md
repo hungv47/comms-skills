@@ -240,57 +240,92 @@ Step 10   Deliver artifacts (BRAND.md + DESIGN.md + ASSETS.md)
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-### Product Context Check
-Check for `research/product-context.md` and `research/icp-research.md`. If `date` fields are older than 30 days, **warn the user** and recommend re-running upstream skills.
+Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
 
-### Required Inputs — Interview If Missing
-- Product description or PRD
-- Target audience profile
-- Competitive context
-- **Target platforms** — which surfaces the brand ships on. Multi-select; ask explicitly, don't assume "a web app." Canonical set:
-  - **Web** (marketing site, in-product web UI, PWA)
-  - **iOS / iPadOS**
-  - **Android**
-  - **macOS** (native AppKit/SwiftUI, or cross-platform shell like Electron/Tauri — ask which)
-  - **Windows** (native WinUI/Win32, or cross-platform shell)
-  - **Linux desktop** (GTK/Qt, or shell)
-  - **watchOS** / **Wear OS**
-  - **tvOS**
-  - **CarPlay / Android Auto**
-  - **Browser extension** (Chrome / Firefox / Safari / Edge — ask which)
-  - **CLI / terminal**
-  - **Email** (first-class brand channel — transactional + newsletter)
-  - **Embedded app** (Slack / Notion / Discord / Teams / Linear / GitHub — ask which host)
+**Needed dimensions:** product (1-line), audience, competitive landscape (3-5 names), voice intuition (3 adjectives or reference brand), aesthetic intuition (3 visual references), **target platforms** (mandatory enumeration — drives ASSETS.md and per-platform sections), positioning intent.
 
-  **Disambiguate vagueness:** "mobile app" → iOS, Android, or both? "desktop app" → native or Electron? "web app" → marketing site + product, or one? If user names a cross-platform shell (Electron, Tauri, Flutter, RN, Capacitor), still enumerate host OSes — each gets its own surface set.
+**Read order:**
+1. Pipeline: `research/product-context.md`, `research/icp-research.md`. Existing brand assets directory if present.
+2. Experience: `.agents/experience/{product,audience,brand,business}.md`.
 
-### Strongly Recommended
-- Existing brand assets (logos, colors, fonts, past guidelines)
-- Founder/team values and origin story
-- Key differentiators
+If pipeline artifact `date` fields are >30 days old, warn and recommend re-running `icp-research`.
 
-### Helpful
-- Admired brands (aspirational and anti-aspirational)
-- Market positioning intent (premium, accessible, disruptive, trusted)
+**Warm Start** (product + audience inferable from pipeline, prior brand exists or strong references in experience/):
 
-### Optional Artifacts
-| Artifact | Source | Benefit |
-|----------|--------|---------|
-| `research/product-context.md` | icp-research (from `hungv47/research-skills`) | Product positioning, audience, and voice adjectives — grounds brand strategy in audience research |
-| `research/icp-research.md` | icp-research (from `hungv47/research-skills`) | Audience personas, pain profiles, and VoC quotes — brand strategy without audience research produces generic archetypes |
+```
+Found:
+- product → "[1-line]"
+- audience → "[primary persona]"
+- voice notes → "[adjectives from experience/brand.md if any]"
 
-**Strongly recommended:** Run `icp-research` (from research-skills) first if audience research hasn't been done.
+Need before dispatching: target platforms (which surfaces ship), competitive
+landscape (3-5 names), and positioning intent (premium / accessible / disruptive / trusted).
+```
+
+**Cold Start** (no audience research, fresh brand work):
+
+```
+brand-system produces BRAND.md, DESIGN.md, and ASSETS.md. Brand is grounded
+in audience + competitive context — without them, output is generic archetypes.
+(Strongly recommended: run `icp-research` first if no audience research exists.)
+
+1. **Product** in one sentence — what does it do, who pays for it?
+2. **Audience** in one line — primary buyer + 1-2 pain points.
+3. **Competitive landscape** — 3-5 brand names you compete with or admire,
+   noting what each is known for. (Aspirational AND anti-aspirational both valuable.)
+4. **Voice intuition** — 3 adjectives (e.g., "blunt, technical, dry") OR
+   one reference brand whose voice you'd want to emulate.
+5. **Aesthetic intuition** — 3 visual references (URLs, brand names, moodboard hints).
+6. **Target platforms** — multi-select from the canonical list below.
+   Mandatory: this drives per-platform Digital Touchpoints, icon specs,
+   and ASSETS.md rows. Undeclared platforms will NOT appear in artifacts.
+7. **Positioning intent** — premium / accessible / disruptive / trusted.
+
+Answer 1-7 in one response. I'll dispatch.
+```
+
+### Target Platforms (catalog for Q6)
+
+Multi-select, explicit — never "cross-platform". Disambiguate vagueness ("mobile app" → iOS, Android, or both? "desktop app" → native or Electron?):
+
+- **Web** (marketing site, in-product web UI, PWA)
+- **iOS** / **iPadOS**
+- **Android**
+- **macOS** (native AppKit/SwiftUI, or cross-platform shell like Electron/Tauri — ask which)
+- **Windows** (native WinUI/Win32, or cross-platform shell)
+- **Linux desktop** (GTK/Qt, or shell)
+- **watchOS** / **Wear OS**
+- **tvOS**
+- **CarPlay** / **Android Auto**
+- **Browser extension** (Chrome / Firefox / Safari / Edge — ask which)
+- **CLI / terminal**
+- **Email** (first-class brand channel — transactional + newsletter)
+- **Embedded app** (Slack / Notion / Discord / Teams / Linear / GitHub — ask which host)
+
+If user names a cross-platform shell (Electron, Tauri, Flutter, RN, Capacitor), still enumerate host OSes — each gets its own surface set in ASSETS.md.
+
+**Write-back:**
+
+| Q | File | Key |
+|---|---|---|
+| 1. Product | `product.md` | `Product — one-line` |
+| 2. Audience | `audience.md` | `Audience — primary persona` |
+| 3. Competitors | `business.md` | `Business — competitive landscape` |
+| 4. Voice | `brand.md` | `Brand — voice intuition` |
+| 5. Aesthetic | `brand.md` | `Brand — aesthetic intuition` |
+| 6. Platforms | `technical.md` | `Technical — supported platforms` (durable) |
+| 7. Positioning | `business.md` | `Business — positioning intent` |
 
 ### Context to Pass to All Agents
+
+After Pre-Dispatch resolves:
 1. **Product:** description, audience, competitive landscape
 2. **Existing assets:** logos, colors, fonts, guidelines to preserve or evolve
 3. **Positioning intent:** premium, accessible, disruptive, trusted
 4. **Upstream artifacts:** excerpts from product-context.md and icp-research.md if available
-5. **Target platforms:** declared platform list from intake. **Strategy-agent renders a Digital Touchpoints subsection per declared platform; visual-agent renders per-platform icon specs. Undeclared platforms MUST NOT appear.** If user declared "iOS + web" only, do not pad with Android/Windows sections.
-
-Missing product details are not guessable — interview for them.
+5. **Target platforms:** declared platform list. **Strategy-agent renders a Digital Touchpoints subsection per declared platform; visual-agent renders per-platform icon specs. Undeclared platforms MUST NOT appear.** If user declared "iOS + web" only, do not pad with Android/Windows sections.
 
 ---
 

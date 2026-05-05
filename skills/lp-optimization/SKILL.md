@@ -191,32 +191,61 @@ This is a write workflow, not an audit workflow. The agents are repurposed as pl
 
 ---
 
-## Step 0: Pre-Dispatch Context Gathering
+## Pre-Dispatch
 
-Before dispatching any agent, the orchestrator gathers context that ALL agents will need.
+Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
 
-### Product Context Check
-Check for `research/product-context.md`. If available, read for product details and accuracy. If missing, strongly recommend running `icp-research` first — this skill works without it but produces significantly better output with it.
-If `research/product-context.md` or `research/icp-research.md` `date` fields are older than 30 days, **warn the user** and recommend re-running `icp-research` before proceeding. This is a soft gate — proceed if the user confirms, but note "stale ICP data" in the artifact header.
+**Needed dimensions:** URL or page paste, primary conversion goal, traffic source(s), traffic source copy (ad headlines, email subject, search meta), known conversion baseline if any.
 
-### Required Artifacts
-None — can audit any page standalone.
+**Read order:**
+1. Pipeline: `research/icp-research.md` for VoC + audience belief mapping. `research/product-context.md` for product accuracy constraints.
+2. Experience: `.agents/experience/{audience,goals}.md`.
+3. Page itself: fetch URL or read paste.
 
-### Optional Artifacts
-| Artifact | Source | Benefit |
-|----------|--------|---------|
-| `icp-research.md` | icp-research | VoC data for persuasion |
-| `product-context.md` | icp-research | Product details for accuracy |
+If pipeline artifact `date` fields >30 days old, warn and recommend re-running `icp-research` (soft gate — proceed with "stale ICP" header note).
 
-### Pre-Writing Framework
-Answer these questions before dispatching. Pass the answers to every agent as the `pre-writing` input:
+**Warm Start** (URL supplied + audience known + goal clear from invocation):
 
-1. **What is the primary conversion goal?** (signup, purchase, demo request, download)
-2. **Who is the target audience?** What do they currently believe? What language do they use?
-3. **Where is the traffic coming from?** (Ad, search, email, social, direct) — determines message match requirements.
-4. **What traffic source copy exists?** (ad headlines, email subject lines, search meta descriptions) — needed for message-match verification.
+```
+Found:
+- page → "[URL]"
+- audience → "[from icp-research.md]"
+- inferred goal → "[from URL pattern: /pricing → purchase, /signup → signup, etc.]"
 
-If `research/icp-research.md` exists, pull VoC quotes and pain language for all agents.
+Need before auditing: traffic source(s) and source copy (for message-match check)?
+```
+
+**Cold Start** (URL only, no context):
+
+```
+lp-optimization audits a landing page for conversion friction. The audit's
+specificity depends on knowing the goal, audience, and traffic source —
+without them, recommendations stay generic.
+
+1. **URL or paste** — page to audit. (If URL is auth-walled, paste HTML or
+   screenshots of all sections.)
+2. **Primary conversion goal** — signup / purchase / demo request / download
+   / lead capture / other?
+3. **Traffic source(s)** — paid ad / SEO / email / social / direct / referral.
+   Multiple OK. Drives message-match analysis.
+4. **Source copy** (for any traffic source named in Q3) — ad headlines,
+   email subject lines, search meta descriptions, social post copy.
+   Without this, message-match agent can only guess at coherence.
+5. **Audience** — primary buyer (or point me at `research/icp-research.md`).
+6. **Conversion baseline** if known — current conversion rate or volume.
+
+Answer 1-6 (skip Q4 if no traffic sources, Q6 if unknown) in one response.
+I'll dispatch the audit.
+```
+
+**Write-back:**
+
+| Q | File | Key |
+|---|---|---|
+| 2. Goal | `goals.md` | `Goals — page conversion goal: [URL/route]` |
+| 5. Audience | `audience.md` | `Audience — primary persona` (only if novel) |
+| 6. Baseline | `goals.md` | `Goals — baseline conversion: [URL/route]` |
+| 1, 3, 4. URL + traffic + source copy | (page-specific, not persisted) |
 
 ---
 
