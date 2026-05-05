@@ -49,12 +49,9 @@ routing:
   consumes:
     - product-context.md
     - icp-research.md
-    - mkt/content-research.md
     - prioritize.md
   requires: []
-  defers-to:
-    - skill: content-research
-      when: "need pre-creation content intelligence before planning"
+  defers-to: []
   parallel-with:
     - brand-system
   interactive: false
@@ -182,7 +179,6 @@ Check for `research/product-context.md` and `research/icp-research.md`. If `date
 |----------|--------|---------|
 | `product-context.md` | icp-research | Product details, voice adjectives |
 | `prioritize.md` | prioritize | Strategic initiatives for alignment |
-| `mkt/content-research.md` | content-research (research-skills) | Competitor content patterns, audience language, trending topics — informs channel selection and angle priorities |
 
 ### Growth Motion Identification
 
@@ -342,7 +338,7 @@ For offline channels (IRL, SMS), include execution notes:
 
 ## Next Step
 
-Run `lp-brief` for any campaign landing pages, `seo` for search-channel execution, `cold-outreach` for outbound. If content-research was not run before this plan, consider running it now to validate content angles with market data before execution.
+Run `lp-brief` for any campaign landing pages, `seo` for search-channel execution, `cold-outreach` for outbound.
 
 ---
 
