@@ -69,7 +69,6 @@ routing:
     - brand/DESIGN.md
     - brand/ASSETS.md
     - mkt/lp-brief/[slug]/asset-slots/*.md
-    - mkt/content-research.md
   requires:
     - brand/BRAND.md
     - brand/DESIGN.md
@@ -117,7 +116,6 @@ Brand fidelity > aesthetic novelty. Platform fitness > generic polish. A boring 
 - **`brand/ASSETS.md`** — pre-fills format/dimensions if asset matches a row; ticks box on completion
 - **`.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md`** — slot spec when brief is for a landing-page asset
 - **`.agents/mkt/content/[slug].copy.md`** — copy used IN the asset (headline, body, CTA)
-- **`.agents/mkt/content-research.md`** — winning visual patterns from competitor scan
 - **`.agents/mkt/campaign-plan.md`** — campaign context, channel placement, awareness stage
 
 ## Output
@@ -234,7 +232,6 @@ If artifact dates are >60 days old and unconfirmed by user, **warn** and ask bef
 | `brand/ASSETS.md` | brand-system Route B | Auto-fill dimensions, tick checkbox on completion |
 | `.agents/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Slot spec when this brief is for an LP asset |
 | `.agents/mkt/content/[slug].copy.md` | copywriting | Copy to use in the asset |
-| `.agents/mkt/content-research.md` | content-research | Winning visual patterns |
 | `.agents/mkt/campaign-plan.md` | campaign-plan | Campaign context, awareness stage |
 | `research/icp-research.md` | icp-research | Audience visual preferences |
 
@@ -262,7 +259,7 @@ Spawn **IN PARALLEL**; outputs feed Layer 1.5:
 | Agent | Instruction File | Pass These Inputs | Reference Files |
 |-------|-----------------|-------------------|-----------------|
 | Brand-Anchor Agent | `agents/brand-anchor-agent.md` | full BRAND.md + DESIGN.md + asset request | — |
-| Concept Agent | `agents/concept-agent.md` | asset request + brand digest + content-research patterns (if any) | `references/asset-types.md`, `references/platform-modules.md`, `references/failure-modes.md` |
+| Concept Agent | `agents/concept-agent.md` | asset request + brand digest | `references/asset-types.md`, `references/platform-modules.md`, `references/failure-modes.md` |
 | Copy-Anchor Agent | `agents/copy-anchor-agent.md` | asset request + copywriting artifact (if any) + brand voice rules | — |
 
 ---

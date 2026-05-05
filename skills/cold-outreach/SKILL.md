@@ -55,7 +55,6 @@ routing:
   consumes:
     - product-context.md
     - icp-research.md
-    - mkt/content-research.md
     - mkt/campaign-plan.md
   requires: []
   defers-to:
@@ -289,7 +288,6 @@ Read if present (do NOT block if missing):
 |----------|--------|---------|
 | `research/product-context.md` | icp-research | What you're selling, voice adjectives, accuracy constraints |
 | `research/icp-research.md` | icp-research | Target persona pain, VoC language, context |
-| `.agents/mkt/content-research.md` | content-research | Audience language map, winning hook patterns |
 | `.agents/mkt/campaign-plan.md` | campaign-plan | Broader campaign context, angle positioning |
 
 If `research/icp-research.md` or `research/product-context.md` is >30 days old, warn user and recommend re-running `icp-research`. Soft gate — proceed if confirmed, note "stale ICP" in artifact header.

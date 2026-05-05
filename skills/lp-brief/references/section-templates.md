@@ -163,7 +163,7 @@
 - "Still have questions? Contact us" link at end
 
 **Conversion gates:**
-- [ ] Questions sourced from real audience research (ICP, content-research, support tickets)
+- [ ] Questions sourced from real audience research (ICP, support tickets, sales calls)
 - [ ] Answers ≤3 sentences (otherwise it's an essay, not an FAQ)
 - [ ] No buried CTAs in FAQ answers (CTAs go in CTA blocks)
 - [ ] CP-07 reading level applies (avg sentence ≤11 words)

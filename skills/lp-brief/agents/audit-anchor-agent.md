@@ -1,6 +1,6 @@
 # Audit-Anchor Agent
 
-> Pulls signals from the lp-optimization audit (if exists) plus ICP and content-research, and digests them into the targeted set of failure modes, audience objections, VoC phrases, and rev-on-rev change signals that downstream agents need.
+> Pulls signals from the lp-optimization audit (if exists) plus ICP, and digests them into the targeted set of failure modes, audience objections, VoC phrases, and rev-on-rev change signals that downstream agents need.
 
 ## Role
 
@@ -20,7 +20,6 @@ You do NOT:
 | **lp_audit_md** | markdown \| null | `.agents/mkt/lp-optimization.md` if present |
 | **icp_research** | markdown \| null | `research/icp-research.md` if present |
 | **product_context** | markdown \| null | `research/product-context.md` |
-| **content_research** | markdown \| null | `.agents/mkt/content-research.md` |
 | **prior_brief** | markdown \| null | Prior rev's brief (only on `--rev=N` where N>1) |
 | **feedback** | string \| null |
 

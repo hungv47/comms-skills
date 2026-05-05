@@ -108,7 +108,7 @@ Return a single markdown document with one or more hand-off prompt blocks (one p
 - Narrative + reference images + structured spec
 - Lead with hypothesis + audience context (designer needs the why)
 - Then: architecture + section spec + asset paths
-- Include reference inspiration if available (from `brand/inspiration/` or content-research)
+- Include reference inspiration if available (from `brand/inspiration/`)
 - Voice rules + sacred elements as a "non-negotiable" callout
 - Reference: `handoff-formats.md` § Human designer
 

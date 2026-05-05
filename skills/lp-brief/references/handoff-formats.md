@@ -201,7 +201,7 @@ Single desktop + mobile layout per section. Use the design system tokens above.
 
 [5. Per-section spec — copy verbatim, layout intent, asset references, type/color tokens]
 
-[6. Reference inspiration (optional) — links to brand/inspiration/ or content-research]
+[6. Reference inspiration (optional) — links to brand/inspiration/]
 
 [7. Pre-flight checklist for the designer — sacred respected, voice clean, copy verbatim, asset paths used]
 ```

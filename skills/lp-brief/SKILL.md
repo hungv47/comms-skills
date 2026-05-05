@@ -51,7 +51,6 @@ routing:
     - research/icp-research.md
     - research/product-context.md
     - mkt/campaign-plan.md
-    - mkt/content-research.md
   requires:
     - brand/BRAND.md
     - brand/DESIGN.md
@@ -101,7 +100,6 @@ Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity
 | `research/icp-research.md` | optional | Objections + VoC for copy candidates |
 | `research/product-context.md` | optional | Product accuracy in features/proof |
 | `.agents/mkt/campaign-plan.md` | optional | Traffic source, awareness stage, role in funnel |
-| `.agents/mkt/content-research.md` | optional | Winning patterns, audience language map |
 | `.agents/targets.md` | optional | Conversion target informs CTA aggressiveness |
 
 ## Output
@@ -179,7 +177,7 @@ Same dispatch as Route A, but Layer 1 audit-anchor-agent reads the audit. Hypoth
 
 ```
 1. Read prior brief at .agents/mkt/lp-brief/[slug]/v[N-1]/brief.md
-2. Read fresh inputs (new audit, new ICP, new content-research)
+2. Read fresh inputs (new audit, new ICP)
 3. Run Layer 1 — diff prior brief against fresh inputs
 4. Hypothesis-agent receives "what's new since rev N-1" context
 5. Continue Route A/B from Layer 1.5
@@ -252,7 +250,7 @@ If multi-agent dispatch is unavailable, execute layers sequentially. Approval ga
 
 | Agent | Pass These Inputs | Reference Files |
 |-------|-------------------|-----------------|
-| Audit-Anchor Agent | page identity + tier + lp-optimization.md (if present) + ICP + content-research | — |
+| Audit-Anchor Agent | page identity + tier + lp-optimization.md (if present) + ICP | — |
 | Brand-Anchor Agent | full BRAND.md + DESIGN.md + page identity | — |
 
 Wait for both — outputs feed Layer 1.5.

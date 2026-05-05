@@ -20,7 +20,7 @@
 
 ### Layer 1 (parallel)
 
-**audit-anchor-agent** (no audit, pulling signals from ICP + content-research instead):
+**audit-anchor-agent** (no audit, pulling signals from ICP instead):
 > ICP top 3 objections:
 > 1. "Pricing is opaque on most SaaS — I need to see numbers fast."
 > 2. "Will this scale to 50 people without re-platforming?"
