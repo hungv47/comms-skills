@@ -226,7 +226,7 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for release notes.
+See [CHANGELOG.md](CHANGELOG.md) for release notes (commit 3254a53, 2026-05-05).
 
 ## License
 
