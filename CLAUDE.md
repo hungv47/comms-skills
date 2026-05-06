@@ -1,6 +1,6 @@
 # Marketing Skills
 
-Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, and outbound. 10 skills.
+Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, and short-form video briefs. 11 skills.
 
 ## Pipeline
 brand-system (visual identity foundation)
@@ -9,6 +9,7 @@ campaign-plan (channel strategy + calendar)
   ↓
   ├─ lp-brief (per landing page) → design-brief (per asset slot)
   ├─ seo (per mode: audit / ai / programmatic / competitor / aso)
+  ├─ short-form-brief (per video asset) ← reads short-form-research.md from research-skills
   └─ cold-outreach (per touch)
 
 Audit existing pages: lp-optimization → (if redesign warranted) lp-brief
@@ -22,8 +23,7 @@ Run `icp-research` (from [research-skills](https://github.com/hungv47/research-s
 Pipeline outputs write to `.agents/mkt/`; cross-stack records live in the top-level `research/` and `brand/` folders:
 - `research/product-context.md` (cross-stack — created by icp-research in research-skills)
 - `research/icp-research.md` (canonical audience record — from icp-research in research-skills)
-- `.agents/mkt/content-research.md` (from content-research in research-skills — short-form)
-- `.agents/mkt/content-research-long.md` (from content-research-long in research-skills — long-form)
+- `.agents/mkt/short-form-research.md` (from short-form-research in research-skills — per-platform best-practice catalog, consumed by short-form-brief)
 - `.agents/mkt/campaign-plan.md`
 - `.agents/mkt/content/[slug].copy.md` (from copywriting)
 - `.agents/mkt/seo-[mode].md` (mode = audit | ai | programmatic | competitor | aso)
@@ -37,6 +37,8 @@ Pipeline outputs write to `.agents/mkt/`; cross-stack records live in the top-le
 - `.agents/mkt/lp-brief/[slug]/handoff-*.md` (per-target hand-off prompts — from lp-brief)
 - `.agents/mkt/lp-brief/[slug]/asset-slots/*.prompt.md` (per-slot generative prompts — written by design-brief when invoked on a slot)
 - `.agents/mkt/design-briefs/[slug].md` (per-asset graphic-design brief — from design-brief)
+- `.agents/mkt/short-form-brief/[slug]/brief.md` (hero short-form video brief — from short-form-brief)
+- `.agents/mkt/short-form-brief/[slug]/variants/[platform].md` (per-platform variant briefs — from short-form-brief, when multi-platform)
 
 ## Cross-Stack (Optional)
 campaign-plan and lp-brief can read research artifacts for alignment:
@@ -46,11 +48,11 @@ campaign-plan and lp-brief can read research artifacts for alignment:
 
 ## Pre-Dispatch Protocol
 
-All 10 skills follow the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Cold Start (3-7 bundled questions, one round-trip) when context is missing; Warm Start (summary + optional probe) when artifacts/experience cover what's needed. Answers persist to `.agents/experience/{product,audience,brand,business,goals}.md` so subsequent skills never re-ask. Hard-gated skills (`design-brief`, `lp-brief`) gate before cold-start questioning — recommend `brand-system` / `lp-optimization` when gates fail. `cold-outreach` has the most-elaborate cold-start (7 questions + Missing-Input Hard Blocks for mode/channel/target/proof). `brand-system` carries the canonical 13-platform target list as a catalog inside its Pre-Dispatch.
+All 11 skills follow the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Cold Start (3-7 bundled questions, one round-trip) when context is missing; Warm Start (summary + optional probe) when artifacts/experience cover what's needed. Answers persist to `.agents/experience/{product,audience,brand,business,goals,content}.md` so subsequent skills never re-ask. Hard-gated skills (`design-brief`, `lp-brief`) gate before cold-start questioning — recommend `brand-system` / `lp-optimization` when gates fail. `cold-outreach` has the most-elaborate cold-start (7 questions + Missing-Input Hard Blocks for mode/channel/target/proof). `brand-system` carries the canonical 13-platform target list as a catalog inside its Pre-Dispatch. `short-form-brief` writes brand_mode + production_mode to `.agents/experience/content.md`.
 
 ## Multi-Agent Skills
 
-All 10 skills use a two-layer multi-agent orchestration pattern:
+All 11 skills use a two-layer multi-agent orchestration pattern:
 
 - `SKILL.md` = **orchestrator** — dispatch graph, routing logic, merge step, critic gate
 - `agents/` = **sub-agent instruction files** — each with role, input/output contracts, domain knowledge, self-check
@@ -74,6 +76,7 @@ All 10 skills use a two-layer multi-agent orchestration pattern:
 - `cold-outreach` — 8 agents (signal-analyst, strategist, proof-selector, composer, voice-auditor, critic, reply-classifier, reply-composer). Two-stage Layer 1 (signal-analyst solo → strategist + proof-selector parallel) → Layer 2 sequential (composer→voice-auditor→critic) → terminal humanize with specificity regression check. Reply route replaces Layer 1 with reply-classifier and Layer 2's composer slot with reply-composer.
 - `design-brief` — 7 agents (brand-anchor, concept, copy-anchor, brief-synth, prompt-craft, figma-spec, critic). Layer 1 parallel (brand-anchor + concept + copy-anchor) → Layer 1.5 brief-synth → **Approval Gate 1** → Layer 2 downstream-route augmentation (image-gen prompt-craft OR designer-handoff figma-spec OR vector-tool spec inline) → Layer 3 critic (rubric + generic-AI + platform-fit) → **Approval Gate 2**. Re-scoped from previous render-focused skill (design-create) — now brief-only, rendering happens downstream. Per-platform module specs ship as a skeleton — needs follow-up build pass.
 - `lp-brief` — 9 agents (audit-anchor, brand-anchor, hypothesis, architecture, section-spec, asset-slot, handoff, conversion-critic, brand-voice-critic). Layer 1 parallel (audit-anchor + brand-anchor) → Layer 1.5 hypothesis → **Approval Gate 1** → Layer 2 architecture → **Approval Gate 2** → Layer 3 section-spec → Layer 3.5 asset-slot (consumes section-spec slot IDs) → Layer 4 handoff → Layer 5 parallel critics (conversion + brand-voice, both binary PASS/FAIL) → **Approval Gate 3**. Page-level orchestrator between strategy and design — produces a campaign-grade landing-page redesign brief with hypothesis, architecture, per-section spec, asset slots, and target-tool hand-off prompts. Internalizes lp-optimization conversion principles via cite-by-line reference (CP-01 → CP-13). Tier-1 only (primary + secondary conversion pages); programmatic SEO templates out of scope.
+- `short-form-brief` — 9 agents (format, voc-extraction, production-mode, hook, storyboard, audio, copy-pack, platform-tailor, critic). Layer 1 parallel foundation (format + voc-extraction + production-mode) → Layer 1.5 parallel craft (hook + storyboard + audio + copy-pack) → Layer 2 sequential (platform-tailor for variants → critic with 4 sub-critics: hook + production + algorithm-fit + brand-fit). Per-asset video brief consuming `.agents/mkt/short-form-research.md`. Hard cap: 1 hero + 2 variants per invocation. Brand modes: founder | company. Polish chain (vn-tone | humanize) auto-routes per (market, brand_mode) on spoken-line section.
 
 ### Reusable template
 `copywriting/agents/_template.md` defines the standard structure for agent instruction files.
