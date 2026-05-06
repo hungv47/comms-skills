@@ -2,7 +2,9 @@
 
 ![Marketing Skills](./assets/banner.png)
 
-Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, and outbound. 10 skills.
+Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, and short-form video briefs. 12 skills (incl. `/start-marketing` orchestrator).
+
+**New here?** Run `/start-marketing` — it reads brand/research state, parses your ask, and proposes the next skill to invoke with rationale + cost + duration.
 
 ## Install
 

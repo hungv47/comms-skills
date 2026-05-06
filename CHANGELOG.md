@@ -6,6 +6,24 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [3.1.0] - 2026-05-06
+
+Stack orchestrator added; declaration drift fixed.
+
+### Added
+
+- `start-marketing` — Stack orchestrator. Reads `research/`, `brand/`, `.agents/mkt/`, and `.agents/experience/*.md`, parses the user's free-form ask (or asks one bundled scoping question if empty), and proposes the next 1–3 skills in the marketing pipeline (`brand-system` → `campaign-plan` → content layer (`copywriting` / `lp-brief` / `seo` / `cold-outreach` / `short-form-brief`) → polish (`humanize` / `vn-tone`)) with rationale + cost + duration. Honors the brand-foundation gate — defers to `brand-system` (or upstream `icp-research`) when prerequisites are missing. Never auto-invokes — always prints the `/skill-name` for the user to type. Persists a breadcrumb to `.agents/experience/marketing-workflow.md`. Standard budget, ~$0.10–0.30 per run. Pipeline catalog lives in `references/workflow-graph.md`.
+
+### Fixed
+
+- `short-form-brief` was present on disk since v3.0.0 but missing from `.claude-plugin/plugin.json` `skills[]` — declaration restored. Skill now installs correctly via the Claude Code plugin marketplace path.
+
+### Changed
+
+- Plugin `keywords` extended with `short-form` to surface the video-brief capability in marketplace search.
+
+---
+
 ## [1.0.0] - 2026-05-05
 
 Initial public release. Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, and outbound.

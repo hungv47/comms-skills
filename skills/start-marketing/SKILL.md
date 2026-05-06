@@ -1,0 +1,304 @@
+---
+name: start-marketing
+description: "Stack orchestrator for marketing-skills. Reads what's already done in `brand/`, `research/`, and `.agents/mkt/`, parses your intent, and proposes the next 1–3 skills in the marketing pipeline (brand-system → campaign-plan → copywriting / lp-brief / seo / cold-outreach / short-form-brief → humanize / vn-tone). Use when you don't know which marketing skill to invoke, or want a guided run from brand foundation through content production. Not for executing the work itself — it routes to the skill that does. Not for cross-stack workflows (use start-meta or invoke skills directly)."
+argument-hint: "[free-form ask, or empty to be guided]"
+allowed-tools: Read Grep Glob Bash
+user-invocable: true
+license: MIT
+metadata:
+  author: hungv47
+  version: "1.0.0"
+  budget: standard
+  estimated-cost: "$0.10-0.30"
+promptSignals:
+  phrases:
+    - "where do i start with marketing"
+    - "i want to do marketing"
+    - "help me plan marketing"
+    - "what skill should i use for marketing"
+    - "start marketing"
+    - "begin marketing"
+    - "marketing workflow"
+    - "marketing pipeline"
+  allOf:
+    - [where, start, marketing]
+    - [what, skill, marketing]
+  anyOf:
+    - "marketing workflow"
+    - "marketing pipeline"
+    - "guide me through marketing"
+    - "set up brand"
+    - "build a campaign"
+  noneOf:
+    - "code review"
+    - "system architecture"
+    - "user flow"
+  minScore: 5
+routing:
+  intent-tags:
+    - marketing-orchestration
+    - workflow-routing
+    - stack-entry-point
+    - marketing-guide
+  position: orchestrator
+  produces:
+    - .agents/experience/marketing-workflow.md
+  consumes:
+    - research/product-context.md
+    - research/icp-research.md
+    - brand/BRAND.md
+    - brand/DESIGN.md
+    - brand/ASSETS.md
+    - .agents/mkt/campaign-plan.md
+    - .agents/mkt/content/*.md
+    - .agents/mkt/lp-brief/**/brief.md
+    - .agents/mkt/lp-optimization.md
+    - .agents/mkt/seo-*.md
+    - .agents/mkt/cold-outreach/*.md
+    - .agents/mkt/short-form-brief/**/brief.md
+    - .agents/experience/*.md
+  requires: []
+  defers-to:
+    - skill: brand-system
+      when: "no brand foundation — entry point of the marketing pipeline"
+    - skill: campaign-plan
+      when: "brand done, no integrated campaign yet"
+    - skill: copywriting
+      when: "need specific copy — headline, hook, CTA, section"
+    - skill: lp-optimization
+      when: "auditing an existing landing page for conversion"
+    - skill: lp-brief
+      when: "designing a new landing page or full redesign"
+    - skill: seo
+      when: "search visibility — keyword research, AI search, programmatic, technical"
+    - skill: short-form-brief
+      when: "TikTok / Reels / Shorts video brief"
+    - skill: cold-outreach
+      when: "cold email, LinkedIn DM, X DM, proposal"
+    - skill: humanize
+      when: "AI-sounding text needs to be stripped and compressed"
+    - skill: vn-tone
+      when: "Vietnamese text needs native-register polish"
+  parallel-with: []
+  interactive: true
+  estimated-complexity: low
+---
+
+# Start Marketing
+
+*Meta — Stack orchestrator. The entry point for the marketing-skills stack when you don't know what to invoke.*
+
+**Core Job:** read what's been done in `brand/` and `.agents/mkt/`, infer where you are in the marketing pipeline, propose the next skill.
+
+**Core Question:** "Given the brand foundation, the campaign state, and what you just asked, which content skill produces the highest-leverage next artifact?"
+
+This skill does NOT execute marketing work. It is a router and progress-tracker. The actual work is done by the skill it routes you to.
+
+---
+
+## When To Use
+
+- You just installed the marketing-skills plugin and don't know what to type.
+- You're mid-project and forget which skill is next.
+- You have a vague marketing need ("I need a landing page", "I want to send cold email", "we need to look on-brand") and want a guided routing.
+- You want to resume a workflow across sessions.
+
+## When NOT To Use
+
+- You already know which skill to run — invoke it directly.
+- You want cross-stack guidance (research + marketing combined). Use `/start-meta`.
+- You want execution rather than routing.
+
+---
+
+## How It Works
+
+1. **State detection** — silently read `research/`, `brand/`, `.agents/mkt/`, `.agents/experience/*.md`.
+2. **Intention analysis** — parse the user's free-form ask. If empty, ask one bundled scoping question.
+3. **Routing decision** — propose the next 1–3 skills with rationale + cost + duration + what each produces.
+4. **User confirmation** — user picks one. Skill prints the hand-off `/skill-name` command and exits. Never auto-invokes.
+
+---
+
+## Step 1: State Detection
+
+Silent scan, in this order:
+
+| Path | What it tells you |
+|---|---|
+| `research/product-context.md` | ICP foundation exists (cross-stack — comes from research-skills). |
+| `research/icp-research.md` | Full ICP exists. |
+| `brand/BRAND.md` | Brand narrative + voice + positioning defined. |
+| `brand/DESIGN.md` | Visual system + design tokens defined. |
+| `brand/ASSETS.md` | Per-platform asset inventory tracked. |
+| `.agents/mkt/campaign-plan.md` | Integrated campaign plan exists. |
+| `.agents/mkt/content/*.copy.md` | Specific copy artifacts produced. |
+| `.agents/mkt/lp-optimization.md` | Existing LP audit done. |
+| `.agents/mkt/lp-brief/**/brief.md` | LP redesign brief exists. |
+| `.agents/mkt/seo-*.md` | SEO mode artifact (audit / ai / programmatic / competitor / aso). |
+| `.agents/mkt/cold-outreach/*.md` | Outbound touch composed. |
+| `.agents/mkt/short-form-brief/**/brief.md` | Video brief exists. |
+| `.agents/mkt/short-form-research.md` | Short-form best-practice catalog (from research-skills). |
+| `.agents/experience/marketing-workflow.md` | Prior breadcrumb. |
+| `.agents/experience/brand.md`, `audience.md`, `content.md` | Persisted cold-start answers. |
+
+Build a state map:
+
+```
+icp-foundation:    done | partial | missing  (cross-stack)
+brand-narrative:   done | partial | missing
+brand-design:      done | partial | missing
+campaign-plan:     done | partial | missing
+content-produced:  [list of slugs that exist]
+lp-audit:          done | not run
+lp-brief:          [list of LP brief slugs]
+seo:               [list of modes run]
+cold-outreach:     [list of touches]
+short-form:        [list of brief slugs]
+```
+
+**Stale check:** brand artifacts older than 180 days OR product positioning in `BRAND.md` doesn't match current `CLAUDE.md` description → flag as stale.
+
+---
+
+## Step 2: Intention Analysis
+
+Match the user's argument against intent buckets:
+
+| User says | Intent | Pipeline position |
+|---|---|---|
+| "set up brand", "brand identity", "voice", "logo system", "design tokens", "BRAND.md" | brand-foundation | brand-system |
+| "campaign", "marketing plan", "channel strategy", "content calendar", "GTM" | campaign-planning | campaign-plan |
+| "write copy", "headline", "tagline", "CTA", "hook", "section copy" | copy-production | copywriting |
+| "audit my landing page", "why isn't this LP converting", "LP review" | lp-audit | lp-optimization |
+| "redesign my LP", "new landing page", "LP brief", "page architecture" | lp-design | lp-brief |
+| "SEO", "keywords", "AI search", "programmatic SEO", "ASO", "search rank" | search-visibility | seo |
+| "TikTok", "Reels", "Shorts", "short-form video", "video hook" | short-form-video | short-form-brief |
+| "cold email", "LinkedIn DM", "outbound", "proposal", "first-touch" | outbound | cold-outreach |
+| "this sounds AI-generated", "humanize this", "strip the slop", "make it sound human" | text-polish | humanize |
+| "Vietnamese tone", "polish VN", "this Vietnamese sounds translated" | vn-polish | vn-tone |
+
+**If empty or ambiguous**, ask:
+
+> "What are you trying to do? Pick one or describe in your words:
+>
+> 1. Set up brand foundation (voice, design system)
+> 2. Plan a campaign (channels, calendar, GTM)
+> 3. Produce specific content (copy, LP, ad, video, email)
+> 4. Audit existing content (LP review, voice check)
+> 5. Polish existing text (humanize, VN tone)"
+
+Wait for answer.
+
+---
+
+## Step 3: Routing Decision
+
+Apply rules in order — first match wins.
+
+**Foundation gates (highest priority):**
+1. **No `research/product-context.md`** → defer to research-skills. "Marketing produces hollow output without audience clarity. Run `/start-research` (specifically `icp-research`) first." Stop here.
+2. **No `brand/BRAND.md` AND user wants brand-foundation OR campaign-planning OR copy-production OR lp-design** → propose `brand-system`. Rationale: brand voice and design tokens feed every downstream content skill.
+
+**Pipeline routing:**
+3. **brand done + intent: campaign-planning** → propose `campaign-plan`.
+4. **brand done + intent: copy-production** → propose `copywriting`. If campaign-plan missing, note: "copywriting works without it but is sharper with campaign positioning context."
+5. **Intent: lp-audit** → propose `lp-optimization`. No upstream gate — works on any LP URL.
+6. **brand done + intent: lp-design** → propose `lp-brief`. If `lp-optimization.md` exists, note it will be consumed.
+7. **Intent: search-visibility** → propose `seo`. Ask user which mode (audit / ai / programmatic / competitor / aso).
+8. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `.agents/mkt/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
+9. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
+10. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
+11. **Intent: vn-polish** → propose `vn-tone`. Note: post-translation only, runs on already-translated VN text.
+
+**Ambiguity rule:** if user's intent matches 2+ buckets ("I need content for my new product"), propose 2 options with rationale. Don't pick for them.
+
+**Polish chain:** if user is producing copy and a `.agents/experience/content.md` says brand_mode=founder OR market includes Vietnamese, mention humanize/vn-tone as the terminal step after copywriting.
+
+---
+
+## Step 4: Present + Confirm
+
+Output format:
+
+```
+## Where you are
+
+- ICP foundation: ✅ done (research/icp-research.md, 1 month old)
+- Brand narrative: ✅ done (brand/BRAND.md)
+- Brand design: ✅ done (brand/DESIGN.md)
+- Campaign plan: ❌ missing
+- Content produced: hero-copy.md, about-page.md
+- LP audit: not run
+- SEO: not run
+- Short-form: not run
+
+## What you asked
+
+"I want to plan how we go to market" → campaign-planning intent.
+
+## Recommended next: campaign-plan
+
+Why: brand foundation + ICP are in place. campaign-plan consumes both
+and produces the channel strategy + content calendar that downstream
+skills (copywriting, seo, short-form-brief, cold-outreach) hang off.
+
+Cost: ~$1–3 · Duration: ~10 min · Produces: .agents/mkt/campaign-plan.md
+
+Run it?  →  /campaign-plan
+```
+
+If multiple options apply, show 2–3.
+
+---
+
+## Step 5: Persist + Hand Off
+
+Append to `.agents/experience/marketing-workflow.md`:
+
+```markdown
+## Session 2026-05-06
+
+- Read state: icp ✅, brand ✅, campaign ❌, copy [hero, about], LP not audited
+- User intent: campaign-planning
+- Recommended: campaign-plan
+- User confirmed: yes
+```
+
+Print hand-off line:
+
+> Run `/campaign-plan` next. After it completes, re-run `/start-marketing` to plan the next step.
+
+Exit.
+
+---
+
+## Pipeline Reference
+
+For canonical pipeline, decision rules, per-skill catalog, and polish-chain logic, see [`./references/workflow-graph.md`](./references/workflow-graph.md).
+
+---
+
+## Anti-Patterns
+
+- **Don't bypass the icp foundation gate.** Marketing without ICP context produces generic output.
+- **Don't auto-invoke** the recommended skill. Always print `/skill-name` and let the user type it.
+- **Don't recommend more than 3 skills** in one proposal.
+- **Don't lecture.** Show only what's relevant to where the user is.
+- **Don't recommend skills outside this stack.** If intent is research or product, point at `/start-research` or `/start-product`.
+- **Don't conflate `lp-optimization` and `lp-brief`.** Optimization audits an existing page; brief designs a new one (or full redesign). Audit can feed brief.
+- **Don't conflate `copywriting` and `humanize`.** Copywriting writes new copy; humanize fixes AI-sounding existing copy. They run in sequence, not in parallel.
+
+---
+
+## Output
+
+- **Inline only** — prints to conversation, no saved artifact.
+- **Side effect:** appends one entry to `.agents/experience/marketing-workflow.md`.
+
+## Status
+
+Ends with one of:
+- `DONE` — recommendation given, user confirmed, hand-off printed.
+- `BLOCKED` — couldn't read state. Ask user where the project lives.
+- `NEEDS_CONTEXT` — ask was empty AND no state exists. Ask scoping question.
