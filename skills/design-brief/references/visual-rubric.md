@@ -76,7 +76,7 @@ The 8-dimension scoring rubric used by critic-agent. Each dimension scores 0–4
 | 1 | Wrong family substituted somewhere visible. |
 | 0 | Default system font where DESIGN.md specifies a brand font. |
 
-**N/A:** Route P pre-overlay (when type is added in post-processing, score on the post-overlay version).
+**N/A:** `image-gen` pre-overlay (when type is added in post-processing, score on the post-overlay version).
 
 ---
 
@@ -94,7 +94,7 @@ The 8-dimension scoring rubric used by critic-agent. Each dimension scores 0–4
 
 **Always cite the contrast ratio measured** (e.g., "headline 7.2:1 — pass; body 3.8:1 — fail").
 
-**N/A:** Output without text overlay yet (Route P pre-post-processing).
+**N/A:** Output without text overlay yet (`image-gen` pre-post-processing).
 
 ---
 
@@ -168,7 +168,7 @@ When computing the subtotal, **N/A dimensions are dropped from both numerator an
 
 ## Generic-AI-Aesthetic Detector
 
-For each pattern below, score 0–3 (0 = absent, 3 = dominant in the output). Sum is `AI-aesthetic total` out of 15.
+For each pattern below, score 0–3 (0 = absent, 3 = dominant in the output). Sum is `AI-aesthetic total` out of 39 (13 patterns × 3 max).
 
 | Pattern | 0 | 1 | 2 | 3 |
 |---------|---|---|---|---|
@@ -199,9 +199,9 @@ For asset types where some patterns are N/A (e.g., motion + audio rows on a stat
 
 | Condition | Verdict |
 |-----------|---------|
-| Subtotal ≥ 80% applicable dimensions × 4 AND AI-aesthetic ≤3 AND no dimension <3 | **PASS** |
-| Subtotal 65–79% AND AI-aesthetic ≤7 | **DONE_WITH_CONCERNS** |
-| Any dimension = 1 OR AI-aesthetic ≥8 OR Brand fidelity <3 OR Sacred <4 | **FAIL** |
+| Subtotal ≥ 80% applicable dimensions × 4 AND AI-aesthetic ≤7 AND no dimension <3 | **PASS** |
+| Subtotal 65–79% AND AI-aesthetic ≤15 | **DONE_WITH_CONCERNS** |
+| Any dimension = 1 OR AI-aesthetic ≥16 OR Brand fidelity <3 OR Sacred <4 | **FAIL** |
 | Cycle = 2 AND would-be-FAIL | **DONE_WITH_CONCERNS** (deliver with concerns; don't infinite-loop) |
 
 ---
@@ -231,6 +231,6 @@ For asset types where some patterns are N/A (e.g., motion + audio rows on a stat
 | Glassmorphism | 0 | Absent |
 | AI-uncanny | 1 | Slight chair-leg rendering quirk, sub-preview |
 
-**AI-aesthetic total: 1/15 — clean.**
+**AI-aesthetic total: 1/39 — clean.**
 
 **Verdict: PASS.**

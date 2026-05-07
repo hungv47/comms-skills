@@ -141,7 +141,7 @@ Before delivering, the **critic agent** verifies:
 - [ ] Contrast — text passes WCAG AA (≥4.5:1 normal, ≥3:1 large) on its actual background
 - [ ] **Platform fit** — dimensions, safe zones, platform crop behavior, mobile thumb-stop readability, file format, file-size cap all verified against the asset's platform module
 - [ ] CTA clarity (if applicable) — readable at preview size, action verb visible
-- [ ] **Generic-AI-aesthetic check — score 0-3 on each: default-gradient smell, centered-isolated-on-white, stock-3D bevels, faux-glass, AI-uncanny-photo. Total ≥4 = FAIL.**
+- [ ] **Generic-AI-aesthetic check — full 13-pattern detector from `references/visual-rubric.md` §"Generic-AI-Aesthetic Detector". Score 0-3 per pattern (max 39). Thresholds: 0-7 clean / 8-15 DONE_WITH_CONCERNS / 16+ auto-FAIL.**
 - [ ] Downstream-handoff completeness — image-gen prompt is specific (lens / lighting / mood / era / composition / color cast), or designer spec covers placement/typography/color tokens, or vector-tool spec specifies layout grid
 
 ## Chain Position

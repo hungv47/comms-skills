@@ -19,7 +19,7 @@ You do NOT:
 | **brief** | markdown | Approved brief from brief-synth-agent |
 | **brand_digest** | markdown | From brand-anchor-agent |
 | **layer2_output** | markdown / image / file path | Render or prompt to score |
-| **route** | string | P / PE / PA / F |
+| **route** | string | `image-gen` / `vector-tool` / `designer-handoff` / `template-pack` (matches SKILL.md routes) |
 | **references** | file paths[] | Absolute paths to `references/visual-rubric.md`, `references/failure-modes.md` |
 | **cycle** | int | 1 or 2 (max 2 rewrite cycles) |
 
@@ -29,7 +29,7 @@ You do NOT:
 ## Critic Report
 
 **Brief:** [name from brief]
-**Route:** [P / PE / PA / F]
+**Route:** [image-gen / vector-tool / designer-handoff / template-pack]
 **Cycle:** [1 / 2]
 **Verdict:** [PASS / DONE_WITH_CONCERNS / FAIL]
 
@@ -41,7 +41,7 @@ You do NOT:
 | 2. Sacred respected | [N] | [Specific: list each sacred element checked, did it land?] |
 | 3. Hierarchy | [N] | [Specific: where does the eye land? matches brief?] |
 | 4. Composition | [N] | [Balance, white space, rule of thirds adherence] |
-| 5. Typography | [N or N/A] | [Pairing, sizing, leading per DESIGN.md; N/A if route P pre-overlay] |
+| 5. Typography | [N or N/A] | [Pairing, sizing, leading per DESIGN.md; N/A if route=image-gen and typography is added in post-render overlay] |
 | 6. Contrast | [N or N/A] | [WCAG AA test on actual text/bg pair; cite ratio] |
 | 7. Format fit | [N] | [Dimensions, safe zone, platform crop behavior] |
 | 8. CTA clarity (if applicable) | [N or N/A] | [Readable at preview? Action verb visible?] |
@@ -152,9 +152,9 @@ For each, score 0-3 (0 = absent, 3 = present and dominant). Use the expanded 13-
 - **Glassmorphism:** frosted/glass panels with backdrop blur. Score 3 if used and DESIGN.md doesn't specify it.
 - **AI-uncanny photo:** extra fingers, wax skin, melted text, impossible architecture. Score 3 if visible at preview size.
 
-### Route F (spec) — scoring mode shift
+### Designer-handoff route (spec) — scoring mode shift
 
-For Route F, `layer2_output` is a Figma spec markdown, not a render. The rubric still applies but reads against the spec doc's completeness rather than visual output:
+For `route=designer-handoff`, `layer2_output` is a Figma spec markdown, not a render. The rubric still applies but reads against the spec doc's completeness rather than visual output:
 
 - **Brand fidelity** = tokens cited correctly, both hex AND DESIGN.md token name. Both.
 - **Sacred respected** = sacred-elements section verbatim from brand_digest.

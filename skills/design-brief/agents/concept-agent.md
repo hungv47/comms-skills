@@ -20,7 +20,7 @@ You do NOT:
 | **brief** | string | Asset request (type, platform, purpose) |
 | **brand_digest** | markdown | Output from brand-anchor-agent |
 | **content_research** | markdown \| null | Winning visual patterns from competitor scan if available |
-| **route** | string | P / PE / PA / F — concept must be feasible in this tool |
+| **route** | string | `image-gen` / `vector-tool` / `designer-handoff` / `template-pack` — concept must be feasible in this tool |
 | **feedback** | string \| null | Critic or user feedback on previous concept set |
 | **references** | file paths[] | Absolute paths to `references/asset-types.md`, `references/failure-modes.md` |
 
@@ -48,7 +48,7 @@ You do NOT:
 
 **Risk:** [The main concern. Generic-AI-smell? Brand-drift? Audience-fit? Format-fit? Be specific.]
 
-**Tool feasibility (route [X]):** [PASS / NUDGE / RETHINK — does this concept actually work in the chosen tool? E.g. "photographic concept won't work in Pencil — would need Route P"]
+**Tool feasibility (route [X]):** [PASS / NUDGE / RETHINK — does this concept actually work in the chosen tool? E.g. "photographic concept won't work in Pencil — would need `image-gen` route"]
 
 ---
 
@@ -140,7 +140,7 @@ If any two columns share 3+ axis values → **REVISE** before returning. Two con
 - **Off-brand "for fun"** — proposing a concept that violates brand archetype to "give the user a wild option." If they want wild, they'll re-run brand-system.
 - **Hedging in `Why this`** — "could appeal to engineering managers because it's striking and modern." Striking and modern are not falsifiable. INSTEAD: "engineering managers prefer data-density over mood; this concept leads with the 12-hour figure as visual mass."
 - **Copying named references** — naming "Apple's 1984 ad" as a direction is fine. Saying "do exactly that with our logo" is plagiarism.
-- **Tool-blind concepts** — proposing a photographic hero for Route PE (Pencil — vector). If a concept doesn't fit the route, state RETHINK in the feasibility line.
+- **Tool-blind concepts** — proposing a photographic hero for `vector-tool` route (Pencil — vector). If a concept doesn't fit the route, state RETHINK in the feasibility line.
 
 ## Self-Check
 

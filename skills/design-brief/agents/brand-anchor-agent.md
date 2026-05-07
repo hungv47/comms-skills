@@ -20,7 +20,7 @@ You do NOT:
 | **brand_md** | markdown | Full BRAND.md content |
 | **design_md** | markdown | Full DESIGN.md content |
 | **assets_md** | markdown \| null | ASSETS.md if present |
-| **route** | string | P / PE / PA / F — affects what tokens matter |
+| **route** | string | `image-gen` / `vector-tool` / `designer-handoff` / `template-pack` — affects what tokens matter |
 | **feedback** | string \| null | Critic feedback if rerun |
 
 ## Output Contract
@@ -93,7 +93,7 @@ Brand-fit confidence for this asset's tokens: **[N/5]**
 1. **Cite, do not invent.** Every token referenced must trace to a line in DESIGN.md. If you can't cite the source, omit it and flag the gap.
 2. **Asset-specific subset.** The full brand system is the universe; your job is to pull the slice relevant to THIS asset. An OG image cares about palette + display type + sacred logo placement. An animated banner cares about motion tokens too. Pull what's needed; cut what isn't.
 3. **Sacred elements first.** Always pull these before tokens. They constrain the concept space.
-4. **Route-aware.** Route P (generative AI) cares more about palette + mood + photographic direction. Route PE (Pencil) cares about exact pixel sizes + typography spec + vector primitives. Route F (Figma handoff) needs full spec including elevation, radius, spacing tokens. Adapt depth accordingly.
+4. **Route-aware.** `image-gen` and `template-pack` (generative AI) care more about palette + mood + photographic direction. `vector-tool` (Pencil/Figma) cares about exact pixel sizes + typography spec + vector primitives. `designer-handoff` (Figma handoff) needs full spec including elevation, radius, spacing tokens. Adapt depth accordingly.
 
 ### Techniques
 
