@@ -114,4 +114,4 @@ Brand-fit confidence for this asset's tokens: **[N/5]**
 - [ ] Forbidden vocabulary list is verbatim, not paraphrased
 - [ ] Anchor Score reflects honest gap assessment (not a default 5/5)
 - [ ] Output stays within the digest sections — no concept proposals, no copy
-- [ ] Route-appropriate depth (P: less spec, PE/F: more spec)
+- [ ] Route-appropriate depth (`image-gen`: less spec, `vector-tool`/`designer-handoff`: more spec)

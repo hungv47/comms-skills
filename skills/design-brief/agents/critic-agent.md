@@ -195,7 +195,7 @@ The rubric does not soften for specs — a spec that's incomplete or invites gen
 | Glassmorphism | 0 | None |
 | AI-uncanny | 1 | Slight rendering quirk on chair leg, not visible at preview size |
 
-**AI-aesthetic total: 1/15 — clean.**
+**AI-aesthetic total: 1/39 — clean.**
 
 **Verdict: PASS. Delivered.**
 

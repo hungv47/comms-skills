@@ -166,8 +166,8 @@ Previous: `brand-system` (required), `lp-brief` (optional — slot spec), `copyw
 | Concept Agent | 1 (parallel) | `agents/concept-agent.md` | Generates 3 distinct concept directions (mood, composition, references) |
 | Copy-Anchor Agent | 1 (parallel) | `agents/copy-anchor-agent.md` | Resolves copy that appears IN the asset (from copywriting artifact, or interview the user) |
 | Brief Synthesizer | 1.5 (after L1) | `agents/brief-synth-agent.md` | Merges anchor + 3 concepts + copy into 3 candidate briefs with platform spec, hierarchy, asset slots |
-| Prompt-Craft Agent | 2P (downstream-route: image-gen) | `agents/prompt-craft-agent.md` | Produces image-gen prompts (Claude Design / Midjourney / Imagen / DALL·E / Veo / Suno) for the chosen brief |
-| Figma-Spec Agent | 2F (downstream-route: human designer) | `agents/figma-spec-agent.md` | Produces design spec markdown for human designer in Figma |
+| Prompt-Craft Agent | 2 (downstream-route: `image-gen` / `template-pack`) | `agents/prompt-craft-agent.md` | Produces image-gen prompts (Claude Design / Midjourney / Imagen / DALL·E / Veo / Suno) for the chosen brief |
+| Figma-Spec Agent | 2 (downstream-route: `designer-handoff`) | `agents/figma-spec-agent.md` | Produces design spec markdown for human designer in Figma |
 | Critic Agent | 3 (final) | `agents/critic-agent.md` | Visual rubric scoring + generic-AI-aesthetic detection + platform-fit check |
 
 ---
