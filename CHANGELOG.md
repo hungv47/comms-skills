@@ -6,6 +6,20 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [3.3.0] - 2026-05-07
+
+Platform-intelligence references for `short-form-brief` (Phase 0.5).
+
+### Added
+
+- `short-form-brief/references/platform-intelligence/` — 6 per-platform reference docs (LinkedIn, TikTok, Reels, Shorts, X, YouTube long-form) plus a canonical `_template.md`. Each doc covers: ≥3 platform-native hook archetypes with verbatim public-post examples + URLs + engagement metrics, format constraints (numeric over prose), 5–7 ranked algorithm signals with operator levers, anti-patterns with detection rules, hook window + retention curve, CTA placement matrix, and explicit open-questions section. Frontmatter `last_verified: 2026-05-07`. When `last_verified` exceeds 90 days, downstream critics flag `DONE_WITH_CONCERNS` ("platform signal may be stale"). 8–20 cited sources per doc, mix of primary platform docs/exec statements and named-cohort practitioner studies (Richard van der Blom, AuthoredUp, Buffer, Later, Mosseri/Ritchie/Beaupré statements, the open-sourced X algorithm). Replaces the previously-scoped standalone `algo-intel` skill — practitioner-grade reference content, not a new skill.
+
+### Notes
+
+This release lands the practitioner-grade answer to the "algo-master" ask (per stack roadmap). YouTube long-form ships pre-built so it's available when long-form briefs become a Phase 2 candidate. Drafts are `status: draft` until first real-use validation; the `last_verified` 90-day staleness gate is enforced by consuming critics.
+
+---
+
 ## [3.2.0] - 2026-05-07
 
 Manifest-aware state detection in `start-marketing`.
