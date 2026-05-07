@@ -43,6 +43,8 @@ routing:
   position: orchestrator
   produces:
     - .agents/experience/marketing-workflow.md
+  side-effects:
+    - manifest-sync
   consumes:
     - research/product-context.md
     - research/icp-research.md
@@ -122,7 +124,30 @@ This skill does NOT execute marketing work. It is a router and progress-tracker.
 
 ## Step 1: State Detection
 
-Silent scan, in this order:
+Read `.agents/manifest.json` first — it is the canonical state index for all artifact metadata (status, staleness, producer, summary). Filesystem scans are a fallback only.
+
+If `.agents/manifest.json` is missing or its `updated_at` appears stale, refresh it:
+```bash
+bun ${SKILLS_ROOT:-.claude/skills}/meta-skills/scripts/manifest-sync.ts
+```
+
+**Status-aware lookup:** for each artifact relevant to the marketing stack, read the manifest entry's `status` and `stale` fields to qualify the state map:
+
+| Manifest signal | State map value |
+|---|---|
+| `status: done`, `stale: false` | ✅ done |
+| `status: done_with_concerns` | ⚠️ done-with-concerns — surface the concern in routing output |
+| `status: blocked` or `needs_context` | treat as missing |
+| `stale: true` | ✅ done (stale) — propose refresh as an option, don't block |
+| `frontmatter_present: false` | ✅ done (legacy, no frontmatter) — quality unknown, suggest refresh |
+
+Staleness is derived per-artifact via the manifest's `stale_after_days` (defaults vary per artifact type — see manifest spec). Read the manifest entry's `stale` field directly; do not apply a fixed-day threshold here.
+
+**Experience block:** also read `manifest.experience` — the `entries` count for `brand.md`, `audience.md`, and `goals.md` indicates Pre-Dispatch coverage for marketing-stack questions. Low entry counts (< 3) signal cold-start conditions.
+
+See [`../../../meta-skills/references/manifest-spec.md`](../../../meta-skills/references/manifest-spec.md) for the full contract.
+
+**Path reference / filesystem fallback** — used only when `.agents/manifest.json` doesn't exist (fresh project) or sync hasn't been run.
 
 | Path | What it tells you |
 |---|---|
@@ -156,8 +181,6 @@ seo:               [list of modes run]
 cold-outreach:     [list of touches]
 short-form:        [list of brief slugs]
 ```
-
-**Stale check:** brand artifacts older than 180 days OR product positioning in `BRAND.md` doesn't match current `CLAUDE.md` description → flag as stale.
 
 ---
 
@@ -281,6 +304,7 @@ For canonical pipeline, decision rules, per-skill catalog, and polish-chain logi
 
 ## Anti-Patterns
 
+- **Don't ignore the manifest** — always read `.agents/manifest.json` first; per-path filesystem scans are a fallback, not the default.
 - **Don't bypass the icp foundation gate.** Marketing without ICP context produces generic output.
 - **Don't auto-invoke** the recommended skill. Always print `/skill-name` and let the user type it.
 - **Don't recommend more than 3 skills** in one proposal.
