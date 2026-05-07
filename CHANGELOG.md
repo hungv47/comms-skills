@@ -6,6 +6,27 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [3.4.0] - 2026-05-07
+
+`lp-brief` always-emit Implementation Prompt for coding agents + critic-rubric awareness + `pending-media-skill` route.
+
+### Added
+
+- `lp-brief` now writes `handoff-implementation.md` as a paste-ready prompt for any frontier coding agent (Claude Code, Cursor, Codex, etc.) on every brief run, regardless of `target_handoff`. Stack auto-detected from repo (frameworks → that stack; no framework → pure HTML/CSS/Vanilla JS, single index.html). Motion stack from `brand/DESIGN.md` (silent → GSAP+ScrollTrigger+Lenis default). Includes verbatim Asset Placeholder Rule so coding agents never invent stock-photo URLs — missing slot files render as solid-color placeholder blocks with slot-id overlay until a media-briefing skill catches up. New gold-standard format section in `references/handoff-formats.md` modeled on Awwwards-grade single-shot prompts.
+- `lp-brief/agents/asset-slot-agent.md` adds `pending-media-skill` route value for slot types not yet covered by an existing media-briefing skill (motion, 3D, video, audio-reactive). Slots flagged this way spec dimensions/format/fallback fully; the implementation prompt renders placeholders until skills like `motion-brief` / `3d-brief` / `video-brief` ship.
+- `lp-brief/agents/brand-voice-critic-agent.md` G8b — new gate scoring Implementation Prompt compliance: Asset Placeholder Rule lifted verbatim, "Invent or substitute asset URLs" ban present in DO NOT block, closing-rule presence, and (BUG FIX) callouts for tricky CSS mechanics (clip-path, mix-blend-mode + transform stacking, sticky-inside-overflow). Both critics' input contracts now reference the implementation prompt companion.
+
+### Changed
+
+- `lp-brief` artifact template: `target_handoff` now optional (specialty targets only — implementation prompt is universal default). `pencil` restored to enum (was missing). Array form documented. Hand-Off (Specialty Targets) section explicitly omitted when `target_handoff: null`.
+- Brief stays inside the 250–500 line envelope by referencing `handoff-implementation.md` as a companion file, not inlining the 200–350-line prompt body. Prevents auto-FAIL on brand-voice critic G6 (envelope gate).
+
+### Notes
+
+User-driven: improve lp-brief output so coding agents (Cursor / Codex / Claude Code) can implement landing pages from a single paste-ready prompt, with media handled as placeholders deferring to `design-brief` and future media-briefing skills. Independent fresh-eyes review caught and fixed an envelope conflict, a dropped enum value (`pencil`), and a critic blind spot before merge.
+
+---
+
 ## [3.3.0] - 2026-05-07
 
 Platform-intelligence references for `short-form-brief` (Phase 0.5).

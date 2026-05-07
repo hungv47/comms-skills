@@ -16,7 +16,7 @@ You do NOT:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **assembled_brief** | markdown | Full brief: hypothesis + architecture + section spec + asset slots + handoff |
+| **assembled_brief** | markdown | Full brief: hypothesis + architecture + section spec + asset slots + handoff + implementation prompt companion (`handoff-implementation.md`) |
 | **page_tier** | string | `primary` or `secondary` — informs gate strictness |
 | **traffic_source** | string \| null | If campaign LP, the named source (informs CP-05 message-match scoring) |
 | **references** | file paths[] | `references/conversion-principles.md`, `references/section-templates.md` |

@@ -34,6 +34,7 @@ You do NOT:
 | `logo-grid` | Social Proof | Logo grid (real customer logos) | 6 cells × 60px height each | SVG (per logo) | `growth/[slug]/logos/{customer-name}.svg` | "Delete cell if not real" — no placeholders | Manual sourcing (no design-brief) |
 | `testimonial-portrait-1` | Social Proof | Photographic portrait | 600×600 | WebP | `growth/[slug]/testimonials/{customer-name}.webp` | Initials in brand-color circle | Real customer photo only |
 | `og-image` | (page metadata) | OG share card | 1200×630 | PNG | `growth/[slug]/og.png` | Generic brand OG | `design-brief` → generative image-gen or Satori |
+| `hero-motion-bg` | Hero | Motion / 3D background loop | 1920×1080 | MP4 (H.264) + WebM (VP9) | `growth/[slug]/hero-bg.{mp4,webm}` | Static poster frame (`hero-bg-poster.webp`) | `pending-media-skill` (no prompt yet — implementation prompt renders placeholder block) |
 
 (One row per slot. Slot IDs are kebab-case, unique within page.)
 
@@ -152,10 +153,24 @@ Project-specific path conventions override defaults — check `brand/ASSETS.md` 
 
 ### Generation Route Selection
 
-- **Photographic / illustrative hero, OG image:** invoke `design-brief` per slot. Design-brief produces the per-slot brief and writes the image-gen prompt at `asset-slots/{slot-id}.prompt.md` (do NOT write the prompt yourself — your job is to spec the slot; design-brief writes the prompt).
-- **Logos, real customer assets:** manual sourcing. No prompt file.
-- **Pricing tables, UI screenshots, system diagrams:** invoke `design-brief` with vector-tool routing (Pencil MCP) or designer-handoff routing (Figma) depending on whether the asset is web-renderable or designer-built.
-- **Animations, video:** flag for separate spec — out of scope for v1 lp-brief asset-slot-agent.
+Valid `route` values:
+- `design-brief` → generative image-gen — `design-brief` writes per-slot prompt at `asset-slots/{slot-id}.prompt.md`
+- `manual sourcing` — real assets (logos, customer photos), no prompt file
+- `pending-media-skill` — slot type not yet covered by an existing media-briefing skill (motion sequence, 3D scene, video, animation, audio-reactive visual). Spec the slot fully (dimensions, format, fallback, visual concept); leave `prompt` field as `null`. The implementation prompt will render the slot as a solid-color placeholder per the Asset Placeholder Rule until the appropriate media-briefing skill catches up.
+
+Routing by slot type:
+- **Photographic / illustrative hero, OG image:** `design-brief` per slot. Design-brief produces the per-slot brief and writes the image-gen prompt at `asset-slots/{slot-id}.prompt.md` (do NOT write the prompt yourself — your job is to spec the slot; design-brief writes the prompt).
+- **Logos, real customer assets:** `manual sourcing`. No prompt file.
+- **Pricing tables, UI screenshots, system diagrams:** `design-brief` with vector-tool routing (Pencil MCP) or designer-handoff routing (Figma).
+- **Motion sequences, animations, 3D scenes, video, audio-reactive visuals:** `pending-media-skill`. Spec dimensions/format/fallback; leave prompt null. Implementation prompt renders placeholder until a future media-briefing skill (motion-brief / 3d-brief / video-brief) catches up.
+
+### Placeholder treatment for unrendered slots
+
+When a slot's prompt file does not yet exist (because `design-brief` hasn't been invoked on it, or `route: pending-media-skill` is in effect), the implementation prompt renders the slot as a solid-color placeholder block.
+
+**The recipe is canonical in `references/handoff-formats.md` § Asset Placeholder Rule and lifted verbatim by handoff-agent into every implementation prompt.** Do not duplicate it here — single source of truth keeps the rule from drifting.
+
+Slot-specific fallbacks override the generic placeholder where they exist (e.g., logo grids: "delete cell if not real" — never use placeholders for proof assets, CP-09).
 
 ### Sacred Element Translation
 

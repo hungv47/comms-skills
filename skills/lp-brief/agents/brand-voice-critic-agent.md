@@ -16,7 +16,7 @@ You do NOT:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **assembled_brief** | markdown | Full brief: hypothesis + architecture + section spec + asset slots + handoff |
+| **assembled_brief** | markdown | Full brief: hypothesis + architecture + section spec + asset slots + handoff + implementation prompt companion (`handoff-implementation.md`) |
 | **brand_digest** | markdown | From brand-anchor-agent — palette, type, surface, sacred elements, voice rules (forbidden + preferred vocab), motion |
 | **page_tier** | string | `primary` or `secondary` |
 | **references** | file paths[] | `references/failure-modes.md`, `marketing-skills/skills/brand-system/references/*` (if needed for sacred-element semantics) |
@@ -83,6 +83,14 @@ You do NOT:
 **Sacred elements in handoff blocks:** [verbatim from brand_digest? Y/N per block]
 **Voice rules in handoff blocks:** [verbatim? Y/N per block]
 [FAIL if hand-off block paraphrases sacred or voice rules instead of lifting verbatim.]
+
+### G8b — Implementation Prompt Compliance (always-emitted)
+**Verdict:** [PASS | FAIL]
+**Asset Placeholder Rule lifted verbatim** from `references/handoff-formats.md`: [Y/N]
+**"Invent or substitute asset URLs" ban present in DO NOT block:** [Y/N]
+**Closing rule present verbatim** ("Write production-ready, flawless code. Do not truncate. Do not use placeholder copy or invented imagery."): [Y/N]
+**(BUG FIX) callouts present** for any section-spec mechanic involving clip-path, mix-blend-mode + transform stacking, or sticky-inside-overflow patterns: [Y/N or N/A]
+[FAIL if Asset Placeholder Rule is paraphrased, URL-invention ban is missing, or closing rule is absent. (BUG FIX) callouts are gated on N/A — only required when the section-spec triggers them. Implementation prompt is always emitted; this gate always runs regardless of `target_handoff`.]
 
 ## Failures Summary
 
@@ -185,6 +193,7 @@ If brief is 412 lines: PASS.
 - [ ] G6 (envelope): line count cited, in or out of 250–500 range
 - [ ] G7 (asset slot brand compliance): every generative slot's Sacred Elements line checked
 - [ ] G8 (handoff verbatim): every handoff block checked for verbatim sacred + voice rules
+- [ ] G8b (implementation prompt): Asset Placeholder Rule verbatim, URL-invention ban present, closing rule present, (BUG FIX) callouts present where applicable
 - [ ] Failures Summary lists all FAILs with re-dispatch direction
 - [ ] No sycophancy; no manufactured nits
 

@@ -104,12 +104,18 @@ Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity
 
 ## Output
 
-`.agents/mkt/lp-brief/[slug]/brief.md` — single artifact, structured per the template below.
+`.agents/mkt/lp-brief/[slug]/brief.md` — single main artifact, structured per the template below.
 
-Optional companions if the project uses them:
+Always written alongside `brief.md`:
+- `.agents/mkt/lp-brief/[slug]/handoff-implementation.md` — paste-ready prompt for any coding agent (Claude Code / Cursor / Codex / Opus / Gemini / GPT). Stack auto-detected from repo (frameworks → that stack; no framework → pure HTML/CSS/Vanilla JS, single index.html). Motion stack from `brand/DESIGN.md` (silent → GSAP+ScrollTrigger+Lenis). Includes verbatim Asset Placeholder Rule so coding agents never invent stock-photo URLs.
+
+Optional companions if `target_handoff` lists them:
 - `.agents/mkt/lp-brief/[slug]/handoff-claude-design.md` — verbatim prompt block for claude.ai/design
-- `.agents/mkt/lp-brief/[slug]/handoff-figma.md` — design spec for human designer
-- `.agents/mkt/lp-brief/[slug]/asset-slots/` — per-asset prompt artifacts (one per generative slot)
+- `.agents/mkt/lp-brief/[slug]/handoff-figma.md` — design spec for designer in Figma
+- `.agents/mkt/lp-brief/[slug]/handoff-designer.md` — narrative brief for human designer
+
+Per-slot artifacts (written by downstream media-briefing skills, not by lp-brief itself):
+- `.agents/mkt/lp-brief/[slug]/asset-slots/{slot-id}.prompt.md` — per-asset generation prompt (written by `design-brief` today; future media-briefing skills like motion-brief / 3d-brief / video-brief as they ship). Slots with `route: pending-media-skill` have no prompt file yet — the implementation prompt renders them as solid-color placeholders until a media-briefing skill catches up.
 
 ## Quality Gate
 
@@ -402,9 +408,11 @@ Asset-slot-agent runs **after** section-spec because slot IDs originate in secti
 
 | Agent | Pass These Inputs | Reference Files |
 |-------|-------------------|-----------------|
-| Hand-Off Agent | full assembled brief (architecture + section spec + asset slots) + target tool (Claude Design / Figma / designer) | `references/handoff-formats.md` |
+| Hand-Off Agent | full assembled brief (architecture + section spec + asset slots) + `target_handoff` (specialty targets, may be null) + detected_stack (framework + motion library, auto-detected from repo) | `references/handoff-formats.md` |
 
-Output: hand-off prompt block, ready to paste into target tool.
+Output (always): `handoff-implementation.md` — universal coding-agent prompt block (Claude Code / Cursor / Codex / Opus / Gemini / GPT). Stack auto-detected at write time; falls back to pure HTML/CSS/Vanilla JS. Motion stack from `brand/DESIGN.md` or GSAP+ScrollTrigger+Lenis default. Contains verbatim Asset Placeholder Rule so coding agents never invent stock-photo URLs.
+
+Output (optional, per `target_handoff`): one additional `handoff-{target}.md` per listed specialty target.
 
 ---
 
@@ -472,7 +480,7 @@ page_route: [/pricing | /services | etc.]
 tier: [primary | secondary]
 rev: [N — what revision this is]
 hypothesis_title: [from approved hypothesis]
-target_handoff: [claude-design | figma | designer]
+target_handoff: [claude-design | pencil | figma | designer | null | list of any]  # specialty targets in addition to always-on implementation prompt; pass single value, list, or null
 brand_anchors:
   primary_color: [hex with token name]
   primary_type: [font, weight]
@@ -610,7 +618,17 @@ N. **CTA Block** — [purpose]
 - [Page-specific failure mode — e.g., "do not use stock-photo office imagery; ICP rejects it"]
 - [Voice violations — e.g., "no leverage / unlock / seamlessly anywhere"]
 
-## Hand-Off
+## Implementation Prompt (Coding Agents)
+
+> **Always emitted as a companion file**, not inlined here (keeps brief.md within the 250–500 line envelope). Full paste-ready block lives at `handoff-implementation.md` alongside this brief.
+>
+> - **Stack:** `[detected framework | vanilla HTML/CSS/JS]` — auto-detected from repo at write time
+> - **Motion stack:** `[from brand/DESIGN.md | GSAP + ScrollTrigger + Lenis default]`
+> - **Recipients:** any frontier coding agent (Claude Code, Cursor, Codex, etc.) — tool-agnostic
+
+## Hand-Off (Specialty Targets)
+
+> Optional — only present when `target_handoff` lists `claude-design` / `pencil` / `figma` / `designer`. **Omit this entire section when `target_handoff` is null.** The implementation prompt companion is the universal default; these are supplements for projects that also use a design tool or human designer.
 
 ### To: [Claude Design / Figma / designer]
 
@@ -684,6 +702,12 @@ See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP
 **Brief too long** — Over 500 lines. Designer skims; misses critical spec. INSTEAD: cite shared chain instead of duplicating; cap section spec at the conversion-checklist gates.
 
 **Hero copy violating voice** — "Unlock seamless leverage" passes 4-U but fails brand. The brand-voice critic catches this before delivery.
+
+**Coding-agent inventing asset URLs** — implementation prompt without the verbatim Asset Placeholder Rule → coding agent fills `<img>` tags with hallucinated Unsplash URLs (`images.unsplash.com/photo-{guess}...`) that 404 or load wrong imagery. INSTEAD: handoff-agent lifts the Asset Placeholder Rule verbatim from `references/handoff-formats.md` into every implementation prompt, plus an "Invent or substitute asset URLs" entry in the DO NOT block. Slots that lack a render route (`pending-media-skill`) are spec'd with the placeholder fallback and re-rendered when the appropriate media-briefing skill ships.
+
+**Implementation-prompt sacred-creep** — coding agent adds noise overlay, custom cursor, or preloader for "polish" when brand_digest doesn't declare them. INSTEAD: CORE SETUP & GLOBALS lists ONLY treatments brand_digest explicitly declares; every other "Awwwards trick" is sacred drift and gets caught by the brand-voice critic.
+
+**Implementation-prompt stack mismatch** — emitting Vanilla JS prompt for a Next.js project, or React component tree for a static site. INSTEAD: handoff-agent runs stack detection (package.json + framework configs) at write time before composing the prompt; never asks the user.
 
 ---
 
