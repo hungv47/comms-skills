@@ -6,6 +6,23 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [3.4.3] - 2026-05-08
+
+CLAUDE.md doc cleanup — align stack-level documentation with the new `.agents/skill-artifacts/` taxonomy shipped in v3.4.2 and across the umbrella as marketplace 1.5.0.
+
+### Changed
+
+- `marketing-skills/CLAUDE.md` Artifacts and Cross-Stack sections — every `.agents/mkt/...`, `.agents/prioritize.md`, `.agents/targets.md` reference migrated to the new lifecycle taxonomy (`.agents/skill-artifacts/mkt/...`, `.agents/skill-artifacts/meta/sketches/prioritize-*.md`, `.agents/skill-artifacts/meta/records/targets-*.md`).
+- Cross-stack `short-form-research` reference relocated from `mkt/` to `research/` to match where the producer skill writes after its own T33 migration.
+- "Pipeline outputs write to `.agents/mkt/`" → "Pipeline outputs write to `.agents/skill-artifacts/mkt/`."
+- Manifest Spec section + short-form-brief description updated to the new path.
+
+### Notes
+
+Doc-only patch — no SKILL.md or skill-behavior changes. Per-stack CLAUDE.md was left out of the v3.4.2 T33 pass to keep that pass strictly about skill output declarations; this patch closes the doc-vs-code drift.
+
+---
+
 ## [3.4.2] - 2026-05-08
 
 T33 path migration — every skill SKILL.md updated to the new `.agents/skill-artifacts/` lifecycle taxonomy (see `agent-skills/CLAUDE.md` §"Artifact Placement"). Mechanical churn only — no behavior changes.
