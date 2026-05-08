@@ -19,7 +19,8 @@ sources:
     title: "YouTube Algorithm & Television Strategy — Ritchie + Beaupré (Richard Harrington recap, Aug 2025)"
     url: https://www.richardharrington.com/blog/2025/8/16/youtube-algorithm-amp-television-strategy-key-insights-and-tactics
     accessed: 2026-05-07
-    tier: primary
+    tier: secondary
+    note: "Third-party recap of a Ritchie + Beaupré presentation. The presenters are YouTube employees but this source is a third-party blog, not a YouTube channel — treat as secondary."
   - id: yt-help-midroll
     title: "Manage mid-roll ad breaks in long videos — YouTube Help"
     url: https://support.google.com/youtube/answer/6175006

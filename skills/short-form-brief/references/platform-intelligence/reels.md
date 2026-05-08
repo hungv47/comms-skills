@@ -81,8 +81,8 @@ sources:
     title: "ManyChat — Instagram Post and Reel Comments trigger"
     url: https://help.manychat.com/hc/en-us/articles/14281316989724-Instagram-Post-and-Reel-Comments-trigger
     accessed: 2026-05-07
-    tier: primary
-    note: "Official ManyChat doc for the 'comment X to get the link' DM-trigger pattern Mosseri publicly endorses (because DM sends are a top-3 ranking signal — see S2)."
+    tier: secondary
+    note: "Third-party (ManyChat) automation tool documentation. Documents the integration mechanism for the DM-trigger pattern; Mosseri's endorsement of the pattern is primary (S2), but ManyChat's docs are themselves secondary."
   - id: S14
     title: "SocialSizes.io — Instagram Reels Size 2026 (1080×1920, safe zones)"
     url: https://socialsizes.io/instagram-reels-size/
@@ -135,7 +135,7 @@ Four Reels-native archetypes. They overlap with the base six (`../hook-archetype
 
 ### Archetype 4 — Remix-Driven Stitch / Collab-Tagged Reel
 
-- **Definition:** Reel built on top of another creator's existing reel via Reels Remix (side-by-side or sequential) or co-published as a Collab post. Imports the original reel's audience into your distribution pool — Meta's 2024 internal data cited 50% reach lift for Collab posts vs. single-author posts [secondary tracker, see notes below].
+- **Definition:** Reel built on top of another creator's existing reel via Reels Remix (side-by-side or sequential) or co-published as a Collab post. Imports the original reel's audience into your distribution pool. (Practitioner reports cite a meaningful Collab-post reach lift vs. single-author posts, but no platform-confirmed figure is publicly available — see §7.)
 - **Identifying signal:** Reels Remix UI badge ("Remixed with @x") at top-left; or two creator handles in the post header for Collab posts. Typically the original reel is on one side and the new reaction/extension is on the other.
 - **Verbatim example A:** "I had to remix this — this is the WORST advice on Reels and here's why" — reaction-style remix targeting a high-view contrarian post; standard pattern across @nealtschuler, @latermedia, @ross.simmonds and other creator-economy commentators.
 - **Verbatim example B:** A Collab post between @vanessalau.co and a guest creator where both audiences see the same reel in their feed simultaneously — Vanessa has used this to launch course cohorts; appears on both grids.
@@ -155,8 +155,8 @@ Four Reels-native archetypes. They overlap with the base six (`../hook-archetype
 | Aspect ratio | 9:16 vertical (1080×1920) | S14 |
 | Resolution recommended | 1080×1920, H.264, 30fps, 10–15 Mbps, AAC 48 kHz | S14 |
 | Max file size | 4 GB (≤500 MB recommended for upload reliability) | S14 |
-| Caption character limit | 2,200 | S6 (Instagram help, cited in source's primary chain) |
-| Caption truncation point | ~125 chars before "...more" | S6 |
+| Caption character limit | 2,200 | Instagram Help Center (long-documented platform constraint; not in current sources block) |
+| Caption truncation point | ~125 chars before "...more" | Practitioner consensus across S5/S9 (not platform-stated as a numeric value) |
 | Safe zones (top / bottom) | ~250 px top + ~250 px bottom obscured by UI; place text in center 1080×1420 | S14 |
 | Feed crop | Reels in main feed crop to **4:5** centered vertically — design the center 1080×1350 to read alone | S14 |
 | Burned-in caption requirement | Yes — autoplay-with-sound-off behavior and accessibility; on-screen captions correlate with retention lift | S11 |
@@ -244,6 +244,8 @@ If retention data isn't public for a specific cohort, default to OpusClip's 60% 
 - **Trending-audio decay window:** "Trending" is signaled by an up-arrow in the audio picker, but the velocity decay (how long after the up-arrow appears does the reel still get the audio-trend lift?) is not documented. Practitioner heuristic: 7–14 days, but no cohort study cited.
 - **Effect of the Dec-2025 5-hashtag cap on niche discoverability:** The cap is 6 months old as of this doc's verification date. It's too early to know whether niche/long-tail hashtags (e.g., #notiontemplate, #vintagecamera) still drive measurable search traffic at the new cap, or whether keyword-in-caption SEO has fully replaced them. Re-verify this open question when re-checking source S5 in 90 days.
 - **Cross-posting from TikTok with the watermark removed (but identical edit):** Originality classifier behavior on a watermark-stripped but otherwise-identical-to-TikTok upload is unclear — IG can fingerprint visuals, not just OCR watermarks. Anecdotal practitioner reports suggest re-edits with at least one new cut + on-screen text are required to avoid the originality demotion.
+- **Collab-post reach-lift magnitude.** Practitioner reports cite a meaningful lift (commonly stated as "around 50%") for Collab posts vs. single-author posts, but the originally-cited "Meta's 2024 internal data" attribution was an unsourced inline claim and has been removed. The reach lift is real and consistent in cohort observations; the specific magnitude is not platform-confirmed. Re-research pass to find a properly-cited cohort number.
+- **Caption character limit (2,200) primary-source citation gap.** The 2,200-char caption + ~125-char "...more" truncation is long-documented Instagram constraint but the specific Help Center URL is not yet pinned to the frontmatter sources block. The values are correct in practitioner consensus; the citation chain needs a primary doc URL.
 
 ---
 

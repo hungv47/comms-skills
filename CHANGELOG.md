@@ -6,6 +6,24 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [3.4.1] - 2026-05-08
+
+Fresh-eyes mechanical fixes to the v3.3.0 platform-intelligence reference docs. No behavioral changes.
+
+### Fixed
+
+- `short-form-brief/references/platform-intelligence/linkedin.md` — Reclassified the Microsoft Q1 2026 earnings recap (Social Media Today) from `primary` to `secondary` (third-party recap; underlying earnings statements are primary). Split the conflated "Duration sweet spot (organic)" row into two rows so the 30–90s talking-head guidance and the 3+ min retention-lift figure each carry their own citation.
+- `short-form-brief/references/platform-intelligence/reels.md` — Reclassified the ManyChat DM-trigger source from `primary` to `secondary` (third-party automation-tool docs documenting an integration mechanism; Mosseri's endorsement is primary, ManyChat's docs are not). Removed the unsourced "Meta's 2024 internal data cited 50% reach lift for Collab posts" claim and replaced with hedged practitioner-consensus phrasing; added a §7 open-question entry to track the citation gap. Hedged the 2,200-char caption limit and ~125-char truncation citations (`S6` was claimed but the underlying URL pin is not in the sources block); added a second §7 open-question entry.
+- `short-form-brief/references/platform-intelligence/shorts.md` — Removed the unsupported numeric claim "70–90% of total Shorts views via the Shorts feed traffic source"; rephrased to "the Shorts feed handles the majority of Shorts views" with the 70–90% split flagged as practitioner-estimated and pinned to §7.
+- `short-form-brief/references/platform-intelligence/tiktok.md` — Hedged the 4,000-char caption-limit citation (`jera.bean TikTok 2023 announcement` was an inline reference not registered in the frontmatter sources block) to practitioner-derived; added §7 open-question. Hedged the 3–5 hashtag-norm and >7 stuffing-penalty rows (orphan source IDs `accio-hashtag-2025`, `admetrics`, `sproutsocial` not pinned in frontmatter); added §7 open-question entry to register them on a re-research pass.
+- `short-form-brief/references/platform-intelligence/youtube.md` — Reclassified the Ritchie + Beaupré algorithm-and-television-strategy recap (Richard Harrington's blog) from `primary` to `secondary` (the presenters are YouTube employees, but the source itself is a third-party blog).
+
+### Notes
+
+These are the 9 mechanical fresh-eyes corrections to the v3.3.0 platform-intelligence ship: tier mis-classifications corrected (3 sources), a fabricated "internal data" claim removed, an orphan source-ID chain hedged, a conflated citation row split, and §7 open-questions seeded so the next re-research pass can close the citation gaps cleanly. No content claim was strengthened — the fix direction is consistently from over-confident attribution to honest hedging plus a registered re-research item.
+
+---
+
 ## [3.4.0] - 2026-05-07
 
 `lp-brief` always-emit Implementation Prompt for coding agents + critic-rubric awareness + `pending-media-skill` route.

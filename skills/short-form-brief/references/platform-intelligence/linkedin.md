@@ -69,7 +69,8 @@ sources:
     title: "LinkedIn Reports Significant Increases in Post Comments and Video Posts (Microsoft Q1 2026 earnings) — Social Media Today"
     url: https://www.socialmediatoday.com/news/linkedin-reports-increase-in-post-comments-video-posts-microsoft-q1-2026/804353/
     accessed: 2026-05-07
-    tier: primary
+    tier: secondary
+    note: "Third-party recap of LinkedIn/Microsoft Q1 2026 earnings statements. The underlying earnings statements are primary; this recap is secondary."
   - id: src-growleads
     title: "LinkedIn Algorithm 2026: Text vs Video Strategy Exposed — GrowLeads"
     url: https://growleads.io/blog/linkedin-algorithm-2026-text-vs-video-reach/
@@ -138,7 +139,8 @@ Hard specs an agent or critic can enforce. Numeric over prose.
 
 | Constraint | Value | Citation |
 |---|---|---|
-| Duration sweet spot (organic) | 30–90 seconds for talking heads; videos >3 min get 21% more reach + 17% more engagement than format-average per Socialinsider 2026 cohort | src-authoredup-video, src-socialinsider |
+| Duration sweet spot — talking heads | 30–90 seconds | src-authoredup-video |
+| Duration sweet spot — long-form | Videos >3 min get 21% more reach + 17% more engagement than format-average | src-socialinsider |
 | Duration hard cap (Pages, organic) | 10 minutes | src-li-help-pages |
 | Duration hard cap (mobile upload) | 10 minutes | src-li-help-pages |
 | Duration hard cap (desktop upload) | 15 minutes (some practitioner sources); LinkedIn Help formal cap is 10 minutes | src-li-help-pages |
