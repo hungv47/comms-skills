@@ -39,15 +39,16 @@ routing:
     - video-brief
     - production-brief
   position: pipeline
+  lifecycle: pipeline
   produces:
-    - mkt/short-form-brief/[slug]/brief.md
-    - mkt/short-form-brief/[slug]/variants/[platform].md
+    - skill-artifacts/mkt/short-form-brief/[slug]/brief.md
+    - skill-artifacts/mkt/short-form-brief/[slug]/variants/[platform].md
   consumes:
-    - mkt/short-form-research.md
+    - skill-artifacts/research/short-form-research.md
     - research/icp-research.md
     - research/product-context.md
     - brand/BRAND.md
-    - mkt/campaign-plan.md
+    - skill-artifacts/mkt/campaign-plan.md
   requires: []
   defers-to:
     - skill: short-form-research
@@ -94,7 +95,7 @@ Brand mode and market drive the voice and polish chain; they're not cosmetic. Fo
 
 **Inputs:** Angle (required); target platforms (1-3, hard cap 1+2); brand mode (founder | company, auto-detect or ask); production mode (live-action | motion-graphic | mixed, default per brand mode); market (inherited from research); optional campaign tie-in.
 
-**Output:** `.agents/mkt/short-form-brief/[slug]/brief.md` (hero) + `[slug]/variants/[platform].md` per variant.
+**Output:** `.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md` (hero) + `[slug]/variants/[platform].md` per variant.
 
 ## Quality Gate
 
@@ -160,20 +161,20 @@ Run the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-pr
 **Needed dimensions:** angle, platforms (1-3), brand_mode (founder | company), production_mode (auto | live-action | motion-graphic | mixed), market, optional campaign tie-in.
 
 **Read order:**
-1. `.agents/mkt/short-form-research.md` — **primary dependency.**
+1. `.agents/skill-artifacts/research/short-form-research.md` — **primary dependency.**
    - Missing → "No short-form-research artifact for this market. Run `short-form-research` first, or proceed with platform references only (briefs will lack current trend signals). [Run upstream / Proceed without]"
    - Trend signals stale (>30d) → "Trend signals are X days old. Re-run research, or proceed with stale trends? Briefs may bet on decayed patterns."
    - Mechanics stale (>180d) → strongly recommend re-run; user can override with concerns flag.
 2. `brand/BRAND.md` + `.agents/experience/business.md` → infer `brand_mode`. Solo founder / personal brand → `founder`. Faceless product / company → `company`. Ambiguous → ask.
 3. `research/icp-research.md` + `.agents/experience/audience.md` → audience VoC, register, market.
 4. `.agents/experience/content.md` → recent content decisions, market lock-in.
-5. `.agents/mkt/campaign-plan.md` → if `[slug]` matches a campaign asset, inherit theme/dates/CTAs.
+5. `.agents/skill-artifacts/mkt/campaign-plan.md` → if `[slug]` matches a campaign asset, inherit theme/dates/CTAs.
 
 **Warm Start** (research artifact found, brand_mode inferred):
 
 ```
 Found context for short-form-brief:
-- research artifact: .agents/mkt/short-form-research.md (trends 8d ago, mechanics 22d ago — fresh)
+- research artifact: .agents/skill-artifacts/research/short-form-research.md (trends 8d ago, mechanics 22d ago — fresh)
 - brand_mode: founder (from BRAND.md archetype)
 - market: VN (from research artifact)
 - production_mode default: live-action (founder)
@@ -307,7 +308,7 @@ The polish chain runs as a final pass over the relevant sections — not a re-di
 
 ## Output Artifact Structure
 
-`.agents/mkt/short-form-brief/[slug]/brief.md` (hero) — full template lives in `.agents/meta/short-form-brief-spec.md` §5.1. Frontmatter:
+`.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md` (hero) — full template lives in `.agents/meta/short-form-brief-spec.md` §5.1. Frontmatter:
 
 ```yaml
 ---
@@ -322,7 +323,7 @@ production_mode: live-action | motion-graphic | mixed
 market: [region]
 hero_platform: tiktok | reels | shorts | x | linkedin
 variants: [list]
-research_artifact: .agents/mkt/short-form-research.md
+research_artifact: .agents/skill-artifacts/research/short-form-research.md
 research_trend_signals_date: [YYYY-MM-DD]
 research_mechanics_date: [YYYY-MM-DD]
 campaign_tie_in: [slug or null]

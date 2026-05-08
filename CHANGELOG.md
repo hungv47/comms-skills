@@ -6,6 +6,25 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [3.4.2] - 2026-05-08
+
+T33 path migration — every skill SKILL.md updated to the new `.agents/skill-artifacts/` lifecycle taxonomy (see `agent-skills/CLAUDE.md` §"Artifact Placement"). Mechanical churn only — no behavior changes.
+
+### Changed
+
+- All 12 SKILL.md files (`brand-system`, `campaign-plan`, `cold-outreach`, `copywriting`, `design-brief`, `humanize`, `lp-brief`, `lp-optimization`, `seo`, `short-form-brief`, `start-marketing`, `vn-tone`) — frontmatter `description`, `routing.produces`, `routing.consumes`, and inline body references updated:
+  - `.agents/mkt/...` → `.agents/skill-artifacts/mkt/...`
+  - `.agents/prioritize.md` → `.agents/skill-artifacts/meta/sketches/prioritize-*.md`
+  - `.agents/targets.md` → `.agents/skill-artifacts/meta/records/targets-*.md`
+  - Cross-stack: short-form-brief's reference to `short-form-research` updated to `.agents/skill-artifacts/research/short-form-research.md` (was incorrectly pinned under `mkt/`).
+- All 12 SKILL.md files now declare `routing.lifecycle:` — `canonical` for `brand-system` (top-level `brand/` paths unchanged), `pipeline` for the rest.
+
+### Notes
+
+Non-behavioral release. Operator-driven migration to clean two-tier `.agents/` structure; old paths were not breaking but accumulated drift. No skill output changed format. No CHANGELOG entry warranted for downstream skill consumers — the path change is purely substrate-level and the manifest catches up automatically.
+
+---
+
 ## [3.4.1] - 2026-05-08
 
 Fresh-eyes mechanical fixes to the v3.3.0 platform-intelligence reference docs. No behavioral changes.

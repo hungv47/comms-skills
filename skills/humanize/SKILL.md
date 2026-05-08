@@ -1,6 +1,6 @@
 ---
 name: humanize
-description: "Strips AI patterns, injects brand voice, and compresses existing text so it reads human-written. Targets 15%+ word reduction with zero idea loss. Produces `.agents/mkt/content/[slug].humanized.md`. Not for writing new copy (use copywriting). For brand voice reference, see brand-system. For SEO compliance, see seo."
+description: "Strips AI patterns, injects brand voice, and compresses existing text so it reads human-written. Targets 15%+ word reduction with zero idea loss. Produces `.agents/skill-artifacts/mkt/content/[slug].humanized.md`. Not for writing new copy (use copywriting). For brand voice reference, see brand-system. For SEO compliance, see seo."
 argument-hint: "[content file or text]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -38,11 +38,12 @@ routing:
     - compression
     - text-polish
   position: horizontal
+  lifecycle: pipeline
   produces:
-    - mkt/content/[slug].humanized.md
+    - skill-artifacts/mkt/content/[slug].humanized.md
   consumes:
     - product-context.md
-    - mkt/content/[slug].md
+    - skill-artifacts/mkt/content/[slug].md
   requires: []
   defers-to:
     - skill: copywriting
@@ -73,7 +74,7 @@ AI-generated content fails in three ways: it reads like AI wrote it (patterns), 
 - Any content artifact (from `copywriting`, `lp-optimization`, or any other skill) or raw text
 
 ## Output
-- `.agents/mkt/content/[slug].humanized.md`
+- `.agents/skill-artifacts/mkt/content/[slug].humanized.md`
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:

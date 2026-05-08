@@ -43,6 +43,7 @@ routing:
     - typography-system
     - brand-voice
   position: pipeline
+  lifecycle: canonical
   produces:
     - brand/BRAND.md
     - brand/DESIGN.md  # Route B (full) only. Quick Brand (Route A) produces BRAND.md only.

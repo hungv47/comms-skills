@@ -38,8 +38,9 @@ routing:
     - page-optimization
     - cro
   position: horizontal
+  lifecycle: pipeline
   produces:
-    - mkt/lp-optimization.md
+    - skill-artifacts/mkt/lp-optimization.md
   consumes:
     - product-context.md
     - icp-research.md

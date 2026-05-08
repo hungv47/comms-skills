@@ -1,6 +1,6 @@
 ---
 name: start-marketing
-description: "Stack orchestrator for marketing-skills. Reads what's already done in `brand/`, `research/`, and `.agents/mkt/`, parses your intent, and proposes the next 1–3 skills in the marketing pipeline (brand-system → campaign-plan → copywriting / lp-brief / seo / cold-outreach / short-form-brief → humanize / vn-tone). Use when you don't know which marketing skill to invoke, or want a guided run from brand foundation through content production. Not for executing the work itself — it routes to the skill that does. Not for cross-stack workflows (use start-meta or invoke skills directly)."
+description: "Stack orchestrator for marketing-skills. Reads what's already done in `brand/`, `research/`, and `.agents/skill-artifacts/mkt/`, parses your intent, and proposes the next 1–3 skills in the marketing pipeline (brand-system → campaign-plan → copywriting / lp-brief / seo / cold-outreach / short-form-brief → humanize / vn-tone). Use when you don't know which marketing skill to invoke, or want a guided run from brand foundation through content production. Not for executing the work itself — it routes to the skill that does. Not for cross-stack workflows (use start-meta or invoke skills directly)."
 argument-hint: "[free-form ask, or empty to be guided]"
 allowed-tools: Read Grep Glob Bash
 user-invocable: true
@@ -41,6 +41,7 @@ routing:
     - stack-entry-point
     - marketing-guide
   position: orchestrator
+  lifecycle: pipeline
   produces:
     - .agents/experience/marketing-workflow.md
   side-effects:
@@ -51,13 +52,13 @@ routing:
     - brand/BRAND.md
     - brand/DESIGN.md
     - brand/ASSETS.md
-    - .agents/mkt/campaign-plan.md
-    - .agents/mkt/content/*.md
-    - .agents/mkt/lp-brief/**/brief.md
-    - .agents/mkt/lp-optimization.md
-    - .agents/mkt/seo-*.md
-    - .agents/mkt/cold-outreach/*.md
-    - .agents/mkt/short-form-brief/**/brief.md
+    - .agents/skill-artifacts/mkt/campaign-plan.md
+    - .agents/skill-artifacts/mkt/content/*.md
+    - .agents/skill-artifacts/mkt/lp-brief/**/brief.md
+    - .agents/skill-artifacts/mkt/lp-optimization.md
+    - .agents/skill-artifacts/mkt/seo-*.md
+    - .agents/skill-artifacts/mkt/cold-outreach/*.md
+    - .agents/skill-artifacts/mkt/short-form-brief/**/brief.md
     - .agents/experience/*.md
   requires: []
   defers-to:
@@ -90,7 +91,7 @@ routing:
 
 *Meta — Stack orchestrator. The entry point for the marketing-skills stack when you don't know what to invoke.*
 
-**Core Job:** read what's been done in `brand/` and `.agents/mkt/`, infer where you are in the marketing pipeline, propose the next skill.
+**Core Job:** read what's been done in `brand/` and `.agents/skill-artifacts/mkt/`, infer where you are in the marketing pipeline, propose the next skill.
 
 **Core Question:** "Given the brand foundation, the campaign state, and what you just asked, which content skill produces the highest-leverage next artifact?"
 
@@ -115,7 +116,7 @@ This skill does NOT execute marketing work. It is a router and progress-tracker.
 
 ## How It Works
 
-1. **State detection** — silently read `research/`, `brand/`, `.agents/mkt/`, `.agents/experience/*.md`.
+1. **State detection** — silently read `research/`, `brand/`, `.agents/skill-artifacts/mkt/`, `.agents/experience/*.md`.
 2. **Intention analysis** — parse the user's free-form ask. If empty, ask one bundled scoping question.
 3. **Routing decision** — propose the next 1–3 skills with rationale + cost + duration + what each produces.
 4. **User confirmation** — user picks one. Skill prints the hand-off `/skill-name` command and exits. Never auto-invokes.
@@ -156,14 +157,14 @@ See [`../../../meta-skills/references/manifest-spec.md`](../../../meta-skills/re
 | `brand/BRAND.md` | Brand narrative + voice + positioning defined. |
 | `brand/DESIGN.md` | Visual system + design tokens defined. |
 | `brand/ASSETS.md` | Per-platform asset inventory tracked. |
-| `.agents/mkt/campaign-plan.md` | Integrated campaign plan exists. |
-| `.agents/mkt/content/*.copy.md` | Specific copy artifacts produced. |
-| `.agents/mkt/lp-optimization.md` | Existing LP audit done. |
-| `.agents/mkt/lp-brief/**/brief.md` | LP redesign brief exists. |
-| `.agents/mkt/seo-*.md` | SEO mode artifact (audit / ai / programmatic / competitor / aso). |
-| `.agents/mkt/cold-outreach/*.md` | Outbound touch composed. |
-| `.agents/mkt/short-form-brief/**/brief.md` | Video brief exists. |
-| `.agents/mkt/short-form-research.md` | Short-form best-practice catalog (from research-skills). |
+| `.agents/skill-artifacts/mkt/campaign-plan.md` | Integrated campaign plan exists. |
+| `.agents/skill-artifacts/mkt/content/*.copy.md` | Specific copy artifacts produced. |
+| `.agents/skill-artifacts/mkt/lp-optimization.md` | Existing LP audit done. |
+| `.agents/skill-artifacts/mkt/lp-brief/**/brief.md` | LP redesign brief exists. |
+| `.agents/skill-artifacts/mkt/seo-*.md` | SEO mode artifact (audit / ai / programmatic / competitor / aso). |
+| `.agents/skill-artifacts/mkt/cold-outreach/*.md` | Outbound touch composed. |
+| `.agents/skill-artifacts/mkt/short-form-brief/**/brief.md` | Video brief exists. |
+| `.agents/skill-artifacts/mkt/short-form-research.md` | Short-form best-practice catalog (from research-skills). |
 | `.agents/experience/marketing-workflow.md` | Prior breadcrumb. |
 | `.agents/experience/brand.md`, `audience.md`, `content.md` | Persisted cold-start answers. |
 
@@ -229,7 +230,7 @@ Apply rules in order — first match wins.
 5. **Intent: lp-audit** → propose `lp-optimization`. No upstream gate — works on any LP URL.
 6. **brand done + intent: lp-design** → propose `lp-brief`. If `lp-optimization.md` exists, note it will be consumed.
 7. **Intent: search-visibility** → propose `seo`. Ask user which mode (audit / ai / programmatic / competitor / aso).
-8. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `.agents/mkt/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
+8. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `.agents/skill-artifacts/mkt/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
 9. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
 10. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
 11. **Intent: vn-polish** → propose `vn-tone`. Note: post-translation only, runs on already-translated VN text.
@@ -266,7 +267,7 @@ Why: brand foundation + ICP are in place. campaign-plan consumes both
 and produces the channel strategy + content calendar that downstream
 skills (copywriting, seo, short-form-brief, cold-outreach) hang off.
 
-Cost: ~$1–3 · Duration: ~10 min · Produces: .agents/mkt/campaign-plan.md
+Cost: ~$1–3 · Duration: ~10 min · Produces: .agents/skill-artifacts/mkt/campaign-plan.md
 
 Run it?  →  /campaign-plan
 ```

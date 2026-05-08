@@ -1,6 +1,6 @@
 ---
 name: campaign-plan
-description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/mkt/campaign-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing page optimization, see lp-optimization."
+description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/skill-artifacts/mkt/campaign-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing page optimization, see lp-optimization."
 argument-hint: "[product or campaign to plan]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -44,12 +44,13 @@ routing:
     - growth-motion
     - 9-channel-map
   position: pipeline
+  lifecycle: pipeline
   produces:
-    - mkt/campaign-plan.md
+    - skill-artifacts/mkt/campaign-plan.md
   consumes:
     - product-context.md
     - icp-research.md
-    - prioritize.md
+    - skill-artifacts/meta/sketches/prioritize-*.md
   requires: []
   defers-to: []
   parallel-with:
@@ -81,7 +82,7 @@ Frameworks (ORB, 3D Angles, Pillar Types) are proven defaults — not mandatory 
 - ICP research from `research/icp-research.md` + `research/product-context.md` (or user-provided)
 
 ## Output
-- `.agents/mkt/campaign-plan.md`
+- `.agents/skill-artifacts/mkt/campaign-plan.md`
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
@@ -157,7 +158,7 @@ Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search st
 **When:** `lp-brief`, `cold-outreach`, or another downstream skill needs plan context.
 
 ```
-1. Read existing .agents/mkt/campaign-plan.md if available
+1. Read existing .agents/skill-artifacts/mkt/campaign-plan.md if available
 2. If not available, run Route B
 3. Return plan to calling skill
 ```
@@ -177,7 +178,7 @@ Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Star
 - Constraints (team size, budget tier, channels off-limits)
 
 ### Read order
-1. Pipeline: `research/product-context.md` → product. `research/icp-research.md` → audience, habitats, VoC. `.agents/prioritize.md` → strategic initiatives (optional, alignment only).
+1. Pipeline: `research/product-context.md` → product. `research/icp-research.md` → audience, habitats, VoC. `.agents/skill-artifacts/meta/sketches/prioritize-*.md` → strategic initiatives (optional, alignment only).
 2. Experience: `.agents/experience/{product,audience,business,goals}.md` for any dimension not covered by pipeline artifacts.
 
 If pipeline artifact `date` fields are >30 days, warn and recommend re-running upstream — audience and pains evolve.
