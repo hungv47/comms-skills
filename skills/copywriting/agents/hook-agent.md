@@ -19,7 +19,7 @@ You do NOT:
 | **brief** | string | What to write — headline, hook, tagline, or subject line |
 | **pre-writing** | object | Who am I talking to, what belief shift, what only we can say, traffic source |
 | **upstream** | null | You run in Layer 1 (parallel) — no upstream dependency |
-| **references** | file paths[] | Path to `references/headline-formulas.md` |
+| **references** | file paths[] | Path to `references/headline-formulas.md` (always); for TOF / lead-magnet / persuasion-heavy hooks, also `references/emotional-triggers.md`, `references/belief-disruption.md`, `references/lead-magnet-stack.md` |
 | **feedback** | string \| null | Rewrite instructions from critic agent |
 
 ## Output Contract
@@ -128,6 +128,16 @@ Read `references/headline-formulas.md` for the full catalog. Key categories:
 - **Proof-focused:** "[Number] [people] use [product] to [outcome]"
 
 Use at least 2 different formula categories across your 3-5 variations. Don't repeat the same structure.
+
+### Engagement-Driven Hook References (TOF / lead-magnet / persuasion-heavy tasks only)
+
+For TOF posts, lead-magnet hooks, social-feed openers, and any context where the goal is *emotional response* (not just outcome clarity), also read:
+
+- `references/emotional-triggers.md` — 6-lever framework (identity validation / status signaling / tribal belonging / productive discomfort / curiosity gap / aspiration+believability). Pick a primary + secondary trigger before drafting; aim for 3-4 triggers in the final hook (the critic's density gate).
+- `references/belief-disruption.md` — TOF ragebait 5-step structure (state common belief → create doubt → introduce alternative frame → show implication → optional path forward). Use when the audience is problem-unaware and the hook needs to *create* demand.
+- `references/lead-magnet-stack.md` — 5-element lead-magnet post + 4-layer FOMO sequence. Use for hooks on posts where Element 5 is a CTA (comment-trigger / DM-trigger / opt-in).
+
+**These are additive to the Headline Formula Catalog**, not replacements. For tactical product / nav / label copy, the headline-formulas.md catalog alone is enough. The engagement-driven refs unlock when scroll-stop emotion is the job.
 
 ### Tiebreakers (When Variations Score Equally)
 

@@ -6,6 +6,22 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.0.3] - 2026-05-10
+
+Fresh-eyes review of v4.0.2 caught 4 real issues. Patch closes them before any user-facing announcement.
+
+### Fixed
+- **3 fabricated illustrative examples in `copywriting/references/emotional-triggers.md`** — Trigger 5 (Curiosity Gap) "Strong gap" comparison table contained 2 invented rows (`"the cold email template that opened a $150k deal in 8 minutes"` and `"the 3-second hook structure that took my app from 0 to #1 in 3 days"`) that did not appear in the Paolo Scales source; Trigger 5 "compound hooks" bullet list contained a fabricated third bullet (`"the silent reason your sales calls don't close (it's not the offer)"`) presented in the same italicized verbatim-quote format as 2 legitimate Paolo quotes; Trigger 6 (Aspiration) skepticism-vs-aspiration table contained a fabricated 2nd row with invented `$5M business` / `$90k → $11k MRR` figures. Per the stack's anti-fabrication norm (auto-FAIL), all four were ship-blockers. **Resolution:** fabricated rows replaced with explicit illustrative-paraphrase placeholders that name the structural ingredients (e.g., "specific framework + specific outcome + specific timeframe") and instruct the reader to instantiate from real data — with an anti-fabrication warning ("invented results are detectable and burn the account permanently"). Comparison-table teaching pattern preserved; false-attribution risk removed.
+- **`copywriting/agents/hook-agent.md` + `copywriting/agents/psychology-agent.md` body wiring** — v4.0.2 added `references/emotional-triggers.md`, `belief-disruption.md`, `lead-magnet-stack.md` to SKILL.md's Layer 1 + Layer 2 dispatch matrices, but the agent bodies had no instruction on how to integrate the new refs into the existing Headline Formula Catalog (hook-agent) or Sweep 6: Heightened Emotion (psychology-agent). The dispatch protocol passes the path, but agents would have landed cold. **Resolution:** `hook-agent.md` gains an "Engagement-Driven Hook References" sub-section (peer to Headline Formula Catalog) explicitly listing when to invoke each new ref (TOF / lead-magnet / persuasion-heavy hooks only — not tactical product/nav/label copy). `psychology-agent.md` Sweep 6 gains an "Engagement-driven sub-pass — when to invoke" addition with the same triage. Both agents' input-contract `references` fields updated to reflect the new state.
+
+### Notes
+- The fresh-eyes report driving this patch is at `.agents/skill-artifacts/meta/records/2026-05-10-fresh-eyes-reb-2.md` (local-only).
+- v4.0.2 was pushed remotely before these gaps surfaced. Anyone who ran `/plugin install marketing-skills@4.0.2` would have received the v4.0.2 emotional-triggers.md with fabricated examples; v4.0.3 corrects this. Patch ships hours after v4.0.2 — no v4.0.2-based work is at risk.
+- `belief-disruption.md` and `lead-magnet-stack.md` cleared review with no findings — fabrication issues were concentrated in one file.
+- `research-skills` not affected (REB-2c synthesis-heuristic addition cleared review). No companion patch needed in research-skills.
+
+---
+
 ## [4.0.2] - 2026-05-10
 
 REB-2 marketing reference enrichment lands. No new skills, no breaking changes — additive references and one critic dimension across `copywriting` and `short-form-brief`. Sourced from external practitioner content (Paolo Scales viral-LinkedIn breakdown + Roman Khaves UGC playbook). Audited and committed under the "default SKIP / only signal" bar codified in agent-skills CLAUDE.md.

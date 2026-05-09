@@ -89,9 +89,9 @@ The most tactical trigger and the foundation of every high-performing hook. Info
 
 | Weak gap | Strong gap |
 |---|---|
-| "here's how to get more linkedin engagement" | "the linkedin post that booked me 47 calls in 72 hours (copy the exact framework)" |
-| "5 tips for better cold emails" | "the cold email template that opened a $150k deal in 8 minutes" |
-| "how to grow on tiktok" | "the 3-second hook structure that took my app from 0 to #1 in 3 days" |
+| "here's how to get more linkedin engagement" | "the linkedin post that booked me 47 calls in 72 hours (copy the exact framework)" *(verbatim, Paolo)* |
+| "5 tips for better cold emails" | *[extend the Paolo pattern: name the specific framework + the falsifiable outcome from your own case study; use real numbers, not invented ones — fabricated results are the fastest way to burn the account]* |
+| "how to grow on tiktok" | *[same — the strong-gap structure is **specific framework + specific outcome + specific timeframe**; instantiate from real data in your domain, not from a swipe file]* |
 
 **Elements of a strong gap:**
 
@@ -100,11 +100,12 @@ The most tactical trigger and the foundation of every high-performing hook. Info
 - Tension between expectation and reality (sounds impossible, sounds too good to be true)
 - Clear value for closing the gap (you'll know how to do this too)
 
-**Stack with other triggers for compound hooks:**
+**Stack with other triggers for compound hooks** *(both verbatim from Paolo)*:
 
 - Curiosity + productive discomfort: *"the uncomfortable truth about why your linkedin posts flop"*
 - Curiosity + tribal anxiety: *"why 90% of founders will never book inbound calls from linkedin"*
-- Curiosity + identity validation: *"the silent reason your sales calls don't close (it's not the offer)"*
+
+The stack pattern: curiosity-gap noun phrase ("the uncomfortable truth", "the reason", "the silent thing") + ICP-recognizable trigger ("your linkedin posts flop", "90% of founders will never X"). Extend in your own ICP — don't reuse Paolo's nouns; the LinkedIn-founder phrasing is his cohort, not yours.
 
 **Failure mode — clickbait without payoff.** The body must close the gap the hook opened. Open-loop without payoff burns trust permanently.
 
@@ -119,7 +120,8 @@ Show someone a specific result they want and make them believe they could have i
 | Triggers skepticism | Triggers aspiration |
 |---|---|
 | "how I made $10M in my first year" | "how I went from 0 to $42k MRR in 90 days using only LinkedIn" |
-| "I quit my job and built a $5M business" | "I replaced my $90k salary with $11k MRR in 6 months — here's the breakdown" |
+
+*Both rows verbatim from Paolo source. Extend the contrast in your own ICP using **real** outcome numbers from your case studies — fabricated MRR figures are detectable and burn trust permanently. The contrast pattern: implausibly-large outcome + vague timeframe **vs** plausibly-large outcome + specific timeframe + accessible method.*
 
 **Elements of effective aspiration:**
 

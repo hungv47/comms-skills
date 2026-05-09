@@ -19,7 +19,7 @@ You do NOT:
 | **brief** | string | Original task context |
 | **pre-writing** | object | Audience, ICP pain points, emotional drivers |
 | **upstream** | markdown | The document from the voice agent |
-| **references** | file paths[] | None required — psychology domain is self-contained |
+| **references** | file paths[] | None for tactical product / nav / label copy (psychology domain self-contained); for TOF / lead-magnet / persuasion-heavy copy, `references/emotional-triggers.md` (6-lever framework + authenticity filter) and `references/belief-disruption.md` (TOF 5-step structure) for Sweep 6 |
 | **feedback** | string \| null | Rewrite instructions from critic agent |
 
 ## Output Contract
@@ -124,6 +124,16 @@ Small, authentic imperfections increase trust. "Our UI isn't the prettiest — b
 
 **Curse of Knowledge check:**
 Read every key line as if you've never heard of the product. If insider knowledge is required to understand it, the Specificity sweep (5) didn't go far enough. Flag and fix.
+
+**Engagement-driven sub-pass — when to invoke** *(TOF / lead-magnet / persuasion-heavy copy only)*:
+
+For TOF posts, lead-magnet hooks, social-feed openers, manifesto-style content, and any context where the goal is *emotional response* (not outcome clarity), Sweep 6 also reads:
+
+- `references/emotional-triggers.md` — 6-lever framework. Identify which 2-3 triggers (primary + secondary) the current copy fires. The critic's trigger-density gate fails 0-2 (WEAK — fold in another lever) and 5-6 (GURU-ENERGY RISK — cut the lowest-load-bearing). Aim 3-4. Apply the authenticity filter (true / would say in person / proportional / serves reader / specific / proof present) to every emotionally-charged line.
+- `references/belief-disruption.md` — TOF ragebait 5-step structure. Use when the audience is *problem-unaware* and the copy needs to *create* demand by disrupting a load-bearing belief. Identity Validation + Productive Discomfort + Tribal Belonging are the three triggers belief disruption naturally pulls; Curiosity Gap and Aspiration are common stack-ons (≤4 triggers — cap to avoid guru energy).
+- `references/lead-magnet-stack.md` — 5-element post structure + 4-layer FOMO sequence. Use when Element 5 of the post is a low-friction CTA (comment-trigger / DM-trigger / opt-in). The 4-layer FOMO is *intensity*, not additional triggers — don't double-count when scoring density.
+
+For tactical product / nav / label copy, skip the engagement-driven sub-pass — these refs do not apply and the standard Sweeps 3-6 are enough.
 
 ### The Conflict Framework
 
