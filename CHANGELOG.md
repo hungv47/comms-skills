@@ -6,6 +6,26 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.0.1] - 2026-05-09
+
+Fresh-eyes review of v4.0.0 caught real gaps. Patch closes them before any user-facing announcement.
+
+### Fixed
+- **plugin.json `skills` array was missing `social-copy`** — installed copies of marketing-skills@4.0.0 wouldn't have surfaced the new skill at all (skill files on disk but not in the plugin manifest). Added `./skills/social-copy/` to the array. **This is the load-bearing fix in this patch.**
+- `orchestrate-marketing/SKILL.md` body H1 still said `# Start Marketing` — T41 rename missed the body title. Fixed to `# Orchestrate Marketing`.
+- `orchestrate-marketing/references/workflow-graph.md` did not list `social-copy` — the orchestrator could not route users to the new skill. Added social-copy to the pipeline diagram, per-skill catalog, and routing rules (h. social-post → social-copy with soft-gate on short-form-brief OR brand). Also corrected stale `.agents/mkt/...` paths under short-form-brief to the post-T33 `.agents/skill-artifacts/` taxonomy.
+- Phase 0.5b CHANGELOG claim in v4.0.0 said TikTok Findings 1-4 were closed; actually only Finding 1 was. Findings 2 (Billie Eilish stitch), 3 (@mckenzibrooke × Prime Video brand stitch), 4 (Codie Sanchez laundromat) now relabeled `[pattern-observed; URL not pinned]` matching the inventory's proposed fix shape. No fabricated URLs.
+- Phase 0.5b §8 changelog audit-trail rows were missing in `tiktok.md`, `reels.md`, `x.md` (only `shorts.md` had a 2026-05-08 row). Added matching entries describing which findings each file closed.
+- `social-copy/SKILL.md` did not state the spec-locked default "single-market per artifact (matches short-form-brief)". Added the constraint inline alongside the polish-chain section.
+- `marketing-skills/CLAUDE.md` skill counts ("11 skills") and "Skills using this pattern" enumeration not updated for social-copy. Counts now read 12; social-copy added with its 3-agent dispatch description; "Recent Changes" entry added for the 2026-05-08 wave.
+- plugin.json description updated: "11 skills" → "12 skills" + named social-copy in the description blurb. Added `social-copy` keyword.
+
+### Notes
+- The fresh-eyes report driving this patch is at `.agents/skill-artifacts/meta/records/2026-05-09-fresh-eyes-marketplace-2.0.0.md` (local-only).
+- v4.0.0 was pushed remotely before these gaps surfaced. Anyone who ran `/plugin install marketing-skills@4.0.0` would not have received `social-copy` in the install. v4.0.1 corrects this.
+
+---
+
 ## [4.0.0] - 2026-05-08
 
 ### BREAKING

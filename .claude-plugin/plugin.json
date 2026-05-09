@@ -1,12 +1,12 @@
 {
   "name": "marketing-skills",
-  "description": "Brand, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, and short-form video briefs — 11 skills + orchestrate-marketing orchestrator.",
-  "version": "4.0.0",
+  "description": "Brand, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, short-form video briefs, and platform-native social-copy — 12 skills + orchestrate-marketing orchestrator.",
+  "version": "4.0.1",
   "author": { "name": "hungv47" },
   "homepage": "https://github.com/hungv47/marketing-skills",
   "repository": "https://github.com/hungv47/marketing-skills",
   "license": "MIT",
-  "keywords": ["marketing", "brand", "copywriting", "design-brief", "lp-brief", "seo", "humanize", "cold-outreach", "short-form"],
+  "keywords": ["marketing", "brand", "copywriting", "design-brief", "lp-brief", "seo", "humanize", "cold-outreach", "short-form", "social-copy"],
   "skills": [
     "./skills/orchestrate-marketing/",
     "./skills/brand-system/",
@@ -19,6 +19,7 @@
     "./skills/lp-optimization/",
     "./skills/seo/",
     "./skills/short-form-brief/",
+    "./skills/social-copy/",
     "./skills/vn-tone/"
   ]
 }

@@ -15,7 +15,7 @@ Canonical pipeline definition for the marketing-skills stack. `orchestrate-marke
 brand-system ──→ campaign-plan ──→ content layer ───┤
                                                     ├── seo (5 modes)
                                                     │
-                                                    ├── short-form-brief
+                                                    ├── short-form-brief ──→ social-copy (per platform)
                                                     │       ↑
                                                     │       └── consumes short-form-research.md (research-skills)
                                                     │
@@ -103,10 +103,19 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 ### short-form-brief
 
 - **Job:** production-ready video brief — hook, shot list, on-screen text, audio plan, caption, CTA, aspect, length. Live-action OR motion-graphic. Hero + max 2 platform variants per call.
-- **Produces:** `.agents/mkt/short-form-brief/[slug]/brief.md`, `[slug]/variants/[platform].md`
-- **Consumes:** `.agents/mkt/short-form-research.md` (from research-skills), `research/icp-research.md`, `brand/BRAND.md`
+- **Produces:** `.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md`, `[slug]/variants/[platform].md`
+- **Consumes:** `.agents/skill-artifacts/research/short-form-research.md` (from research-skills), `research/icp-research.md`, `brand/BRAND.md`
 - **When to recommend:** short-form-video intent. Hard-gated on `short-form-research.md`.
 - **Cost:** $1–3 · 9 agents · deep budget · ~10 min
+
+### social-copy
+
+- **Job:** platform-native social post copy — A/B hook variants, body, CTA, format spec for tiktok / reels / shorts / x / linkedin. Single-platform per invocation. Char-limit + CTA-truncation enforced; 5-dim critic rubric.
+- **Produces:** `.agents/skill-artifacts/mkt/copy/[platform]-[date]-[slug].md`
+- **Consumes:** `.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md` OR inline topic; `brand/BRAND.md`; `marketing-skills/skills/short-form-brief/references/platform-intelligence/[platform].md`
+- **When to recommend:** social-post intent (user has a topic / brief and wants ready-to-publish copy for a specific platform). Distinct from `copywriting` (horizontal — any surface, no per-platform format enforcement) and `short-form-brief` (per-asset video brief, not the post copy itself).
+- **Cost:** $0.50–1.50 · 3 agents · standard budget · ~5 min
+- **Polish chain:** `polish_chain=humanize|vn-tone|none` (default `none`).
 
 ### cold-outreach
 
@@ -151,9 +160,10 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
    e. lp-design            → lp-brief      (gate: brand)
    f. search-visibility    → seo (ask mode)
    g. short-form-video     → short-form-brief (gate: short-form-research)
-   h. outbound             → cold-outreach (gate: icp)
-   i. text-polish          → humanize
-   j. vn-polish            → vn-tone
+   h. social-post          → social-copy (soft-gate: short-form-brief OR brand; ask which platform)
+   i. outbound             → cold-outreach (gate: icp)
+   j. text-polish          → humanize
+   k. vn-polish            → vn-tone
 
 4. Polish chain hint:
    - If output of recommended skill is user-facing copy in EN → mention humanize as terminal step.

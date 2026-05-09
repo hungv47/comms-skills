@@ -286,3 +286,4 @@ X-native CTA placement is **fundamentally shaped by the link-suppression problem
 | Date | Change | By |
 |---|---|---|
 | 2026-05-07 | Initial draft. Sources: 16 (8 primary platform docs / exec statements, 8 secondary cohort studies). Open questions: 6. | opus-research-agent-2026-05-07 |
+| 2026-05-08 | Phase 0.5b URL repair (Bucket B). Finding 9 closed: Archetype 1 example B (Buffer team / Tamilore Oladipo X-post promoting their X-Premium analysis) relabeled `[pattern-observed; URL not pinned]`; specific X-post URL not pinned. `s9` cite scope clarified — `s9` is the Buffer blog article (the underlying study), not the X post itself. Finding 10 closed: added §"Note on `s4` scope" footnote clarifying that `s4` (X API media-upload reference) covers both API and organic upload paths since both pipe through the same media-encoding backend. `last_verified` bumped to 2026-05-08. | assistant-2026-05-08 |

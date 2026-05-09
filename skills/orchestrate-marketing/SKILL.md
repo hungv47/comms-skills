@@ -87,7 +87,7 @@ routing:
   estimated-complexity: low
 ---
 
-# Start Marketing
+# Orchestrate Marketing
 
 *Meta — Stack orchestrator. The entry point for the marketing-skills stack when you don't know what to invoke.*
 

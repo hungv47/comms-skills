@@ -90,6 +90,8 @@ Social copy generator for 5 platforms: **tiktok, reels, shorts, x, linkedin**. C
 
 **Single-platform per artifact.** Multi-platform = re-invoke with a different `platform` argument.
 
+**Single-market per artifact** (matches `short-form-brief`). Multi-market campaigns re-run per market. Vietnamese-market copy auto-routes through `vn-tone` via `--polish-chain vn-tone`.
+
 **Polish chain default:** `none`. Set `--polish-chain humanize` or `--polish-chain vn-tone` to route the critic-passed copy through a terminal pass.
 
 ---
