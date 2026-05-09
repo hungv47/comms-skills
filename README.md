@@ -228,6 +228,16 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 - `cold-outreach` additionally reads `research/icp-research.md` for target persona pain language
 - `campaign-plan` and `lp-brief` can read `.agents/prioritize.md` and `.agents/targets.md` from research-skills
 
+## Releases
+
+```bash
+# Update to latest version (if already installed)
+npx skills update
+
+# Add this stack to your project
+npx skills add hungv47/marketing-skills
+```
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md) for release notes (commit 3254a53, 2026-05-05).
