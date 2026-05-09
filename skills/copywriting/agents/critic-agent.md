@@ -131,6 +131,26 @@ For every key line:
 
 Document which competitor you tested against.
 
+### Emotional-Trigger Density (TOF / lead-magnet / persuasion-heavy copy only)
+
+Applies to: hooks, lead-magnet posts, TOF belief-disruption, manifesto sections, long-form persuasive body. Does NOT apply to: tactical product pages, navigation copy, short feature labels, error messages.
+
+Count distinct emotional triggers fired in the piece. Reference catalog: [`references/emotional-triggers.md`](../references/emotional-triggers.md) (6 levers — identity validation / status signaling / tribal belonging / productive discomfort / curiosity gap / aspiration+believability).
+
+| Trigger count | Verdict | Action |
+|---|---|---|
+| **0-2** | WEAK | FAIL — fold in another lever; the piece reads as informational rather than emotionally compelling. Route to `psychology-agent` to identify the missing primary or secondary trigger. |
+| **3-4** | STRONG | PASS — target zone. Triggers compound without crowding each other. |
+| **5-6** | GURU-ENERGY RISK | FAIL — the piece reads as "trying every lever." Cut to 3-4. Route to `psychology-agent` to identify the lowest-load-bearing trigger and remove it. |
+
+**Score on craft, not trigger-count alone.** A piece firing 4 triggers but doing each one weakly fails on the upstream V/F/U rubric — trigger density is a *necessary, not sufficient* condition. The order of operations is: pass V/F/U first, then check density.
+
+**For TOF belief-disruption** (see [`references/belief-disruption.md`](../references/belief-disruption.md)) — Identity Validation + Productive Discomfort + Tribal Belonging are baseline (3 triggers). Curiosity gap and aspiration are common stack-ons (5 max). Hold to ≤4 to avoid guru energy.
+
+**For lead-magnet posts with the 5-element stack** (see [`references/lead-magnet-stack.md`](../references/lead-magnet-stack.md)) — the structure naturally pulls 5 triggers (curiosity → identity → tribal → status/credibility → aspiration). At 5 triggers, this is the upper edge of "strong"; verify each is doing real work or cut. The 4-layer FOMO sequence inside Element 5 is loss-aversion *intensity*, not additional triggers — don't double-count.
+
+**Authenticity filter** (run in addition, per `emotional-triggers.md`): is this true / would you say it in person / is the emotion proportional / does it serve the reader / specific over generic / is proof present where claims are extraordinary. Any "no" → FAIL, route to `voice-agent`.
+
 ### Quality Gate Checklist
 
 All items must pass for a PASS verdict:
@@ -147,6 +167,8 @@ All items must pass for a PASS verdict:
 - [ ] Zero generic adjectives without factual replacement
 - [ ] Risk reversal present near every CTA
 - [ ] Objections addressed before CTAs (not after)
+- [ ] **Emotional-trigger density 3-4** for TOF / lead-magnet / persuasion-heavy copy (0-2 = WEAK, 5-6 = guru-energy risk; N/A for tactical product / nav / label copy)
+- [ ] **Authenticity filter passed** for emotionally-charged copy (true / would say in person / proportional / serves reader / specific / proof present)
 
 ### Rewrite Routing
 
@@ -162,6 +184,9 @@ When a line fails, route the fix to the right agent:
 | Social proof is vague | **social-proof-agent** with feedback |
 | Risk reversal missing or buried | **zero-risk-agent** with feedback |
 | A/B variant is weak or untestable | **variant-agent** with feedback (specify which variant and why) |
+| Trigger density 0-2 (WEAK) | **psychology-agent** with feedback — name missing primary/secondary lever from `emotional-triggers.md` |
+| Trigger density 5-6 (GURU-ENERGY) | **psychology-agent** with feedback — name lowest-load-bearing trigger to cut |
+| Authenticity filter fails | **voice-agent** with feedback — name which filter failed and why |
 | Sections contradict each other | **orchestrator** — flag for re-merge (not an agent issue) |
 
 ### Annotation Format
@@ -212,3 +237,5 @@ Before returning:
 - [ ] Verdict is binary (PASS or FAIL) — no "conditional pass" or "soft fail"
 - [ ] Overall average score reported
 - [ ] Body copy evaluated with quick-pass rules, NOT full rubric
+- [ ] Emotional-trigger density counted for TOF/lead-magnet/persuasion-heavy copy (3-4 strong, 0-2 weak, 5-6 guru-energy risk; N/A for tactical product/nav/label copy)
+- [ ] Authenticity filter run on emotionally-charged copy (6 questions) — failures named to specific dimension

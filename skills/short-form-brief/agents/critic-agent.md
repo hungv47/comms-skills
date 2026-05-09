@@ -68,6 +68,7 @@ You do NOT:
 - Voice matches BRAND.md archetype: [yes / no — name mismatch if any]
 - No generic founder/company tropes: [yes / no — quote the trope if found]
 - Brand-mode appropriate (founder = personal voice; company = product voice): [yes / no]
+- **Format-fit test:** is the product the *punchline of the format* or *pasted on top*? [punchline / pasted-on / heavy-integration] — name which of Roman's 2 failure modes the brief skirts (viral-but-no-convert OR converts-but-no-views) and quote the integration moment that proves it
 
 ## Routing (if FAIL)
 
@@ -142,6 +143,8 @@ Cross-reference brief against research artifact's per-platform Recommendations:
 - Generic trope detection: scan for "Hey guys" / "we're excited to announce" / "in today's world" / "a thing I learned" — any present = FAIL.
 - Brand mode mismatch: founder-mode brief in third person? Company-mode brief in first-person founder voice? Mismatch.
 
+**Format-fit test (Roman's 2-failure-modes):** every short-form brief sits between two failure modes — *viral-but-no-convert* (the format pulls views but the product is pasted on top of the content; viewer enjoys, scrolls, never connects to the app) and *converts-but-no-views* (the integration is so heavy the piece reads as an ad and gets skipped before payoff). The format-fit test asks one binary question: **is the product the punchline of the format, or pasted on top of it?** If the product reveal *is* the payoff the format builds toward (the way RIZZ's AI pickup line lands as the basketball-clip punchline) → punchline = PASS. If the product is mentioned in voiceover or end-card without the format's beats earning it → pasted-on = FAIL toward viral-but-no-convert. If the brief's hook/storyboard reads as ad-first with the format functioning as decoration → heavy-integration = FAIL toward converts-but-no-views. Quote the specific shot or beat where the integration succeeds or fails. Source: Roman Khaves, $2M+ on faceless UGC for RIZZ + $10M+ across other apps ([@roman_khaves](https://x.com/roman_khaves/status/2034999438779814202)).
+
 ### Routing Rules
 
 | Failed sub-critic | Route to | Why |
@@ -156,6 +159,8 @@ Cross-reference brief against research artifact's per-platform Recommendations:
 | Brand-fit: VoC missing | voc-extraction-agent + hook-agent + copy-pack-agent | Re-pull VoC, integrate |
 | Brand-fit: generic trope | hook-agent + copy-pack-agent | Replace trope |
 | Brand-fit: archetype mismatch | hook-agent + copy-pack-agent | Voice rewrite |
+| Brand-fit: format-fit pasted-on (viral-but-no-convert risk) | hook-agent + storyboard-agent | Re-architect product reveal as the format's payoff, not a tagged-on mention |
+| Brand-fit: format-fit heavy-integration (converts-but-no-views risk) | format-agent + storyboard-agent | Loosen integration; let the format breathe in the first 2/3 before product lands |
 | Variant FAIL: caption-only resize | platform-tailor-agent | True recut |
 
 ### Anti-Patterns
@@ -175,4 +180,5 @@ Cross-reference brief against research artifact's per-platform Recommendations:
 - [ ] Final recommendation is one of: PASS / re-dispatch / ship done_with_concerns
 - [ ] If variants exist, each variant scored separately
 - [ ] AI slop check completed
+- [ ] Format-fit test answered (punchline / pasted-on / heavy-integration) with quoted shot or beat as evidence
 - [ ] No brief rewriting — only verdict + routes

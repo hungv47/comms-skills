@@ -261,10 +261,10 @@ Spawn the following agents **IN PARALLEL** (multiple Agent tool calls in a singl
 
 | Agent | Instruction File | Pass These Inputs | Reference Files to Resolve |
 |-------|-----------------|-------------------|---------------------------|
-| Hook Agent | `agents/hook-agent.md` | brief + pre-writing | `references/headline-formulas.md` |
+| Hook Agent | `agents/hook-agent.md` | brief + pre-writing | `references/headline-formulas.md`, `references/emotional-triggers.md` (TOF/lead-magnet hooks), `references/belief-disruption.md` (problem-unaware audience), `references/lead-magnet-stack.md` (lead-magnet posts) |
 | Body Agent | `agents/body-agent.md` | brief + pre-writing | `references/page-sections.md` |
-| CTA Agent | `agents/cta-agent.md` | brief + pre-writing | — |
-| Social Proof Agent | `agents/social-proof-agent.md` | brief + pre-writing + available proof points | `references/page-sections.md` |
+| CTA Agent | `agents/cta-agent.md` | brief + pre-writing | `references/lead-magnet-stack.md` (lead-magnet CTAs only) |
+| Social Proof Agent | `agents/social-proof-agent.md` | brief + pre-writing + available proof points | `references/page-sections.md`, `references/lead-magnet-stack.md` (FOMO layer 1-2 social-proof patterns) |
 
 **For single key line tasks (Route A):** Dispatch only the relevant agent, not all four.
 
@@ -317,12 +317,12 @@ Dispatch these agents **ONE AT A TIME, IN ORDER** using the Dispatch Protocol ab
 voice-agent → psychology-agent → zero-risk-agent → critic-agent
 ```
 
-| Step | Agent | Instruction File | Receives |
-|------|-------|-----------------|----------|
-| 1 | Voice Agent | `agents/voice-agent.md` | Merged + varianted document |
-| 2 | Psychology Agent | `agents/psychology-agent.md` | Voice agent's output |
-| 3 | Zero-Risk Agent | `agents/zero-risk-agent.md` | Psychology agent's output |
-| 4 | Critic Agent | `agents/critic-agent.md` | Zero-risk agent's output |
+| Step | Agent | Instruction File | Receives | Reference Files to Resolve |
+|------|-------|-----------------|----------|---------------------------|
+| 1 | Voice Agent | `agents/voice-agent.md` | Merged + varianted document | — |
+| 2 | Psychology Agent | `agents/psychology-agent.md` | Voice agent's output | `references/emotional-triggers.md`, `references/belief-disruption.md` (TOF copy only) |
+| 3 | Zero-Risk Agent | `agents/zero-risk-agent.md` | Psychology agent's output | — |
+| 4 | Critic Agent | `agents/critic-agent.md` | Zero-risk agent's output | `references/emotional-triggers.md` (trigger density gate) |
 
 Each agent returns the full document with their edits applied + a change log.
 
@@ -455,6 +455,9 @@ Receives zero-risk output. Scores all key lines. All average ≥3.5. Annotated a
 ### Shared References (references/)
 - [references/headline-formulas.md](references/headline-formulas.md) — Headline formula catalog (hook-agent)
 - [references/page-sections.md](references/page-sections.md) — Page section types, templates, testimonial selection (body-agent, social-proof-agent)
+- [references/emotional-triggers.md](references/emotional-triggers.md) — 6-lever framework for engagement-driven copy (psychology-agent, hook-agent, critic-agent for trigger density)
+- [references/belief-disruption.md](references/belief-disruption.md) — TOF ragebait 5-step structure for problem-unaware audiences (psychology-agent, hook-agent)
+- [references/lead-magnet-stack.md](references/lead-magnet-stack.md) — 5-element lead-magnet post + 4-layer FOMO sequence (hook-agent, social-proof-agent, cta-agent)
 
 ### Page-Specific Guidance
 

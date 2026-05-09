@@ -6,6 +6,26 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.0.2] - 2026-05-10
+
+REB-2 marketing reference enrichment lands. No new skills, no breaking changes — additive references and one critic dimension across `copywriting` and `short-form-brief`. Sourced from external practitioner content (Paolo Scales viral-LinkedIn breakdown + Roman Khaves UGC playbook). Audited and committed under the "default SKIP / only signal" bar codified in agent-skills CLAUDE.md.
+
+### Added
+- `copywriting/references/emotional-triggers.md` — 6-lever framework (identity validation / status signaling / tribal belonging / productive discomfort / curiosity gap / aspiration+believability) with worked examples per lever, stack rules, authenticity filter, and anti-patterns. Loaded by `hook-agent` (TOF/lead-magnet hooks), `psychology-agent` (Layer 2 emotion pass), and `critic-agent` (trigger-density gate).
+- `copywriting/references/belief-disruption.md` — TOF ragebait 5-step structure (state common belief → create doubt → introduce alternative frame → show implication → optional path forward) for problem-unaware audiences. 3 worked examples with step-by-step decomposition. Pairing rules with the 6-trigger stack.
+- `copywriting/references/lead-magnet-stack.md` — 5-element lead-magnet post (curiosity hook → identity validation → tribal belonging → investment signaling → aspiration+CTA) and 4-layer FOMO sequence (social proof → transformation → exclusivity → urgency) for high-friction CTAs. Worked full-post example. Stack-when matrix.
+
+### Changed
+- `copywriting/agents/critic-agent.md` — added **emotional-trigger density** dimension. 0-2 triggers = WEAK (FAIL — fold in another lever), 3-4 = STRONG (target zone), 5-6 = GURU-ENERGY RISK (FAIL — cut to 3-4). Applies to TOF / lead-magnet / persuasion-heavy copy only; N/A for tactical product / nav / label copy. Score on craft, not trigger-count alone — V/F/U upstream gate must pass first. Routing for trigger-density and authenticity-filter failures added to the Rewrite Routing table. Quality Gate Checklist + Self-Check items added.
+- `copywriting/SKILL.md` — Layer 1 dispatch matrix now lists the 3 new ref files against `hook-agent` / `cta-agent` / `social-proof-agent`. Layer 2 dispatch matrix now lists `emotional-triggers.md` + `belief-disruption.md` against `psychology-agent` and `emotional-triggers.md` against `critic-agent`. Shared References section enumerates the 3 new docs with which agents consume each.
+- `short-form-brief/agents/critic-agent.md` — added **format-fit test** to Brand-Fit Critic (Roman Khaves' 2-failure-modes: viral-but-no-convert vs converts-but-no-views). Critic now answers "is the product the punchline of the format, or pasted on top?" with quoted shot-or-beat evidence. Routing table gains `format-fit pasted-on` → `hook-agent + storyboard-agent` (re-architect product reveal as payoff) and `format-fit heavy-integration` → `format-agent + storyboard-agent` (loosen integration). Self-check item added.
+
+### Notes
+- Driven by Reference Enrichment Backlog REB-2 in `.agents/skill-artifacts/meta/roadmap.md`. REB-2c (`short-form-research/pattern-extractor` synthesis heuristic) ships in the matching `research-skills` patch (3.0.1) — separate stack, separate plugin manifest.
+- Bump kind: PATCH. Additive content + one critic dimension that strengthens existing rubric (no contract changes for downstream consumers, no behavioral change to skill outputs that already passed v4.0.1's gates).
+
+---
+
 ## [4.0.1] - 2026-05-09
 
 Fresh-eyes review of v4.0.0 caught real gaps. Patch closes them before any user-facing announcement.
