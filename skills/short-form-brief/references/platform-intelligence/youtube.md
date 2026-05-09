@@ -2,7 +2,7 @@
 type: platform-intelligence
 platform: youtube
 schema_version: 1
-last_verified: 2026-05-07
+last_verified: 2026-05-08
 verifier: opus-research-agent-2026-05-07
 sources:
   - id: ritchie-think-2025

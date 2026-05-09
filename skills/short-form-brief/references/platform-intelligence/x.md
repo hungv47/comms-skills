@@ -2,7 +2,7 @@
 type: platform-intelligence
 platform: x
 schema_version: 1
-last_verified: 2026-05-07
+last_verified: 2026-05-08
 verifier: opus-research-agent-2026-05-07
 sources:
   - id: s1
@@ -112,7 +112,7 @@ Five archetypes are X-native enough to warrant their own framing. They overlap w
 - **Definition:** The tweet text above the video does the rhetorical work — claim, contradiction, or stat — and the video is the proof. The video's first second can be quieter than on TikTok because the text already grabbed attention.
 - **Identifying signal:** ≥80 chars of declarative copy in the tweet body that would be a complete standalone post if the video were missing. Video opens on context (B-roll, talking head mid-sentence) rather than a TikTok-style cold pattern interrupt.
 - **Verbatim example A:** Tweet text — "I've watched 100+ founder pitch videos this month. The good ones all break the same rule." → 0:01 video cue: founder mid-frame talking, no overlay. Naval / @levelsio / Justin Welsh-style indie founder format frequently uses this exact structure (declarative claim in tweet → talking-head proof in video). [pattern observed across founder-creator cohort; per-tweet engagement varies]
-- **Verbatim example B:** Tweet text — "The numbers nobody on X wants to hear about Premium reach:" → 0:01 video cue: chart cut-in. Buffer's own data thread (Tamilore Oladipo / Buffer team) used this declarative-claim-into-data-video pattern for their X Premium analysis (`s9`, Aug 2025). Engagement: thread drove the underlying 18.8M-post study to wide circulation.
+- **Verbatim example B:** Tweet text — "The numbers nobody on X wants to hear about Premium reach:" → 0:01 video cue: chart cut-in. `[pattern-observed; URL not pinned]` Pattern attributed to the Buffer team (Tamilore Oladipo / Buffer comms) promoting their X Premium analysis circa Aug 2025; specific X-post URL not pinned. (Note: `s9` is the Buffer blog article — *Does X Premium Really Boost Your Reach?* — the underlying study, not the X post. The cite is preserved on the algorithm-signal rationale line below where it correctly references the study itself.)
 - **Engagement-signal rationale:** X renders tweet text above the video in-feed; users decide to play before they see frame 1. Open-sourced weights treat dwell-time-on-tweet as a positive signal at +10 for 2+ minutes (`s1`, `s16`), and tweet text directly drives the read-then-play sequence. (`s1`)
 - **Best for:** founder mode, B2B, data/insight content, thought leadership.
 
@@ -184,6 +184,8 @@ Five archetypes are X-native enough to warrant their own framing. They overlap w
 | Hashtags | Max 1–2 relevant. Multiple hashtags are negatively correlated with engagement in cohort studies (~40% penalty observed) — X Business explicitly says "Avoid using hashtags in your Post copy" | `s5` |
 
 **Note on the 140s cap and the API quirk:** Even Premium subscribers cannot post videos longer than 140 seconds via the X API (`tweet_video` endpoint). Long-form video upload requires the in-app or web UI (`s4` developer-community thread). Brief specs that assume programmatic posting must respect the 140s ceiling.
+
+**Note on `s4` scope:** `s4` is the X API media-upload reference. The codec / bitrate / pixel-format / aspect-ratio constraints listed there apply to the upload pipeline regardless of submission path — both programmatic (API) and organic (in-app / web composer) uploads pass through the same media-encoding backend, so the spec values transfer. Where organic-feed *recommendations* (vs. hard upload constraints) are referenced, supplemental sources are X Business / X Help-Center materials cited as `s5` and `s14`. If a future review surfaces a divergence between API-upload constraints and organic-composer constraints, this note is the place to flag it.
 
 ---
 

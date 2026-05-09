@@ -1,6 +1,6 @@
 ---
-name: start-marketing
-description: "Stack orchestrator for marketing-skills. Reads what's already done in `brand/`, `research/`, and `.agents/skill-artifacts/mkt/`, parses your intent, and proposes the next 1–3 skills in the marketing pipeline (brand-system → campaign-plan → copywriting / lp-brief / seo / cold-outreach / short-form-brief → humanize / vn-tone). Use when you don't know which marketing skill to invoke, or want a guided run from brand foundation through content production. Not for executing the work itself — it routes to the skill that does. Not for cross-stack workflows (use start-meta or invoke skills directly)."
+name: orchestrate-marketing
+description: "Stack orchestrator for marketing-skills. Reads what's already done in `brand/`, `research/`, and `.agents/skill-artifacts/mkt/`, parses your intent, and proposes the next 1–3 skills in the marketing pipeline (brand-system → campaign-plan → copywriting / lp-brief / seo / cold-outreach / short-form-brief → humanize / vn-tone). Use when you don't know which marketing skill to invoke, or want a guided run from brand foundation through content production. Not for executing the work itself — it routes to the skill that does. Not for cross-stack workflows (use orchestrate-meta or invoke skills directly). Renamed from `start-marketing` in v4.0.0."
 argument-hint: "[free-form ask, or empty to be guided]"
 allowed-tools: Read Grep Glob Bash
 user-invocable: true
@@ -109,7 +109,7 @@ This skill does NOT execute marketing work. It is a router and progress-tracker.
 ## When NOT To Use
 
 - You already know which skill to run — invoke it directly.
-- You want cross-stack guidance (research + marketing combined). Use `/start-meta`.
+- You want cross-stack guidance (research + marketing combined). Use `/orchestrate-meta`.
 - You want execution rather than routing.
 
 ---
@@ -221,7 +221,7 @@ Wait for answer.
 Apply rules in order — first match wins.
 
 **Foundation gates (highest priority):**
-1. **No `research/product-context.md`** → defer to research-skills. "Marketing produces hollow output without audience clarity. Run `/start-research` (specifically `icp-research`) first." Stop here.
+1. **No `research/product-context.md`** → defer to research-skills. "Marketing produces hollow output without audience clarity. Run `/orchestrate-research` (specifically `icp-research`) first." Stop here.
 2. **No `brand/BRAND.md` AND user wants brand-foundation OR campaign-planning OR copy-production OR lp-design** → propose `brand-system`. Rationale: brand voice and design tokens feed every downstream content skill.
 
 **Pipeline routing:**
@@ -291,7 +291,7 @@ Append to `.agents/experience/marketing-workflow.md`:
 
 Print hand-off line:
 
-> Run `/campaign-plan` next. After it completes, re-run `/start-marketing` to plan the next step.
+> Run `/campaign-plan` next. After it completes, re-run `/orchestrate-marketing` to plan the next step.
 
 Exit.
 
@@ -310,7 +310,7 @@ For canonical pipeline, decision rules, per-skill catalog, and polish-chain logi
 - **Don't auto-invoke** the recommended skill. Always print `/skill-name` and let the user type it.
 - **Don't recommend more than 3 skills** in one proposal.
 - **Don't lecture.** Show only what's relevant to where the user is.
-- **Don't recommend skills outside this stack.** If intent is research or product, point at `/start-research` or `/start-product`.
+- **Don't recommend skills outside this stack.** If intent is research or product, point at `/orchestrate-research` or `/orchestrate-product`.
 - **Don't conflate `lp-optimization` and `lp-brief`.** Optimization audits an existing page; brief designs a new one (or full redesign). Audit can feed brief.
 - **Don't conflate `copywriting` and `humanize`.** Copywriting writes new copy; humanize fixes AI-sounding existing copy. They run in sequence, not in parallel.
 

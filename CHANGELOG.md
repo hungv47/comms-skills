@@ -6,6 +6,26 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.0.0] - 2026-05-08
+
+### BREAKING
+- Renamed `start-marketing` → `orchestrate-marketing`. The skill scans existing artifacts and continues mid-pipeline; the orchestration role now reads explicitly in the slash command. No backward-compat alias — single-rev cutover.
+- Update any `/start-marketing` invocations in your workflows to `/orchestrate-marketing`.
+
+### Added
+- New skill `social-copy` — generates platform-native social copy (A/B hook variants, body, CTA, format spec) for TikTok, Reels, YouTube Shorts, X, LinkedIn. Three-agent pipeline (copywriter → format-checker with max-1 hard-cap revision loop → critic) with a 5-dimension critic rubric (hook scroll-stop strength / char-word limit compliance / CTA placement vs algorithm truncation / pattern-interruption density / format compliance, 0-10 each, pass ≥35/50). Reads `short-form-brief/references/platform-intelligence/[platform].md` for per-surface Hook Taxonomy + Format Constraints + Algorithm Signals. Single-platform per invocation; YouTube long-form deliberately excluded (different rubric). Polish-chain default `none`, can route through `humanize` or `vn-tone`.
+- `social-copy/references/rubric.md` v0.1 — falsifiable thresholds for each of the 5 dimensions with discrimination test protocol baked in (weak brief MUST score <25, strong brief MUST score ≥35; rubric breakage flagged when both pass or both fail).
+- `social-copy/references/examples.md` — 10 worked examples (1 strong + 1 weak per platform) with full per-dimension critic verdicts. Discrimination spread on ship: strong totals 44-48 / 50; weak totals 11-23 / 50. Calibration record at `.agents/skill-artifacts/mkt/copy/2026-05-08-calibration-record.md`.
+- `social-copy/references/anti-patterns.md` — 10 detection rules (generic hook openers, algorithm-blind CTAs, format mismatch, char-limit-blind copy, brand-voice ignored, pattern-interrupt monotony, pasted-from-blog body, engagement-bait CTA, external link in post body, hook-body disconnect) calibrated per platform.
+- Phase 0.5b verbatim-example + source-attribution closeout — 11 deferred fresh-eyes findings from the Phase 0.5 platform-intelligence framework ship (marketplace 1.5.0) resolved across `tiktok.md`, `reels.md`, `shorts.md`, `x.md`. Verbatim hook examples without locatable specific-post URLs relabeled `[pattern-observed; URL not pinned]` (no fabricated URLs); source mis-attributions corrected (S13 ManyChat doc no longer cited as Stephanie Kase; s9 Buffer blog scope clarified as the underlying study, not the X post; s4 X-API doc footnoted to clarify dual API/organic applicability); Shorts March 2025 "loop = view" methodology preserved with practitioner-source caveat. All 6 platform-intel docs + `_template.md` `last_verified` bumped to 2026-05-08.
+
+### Notes
+- `social-copy` ships as the Phase 1.1 rubric-divergence test per stack roadmap. Operator confirmed Phase 1.2 architecture as **separate skills** (Option A) per the side-by-side analysis at `.agents/skill-artifacts/meta/records/2026-05-08-phase-1.2-divergence-test.md` — `email-copy` and `ad-copy` will ship as gap-gated standalone skills with their own per-surface reference catalogs (not as `--surface` flags on `copywriting`).
+- Phase 0.5b inventory + per-finding fix log at `.agents/skill-artifacts/meta/records/phase-0.5b-inventory.md`.
+- Marketing-skills surface area: 12 → 13 skills.
+
+---
+
 ## [3.4.3] - 2026-05-08
 
 CLAUDE.md doc cleanup — align stack-level documentation with the new `.agents/skill-artifacts/` taxonomy shipped in v3.4.2 and across the umbrella as marketplace 1.5.0.

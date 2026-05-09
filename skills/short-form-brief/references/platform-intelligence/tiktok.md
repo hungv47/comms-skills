@@ -2,7 +2,7 @@
 type: platform-intelligence
 platform: tiktok
 schema_version: 1
-last_verified: 2026-05-07
+last_verified: 2026-05-08
 verifier: opus-research-agent-2026-05-07
 sources:
   - id: tt-recsys
@@ -105,7 +105,7 @@ Four TikTok-native archetypes. These are not renames of the base six in `../hook
 - **Definition:** Opening frame promises a payoff but withholds it; the visual of the unseen reveal carries the first 1–2 seconds while text overlay names the wait.
 - **Identifying signal:** Text overlay reading "wait for it", "POV:", "you won't believe what happens", or "0:18" timestamp tease in the corner. Visual is the *setup* of the payoff (covered object, mid-action freeze, anticipatory stare). VO is minimal or silent — the sound is usually a build-up trending audio.
 - **Verbatim example A:** "Wait for it…" overlay over a slow zoom on a covered baking pan — captioned "the loaf you've been afraid to try" — high-volume cooking-creator pattern documented in CapCut's "Wait for it" template (template ID 7523045197354110261, accessed 2026-05-07). [source: tt-csi context; pattern catalogued in CapCut template library]
-- **Verbatim example B:** "POV: you just hit $1M ARR and your wife asks how the day went" — opening frame is speaker mid-sip of coffee, no audio for first beat. Founder-mode pattern — surfaces consistently across creators tagged `#founderpov`. [source: pattern-log; verbatim retrievable via TikTok search "POV you just hit"]
+- **Verbatim example B:** "POV: you just hit $1M ARR and your wife asks how the day went" — [pattern-observed; URL not pinned] — opening frame is speaker mid-sip of coffee, no audio for first beat. Founder-mode pattern surfacing consistently across creators tagged `#founderpov`; no specific post URL locatable via web search.
 - **Engagement-signal rationale:** Withheld payoff drives **rewatches and completion** — the two heaviest user-interaction signals named by TikTok's own help-center doc, where it states "user interactions, which may include the time spent watching a video, are generally weighted more heavily than others." [source: tt-recsys] Rewatches are explicitly described by Buffer as carrying more weight than likes or follows. [source: buffer-algo]
 - **Best for:** Founder-mode storytime, transformation, cooking, before/after, comedic setup. Fails on dense tutorials (the wait dilutes payoff specificity).
 

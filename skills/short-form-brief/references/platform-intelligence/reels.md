@@ -2,7 +2,7 @@
 type: platform-intelligence
 platform: reels
 schema_version: 1
-last_verified: 2026-05-07
+last_verified: 2026-05-08
 verifier: opus-research-agent-2026-05-07
 sources:
   - id: S1
@@ -110,8 +110,8 @@ Four Reels-native archetypes. They overlap with the base six (`../hook-archetype
 
 - **Definition:** Opens with a value promise *gated behind a comment keyword*; the creator (or a ManyChat-style automation) DMs the resource to commenters. Designed to convert passive views into comments + DM sends — the two algorithm signals weighted heaviest for non-follower reach [S2, S9].
 - **Identifying signal:** First 1–3s says "comment <KEYWORD>" or "I'll send you" alongside the value claim. Caption / pinned-comment repeats the keyword. On-screen text usually shows the keyword in caps.
-- **Verbatim example A:** "Comment 'GROWTH' and I'll DM you my 47-page Reels playbook" — pattern endorsed by Mosseri's DM-priority statements; ManyChat's official Comments trigger doc [S13] is built specifically for this. Used across @vanessalau.co, @stephanie.kase, @jennaproductivity throughout 2024–2025.
-- **Verbatim example B:** "Type 'TEMPLATE' below — I built the exact 3-slide carousel I use to convert viewers into email subs and I'll send it to you free." — Stephanie Kase's tutorial deck on the pattern documents this as her highest-DM-volume reel format ([S13] tutorial reference).
+- **Verbatim example A:** "Comment 'GROWTH' and I'll DM you my 47-page Reels playbook" `[pattern-observed; URL not pinned]` — pattern endorsed by Mosseri's DM-priority statements; ManyChat's official Comments trigger doc [S13] documents the automation that operationalizes this hook. Pattern observed across @vanessalau.co, @stephanie.kase, @jennaproductivity throughout 2024–2025; specific post URL not pinned.
+- **Verbatim example B:** "Type 'TEMPLATE' below — I built the exact 3-slide carousel I use to convert viewers into email subs and I'll send it to you free." `[pattern-observed; URL not pinned]` — pattern attributed to Stephanie Kase's lead-magnet workflow; specific post URL not pinned. (Note: [S13] is the ManyChat Comments-trigger doc — the automation tool that operationalizes this pattern, not Stephanie Kase's verbatim text. Cite removed from this example to avoid mis-attribution.)
 - **Engagement-signal rationale:** A DM send is the single strongest non-follower-reach signal Mosseri has named [S2]. A comment is itself a heavy interaction [S10]. The DM-trigger hook compounds both in a single watch — the algorithm reads the reel as "high enough value that a stranger asked a stranger for the resource and got a private message in return," which is the exact behavior IG's recommendation system is trying to surface [S9]. *Also why it works:* the reel keeps living on the Reels tab for weeks because every new commenter triggers a fresh DM event, which the system reads as ongoing freshness.
 - **Best for:** founder-led education niches, course/lead-magnet funnels, B2B service offers where the asset is a PDF/template/checklist. **Bad fit:** consumer brand awareness with no opt-in asset, or any niche where commenting feels transactional (luxury, art, journalism).
 

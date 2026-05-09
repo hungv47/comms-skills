@@ -2,9 +2,11 @@
 
 ![Marketing Skills](./assets/banner.png)
 
-Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, and short-form video briefs. 12 skills (incl. `/start-marketing` orchestrator).
+> **v4.0.0 BREAKING:** `start-marketing` renamed to `orchestrate-marketing`. Update any `/start-marketing` invocations in your workflows to `/orchestrate-marketing`.
 
-**New here?** Run `/start-marketing` — it reads brand/research state, parses your ask, and proposes the next skill to invoke with rationale + cost + duration.
+Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, and short-form video briefs. 12 skills (incl. `/orchestrate-marketing` orchestrator).
+
+**New here?** Run `/orchestrate-marketing` — it reads brand/research state, parses your ask, and proposes the next skill to invoke with rationale + cost + duration.
 
 ## Install
 

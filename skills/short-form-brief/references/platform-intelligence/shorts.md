@@ -2,7 +2,7 @@
 type: platform-intelligence
 platform: shorts
 schema_version: 1
-last_verified: 2026-05-07
+last_verified: 2026-05-08
 verifier: opus-research-agent-2026-05-07
 sources:
   - id: yt-help-3min
@@ -105,6 +105,12 @@ sources:
     url: https://www.dailydot.com/news/mrbeast-youtube-shorts-views/
     accessed: 2026-05-07
     tier: secondary
+  - id: yt-shorts-view-count-change
+    title: "A Change to How We Count Views on Shorts — YouTube Community (official YouTube staff post)"
+    url: https://support.google.com/youtube/thread/333869549/a-change-to-how-we-count-views-on-shorts?hl=en
+    accessed: 2026-05-08
+    tier: primary
+    note: "Official YouTube Community thread announcing the March 31, 2025 change — views now count every time a Short starts to play or replay, with no minimum watch time. The legacy 'engaged view' metric (requiring a few seconds of watch) persists in YouTube Analytics Advanced Mode for monetization purposes."
 status: draft
 ---
 
@@ -124,8 +130,8 @@ Shorts inherits the base-6 hook archetypes (Credential flash, Pattern interrupt,
 
 - **Definition:** A Short whose opening explicitly previews or fragments a long-form video on the same channel, with the long-form linked via Related Links/description so engaged Shorts viewers route into the long-form rail.
 - **Identifying signal:** First 2s names a deliverable that cannot fit in 60s ("Here's the 3-minute version — full breakdown linked"), or visually fragments a long-form scene ("This is from my 22-minute deep-dive"); a "Related Links" pill appears at the bottom of the Shorts player linking to the long-form. [source: sel-related-links, vidiq-related]
-- **Verbatim example A:** "I spent 24 hours in the world's most expensive hotel room — full video on my channel" — the channel-flywheel pattern that MrBeast's main channel uses to push Shorts traffic into long-form (MrBeast Shorts have >1B views per top short and now exceed long-form views on the main channel) — @MrBeast, https://www.youtube.com/@MrBeast/shorts — engagement: top Shorts in the 1B+ view range. [source: dailydot-mrbeast-shorts, tubefilter-mrbeast]
-- **Verbatim example B:** "The Region Beta Paradox" (2-sentence concept tease with "watch the full 18-min essay" pattern) — @aliabdaal, https://www.youtube.com/@aliabdaal/shorts — engagement: ~1.7M views, 137k likes. [source: shortimize-algo]
+- **Verbatim example A:** "I spent 24 hours in the world's most expensive hotel room — full video on my channel" — [pattern-observed; URL not pinned] — the channel-flywheel pattern that MrBeast's main channel uses to push Shorts traffic into long-form (MrBeast Shorts have >1B views per top short and now exceed long-form views on the main channel); multiple hotel-related Shorts exist on the channel but no post with this exact opening line was locatable. MrBeast Shorts performance documented in [source: dailydot-mrbeast-shorts, tubefilter-mrbeast].
+- **Verbatim example B:** "The Region Beta Paradox" (2-sentence concept tease with "watch the full 18-min essay" pattern) — @aliabdaal, https://www.youtube.com/shorts/tNst8wHB6kU — engagement: ~1.7M views, 137k likes. [source: shortimize-algo]
 - **Engagement-signal rationale:** Shorts subscribers count toward the same channel total used for YPP eligibility (Tier 1 = 500 subs + 3M Shorts views/90d; Tier 2 = 1k subs + 3M Shorts views/90d or 4k watch hours), and long-form watch time monetizes at materially higher RPM than Shorts feed (Shorts ~$0.06/1k views per Galloway's 3.3B-view study). The flywheel hook converts low-RPM Shorts impressions into high-RPM long-form watch hours and into subscribers — both of which compound. [source: paddy-3p3b, unkoa-ypp, vidiq-shorts-mon]
 - **Best for:** Established channels with a long-form library; education/expertise niches; founder-mode where the goal is audience compound, not standalone Short virality.
 
@@ -135,7 +141,7 @@ Shorts inherits the base-6 hook archetypes (Credential flash, Pattern interrupt,
 - **Identifying signal:** Final ~0.5–1s frame visually mirrors first frame; ending sentence completes only when looped to the start; total duration 7–15s (loop math compounds when watch length is short); no end-card or CTA card that breaks the loop. [source: vidiq-loops, virvid-loop]
 - **Verbatim example A:** Satisfying-process Shorts where the last visual frame (e.g., "the door closes") re-cues the opening ("a door opens"); the format is endemic to the @ASMRSCAN, @5MinuteCrafts, and oddly-satisfying niches — pattern documented across 100k+ Shorts in vidIQ's loop-structure analysis. [source: vidiq-loops]
 - **Verbatim example B:** Short ending: "...and that's how you do it. Wait, did you catch the part where—" (cuts to silence; loop restarts and viewer rewatches to "catch" the missed beat) — pattern from looping-structure case studies. [source: virvid-loop]
-- **Engagement-signal rationale:** As of March 31, 2025, each loop counts as another view, and "even a 10% replay rate can meaningfully boost distribution"; looped Shorts can register >100% retention in YouTube analytics because segments get rewatched within a single session. This is the only short-form platform where the "incomplete ending" pattern compounds *measurably* in distribution — not just engagement signal. [source: vidiq-loops, virvid-loop]
+- **Engagement-signal rationale:** As of March 31, 2025 — confirmed by YouTube's official Community announcement [source: yt-shorts-view-count-change] — each loop counts as another view, and "even a 10% replay rate can meaningfully boost distribution"; looped Shorts can register >100% retention in YouTube analytics because segments get rewatched within a single session. This is the only short-form platform where the "incomplete ending" pattern compounds *measurably* in distribution — not just engagement signal. [source: yt-shorts-view-count-change, vidiq-loops, virvid-loop]
 - **Best for:** Visual / process / ASMR / satisfying / micro-narrative niches; product demos with a clear "before → after → before" arc; brand-mode where view-count is the KPI more than CTR-out.
 
 ### Archetype 3 — Shelf-style preview hook
@@ -190,7 +196,7 @@ YouTube's Creator Liaison framework (Rene Ritchie, plus Senior Director of Growt
 
 2. **Average view duration / completion rate.** Concrete metric: % of total length the average viewer watches; top Shorts hit 80–90% completion on <60s videos. *Why:* highest-weight post-swipe signal — a viewer who stopped scrolling but bounced at 3s is a worse signal than a viewer who finished. *Lever:* duration discipline (15–30s for retention-led; 40–60s only when content sustains it); cut every dead second. *Tier:* secondary cohort + primary (YouTube documentation on watch time as core ranking signal). [source: shortimize-algo, opus-retention]
 
-3. **Replay rate / loop count.** Concrete metric: how often viewers re-watch the Short within a session; **as of March 31, 2025 each loop counts as an additional view**. *Why:* replays signal exceptional engagement and now compound view-count math directly. Even ~10% replay rate "can meaningfully boost distribution." *Lever:* loop-bait ending (visual or narrative loop), 7–15s duration target where loop math compounds, no hard end-card that breaks the loop. *Tier:* primary (platform changed counting methodology) + secondary (threshold). [source: vidiq-loops, virvid-loop]
+3. **Replay rate / loop count.** Concrete metric: how often viewers re-watch the Short within a session; **as of March 31, 2025 each loop counts as an additional view**. *Why:* replays signal exceptional engagement and now compound view-count math directly. Even ~10% replay rate "can meaningfully boost distribution." YouTube's official announcement states: "a Shorts view is counted every time a Short starts to play or replay, with no minimum watch time required." *Lever:* loop-bait ending (visual or narrative loop), 7–15s duration target where loop math compounds, no hard end-card that breaks the loop. *Tier:* primary (platform changed counting methodology — official YouTube Community announcement) + secondary (threshold). [source: yt-shorts-view-count-change, vidiq-loops, virvid-loop]
 
 4. **Likes, comments, shares (engagement velocity).** Concrete metric: per-impression rate of each action; shares carry highest weight as virality signal. *Why:* secondary post-swipe satisfaction signal; comments + shares specifically signal "this was worth a reaction" which the algorithm extrapolates to "this will satisfy other viewers." *Lever:* explicit prompt at end ("comment your answer", "share with someone who needs this"); pinned-comment kickoff to seed thread. *Tier:* secondary. [source: shortimize-algo]
 
@@ -232,7 +238,7 @@ YouTube's Creator Liaison framework (Rene Ritchie, plus Senior Director of Growt
   - **80–90% completion** on Shorts <60s = top-performer band.
   - **<50% completion** = algorithmic throttle.
   - **>100% retention** is achievable (and now visibly desirable) on loop-bait Shorts because each loop counts as an additional view. [source: opus-retention, vidiq-loops]
-- **Loop / replay behavior:** Since March 31, 2025, **each replay/loop counts as another view**. Even a 10% replay rate meaningfully boosts distribution. Loop-bait Shorts in the 7–15s range compound view counts most aggressively; >100% retention is the explicit signal Loop-bait targets. [source: vidiq-loops, virvid-loop]
+- **Loop / replay behavior:** Since March 31, 2025, **each replay/loop counts as another view** — confirmed by YouTube's official Community announcement [source: yt-shorts-view-count-change]. Even a 10% replay rate meaningfully boosts distribution. Loop-bait Shorts in the 7–15s range compound view counts most aggressively; >100% retention is the explicit signal Loop-bait targets. [source: yt-shorts-view-count-change, vidiq-loops, virvid-loop]
 - **Drop-off structure on healthy Shorts:** Flat-with-gentle-decline is the target curve. A clean staircase or single sharp cliff means a specific moment failed (pacing slowed, topic shifted without transition, visual interest dropped). Bumps upward late in the Short = replay segments — that's the loop-bait signature. [source: opus-retention, virvid-loop]
 
 ---
@@ -268,3 +274,4 @@ YouTube's Creator Liaison framework (Rene Ritchie, plus Senior Director of Growt
 | Date | Change | By |
 |---|---|---|
 | 2026-05-07 | Initial draft. Covers post-Oct 2024 3-minute Shorts era, March 2025 loop-counts-as-view methodology change, late-2024 egregious-clickbait enforcement, Related Links UI, Tier-1/Tier-2 YPP Shorts monetization split. Hook taxonomy: channel-flywheel, loop-bait, shelf-style preview, title-and-thumbnail-hybrid. | opus-research-agent-2026-05-07 |
+| 2026-05-08 | Phase 0.5b URL repair (Bucket A + C). Archetype 1 example A (MrBeast hotel) relabeled [pattern-observed; URL not pinned] — no Shorts with that exact opening line locatable. Archetype 1 example B (Ali Abdaal "The Region Beta Paradox") pinned to specific Short URL: https://www.youtube.com/shorts/tNst8wHB6kU. Bucket C fix: March 2025 loop=view methodology now cites primary YouTube documentation — added source `yt-shorts-view-count-change` (support.google.com/youtube/thread/333869549) with note; updated §3 signal 3, §5 loop/replay behavior, and Archetype 2 rationale to reference this primary source alongside practitioner cites. | assistant-2026-05-08 |

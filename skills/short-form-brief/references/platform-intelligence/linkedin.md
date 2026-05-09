@@ -2,7 +2,7 @@
 type: platform-intelligence
 platform: linkedin
 schema_version: 1
-last_verified: 2026-05-07
+last_verified: 2026-05-08
 verifier: opus-research-agent-2026-05-07
 sources:
   - id: src-li-eng-dwell

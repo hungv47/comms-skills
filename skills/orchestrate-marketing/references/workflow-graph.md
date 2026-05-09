@@ -1,6 +1,6 @@
 # Marketing Stack Workflow Graph
 
-Canonical pipeline definition for the marketing-skills stack. `start-marketing` reads this for routing decisions.
+Canonical pipeline definition for the marketing-skills stack. `orchestrate-marketing` reads this for routing decisions.
 
 ---
 
@@ -138,7 +138,7 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 
 ```
 1. Read state. Critical gates:
-   - no research/product-context.md  →  defer to /start-research
+   - no research/product-context.md  →  defer to /orchestrate-research
    - no brand/BRAND.md AND intent in {brand, campaign, copy, lp-design}  →  propose brand-system
 
 2. Parse user intent → bucket (see Step 2 in SKILL.md)
@@ -171,7 +171,7 @@ After any content-producing skill, the natural terminal pass is:
 - **VN content (founder voice or VN market):** humanize → vn-tone
 - **Cold-outreach:** automatic humanize terminal pass already runs inside cold-outreach itself; no need to recommend humanize after it. But mention vn-tone if VN.
 
-`/start-marketing` should mention the polish chain in the proposal but NOT auto-include it. User decides whether to run polish after.
+`/orchestrate-marketing` should mention the polish chain in the proposal but NOT auto-include it. User decides whether to run polish after.
 
 ---
 
@@ -186,7 +186,7 @@ After any content-producing skill, the natural terminal pass is:
 
 ## Re-Entry Behavior
 
-`/start-marketing` is idempotent. When the breadcrumb shows "user confirmed: campaign-plan" and `.agents/mkt/campaign-plan.md` now exists, advance to the next step (typically copywriting or lp-brief based on current intent).
+`/orchestrate-marketing` is idempotent. When the breadcrumb shows "user confirmed: campaign-plan" and `.agents/mkt/campaign-plan.md` now exists, advance to the next step (typically copywriting or lp-brief based on current intent).
 
 If recommended skill never produced its artifact, surface that.
 
@@ -197,5 +197,5 @@ If recommended skill never produced its artifact, surface that.
 - Don't recommend more than 3 skills.
 - Don't lecture. Show only what's relevant.
 - Don't auto-invoke. Always print `/skill-name` for the user to type.
-- Don't recommend cross-stack skills directly (icp-research, prioritize) — defer to `/start-research`.
+- Don't recommend cross-stack skills directly (icp-research, prioritize) — defer to `/orchestrate-research`.
 - Don't bypass the brand gate. The pipeline assumes brand foundation.
