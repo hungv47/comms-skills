@@ -240,7 +240,7 @@ npx skills add hungv47/marketing-skills
 
 ## Changelog
 
-See [CHANGELOG.md](CHANGELOG.md) for release notes (commit 3254a53, 2026-05-05).
+Full release history with per-version notes: [marketing-skills/releases](https://github.com/hungv47/marketing-skills/releases)
 
 ## License
 
