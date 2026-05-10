@@ -6,6 +6,23 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.0.4] - 2026-05-10
+
+REB-3 ad-intelligence reference seedbank lands. No new skills, no breaking changes — pre-staged references for the future `ad-copy` skill (skill scaffold pending; ≤6 months out per T53 operator gate). Sourced from 4 practitioner files in operator's idea vault. Audited under the "default SKIP / only signal" bar codified in agent-skills CLAUDE.md.
+
+### Added
+- `skills/ad-copy/references/ad-intelligence/meta-retargeting.md` — warm-audience retargeting system: 3 custom audiences (IG engagers 180d / IG followers / FB page engagers from cold-traffic interactions), warm-vs-cold objection map (warm = fit/credibility/timing, NOT awareness/positioning), creative posture differentiation, frequency-driven budget pacing (`$20-50/day` starter, `$100-200/day` mature), 4-step Meta Ads Manager setup, compounding effect rationale, 7 named failure modes. Source: George Clem (Paid House, $200k+/mo agency). Numeric examples (`$2k cold / $500 retargeting / 4x`) labeled illustrative, not benchmarks.
+- `skills/ad-copy/references/ad-intelligence/meta-cold-traffic.md` — subscription-app cold-traffic playbook: pre-conditions for paid (organic warmth + first-year profitability + founder hands-on learning), 2-campaign structure (Scale CBO + Testing), broad targeting + algo-via-creative (post-Andromeda), conversion-event choice (trial-start NOT purchase, due to Apple privacy 24h signal window), 3-layer attribution (custom product pages + MMP + incrementality testing), 6 anti-patterns, cross-vertical applicability matrix (apps vs DTC vs B2B SaaS — what transfers, what doesn't). Source: Cali (`$2M/mo influencer-only` → `$5.7M/mo` with paid layer; in-house ads run by Zach after agency `$5K/day` cap).
+- `skills/ad-copy/references/ad-intelligence/creative-cadence.md` — paid-ad creative cadence discipline: variant volume (master brief → many angles), kill-speed thresholds (`1.5% CTR / 48h` auto-pause; "3 days not 3 weeks"), winner-vs-test budget split (`80/20` directional), dedicated-vs-repurposed creative spend ceiling differential (`$10-15K/day` repurposed vs `$40K/day` dedicated), affiliate-creator production model (Tribe + WhatsApp), 6 failure modes, source-confidence reconciliation (3 sources of varying confidence with explicit per-claim attribution). Sources: Simplr Intelligence commenter + uncited operator-vault thresholds + Cali creative-strategy section.
+- `skills/ad-copy/README.md` — directory-level note flagging `ad-copy/` as a pre-staged seedbank (no SKILL.md, no plugin-manifest entry, intentionally absent from `skills` array). Protects against future cleanup-artifacts orphan flags by stating re-entry trigger explicitly.
+
+### Notes
+- Bump kind: PATCH. Pre-stage of references only — no skill scaffold, no plugin-manifest changes (`.claude-plugin/plugin.json` `skills` array unchanged because `ad-copy/` has no SKILL.md to register), no contract changes for downstream consumers, no behavioral change to any active skill. Driven by Reference Enrichment Backlog REB-3 in `.agents/skill-artifacts/meta/roadmap.md`. Operator T53 gate (2026-05-10): ad-copy build ≤6 months out → REB-3 executes vs SKIP-and-rot.
+- The 3 reference docs each carry explicit source-confidence labels and re-verification triggers in their frontmatter and footer. When `ad-copy` skill scaffolds, refs should be re-verified before consumption — Meta's ad system shifts on quarter cadences.
+- Anti-fabrication discipline (per the v4.0.3 fresh-eyes patch lessons): every numeric threshold is attributed to a specific source ID; illustrative examples are explicitly labeled as such; no invented metrics presented in verbatim format.
+
+---
+
 ## [4.0.3] - 2026-05-10
 
 Fresh-eyes review of v4.0.2 caught 4 real issues. Patch closes them before any user-facing announcement.
