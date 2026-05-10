@@ -8,7 +8,7 @@ sources:
   - title: <source title>
     url: <url>
     accessed: <YYYY-MM-DD>
-    tier: <primary | secondary>   # primary = platform docs/exec statements; secondary = practitioner reports with named cohort + N
+    tier: <primary | secondary | tertiary>   # primary = platform docs/exec statements; secondary = practitioner reports with named cohort + N; tertiary = uncited author OR commenter signal without disclosed cohort/N (treat as heuristic, not benchmark — calibrate against your own data before adopting any threshold sourced this way)
 status: draft | reviewed | stale
 ---
 

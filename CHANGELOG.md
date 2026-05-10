@@ -6,6 +6,24 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.0.5] - 2026-05-10
+
+Fresh-eyes review of v4.0.4 (REB-3 ad-intelligence seedbank) caught 4 real issues. Patch closes them. Operator instruction throughout: "do NOT skip findings; fix everything that's real."
+
+### Fixed
+- **Stitched-bullet pattern in 4 quote locations** — `meta-cold-traffic.md` §1 pre-conditions (3 source bullets), §3 trial-start rationale (3 source bullets), §4 Layer B MMP (2 source bullets); `creative-cadence.md` §6 dedicated-creative pattern (3 source bullets). Each was rendered as a single contiguous prose blockquote with sentence punctuation, when the source uses bullet structure. Each fragment was individually verbatim, but the rendered quote-as-displayed did not appear as continuous prose in the named source. Per the stack's anti-fabrication norm (every direct quote in a blockquote must actually appear in the named source — same rule that drove the v4.0.3 patch), this technically failed the verbatim test for a reader cross-checking the source. **Resolution:** all 4 stitched quotes split into sequential bullet quotes preserving source's bullet structure. `meta-cold-traffic.md` §7 Sources gains a new "Source-attribution convention" subsection codifying the rule (don't stitch source bullets into prose with sentence punctuation; render bullet boundaries as separate adjacent blockquotes). `creative-cadence.md` §6 cross-references the convention.
+- **`creative-cadence.md` frontmatter `simplr-comment` tier mislabel** — declared `tier: secondary`, but template's `secondary` definition requires "named cohort + N" which a tweet commenter without disclosed audience does not meet. Doc's own §8 reconciliation table at line 174 honestly labeled the same source as **"low — commenter, no cohort, no scale disclosure"** — direct contradiction with the frontmatter. Frontmatter is the machine-readable signal future tier-aware tools (and the eventual `ad-copy` skill's critic-agent gates) key off; should match the doc's own internal honesty. **Resolution:** frontmatter changed to `tier: tertiary` with comment clarifying alignment with §8 internal labeling.
+- **`platform-intelligence/_template.md` tier vocabulary extension** — schema-drift cleanup. v4.0.4's `creative-cadence.md` introduced `tier: tertiary` (for the uncited `paid-ads-thresholds` source) without updating the template, which enumerated only `<primary | secondary>`. Future tier-keyed code (validation, manifest sync, critic-agent gates) wouldn't know about `tertiary`. **Resolution:** template tier enumeration extended to `<primary | secondary | tertiary>` with definition for tertiary ("uncited author OR commenter signal without disclosed cohort/N — treat as heuristic, not benchmark; calibrate against your own data before adopting any threshold sourced this way"). Existing 6 platform-intelligence files left at their current `secondary` classification — they were operator-approved at original ship through their own fresh-eyes cycles; re-tiering them would be scope creep into a separate review.
+
+### Notes
+- The fresh-eyes report driving this patch is at `.agents/skill-artifacts/meta/records/2026-05-10-fresh-eyes-reb-3.md` (local-only).
+- v4.0.4 was pushed remotely ~30 min before fresh-eyes surfaced these issues. Anyone who ran `npx skills update marketing-skills` between the two pushes received v4.0.4's stitched-bullet quotes. v4.0.5 corrects within the same session.
+- Bump kind: PATCH. Closes 4 fresh-eyes findings (1 major + 2 minor + 1 nit-fixed-per-operator-rule); no contract change for downstream consumers; no behavioral change to any active skill; the seedbank is still pre-staged with no SKILL.md to register.
+- Source-fidelity sweep: every numeric threshold ($1k–$2.5k cold CAC, $20–50/day starter, $100–200/day mature, 24–72h timing, 1.5% CTR/48h, 80/20 split, $10–15K vs $40K/day, $2M→$5.7M, $30/year, ~30% retention, ~1.3x, 50+ variants/month, 100+/week) verified verbatim in named source. Every named entity (Clem/Paid House/Cali/Zach/Simplr/Tribe/AppsFlyer) confirmed real and correctly attributed. Plugin manifest invariant holds. Cross-references resolve. The substantive issues were entirely about quote-rendering discipline and tier-vocabulary alignment — no actual fabrication, no invented metrics. Closer to a discipline patch than a substance patch.
+- Self-regulation gate held: ~15 lines added across 3 files; well below 30%-modified threshold; 5 findings ≤ 10 cap; no resolver regressions.
+
+---
+
 ## [4.0.4] - 2026-05-10
 
 REB-3 ad-intelligence reference seedbank lands. No new skills, no breaking changes — pre-staged references for the future `ad-copy` skill (skill scaffold pending; ≤6 months out per T53 operator gate). Sourced from 4 practitioner files in operator's idea vault. Audited under the "default SKIP / only signal" bar codified in agent-skills CLAUDE.md.

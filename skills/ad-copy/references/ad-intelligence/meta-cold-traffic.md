@@ -24,7 +24,11 @@ Per-surface reference for **Meta cold-traffic acquisition**, specifically subscr
 
 ## 1. Pre-Conditions Before Cold Paid
 
-Per source, paid is **not the first move**: *"Don't start with paid ads if you're broke — start with organic/UGC first. Paid ads work best as a second channel after you already have brand awareness. Having influencer content everywhere first = warmer audiences when ads hit."* [cali-apps]
+Per source, paid is **not the first move**. Three contiguous bullets from the source make the case (rendered here as separate quotes to preserve source's bullet boundaries — see §7 source-attribution convention): [cali-apps]
+
+> *"Don't start with paid ads if you're broke — start with organic/UGC first."*
+> *"Paid ads work best as a second channel after you already have brand awareness."*
+> *"Having influencer content everywhere first = warmer audiences when ads hit."*
 
 | Pre-condition | Why |
 |---|---|
@@ -70,7 +74,11 @@ Per source: instead of using Meta's retargeting features, encode retargeting in 
 
 The single highest-leverage configuration choice for subscription apps. Optimize for **start a free trial**, NOT for purchase.
 
-**Why** (source-stated): *"Apple's privacy rules only allow high-quality signal data in the first 24 hours. With a 3-day free trial, purchase data arrives too late for Facebook to learn from. So optimize for trial starts, then model out: 'at X cost per trial start, we know it's profitable.'"* [cali-apps]
+**Why** (source-stated, three contiguous bullets — preserved as separate quotes per §7 convention): [cali-apps]
+
+> *"Apple's privacy rules only allow high-quality signal data in the first 24 hours."*
+> *"With a 3-day free trial, purchase data arrives too late for Facebook to learn from."*
+> *"So optimize for trial starts, then model out: 'at X cost per trial start, we know it's profitable.'"*
 
 ### Operator workflow
 
@@ -112,7 +120,10 @@ Subscription apps need 3-layer attribution. Per source, no single layer is suffi
 
 ### Layer B — MMP (Mobile Measurement Partner)
 
-Per source: AppsFlyer (industry standard for app attribution). *"Supposed to give clear data but there's significant drop-off. Still necessary — you need an MMP for apps."* [cali-apps]
+Per source: AppsFlyer (industry standard for app attribution). Two contiguous source bullets capture the trade-off (preserved as separate quotes per §7 convention): [cali-apps]
+
+> *"Supposed to give clear data but there's significant drop-off."*
+> *"Still necessary — you need an MMP for apps."*
 
 ### Layer C — Incrementality Testing (the noise-cutter)
 
@@ -159,6 +170,8 @@ Per-element transferability when ad-copy expands beyond subscription apps:
 ## 7. Sources
 
 - **cali-apps** — "Paid Ads for Apps" notes from operator's idea vault, attributed to Cali (subscription-app operator who scaled `$2M/mo influencer-only` → `$5.7M/mo` with paid layer; in-house ads run by named individual Zach after agency $5K/day cap). Local file: `playbook-apps-paid-ads.md`. Accessed 2026-05-08.
+
+**Source-attribution convention.** The cali-apps source is structured as bulleted notes; this doc preserves the bullet boundaries when quoting (each source bullet renders as its own blockquote, in source order). Quotes are never stitched across bullet boundaries with sentence punctuation — that would render as a contiguous-prose quote when the source uses bullets, which violates the stack's anti-fabrication rule (every direct quote in a blockquote must actually appear in the named source). When multiple bullets carry one logical claim, they appear as a sequence of adjacent blockquotes.
 
 **Source confidence:** secondary (named practitioner with explicit before/after revenue delta and scale disclosure: `$40K/day spend` ceiling reached with dedicated ad creative). Single-source for the apps-specific mechanics; the structural patterns (2-campaign, broad targeting, incrementality) are echoed in adjacent practitioner sources but not independently verified inside this stack at v0.1 of this seedbank.
 

@@ -10,7 +10,7 @@ sources:
     author: Simplr Intelligence (@Simplrintel) — commenter on Sean Frank thread
     url: https://x.com/Simplrintel/status/2052423524959350819
     accessed: 2026-05-08
-    tier: secondary  # commenter signal — assertion not backed by disclosed cohort; treat as practitioner heuristic, not benchmark
+    tier: tertiary  # commenter signal — assertion not backed by disclosed cohort or N; treat as practitioner heuristic, not benchmark. Aligned with §8 internal labeling ("low — commenter, no cohort, no scale disclosure"); per `_template.md` extended tier vocabulary, secondary requires named cohort + N which this source lacks
   - id: paid-ads-thresholds
     title: Paid Ads (general SaaS playbook notes)
     author: uncited (operator's idea vault, no named author)
@@ -114,9 +114,11 @@ The single most consequential creative-format distinction in [cali-apps-creative
 
 ### What dedicated creative looks like (source-tagged)
 
-Per [cali-apps-creative], the dedicated-creative pattern that scaled:
+Per [cali-apps-creative], the dedicated-creative pattern that scaled is described across three contiguous source bullets — preserved as separate quotes here per the convention noted in `meta-cold-traffic.md` §7 (don't stitch source bullets into prose):
 
-> *"Direct, to the point: 'This app lets me track calories. I just take a picture.' 5 seconds or less to communicate the core value prop. Often no one talking — just gym footage, flexing, scanning food with captions."*
+> *"Direct, to the point: 'This app lets me track calories. I just take a picture.'"*
+> *"5 seconds or less to communicate the core value prop."*
+> *"Often no one talking — just gym footage, flexing, scanning food with captions."*
 
 **Hook examples disclosed by source** (verbatim):
 
