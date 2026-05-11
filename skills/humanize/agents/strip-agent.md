@@ -68,7 +68,7 @@ Return a single markdown document with exactly these sections:
 1. **Only subtract or substitute. Never add.** Every edit removes words or replaces AI-patterned text with a shorter/plainer equivalent. No new sentences. No new ideas. No new data. No style changes.
 2. **Follow the upstream diagnosis.** The pattern-scanner-agent's violation log is your work order. Address every violation unless the user explicitly approved keeping it.
 3. **Preserve meaning.** When you remove a throat-clearing intro, the actual content remains. When you pick one of a paired synonym, the meaning is still conveyed. When you delete a bridge sentence, the sections still connect.
-4. **Absolute Prohibitions are non-negotiable.** Em dashes, negative parallelism, rhetorical question hooks, colons in prose, "actually" as emphasis, filler context phrases, emojis, unsourced 47/73, and staccato taglines ("Your X, Y'd" / "X. Y.") are all zero-tolerance. Remove every instance, no exceptions.
+4. **Absolute Prohibitions are non-negotiable.** Em dashes, negative parallelism, rhetorical question hooks, colons in prose, "actually" as emphasis, filler context phrases, emojis, unsourced 47/73, staccato taglines ("Your X, Y'd" / "X. Y."), "it's giving X" (#39), "X has entered the chat" (#41), "what if I told you" (#42), and "X is having a moment" without cited signal (#43) are all zero-tolerance. Remove every instance, no exceptions.
 
 ### Techniques
 
@@ -90,6 +90,15 @@ Return a single markdown document with exactly these sections:
 | **Colon-list dependency (#30)** | Integrate items into a sentence. "Here's why: reason one, reason two" becomes "This matters because [reason one], and [consequence]." |
 | **High-frequency vocabulary** | Replace with plain-language equivalents. "Leverage" becomes "use." "Utilize" becomes "use." "Navigate" becomes "handle." See the jargon replacement table in ai-patterns.md. |
 | **Staccato taglines (#37)** | Rewrite fragmentary "Your X, Y'd" or "X. Y." headlines with a specific claim. "Your Workflows, Mapped" becomes "See every workflow in one view." "Analytics. Simplified." becomes "One dashboard instead of twelve." |
+| **Load-bearing X (#38)** | Apply the delete-test. If removing "load-bearing" leaves the claim intact, delete the word. Otherwise rewrite to name what fails without it. |
+| **"It's giving X" (#39)** | Delete the construction. Replace with the concrete observation ("uses a gradient hero, three feature columns" vs. "giving 2015 SaaS"). Zero-tolerance per Absolute Prohibitions. |
+| **Anaphora cascade (#40)** | Cap consecutive same-opener sentences at 2. Combine the third into the second, or vary the opener. Never three. |
+| **"X has entered the chat" (#41)** | Delete the meme frame. State who or what changed and who noticed. Zero-tolerance per Absolute Prohibitions. |
+| **"What if I told you" (#42)** | Delete the setup. State the claim directly with evidence. Zero-tolerance per Absolute Prohibitions. |
+| **"X is having a moment" / "X is the new Y" (#43, #46)** | Cite the displacement signal (share-of-time, share-of-spend, named adoption examples) or delete the trend claim. #43 is zero-tolerance without a cited signal. |
+| **"Quietly" / "silently" intensifier (#44)** | Drop the adverb if the move was announced. Otherwise cite the evidence trail of the unannouncement. |
+| **"X, but Y" headline (#45)** | One use per page maximum, and only when X is genuinely the buyer's current tool. Rewrite duplicates with product-specific claims. |
+| **Agentic-era jargon cluster (#47)** | Pick the one term doing actual work. Cut the rest. |
 
 **Stripping order:**
 1. Delete absolute prohibition patterns first (em dashes, negative parallelism, etc.)
@@ -129,7 +138,7 @@ Before returning your output, verify every item:
 
 - [ ] Every violation from the upstream log is addressed (removed, substituted, or noted as user-approved keep)
 - [ ] Zero Hard Tell patterns remain in the stripped text
-- [ ] Zero absolute prohibition patterns remain (em dashes, negative parallelism, rhetorical question hooks, colons in prose, "actually" emphasis, filler context, emojis, unsourced 47/73, staccato taglines)
+- [ ] Zero absolute prohibition patterns remain (em dashes, negative parallelism, rhetorical question hooks, colons in prose, "actually" emphasis, filler context, emojis, unsourced 47/73, staccato taglines, "it's giving X", "X has entered the chat", "what if I told you", "X is having a moment" without cited signal)
 - [ ] Stripped text word count is less than or equal to original word count
 - [ ] No new sentences or ideas were added
 - [ ] Every edit is logged with exact before/after text and pattern number

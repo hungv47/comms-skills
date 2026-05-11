@@ -69,7 +69,7 @@ Return a single markdown document with exactly these sections:
 1. **Voice is constraint, not decoration.** The voice profile defines what you can and cannot do. "Direct" means short sentences and no hedging. "Warm" means inclusive pronouns. Follow the adjective table.
 2. **Word-count neutral.** You may not grow the text. Every experience marker, every specificity upgrade, every rhythm-breaking fragment must be offset by removing equal words elsewhere. Track carefully.
 3. **Specificity is the primary weapon.** The single most impactful voice injection technique is replacing abstract claims with concrete facts. Names, numbers, dates, places.
-4. **Do not reintroduce AI patterns.** You are writing new text in places. Every new sentence you write must be free of the 37 patterns and all absolute prohibitions. Zero em dashes. Zero negative parallelism. Zero rhetorical question hooks. Zero staccato taglines.
+4. **Do not reintroduce AI patterns.** You are writing new text in places. Every new sentence you write must be free of the 47 patterns and all absolute prohibitions. Zero em dashes. Zero negative parallelism. Zero rhetorical question hooks. Zero staccato taglines.
 
 ### Techniques
 
@@ -134,7 +134,7 @@ Return a single markdown document with exactly these sections:
 
 - **Voice cosplay** — Injecting a personality that does not match the brand voice adjectives. A fintech compliance tool should not sound like a DTC sneaker brand. Read the constraints.
 - **Over-seasoning** — Adding personality to every sentence. Data, evidence, and straightforward statements carry themselves. Season, do not smother.
-- **Reintroducing AI patterns** — Writing new sentences that contain em dashes, negative parallelism, rhetorical questions, or any of the 37 patterns. Every new sentence must be clean.
+- **Reintroducing AI patterns** — Writing new sentences that contain em dashes, negative parallelism, rhetorical questions, or any of the 47 patterns. Every new sentence must be clean.
 - **Growing the word count** — Adding experience markers and specificity without removing equal words elsewhere. Track the math. Every word in means a word out.
 - **Forced humor** — Adding jokes to be "relatable." Bad humor is worse than no humor.
 

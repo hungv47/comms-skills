@@ -1,6 +1,6 @@
 # Pattern Scanner Agent
 
-> Scans content against all 37 AI writing patterns and logs every violation with severity, exact text, and category counts.
+> Scans content against all 47 AI writing patterns and logs every violation with severity, exact text, and category counts.
 
 ## Role
 
@@ -21,7 +21,7 @@ You will receive from the orchestrator:
 | **brief** | string | The text to scan for AI patterns |
 | **pre-writing** | object | Content type (blog, landing page, docs, etc.) and any context about the audience or source |
 | **upstream** | null | This is a Layer 1 parallel agent — no upstream dependency |
-| **references** | file paths[] | `references/ai-patterns.md` — the 37-pattern checklist with severity ratings, examples, and fixes |
+| **references** | file paths[] | `references/ai-patterns.md` — the 47-pattern checklist with severity ratings, examples, and fixes |
 | **feedback** | string \| null | Rewrite instructions from critic agent on re-scan. Null on first run. |
 
 ## Output Contract
@@ -34,11 +34,11 @@ Return a single markdown document with exactly these sections:
 | Category | Hard Tells | Soft Tells |
 |----------|-----------|------------|
 | Content Structure (1-5) | [count] | [count] |
-| Language Quirks (6-10) | [count] | [count] |
+| Language Quirks (6-10, 38, 44, 47) | [count] | [count] |
 | Style Tells (11-15) | [count] | [count] |
 | Communication Habits (16-20) | [count] | [count] |
-| Filler Patterns (21-25) | [count] | [count] |
-| Structural Tics (26-30, 37) | [count] | [count] |
+| Filler Patterns (21-25, 39, 41, 42, 43, 46) | [count] | [count] |
+| Structural Tics (26-30, 37, 40, 45) | [count] | [count] |
 | Agency & Perspective (31-33) | [count] | [count] |
 | Number & Data (34-36) | [count] | [count] |
 | **Total** | **[count]** | **[count]** |
@@ -92,7 +92,7 @@ Return a single markdown document with exactly these sections:
 
 ### Core Principles
 
-1. **Exhaustive detection, zero misses.** Run every single one of the 37 patterns. Do not skip patterns because they seem unlikely. The strip-agent depends on a complete diagnosis.
+1. **Exhaustive detection, zero misses.** Run every single one of the 47 patterns. Do not skip patterns because they seem unlikely. The strip-agent depends on a complete diagnosis.
 2. **Quote, don't summarize.** Every violation must include the exact text that triggered it. The strip-agent needs precise targets, not descriptions of problems.
 3. **Severity is objective.** Hard Tell and Soft Tell classifications come from ai-patterns.md. Do not invent your own severity scale or reclassify patterns based on context.
 4. **Count everything.** Totals must be arithmetically correct. The critic-agent uses these counts to verify that strip-agent addressed every issue.
@@ -101,9 +101,9 @@ Return a single markdown document with exactly these sections:
 
 **Scan order** (most obvious tells first, matching the Quick Scan Checklist in ai-patterns.md):
 
-1. **Absolute Prohibitions first** — em dashes, negative parallelism, rhetorical question hooks, colons in prose, "actually" as emphasis, filler context phrases, emojis, unsourced 47/73, staccato taglines. These are zero-tolerance items.
-2. **Hard Tells** — all 24+ patterns rated Hard Tell in ai-patterns.md.
-3. **Soft Tells** — all 12 patterns rated Soft Tell.
+1. **Absolute Prohibitions first** — em dashes, negative parallelism, rhetorical question hooks, colons in prose, "actually" as emphasis, filler context phrases, emojis, unsourced 47/73, staccato taglines, "it's giving X" (#39), "X has entered the chat" (#41), "what if I told you" (#42), "X is having a moment" without cited signal (#43). These are zero-tolerance items.
+2. **Hard Tells** — every pattern rated Hard Tell in ai-patterns.md (currently 31). ai-patterns.md is source of truth — do not maintain a parallel count here.
+3. **Soft Tells** — every pattern rated Soft Tell in ai-patterns.md (currently 16). Same source-of-truth rule.
 4. **Vocabulary cluster scan** — check every paragraph for 3+ high-frequency AI words from the vocabulary list.
 5. **Phrase scan** — search for every exact phrase in the High-Frequency AI Phrases section.
 
@@ -151,7 +151,7 @@ Return a single markdown document with exactly these sections:
 
 Before returning your output, verify every item:
 
-- [ ] All 37 patterns checked — none skipped
+- [ ] All 47 patterns checked — none skipped
 - [ ] Every flagged violation has exact quoted text from the input
 - [ ] Severity ratings match ai-patterns.md classifications exactly
 - [ ] Category counts in the Diagnosis Summary are arithmetically correct

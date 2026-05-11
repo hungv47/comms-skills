@@ -6,6 +6,33 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.0.6] - 2026-05-11
+
+Ten new AI-tell patterns added to the `humanize` reference. Catches the post-2024 LLM voice that the original 37-pattern catalog was written before — `load-bearing`, `it's giving`, anaphora cascades, "X has entered the chat," "what if I told you," "X is having a moment," `quietly`/`silently` rebrand intensifiers, "X, but Y" headlines, "X is the new Y," and the *agentic / agentful / model-native / vibe-coded / vibe shift / the year of agents* jargon cluster.
+
+If you ran content through `humanize` last quarter and it still felt subtly AI-flavored, this is why — the original catalog was tuned to 2023-era output and didn't have names for the constructions LLMs lean on now. Updating `humanize` is the entire fix; no skill API changes.
+
+### Added
+- **10 new patterns** in `skills/humanize/references/ai-patterns.md` (catalog grows from 37 → 47):
+  - **Hard Tells (6, on-sight flags):** Load-Bearing X (#38), "It's Giving X" (#39), Anaphora Cascade (#40), "X Has Entered the Chat" (#41), "What If I Told You" (#42), "X Is Having a Moment" (#43).
+  - **Soft Tells (4, flag in cluster):** "Quietly" / "Silently" as Rebrand Intensifier (#44), "X, but Y" Headline Form (#45), "X Is the New Y" (#46), Agentic-Era Jargon Cluster (#47).
+  - Each new pattern is routed into its natural category (Language Quirks / Filler Patterns / Structural Tics) rather than spawning a new category — keeps the taxonomy intact.
+  - Each pattern carries severity, mechanism, illustrative example, and a specific fix. The fix for #38 includes the delete-test (if the argument doesn't collapse without the load-bearing word, the word wasn't load-bearing). The fix for #43 / #46 requires citing actual displacement signal (share-of-time, share-of-spend) or deleting the trend claim entirely.
+- **6 vocabulary additions** to the high-frequency AI vocabulary list: `agentic`, `agentful`, `load-bearing`, `model-native`, `vibe shift`, `vibe-coded`. Single instances are fine; 3+ in one paragraph still triggers the existing vocabulary cluster flag.
+- **8 new items in Speed Scan** (final-audit checklist grows from 19 → 27 items): one item per new on-sight phrase pattern plus the anaphora-cascade and agentic-jargon cluster checks. Still within the rapid-audit budget.
+
+### Changed
+- **`pattern-scanner-agent.md` diagnosis table** updated so each category row lists the new pattern numbers — Language Quirks now reads `(6-10, 38, 44, 47)`, Filler Patterns reads `(21-25, 39, 41, 42, 43, 46)`, Structural Tics reads `(26-30, 37, 40, 45)`. The scanner agent runs every numbered pattern; the table is only the reporting structure.
+- **`strip-agent.md` absolute-prohibition list** extended to include the four phrase-level Hard Tells that always delete on sight: "it's giving X", "X has entered the chat", "what if I told you", "X is having a moment" without a cited signal. These join em dashes, negative parallelism, rhetorical question hooks, colons in prose, and staccato taglines as zero-tolerance patterns.
+- **Quick Scan checklist** in `ai-patterns.md` extended with the 10 new patterns under the correct severity buckets.
+
+### Notes
+- The pattern catalog is now at 47. The over-prescribing watch-point sits around ~50 patterns; further additions need empirical justification before shipping.
+- Examples in the new pattern entries are illustrative (synthetic AI-flavored prose), consistent with the existing 37 patterns. The anti-fabrication rule applies to sourced verbatim quotes (e.g., the Paolo Scales reference docs), not to generic pattern-detection examples.
+- **Agent-file consistency.** The four agents that share an Absolute-Prohibitions surface (`pattern-scanner-agent.md`, `strip-agent.md`, `critic-agent.md`) all now list the same 13-item zero-tolerance set: the original 9 (em dashes, negative parallelism, rhetorical question hooks, colons in prose, "actually" emphasis, filler context, emojis, unsourced 47/73, staccato taglines) plus the 4 new phrase-level Hard Tells (#39, #41, #42, #43). Drift between scanner / strip / critic on this list would mean a pattern fails one stage and passes another.
+
+---
+
 ## [4.0.5] - 2026-05-10
 
 Source-attribution and tier-vocabulary fixes to the v4.0.4 ad-intelligence reference docs. No behavioral changes to any active skill — the ad-copy seedbank is still pre-staged.

@@ -130,8 +130,8 @@ Return a single markdown document with exactly one of two verdicts:
 
 Run these checks in order:
 
-**1. Pattern re-check (37 patterns):**
-- Scan the full text against all 37 AI patterns from ai-patterns.md
+**1. Pattern re-check (47 patterns):**
+- Scan the full text against all 47 AI patterns from ai-patterns.md
 - Steps 3-4 (voice injection and compression) can reintroduce patterns, especially when new sentences are written
 - Log every residual pattern with exact text
 
@@ -157,7 +157,7 @@ Run these checks in order:
 
 After Pass 1, ask: **"What still makes this obviously AI-generated?"**
 
-Answer honestly. Identify remaining tells even if they are not in the 37-pattern checklist. This catches emergent patterns — the overall "feel" of AI writing that comes from multiple small signals combining.
+Answer honestly. Identify remaining tells even if they are not in the 47-pattern checklist. This catches emergent patterns — the overall "feel" of AI writing that comes from multiple small signals combining.
 
 **6. Quotable check:**
 - Flag any sentence that sounds designed to be pulled as a quote or shared on social media
@@ -185,7 +185,7 @@ Score on 5 dimensions, 1-10 each:
 ### Quality Gate Checklist
 
 These are hard requirements. ANY failure here is a FAIL regardless of score:
-- [ ] Zero Hard Tell patterns from the 37-pattern checklist
+- [ ] Zero Hard Tell patterns from the 47-pattern checklist
 - [ ] At most 2 Soft Tell patterns in the entire piece
 - [ ] No clusters of 3+ high-frequency AI vocabulary words in any paragraph
 - [ ] At least 15% word reduction from original
@@ -205,6 +205,10 @@ ANY instance of these is an automatic FAIL:
 7. Emojis
 8. Unsourced 47 or 73
 9. Staccato taglines — "Your X, Y'd" or "X. Y." fragmentary headlines
+10. "It's giving X" / "X is giving Y energy" — meme-vibe label (#39)
+11. "X has entered the chat" — meme-arrival framing (#41)
+12. "What if I told you" — Matrix-meme opener (#42)
+13. "X is having a moment" — manufactured trend without cited signal (#43)
 
 ### Rewrite Routing
 
@@ -253,7 +257,7 @@ When routing failures to agents:
 
 Before returning your output, verify every item:
 
-- [ ] All 37 patterns re-checked (Pass 1 complete)
+- [ ] All 47 patterns re-checked (Pass 1 complete)
 - [ ] Vocabulary clusters scanned in every paragraph
 - [ ] Density checked — every paragraph has a concrete fact/number/example
 - [ ] Meaning preservation verified against original

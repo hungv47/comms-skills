@@ -78,7 +78,7 @@ AI-generated content fails in three ways: it reads like AI wrote it (patterns), 
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
-- [ ] Zero Hard Tell patterns from the 37-pattern checklist
+- [ ] Zero Hard Tell patterns from the 47-pattern checklist
 - [ ] At most 2 Soft Tell patterns in the entire piece
 - [ ] No clusters of 3+ high-frequency AI vocabulary words in any paragraph
 - [ ] At least 15% word reduction from original
@@ -113,7 +113,7 @@ Horizontal — works on output from any skill. If content passed the `copywritin
 
 | Agent | Layer | File | Focus |
 |-------|-------|------|-------|
-| Pattern Scanner | 1 (parallel) | `agents/pattern-scanner-agent.md` | Runs all 37 AI patterns, logs violations by category, estimates compression potential |
+| Pattern Scanner | 1 (parallel) | `agents/pattern-scanner-agent.md` | Runs all 47 AI patterns, logs violations by category, estimates compression potential |
 | Voice Extractor | 1 (parallel) | `agents/voice-extractor-agent.md` | Reads voice adjectives, assesses register, identifies injection opportunities |
 | Strip Agent | 2 (sequential) | `agents/strip-agent.md` | Surgical removal of flagged AI patterns — subtract only, no style changes |
 | Soul Injection | 2 (sequential) | `agents/soul-injection-agent.md` | Applies brand voice — rhythm, specificity, experience markers |
@@ -182,7 +182,7 @@ This skill's examples are marketing-focused, but it works on any content type. A
 
 | Content Type | Strip Intensity | Voice Injection | Compression Target |
 |-------------|----------------|-----------------|-------------------|
-| Marketing copy | Full — all 37 patterns | Full — brand voice adjectives | 20-30% |
+| Marketing copy | Full — all 47 patterns | Full — brand voice adjectives | 20-30% |
 | Blog posts / thought leadership | Full | Moderate — author voice, not brand voice | 15-25% |
 | Short outbound — `content-type: "short-outbound"` (cold email, DM, proposal) | Light — AI telltales only | Full — sender voice | 0-10% (already compressed; further cuts kill specificity) |
 | Documentation / technical writing | Light — focus on clarity patterns only | Minimal — accuracy over personality | 10-15% |
@@ -499,7 +499,7 @@ Every run ends with explicit status:
 ## Agent Files
 
 ### Sub-Agent Instructions (agents/)
-- [agents/pattern-scanner-agent.md](agents/pattern-scanner-agent.md) — Scans all 37 AI patterns, logs violations, estimates compression
+- [agents/pattern-scanner-agent.md](agents/pattern-scanner-agent.md) — Scans all 47 AI patterns, logs violations, estimates compression
 - [agents/voice-extractor-agent.md](agents/voice-extractor-agent.md) — Reads voice adjectives, assesses register, identifies injection opportunities
 - [agents/strip-agent.md](agents/strip-agent.md) — Surgical removal of flagged AI patterns
 - [agents/soul-injection-agent.md](agents/soul-injection-agent.md) — Applies brand voice through rhythm, specificity, experience markers
@@ -508,6 +508,6 @@ Every run ends with explicit status:
 - [agents/_template.md](agents/_template.md) — Reusable template for creating new agent files
 
 ### Shared References (references/)
-- [references/ai-patterns.md](references/ai-patterns.md) — 37 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists; detection, examples, fixes, severity (pattern-scanner, strip, critic)
+- [references/ai-patterns.md](references/ai-patterns.md) — 47 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists; detection, examples, fixes, severity (pattern-scanner, strip, critic)
 - [references/voice-injection.md](references/voice-injection.md) — Voice adjective framework, rhythm, specificity, personality injection (voice-extractor, soul-injection)
 - [references/conciseness-rules.md](references/conciseness-rules.md) — Compression techniques at sentence, paragraph, and section level (compression-agent)

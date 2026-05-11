@@ -1,6 +1,6 @@
 # AI Writing Patterns — Detection & Fix Reference
 
-37 patterns across 8 categories. Each pattern includes severity:
+47 patterns across 8 categories. Each pattern includes severity:
 - **Hard Tell** — Immediately flags content as AI-generated. Fix before publishing.
 - **Soft Tell** — Suspicious in clusters. Fix when 3+ appear in the same piece.
 
@@ -10,7 +10,7 @@
 
 These words appear significantly more often in post-2023 AI-generated text than in human writing. A single instance is fine — clusters of 3+ in one piece are a signal.
 
-> additionally, align (with), at scale, comprehensive, crucial, cutting-edge, deep dive, delve, dynamic, ecosystem, elevate, empower, endeavor, enhance, ensure, evolving, foster, furthermore, game-changer, garner, harness, highlight, holistic, implement, innovative, interplay, intricate, journey, landscape, leverage, meticulous, moreover, multifaceted, navigate, north star, notably, optimize, overarching, pain point, pivotal, realm, resonate, revolutionize, robust, seamless, showcase, space (as in "the AI space"), stakeholder, streamline, tapestry, testament, transformative, underscore, unlock, utilize, vibrant
+> additionally, agentic, agentful, align (with), at scale, comprehensive, crucial, cutting-edge, deep dive, delve, dynamic, ecosystem, elevate, empower, endeavor, enhance, ensure, evolving, foster, furthermore, game-changer, garner, harness, highlight, holistic, implement, innovative, interplay, intricate, journey, landscape, leverage, load-bearing, meticulous, model-native, moreover, multifaceted, navigate, north star, notably, optimize, overarching, pain point, pivotal, realm, resonate, revolutionize, robust, seamless, showcase, space (as in "the AI space"), stakeholder, streamline, tapestry, testament, transformative, underscore, unlock, utilize, vibe shift, vibe-coded, vibrant
 
 **Sophistication-seeking words** (above) are chosen to sound impressive. The list below covers a different failure mode:
 
@@ -172,6 +172,27 @@ Note: "navigate" and "landscape" also appear in the vocabulary list above. The v
 > "Industry experts believe this technology will play a crucial role in the future of healthcare. Several studies have shown promising results."
 **Fix:** Name the source and date. "A 2024 Stanford study found..." or "Kent Beck argues..." If you can't name the source, the claim is unsubstantiated — either find the source or cut the claim.
 
+### 38. Load-Bearing X
+**Severity:** Hard Tell
+**Description:** Using "load-bearing" as an intensifier to claim a single word, assumption, or phrase is doing all the work in a sentence or argument. Originated as an engineering/architecture metaphor; post-2024 AI-generated criticism abuses it for instant analytical gravitas. The word it modifies is usually not actually load-bearing — the writer is performing precision, not demonstrating it.
+**Example:**
+> "The load-bearing word in that sentence is 'eventually.' Everything else is window dressing."
+**Fix:** Either prove the claim with the delete-test ("remove X and the argument collapses because Y"), or cut "load-bearing" and state the actual point. If the word really is doing all the work, name what fails without it.
+
+### 44. "Quietly" / "Silently" as Rebrand Intensifier
+**Severity:** Soft Tell
+**Description:** Modifying neutral verbs with "quietly" or "silently" to manufacture intrigue around an action that was, in fact, public, documented, or unremarkable. AI uses this to make routine product updates sound like covert operations. Common targets: "quietly shipped," "silently rolled out," "quietly raised," "silently became the default."
+**Example:**
+> "Notion quietly shipped a new pricing model. Anthropic silently became the default for code generation."
+**Fix:** Drop the adverb if the move was announced ("Notion shipped a new pricing model — see their April changelog"). If the move really was unannounced, cite the evidence trail: "Notion shipped a new pricing model with no blog post, no email, no in-product notification — spotted by a user on April 12." "Quietly" without a trail is rumor dressed as reporting.
+
+### 47. Agentic-Era Jargon Cluster
+**Severity:** Soft Tell
+**Description:** A specific post-2024 jargon family — *agentic, agentful, model-native, vibe-coded, vibe shift, the year of agents* — that LLMs cluster heavily in tech and AI commentary. Individual terms appear in the high-frequency vocabulary list above (single instances are fine). Three or more from this cluster in the same piece signals AI-generated trend commentary. Distinct from the general vocabulary check because the mechanism is domain-specific (AI-era discourse) and the cluster is named, not dispersed.
+**Example:**
+> "We're entering the agentic era — model-native workflows, agentful tooling, and a real vibe shift toward production-grade AI."
+**Fix:** Pick the one term doing actual work and cut the rest. "Production-grade AI tooling is now competitive with hand-coded workflows for [specific task]." If the piece needs three or more of these terms to land its point, the point isn't real — it's vibe commentary masquerading as analysis.
+
 ---
 
 ## Category 3: Style Tells
@@ -293,6 +314,41 @@ Note: "navigate" and "landscape" also appear in the vocabulary list above. The v
 > "As we look to the future, the possibilities are truly exciting. With continued innovation and dedication, we can achieve remarkable things together."
 **Fix:** Replace with a specific, measurable next step or prediction. "Q3 goal: reduce onboarding time to under 48 hours" instead of "the future looks bright." If there's no concrete forward-looking statement to make, end before the conclusion.
 
+### 39. "It's Giving X"
+**Severity:** Hard Tell
+**Description:** Performative cultural signaling using TikTok-derived "it's giving" syntax to attach an aesthetic label to something. AI uses this to sound culturally fluent; the construction is so overused it now reads as cultural cosplay. Common variants attach to eras ("giving 2015 SaaS"), company-types ("giving startup-pivot"), or vibes ("giving collapse energy").
+**Example:**
+> "The new redesign is giving 2015 SaaS. The launch copy is giving startup-pivot energy."
+**Fix:** State what's actually being observed. "The redesign uses a gradient hero, three feature columns, and a vague stock illustration — the same template every 2015 SaaS landing page used." Specific observation beats vibe-labeling. If you can't name the concrete element, the comparison is decorative.
+
+### 41. "X Has Entered the Chat"
+**Severity:** Hard Tell
+**Description:** Meme-derived construction that anthropomorphizes an abstract concept arriving in a discussion. AI uses it to insert false momentum into prose. The phrase peaked in 2020 Slack culture and now reads as both lazy and dated. Especially common when the writer wants to claim a shift but lacks the data to back it.
+**Example:**
+> "Authenticity has entered the chat. Compliance has entered the chat. Reality has entered the chat."
+**Fix:** State what changed and who noticed. "After three quarters of growth-at-all-costs, the finance team started asking about retention." Delete the meme frame entirely — the construction adds nothing the named actor and named change don't already say.
+
+### 42. "What If I Told You"
+**Severity:** Hard Tell
+**Description:** Matrix-meme-derived false-insight opener that performs revelation. AI uses it to manufacture suspense before stating something the reader either already knows or could deduce. The phrase loads expectations the substance can't pay off, which is why it's almost always followed by a flat or obvious claim. Sibling to the False Insight Phrases list above; promoted to a numbered pattern because the construction is recognizable enough to scan for on sight.
+**Example:**
+> "What if I told you the most successful teams don't measure individual productivity at all?"
+**Fix:** State the claim directly with evidence. "Stripe, Linear, and Vercel all stopped using individual productivity metrics by 2024 — they measure team-level shipping velocity instead." If the claim isn't strong enough to stand without a setup, the claim isn't strong enough to publish.
+
+### 43. "X Is Having a Moment"
+**Severity:** Hard Tell
+**Description:** Trend manufacturing without evidence. AI uses "having a moment" / "is having its moment" to assert cultural relevance for something the writer wants to discuss. The phrase substitutes for the actual evidence of relevance (search trends, revenue data, named-instance examples). One instance per piece is suspicious; two or more is a confession.
+**Example:**
+> "Long-form newsletters are having a moment. Asynchronous communication is having its moment. Founder-led marketing is having a moment."
+**Fix:** Cite the actual signal. "Substack revenue grew 4x in 2024," or "Three of the top five YC W25 companies have founder-on-camera marketing as their primary acquisition channel." If no signal exists, the moment doesn't exist either — cut the sentence.
+
+### 46. "X Is the New Y"
+**Severity:** Soft Tell
+**Description:** Trend-manufacturing template that asserts replacement without evidence. AI uses "X is the new Y" to invent generational shifts ("Vibe-coding is the new pair programming," "Async is the new sync," "Newsletters are the new blogs"). Same family as #43 ("having a moment") — substitutes phrasing for the actual signal that the replacement is happening. Flagged Soft rather than Hard because the construction has a legitimate human-writing pedigree ("orange is the new black"); the tell is volume and absence of data.
+**Example:**
+> "Threads is the new Twitter. Newsletters are the new blogs. Vibe-coding is the new pair programming."
+**Fix:** Cite the displacement — share-of-time, share-of-spend, share-of-attention numbers with sources. If the replacement is real, the data is loud. If it's not, "X is the new Y" is wishful thinking dressed as observation.
+
 ---
 
 ## Category 6: Structural Tics
@@ -341,6 +397,20 @@ Note: "navigate" and "landscape" also appear in the vocabulary list above. The v
 > - Reason two
 > - Reason three"
 **Fix:** Integrate items into a sentence. "This matters because [reason one], and teams that ignore it [consequence]." For technical documentation or tables, colons may be acceptable. In marketing copy, blog posts, and general prose, eliminate colons. Restructure "X: Y" constructions into natural sentences.
+
+### 40. Anaphora Cascade
+**Severity:** Hard Tell
+**Description:** Three or more consecutive sentences or paragraphs starting with the same word or phrase. AI uses anaphora to manufacture rhetorical weight; one or two instances are rhetoric, three is a tell. Especially common with "We," "They," "This," "It's," "Imagine," "Every," "No." Distinct from #1 (predictable paragraph structure) — that's about internal paragraph templates; this is the opener-level case visible at a glance.
+**Example:**
+> "We believe in shipping fast. We believe in customer obsession. We believe in compound trust over time."
+**Fix:** Vary the openers. Combine two sentences into one. If the rhetorical weight is genuinely needed, cap the anaphora at exactly two sentences — never three. The third repetition crosses from rhetoric into pattern, and pattern reads as AI.
+
+### 45. "X, but Y" Headline Form
+**Severity:** Soft Tell
+**Description:** Positioning headline construction — "X, but Y" or "X for Y" — used to anchor a product to a known reference. Examples: "An IDE, but for AI." / "Notion, but fast." / "Slack, but quiet." Legitimate when X is the right anchor for the buyer's existing mental model; overused when X is unrelated to the buyer's actual workflow, or when two or more headlines on the same page use the same construction. Distinct from #37 staccato tagline — that's a fragmentary punch ("Analytics. Simplified."); this is an analogy clause.
+**Example:**
+> "A spreadsheet, but for AI. A CRM, but for builders. A database, but for vibes."
+**Fix:** Use the form once per page maximum, and only when X is genuinely the buyer's current tool. Replace duplicates with claims grounded in your product's specific behavior. If X is wrong (e.g., positioning a dev tool against a consumer app), the headline is theater — pick a different anchor or write a direct claim.
 
 ### 37. Staccato Tagline Construction
 **Severity:** Hard Tell
@@ -443,6 +513,12 @@ When auditing content, scan in this order (most obvious tells first):
    - [ ] AI-typical numbers — 47 or 73 as "random" numbers without cited source (34)
    - [ ] Fabricated precision — specific stats with no named source (36)
    - [ ] Staccato tagline — "Your X, Y'd" or "X. Y." fragmentary headlines (37)
+   - [ ] Load-bearing X used as intensifier (38)
+   - [ ] "It's giving X" / cultural-vibe label (39)
+   - [ ] Anaphora cascade — 3+ consecutive same-opener sentences (40)
+   - [ ] "X has entered the chat" — meme-arrival framing (41)
+   - [ ] "What if I told you" — Matrix-meme opener (42)
+   - [ ] "X is having a moment" — manufactured trend without evidence (43)
 
 2. **Soft Tells** — Flag when 3+ appear in the same piece
    - [ ] Symmetric lists (2)
@@ -457,6 +533,10 @@ When auditing content, scan in this order (most obvious tells first):
    - [ ] False ranges (29)
    - [ ] Narrator-from-a-distance (32)
    - [ ] Round number bias — all stats suspiciously clean (50%, 30%, 10x) (35)
+   - [ ] "Quietly" / "silently" as rebrand intensifier without evidence trail (44)
+   - [ ] "X, but Y" headline form — 2+ uses on same page or wrong anchor (45)
+   - [ ] "X is the new Y" — replacement claim without displacement data (46)
+   - [ ] Agentic-era jargon cluster — 3+ of *agentic / agentful / model-native / vibe-coded / vibe shift / the year of agents* (47)
 
 3. **Vocabulary check** — Scan for 3+ high-frequency AI words in any single paragraph (see vocabulary list above)
 
@@ -464,7 +544,7 @@ When auditing content, scan in this order (most obvious tells first):
 
 ## Speed Scan Checklist
 
-A flat 19-item rapid-fire checklist for re-checking during final audit (Step 5). Covers the most common residual tells — patterns that survive initial stripping or get reintroduced during voice injection.
+A flat 27-item rapid-fire checklist for re-checking during final audit (Step 5). Covers the most common residual tells — patterns that survive initial stripping or get reintroduced during voice injection.
 
 - [ ] Any em dash (—) anywhere? → Replace with comma, period, or parentheses. Zero allowed.
 - [ ] Any "it's not just X, it's Y" or variant? → State the positive claim directly. Zero allowed.
@@ -485,3 +565,11 @@ A flat 19-item rapid-fire checklist for re-checking during final audit (Step 5).
 - [ ] Number 47 or 73 used as a "random" value? → Cite the source or replace with real data.
 - [ ] Three or more round numbers (50%, 30%, 10x) in the same piece? → Replace with actual data or remove.
 - [ ] Any "Your X, Y'd" or "X. Y." fragmentary headline? → Rewrite with a specific claim. Zero allowed.
+- [ ] "Load-bearing X" used as intensifier? → Prove with the delete-test or remove the word.
+- [ ] "It's giving X" or "X has entered the chat"? → Delete the meme frame; state what's actually being observed.
+- [ ] Three or more consecutive sentences starting with the same word (anaphora cascade)? → Vary openers or combine sentences. Cap at two.
+- [ ] "What if I told you" Matrix-meme opener? → State the claim directly with evidence.
+- [ ] "X is having a moment" or "X is the new Y" without cited displacement data? → Cite share-of-X numbers or delete.
+- [ ] "Quietly shipped" / "silently rolled out" / "quietly became" without an evidence trail? → Drop the adverb or cite the unannounced trail.
+- [ ] "X, but Y" headline used 2+ times on the same page, or X unrelated to buyer's current tool? → Keep one max with a buyer-fit anchor.
+- [ ] Three or more of *agentic / agentful / model-native / vibe-coded / vibe shift / the year of agents* in one piece? → Cut the jargon scaffold; keep the one term doing real work.
