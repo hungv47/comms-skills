@@ -6,6 +6,44 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.1.0] - 2026-05-11
+
+`cold-outreach` gains an opinionated four-step framework reference from Nick Saraev's 2026 cold-email course, plus a Specificity Floor in the critic that tightens what counts as a passable cold message. Touch 1 to a stranger now has a sharper structural option than the generic Q→V→A fallback.
+
+### Behavioral change worth knowing about
+
+- **Critic now enforces a Specificity Floor: ≥2 verifiable specifics in the body.** A "verifiable specific" is a named entity (Ramp, Linear, a specific post the prospect wrote), a named number with context (`9 days → 4 days`, `$3M last month`, `20 booked meetings in 90 days`), or a named research source. Drafts with one strong specific and three generic-flavor sentences ("great work in SaaS space", "leading B2B SaaS companies") will now fail where they previously passed. Generic-flavor language doesn't count toward the floor. The reason: drafts that "feel specific" without being verifiable were sliding through the old rubric — the floor closes that gap.
+
+### New framework reference
+
+- **`cold-outreach/references/frameworks/saraev-four-step.md`** — Saraev's four-step outbound framework (personalization → who-am-I → offer → CTA) with each step's purpose, length budget, and worked tactics. Includes the seven Cialdini-mapped levers (reciprocity, commitment, social proof, authority, liking, scarcity, unity), the offer-formula equation (`ROI × Trust ÷ Friction`), and the verbatim $15M template attributed to Saraev's source claim (figure not stack-verified — cited as Saraev's example, not endorsed).
+- **`strategist.md` Framework Selection Logic** gains a new row for `signal-strength 1-3 / email-or-linkedin-dm / services-sell` → **Saraev Four-Step**. Sharper than the Q→V→A fallback when the message is touch 1 to a stranger with zero pre-existing trust.
+
+### New anti-patterns
+
+- **`anti-patterns.md` §"AI-Generated Personalization Tells (Saraev)"** documents five specific tells that mark personalization as AI-written or scraper-driven:
+  - **Compound-praise specificity ("BeaverCorp tell")** — "love how passionate you are about process optimization and aligning corporations with diversity outcomes at BeaverCorp"
+  - **Variable mishaps** — scrapers pulling YouTube channel names as first-name fields ("Hi Nick Daily Updates", "Hi Pacific Creative Group LLC team")
+  - **Bolded / quoted / bracketed variables** — template-engine leaks ("Hi **{{FirstName}}**", "Hi [Sarah]")
+  - **False-specificity dressed as specificity** — "Saw you're doing great work in the SaaS space" reads specific but isn't verifiable; the remove-the-opener test passes (rest of the email reads identically without it)
+  - **AI-coined rhetorical-question hooks** — "What if I told you there's a way to 10x your pipeline..." (auto-fail per `critic.md` §Peer Voice structural auto-fail #9)
+
+### Email channel additions
+
+- **`channels/email.md` §Subject + Preheader Truncation** — Gmail/Outlook show subject + first ~80-100 chars as the preview line (combined ~150 chars). Body length ≥150 chars total so the preheader isn't filled with date metadata; bury the hook at the truncation boundary to force the click.
+- **`channels/email.md` §Iteration** (new section) — codifies the 500-1,000-send statistical-significance floor per variant, Saraev's Sunday 20-30 min iteration cadence (~50 cycles/year vs. ad-hoc iteration that dies after week one), the reply-rate progression band (2.0-3.0% week 1 → 4.5-6.0% week 4-6 with iteration; 8-15% top-decile), and the 2-then-3 follow-up sequence sizing rule.
+
+### Coordination notes
+
+- Voice-auditor's downstream rules are unchanged — Saraev's framework lives upstream of voice-auditor. The "Sent from my iPhone" tag and intentional-typo-at-end-of-long-emails stylistic devices pass through voice-auditor cleanly (it kills phrases, not stylistic choices).
+- Source figures from Saraev (`$15M+`, `$300K/mo profit`) are cited as source claims, not stack endorsements. The framework's structural value is independent of the revenue numbers.
+
+### Source
+
+Nick Saraev's 2026 cold-email course condensed at the contributor's idea vault. Practitioner-grade source with cited tactics and verbatim teardowns; numeric author-claims (`$15M+`) flagged inline as source claims.
+
+---
+
 ## [4.0.6] - 2026-05-11
 
 Ten new AI-tell patterns added to the `humanize` reference. Catches the post-2024 LLM voice that the original 37-pattern catalog was written before — `load-bearing`, `it's giving`, anaphora cascades, "X has entered the chat," "what if I told you," "X is having a moment," `quietly`/`silently` rebrand intensifiers, "X, but Y" headlines, "X is the new Y," and the *agentic / agentful / model-native / vibe-coded / vibe shift / the year of agents* jargon cluster.

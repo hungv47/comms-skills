@@ -46,6 +46,16 @@ Craft rules for cold email. Consumed by composer, voice-auditor, critic.
 
 **Subject-body match.** The subject should not promise more than the body delivers. "Reply rates" → body must talk about reply rates. If they mismatch, unsubscribes rise.
 
+### Subject + Preheader Truncation
+
+Gmail/Outlook show **subject + first ~80-100 chars of body** as the preview line. Combined truncation lands at ~150 chars.
+
+- **Body length ≥150 chars total** so the preheader space isn't filled with date metadata ("Sat, May 11 …"). Any draft <150 chars total — the preview shows date stamps instead of content.
+- **Every preheader char is sell room.** Don't waste it on greeting padding ("Hi Sarah, hope this finds you well") — the entire preview shows that fluff and the prospect deletes before opening.
+- **Bury the hook at the truncation boundary** (~80-100 char mark of the body): the user sees a cliff-hanger fragment that forces the click.
+
+Pulls from Saraev's 2026 cold-email course. See `frameworks/saraev-four-step.md` for the full framework integration.
+
 ## Body Structure
 
 ### Opening Sentence
@@ -106,6 +116,49 @@ Avoid triggers:
 - Large images (none at all in cold)
 - Attachments (zero for cold outreach)
 - Trigger words in subject: "FREE," "URGENT," "GUARANTEE"
+
+## Iteration
+
+Treat cold-email campaigns as **science experiments**, not creative drafts. Single-shot iteration on vibes-feedback dies after week one.
+
+### Significance Floor
+
+**500-1,000 sends per variant** is the minimum for statistically meaningful signal. Below 500 sends, gut-feel beats the numbers — you'll over-rotate on noise.
+
+- 100 sends with a 3% reply rate could be 1-2% or 5-6% real. Sample too small to tell.
+- 500-1000 sends with a 3% reply rate is signal you can act on.
+- Picking a TAM with volume matters here: niches with <a few hundred leads can't even support one valid test cycle.
+
+### Iteration Cadence
+
+**Saraev's recommended cadence:** every Sunday, spend 20-30 minutes reviewing the prior week's variants and producing the next batch. Produces ~50 cycles/year vs. ad-hoc iteration that dies after week one.
+
+- **Make big changes early, small changes late.** Week 1: ship two fundamentally different emails (super-short vs. super-long, formal vs. casual). Once a winner is established, narrow the deltas — change one line, then one word.
+- **Always run multiple variants in parallel.** Kill bottom performers fast; build new variants off the top.
+- **Different subject line on each follow-up** — lets you A/B subjects without rewriting the whole email body.
+
+### Reply-Rate Progression Band
+
+Typical progression for a campaign that's actually being iterated:
+
+| Stage | Reply rate band |
+|---|---|
+| Week 1 (cold start) | 2.0-3.0% |
+| Week 2-3 (post-first-iteration) | 3.0-4.5% |
+| Week 4-6 (refined) | 4.5-6.0% |
+| Killer (top decile) | 8-15% |
+
+Stagnant at 2.5% after week 3 = your iteration isn't actually iterating. Re-evaluate whether the offer or the TAM is the problem before tweaking copy.
+
+### Follow-Up Sequence Sizing
+
+- **Start with 2 emails total.** Don't run 5-step sequences until you know the campaign works. Extra steps just multiply spam/block risk.
+- Once a 2-email campaign hits >4-5% reply, **add a third**. Each added step lifts reply rate a point or two while bringing block risk along.
+- Real follow-up copy = human ping, not newsletter. "Hey Pete, quick ping — did this get lost?" beats a 6-sentence fresh pitch.
+
+Source: Nick Saraev's 2026 cold-email course. See `frameworks/saraev-four-step.md`.
+
+---
 
 ## Breakup Email (final touch)
 

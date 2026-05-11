@@ -207,6 +207,7 @@ Horizontal — runs standalone or called by `campaign-plan` when outbound is par
 - `references/frameworks/personalization-signals.md` — 4-level signal system + trigger catalogue (funding, hiring, post, tech-stack, event)
 - `references/frameworks/ctas.md` — low-friction asks, interest-based vs meeting-request, one-line-reply CTAs
 - `references/frameworks/objections.md` — reply playbooks per classification
+- `references/frameworks/saraev-four-step.md` — Nick Saraev's 4-step framework (personalization → who-am-I → offer → CTA), 7 Cialdini-mapped levers, verbatim $15M template, offer-formula equation. Strategist picks this in preference to `structures.md` when the message is touch 1 to a stranger with zero pre-existing trust.
 
 **Shared guardrails:**
 - `references/anti-patterns.md` — AI tells, template smell, phrases that kill replies
@@ -385,7 +386,7 @@ Spawn both in a single message (multiple Agent tool calls).
 
 | Agent | Instruction File | Pass These Inputs | Reference Files to Resolve |
 |-------|-----------------|-------------------|---------------------------|
-| Strategist | `agents/strategist.md` | pre-writing (all) + channel + mode + `signal_strength` from 1a | `references/frameworks/structures.md`, `references/frameworks/ctas.md`, `references/modes/{mode}.md` |
+| Strategist | `agents/strategist.md` | pre-writing (all) + channel + mode + `signal_strength` from 1a | `references/frameworks/structures.md`, `references/frameworks/ctas.md`, `references/frameworks/saraev-four-step.md`, `references/modes/{mode}.md` |
 | Proof Selector | `agents/proof-selector.md` | pre-writing (esp. Q5 `available_proof[]`) + `signal_strength` from 1a | `references/proof-types.md` |
 
 **For Reply Route:** Spawn only `reply-classifier` in Layer 1 (no 1a/1b split needed).

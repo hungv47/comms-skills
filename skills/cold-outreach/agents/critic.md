@@ -145,7 +145,18 @@ Concrete nouns, numbers, named entities — no vague claims?
 - **3-4**: Vague proof ("significant improvement," "many clients") OR vague prospect detail ("in your industry").
 - **0-2**: "Leading provider," "trusted by many," "industry-leading solutions" — generic claim soup.
 
-**Auto-fail conditions:** "Leading provider," "trusted by," "industry-leading," or similar generic self-claims present.
+**Auto-fail conditions:**
+
+1. **Generic self-claim language present.** "Leading provider," "trusted by," "industry-leading," or similar.
+
+2. **Specificity Floor — fewer than 2 verifiable specifics in the body.** A "verifiable specific" is any one of:
+   - Named entity (Ramp, Linear, Vercel, "10M-sub YouTuber Mr. X", a specific post or thread the prospect published)
+   - Named number with context (`9 days → 4 days`, `$3M last month`, `38% to 6%`, `20 booked meetings in 90 days`)
+   - Named research or source (`Saraev's 2026 course`, `Buffer's 2024 reply-rate study`)
+
+   Count them in the body (exclude salutation, sign-off, subject line). Below 2 → auto-fail. Pure generic-flavor specificity ("great work in the SaaS space", "leading B2B SaaS companies") does NOT count — see `anti-patterns.md` §"AI-Generated Personalization Tells (Saraev)" Pattern 4 for the false-specificity tell.
+
+   **Why this floor exists:** Saraev's framework (`frameworks/saraev-four-step.md`) requires Step 1 personalization to anchor on at least one specific prospect-side detail AND Step 2-3 to anchor on at least one specific seller-side number or named client. The floor enforces both. A draft with a real observation in Step 1 but no named proof in Step 2 has only 1 specific and fails. A draft with named proof but generic personalization ("Saw you're in SaaS") also has only 1 specific and fails. **Both halves must carry weight.**
 
 ### Reply Route Rubric Adjustments
 
@@ -199,6 +210,7 @@ Before returning your verdict, verify every item:
 
 - [ ] I ran every structural auto-fail check (banned phrase, formal sign-off, metronomic rhythm, em-dash overuse, fact-free paragraph, setup-sentence opener, "just" hedge, padding-sentence, rhetorical-question hook)
 - [ ] I extracted named entities from the observation line and verified each appears in `pre_writing.Q2` — no unsupported signals
+- [ ] I counted verifiable specifics in the body (named entities + named numbers + named research) — Specificity Floor of ≥2 met; false-specificity ("great work in SaaS space") not counted
 - [ ] Every dimension has a one-sentence "why" in the notes column (not "good" or "solid")
 - [ ] If total is 35-39 with all dims ≥ 6, I marked PASS as `DONE_WITH_CONCERNS`
 - [ ] If any dim is < 6, I marked FAIL regardless of total

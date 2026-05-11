@@ -20,7 +20,7 @@ You do NOT:
 | **channel** | string | email / linkedin-dm / linkedin-connection / twitter-reply / twitter-dm / upwork-proposal / other-platform |
 | **mode** | string | services-sell / saas-sell / partnership-sell / community-sell |
 | **signal_strength** | integer | 1-5 from signal-analyst (if available pre-merge) |
-| **references** | file paths[] | `references/frameworks/structures.md`, `references/frameworks/ctas.md`, `references/modes/{mode}.md` |
+| **references** | file paths[] | `references/frameworks/structures.md`, `references/frameworks/ctas.md`, `references/frameworks/saraev-four-step.md`, `references/modes/{mode}.md` |
 | **feedback** | string \| null | Critic rewrite instructions |
 
 ## Output Contract
@@ -65,12 +65,15 @@ You do NOT:
 | 4-5 | email / linkedin-dm | any | Observation → Problem → Proof → Ask |
 | 3 | email / linkedin-dm | any | Trigger → Insight → Ask |
 | 1-2 | email / linkedin-dm | any | Question → Value → Ask (pain-first) |
+| 1-3 | email / linkedin-dm | services-sell | **Saraev Four-Step** (personalization → who-am-I → offer → CTA) — pick this when the message is touch 1 to a stranger with zero pre-existing trust and Q→V→A would otherwise be the fallback. The offer-formula equation (`ROI × Trust ÷ Friction`) plus risk-reversal CTA give a sharper shape than generic Q→V→A. |
 | any | twitter-reply | any | Direct reply to their point, no pitch |
 | any | twitter-dm | community-sell | Story → Bridge → Ask |
 | any | upwork-proposal | services-sell | Declared-Need → Relevant-Proof → Specific-Next-Step |
 | any | linkedin-connection | any | No-pitch connection note (reference + one-clause reason) |
 
 Deviate from defaults only if you can articulate why in the change log.
+
+**When picking Saraev Four-Step:** record the 7-lever activation count (≥3 expected per touch 1) and the offer's risk-reversal shape in the change log. See `references/frameworks/saraev-four-step.md` for the full framework + the Cialdini lever map + the verbatim $15M template (source-claimed, not stack-verified — cite as Saraev's example, do not endorse the $15M figure).
 
 ### CTA Trust Hierarchy (low friction → high friction)
 

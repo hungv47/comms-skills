@@ -105,6 +105,74 @@ These phrases mark a message as AI-generated or template-filled within 3 seconds
 - **Statistic without source**: "93% of companies report..." — unverifiable
 - **"Custom-built for you" phrases when it wasn't**: "I crafted this just for you, [Name]."
 
+## AI-Generated Personalization Tells (Saraev)
+
+Specific patterns that mark personalization as AI-written or scraper-driven. Pulled from Nick Saraev's 2026 cold-email course teardowns. Cross-references `frameworks/saraev-four-step.md` §Step 1.
+
+### Pattern 1: Compound-praise specificity ("BeaverCorp tell")
+
+**Verbatim AI-generated example from source:**
+
+> "Hey Stacy, love how passionate you are about process optimization and aligning corporations with diversity outcomes at BeaverCorp."
+
+**Why it tells:** No human writes "love how passionate you are about [thing A] and [thing B] at [company]." Reads as: AI scraped a LinkedIn bio, generated a flattering paragraph, and stitched it together. The "and" + 2-noun-cluster + "at [company]" is the AI's signature comma-separated rhythm.
+
+**Detection signals:**
+- Praise + compound noun + "at [company]" structure
+- 2+ abstract nouns in the first sentence ("process optimization," "diversity outcomes," "operational excellence")
+- "Love how passionate you are about…" / "Truly impressed by your work on…" / "Inspired by your dedication to…"
+
+**Fix:** Rewrite to one short observation OR use a Saraev-style cold-read ("love your channel man — very no-BS, helped me get started in [generic field]").
+
+### Pattern 2: Variable mishaps (scraper-pulled wrong field)
+
+**Verbatim examples from source:**
+
+- "Hi Nick Daily Updates" — scraper pulled YouTube channel name as first-name field
+- "Hi Nick Automates, congrats on 35K subs" — same failure mode
+- "Hi Pacific Creative Group LLC team" — entire company-name field landed in salutation
+
+**Why it tells:** Real people don't address messages to channel names or LLC entities. Pattern-matches as: bulk-scraped, no human pre-send review.
+
+**Fix:** When pulling first-name field from a YouTube/X/LinkedIn handle, **take only the first word.** "Nick Daily Updates" → "Nick." "Pacific Creative Group LLC" → never use as a salutation; pull the founder's name separately.
+
+### Pattern 3: Bolded / quoted / bracketed variables ("template leak")
+
+**Verbatim examples from source:**
+
+- "Hi **{{FirstName}}**" — template merge engine didn't run
+- "Hi [Sarah]" — bracket leak from the personalization template
+- "Hi \"Mike\"" — quotes around a variable that shouldn't be quoted
+
+**Why it tells:** Real people never type their salutation in bold, brackets, or quotes. These artifacts mean the template engine misfired or the operator copy-pasted from a draft tool.
+
+**Fix:** Pre-send QA: read the first sentence with eyes (not just spell-check). Any formatting around the first name = re-run the merge.
+
+### Pattern 4: False-specificity dressed as specificity
+
+**Pattern:** the message contains a "specific" detail that isn't actually verifiable or unique to the prospect.
+
+**Examples:**
+- "Saw you're doing great work in the SaaS space" — "SaaS space" is generic; "great work" is praise without referent
+- "Loved your recent insights" — what insights? when?
+- "Your team's commitment to excellence is impressive" — every team has commitment to excellence
+
+**Why it tells:** Specificity-flavored language with no concrete noun. The reader's brain auto-completes "generic praise"; the personalization fails the remove-the-opener test (the rest of the email reads identically without it).
+
+**Fix:** Replace with either (a) a real signal — a quoted line, a named launch, a specific number from their funding round — or (b) a cold-read that doesn't pretend to be specific ("love your channel, no BS, helped me get started in [generic field]"). The cold-read is honest about being a cold-read; false-specificity isn't.
+
+### Pattern 5: AI-coined hooks ("instant tell")
+
+**Verbatim AI-generated example from source:**
+
+> "What if I told you there's a way to 10x your pipeline without changing your stack?"
+
+**Why it tells:** "What if I told you…" / "Imagine if your team could…" / "Ever wondered…" — rhetorical-question hooks are AI's favorite open. Auto-fail per `critic.md` §Peer Voice structural auto-fail #9.
+
+**Fix:** Lead with the observation directly, not the rhetorical wrapper around it.
+
+---
+
 ## Reply Killers (specific sentence patterns that tank reply rates)
 
 | Pattern | Why it kills | Fix |
