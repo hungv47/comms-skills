@@ -6,6 +6,32 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.1.4] - 2026-05-11
+
+Tightens `cold-outreach` with per-channel teaser-preview rules from the Saraev source and adds first-class support for iMessage / SMS as a cold-outreach channel. Drafts targeting any of these channels now respect the visible-preview window before recipients open the thread.
+
+### What's new
+- **LinkedIn connection notes — visible-preview window codified.** `references/channels/linkedin.md` gains a Teaser Preview Constraint subsection: LinkedIn surfaces only the first ~50-55 characters in the inbox before the recipient clicks in. A long-firstname salutation (`Hi [Long-Firstname] — `) can burn 20+ of the 55-char preview before the trigger lands. The existing ≤300-char hard limit is the layered limit on the full note; the new rule guards the *visible* slice.
+- **X / Twitter DM — visible-preview window codified.** `references/channels/twitter.md` gains a Teaser Preview Constraint (DM) subsection: X DM inboxes preview only the first ~40-55 characters before requiring a click. Public replies don't have this constraint (they render inline), so the rule bites specifically on DM. Reinforces the existing "no salutation" DM convention.
+- **New channel — iMessage / SMS.** `references/channels/imessage.md` covers what the Saraev source gives us: a ~90-character preview that often shows the whole message in the lock-screen notification, so drafts need to be ≥135 characters to force the open, with a cliffhanger landing right at the truncation boundary. Also: blue-bubble (iMessage) carries a trust premium over green-bubble (SMS) for high-income iPhone-native targets. Coverage is intentionally thin — a single practitioner source — and the file is flagged that way.
+- **`channel` field now accepts `imessage` and `sms`.** Artifact frontmatter enum widened from `email | linkedin-dm | linkedin-connection | twitter-reply | twitter-dm | upwork-proposal | other-platform` → adds `imessage | sms`. Backward-compatible (existing channel values unchanged).
+
+### Wiring (so the new channel actually carries through the pipeline, not just sit in references)
+- **composer.md** — new row in the channel constraints table for `imessage / sms`: ≥135 chars, ~90-char cliffhanger, no links, prefer blue bubble. The existing `twitter-dm` row gains a teaser hook addendum (first ~40-55 chars carry the hook).
+- **voice-auditor.md** — new row in the channel-register table for `imessage / sms`: casual peer, text-to-a-friend register. Corporate phrasing reads instantly fake on a phone.
+- **strategist.md** — framework selection rows for `email / linkedin-dm` now also cover `imessage / sms` for parity (same framework choices apply; only the form factor differs). The Saraev Four-Step row extends here too — the channel is a natural fit for touch-1 outbound to strangers.
+- **SKILL.md** — `references/channels/imessage.md` registered in the Shared References block, channel enum extended in the artifact frontmatter spec, top-level skill description updated to mention iMessage/SMS so the skill matches when someone asks for iMessage outreach help.
+
+### What did NOT change
+- All existing channel files (email, LinkedIn, Twitter/X, platform proposals) behave identically. The LinkedIn and Twitter edits are additive — the new Teaser Preview Constraint sub-sections sit alongside existing rules without modifying them.
+- Saraev Four-Step framework itself unchanged. The new channel inherits the existing framework selection; no new framework was added.
+- Per-channel character limits beyond the teaser-preview rule (LinkedIn 300-char hard cap, Twitter 280, etc.) all unchanged.
+
+### Source
+Nick Saraev's 2026 cold outreach course (§Channel-specific platform rules — LinkedIn, X, iMessage/SMS). Strict scope per source — only the three teaser-window rules + iMessage/SMS bubble-color signal were ported. Other Saraev material (subject-line tactics, follow-up cadence, iteration cadence) was already absorbed in v4.1.0; this release closes the channel-tightening tail.
+
+---
+
 ## [4.1.3] - 2026-05-11
 
 One-line discipline patch on the `campaign-plan/references/distribution-models/clipping-and-live.md` ref shipped in 4.1.2. Independent review caught one row of operational guidance that wasn't carrying the inferred-tag the rest of the doc uses.

@@ -6,6 +6,18 @@ Three sub-formats with different craft rules: **connection note** / **post-accep
 
 **Constraint: ≤300 characters.** Hard limit.
 
+### Teaser Preview Constraint
+
+Beyond the 300-char hard limit, LinkedIn's inbox preview surfaces only the **first ~50-55 characters** before the recipient clicks in. The rest is hidden until open. Optimize the opening clause for this window — anything past ~55 chars is post-click, not open-bait.
+
+> "Teaser visible at ~50-55 chars. Shorter first name = more teaser room." — Saraev source
+
+**Practical implications:**
+- A `Hi [Long-Firstname] — ` opener can burn 20+ of the 55-char preview on greeting. Lead with the trigger noun when the first name runs long.
+- The ≤300-char hard limit on the full note still applies; this is a layered constraint on the *visible* slice.
+
+Source: Nick Saraev cold outreach course 2026; see `references/frameworks/saraev-four-step.md`.
+
 ### Rules
 
 - **No pitch.** Ever. This is a handshake, not a sales call.

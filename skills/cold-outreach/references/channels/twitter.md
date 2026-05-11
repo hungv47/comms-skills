@@ -77,6 +77,18 @@ Only DM AFTER a public exchange (reply + their response) or if they have "DMs op
 - Link okay if relevant (Twitter doesn't deprioritize DMs with links the way LinkedIn does)
 - One CTA, tier 1-2
 
+### Teaser Preview Constraint (DM)
+
+X DM inboxes preview only the **first ~40-55 characters** before requiring a click. Public replies don't have this constraint — they render inline. DM is where the rule bites.
+
+> "Teaser preview ~40-55 chars." — Saraev source
+
+**Practical implications:**
+- The first 40-55 chars must carry the trigger reference or the curiosity hook, not a salutation. The "no salutation" convention in §Rules below already pulls in this direction — the teaser window reinforces it.
+- Bury anything heavy past ~55 chars; the visible slice should make them want to click in.
+
+Source: Nick Saraev cold outreach course 2026; see `references/frameworks/saraev-four-step.md`.
+
 ### Rules
 
 - **Reference the tweet/exchange.** Twitter DM in a vacuum feels random.

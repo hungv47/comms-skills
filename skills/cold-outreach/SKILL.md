@@ -1,6 +1,6 @@
 ---
 name: cold-outreach
-description: "Writes and evaluates cold outreach — email, LinkedIn, Twitter/X, platform proposals — with signal-based personalization, channel-specific craft, and rubric scoring. Produces `.agents/skill-artifacts/mkt/cold-outreach/[slug].md` (+ `.rationale.md` + `.critic-score.md`). Handles first-touch compose and reply-to-inbound modes. Not for campaign orchestration or sequence design (compose touches individually, pass prior touches as context). Not for sourcing/list-building (start at 'here's who I'm reaching'). Brand voice: see brand-system. AI-sounding cleanup: humanize runs as terminal pass."
+description: "Writes and evaluates cold outreach — email, LinkedIn, Twitter/X, iMessage/SMS, platform proposals — with signal-based personalization, channel-specific craft, and rubric scoring. Produces `.agents/skill-artifacts/mkt/cold-outreach/[slug].md` (+ `.rationale.md` + `.critic-score.md`). Handles first-touch compose and reply-to-inbound modes. Not for campaign orchestration or sequence design (compose touches individually, pass prior touches as context). Not for sourcing/list-building (start at 'here's who I'm reaching'). Brand voice: see brand-system. AI-sounding cleanup: humanize runs as terminal pass."
 argument-hint: "[target/signal + channel + mode, or reply text to respond to]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -136,7 +136,7 @@ skill: cold-outreach
 version: 1
 date: YYYY-MM-DD
 status: done | done_with_concerns | blocked | needs_context
-channel: email | linkedin-dm | linkedin-connection | twitter-reply | twitter-dm | upwork-proposal | other-platform
+channel: email | linkedin-dm | linkedin-connection | twitter-reply | twitter-dm | imessage | sms | upwork-proposal | other-platform
 mode: services-sell | saas-sell | partnership-sell | community-sell
 touch: integer | "breakup"   # 1, 2, 3, 4+, or "breakup"
 route: compose | reply
@@ -192,8 +192,9 @@ Horizontal — runs standalone or called by `campaign-plan` when outbound is par
 
 **Channel craft (channels/):**
 - `references/channels/email.md` — subject lines, length targets, structure, formatting, breakup email
-- `references/channels/linkedin.md` — connection-note (≤300 chars) vs post-accept DM vs InMail distinctions
-- `references/channels/twitter.md` — public reply craft vs DM craft, demand-signal reading
+- `references/channels/linkedin.md` — connection-note (≤300 chars) vs post-accept DM vs InMail distinctions; ~50-55 char teaser preview window
+- `references/channels/twitter.md` — public reply craft vs DM craft, demand-signal reading; DM ~40-55 char teaser preview window
+- `references/channels/imessage.md` — iMessage/SMS: ~90-char teaser preview (write ≥135 chars to force open), blue-vs-green bubble trust signal. Thin coverage — single source.
 - `references/channels/platform-proposals.md` — Upwork/Fiverr: pitching into declared need
 
 **Mode defaults (modes/):**

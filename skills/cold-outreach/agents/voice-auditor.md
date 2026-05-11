@@ -116,6 +116,7 @@ Read the message aloud. If it sounds like:
 | linkedin-connection | Neutral peer. No slang. ≤300 char discipline is the main constraint. |
 | twitter-reply | Casual. Short. Can drop capitalization at start if user's voice does. |
 | twitter-dm | Casual peer. Like a text to a colleague you've met once. |
+| imessage / sms | Casual peer, text-to-a-friend register. Lowercase OK, contractions required. No corporate phrasing — reads instantly fake on a phone. |
 | upwork-proposal | Professional peer. More formal than DM, less than a pitch deck. |
 
 ### Rewrite Rules

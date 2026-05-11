@@ -100,7 +100,8 @@ Read the relevant `references/channels/{channel}.md` for the full spec. Summary:
 | **linkedin-dm** | 3-5 sentences / no pitch in first DM if connection just accepted; continue from where note left off / no links if possible (reduces reach) |
 | **linkedin-connection** | ≤300 chars / no pitch / reference + one-clause reason / no URL |
 | **twitter-reply** | Public: add value to their point first, pitch second (or not at all); 1-2 sentences |
-| **twitter-dm** | 2-4 sentences / casual register / story-first if cold |
+| **twitter-dm** | 2-4 sentences / casual register / story-first if cold / first ~40-55 chars carry hook (DM teaser preview) |
+| **imessage / sms** | ≥135 chars total (1.5× the ~90-char preview window) / land a cliffhanger at the ~90-char truncation boundary to force the open / no links / blue-bubble preferred over green for high-income targets |
 | **upwork-proposal** | Hook with specific detail from their post in first line / outcome-focused / evidence beats claims / specific next step |
 | **other-platform** | Apply closest analog (Fiverr ≈ Upwork; Slack community DM ≈ Twitter DM) |
 

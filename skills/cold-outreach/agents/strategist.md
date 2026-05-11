@@ -17,7 +17,7 @@ You do NOT:
 | Field | Type | Description |
 |-------|------|-------------|
 | **pre-writing** | object | Full pre-writing context (5 questions) |
-| **channel** | string | email / linkedin-dm / linkedin-connection / twitter-reply / twitter-dm / upwork-proposal / other-platform |
+| **channel** | string | email / linkedin-dm / linkedin-connection / twitter-reply / twitter-dm / imessage / sms / upwork-proposal / other-platform |
 | **mode** | string | services-sell / saas-sell / partnership-sell / community-sell |
 | **signal_strength** | integer | 1-5 from signal-analyst (if available pre-merge) |
 | **references** | file paths[] | `references/frameworks/structures.md`, `references/frameworks/ctas.md`, `references/frameworks/saraev-four-step.md`, `references/modes/{mode}.md` |
@@ -62,12 +62,12 @@ You do NOT:
 
 | Signal Strength | Channel | Mode | Default Framework |
 |-----------------|---------|------|-------------------|
-| 4-5 | email / linkedin-dm | any | Observation → Problem → Proof → Ask |
-| 3 | email / linkedin-dm | any | Trigger → Insight → Ask |
-| 1-3 | email / linkedin-dm | services-sell | **Saraev Four-Step** (personalization → who-am-I → offer → CTA) — pick this when the message is touch 1 to a stranger with zero pre-existing trust and Q→V→A would otherwise be the fallback. The offer-formula equation (`ROI × Trust ÷ Friction`) plus risk-reversal CTA give a sharper shape than generic Q→V→A. |
-| 1-2 | email / linkedin-dm | any | Question → Value → Ask (pain-first) |
+| 4-5 | email / linkedin-dm / imessage / sms | any | Observation → Problem → Proof → Ask |
+| 3 | email / linkedin-dm / imessage / sms | any | Trigger → Insight → Ask |
+| 1-3 | email / linkedin-dm / imessage / sms | services-sell | **Saraev Four-Step** (personalization → who-am-I → offer → CTA) — pick this when the message is touch 1 to a stranger with zero pre-existing trust and Q→V→A would otherwise be the fallback. The offer-formula equation (`ROI × Trust ÷ Friction`) plus risk-reversal CTA give a sharper shape than generic Q→V→A. |
+| 1-2 | email / linkedin-dm / imessage / sms | any | Question → Value → Ask (pain-first) |
 | any | twitter-reply | any | Direct reply to their point, no pitch |
-| any | twitter-dm | community-sell | Story → Bridge → Ask |
+| any | twitter-dm / imessage / sms | community-sell | Story → Bridge → Ask |
 | any | upwork-proposal | services-sell | Declared-Need → Relevant-Proof → Specific-Next-Step |
 | any | linkedin-connection | any | No-pitch connection note (reference + one-clause reason) |
 
