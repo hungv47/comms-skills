@@ -4,7 +4,7 @@
 
 > **v4.0.0 BREAKING:** `start-marketing` renamed to `orchestrate-marketing`. Update any `/start-marketing` invocations in your workflows to `/orchestrate-marketing`.
 
-Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, and short-form video briefs. 12 skills (incl. `/orchestrate-marketing` orchestrator).
+Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 13 skills (incl. `/orchestrate-marketing` orchestrator).
 
 **New here?** Run `/orchestrate-marketing` — it reads brand/research state, parses your ask, and proposes the next skill to invoke with rationale + cost + duration.
 
@@ -53,13 +53,13 @@ brand-system                         → brand/BRAND.md, brand/DESIGN.md, brand/
                                           ↓
 campaign-plan                             → .agents/mkt/campaign-plan.md
                                           ↓
-                            ┌─────────────┼─────────────┐
-                            ↓             ↓             ↓
-                       lp-brief        seo         cold-outreach
-                       (per page)   (per mode)    (per touch)
-                            ↓
-                       design-brief
-                       (per slot)
+                ┌─────────────┬───────────┼───────────┬─────────────┐
+                ↓             ↓           ↓           ↓             ↓
+           lp-brief        seo         ad-copy   cold-outreach   short-form-brief
+           (per page)   (per mode)   (per temp)  (per touch)     (per video) → social-copy
+                ↓                                                              (per platform)
+           design-brief
+           (per slot)
 
 Horizontal: copywriting, lp-optimization, humanize, vn-tone — invoked at any stage.
 ```
@@ -207,6 +207,21 @@ Uses a live-scraped corpus from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun
 
 ---
 
+### `ad-copy` — write Meta paid-ad copy (retargeting + cold-traffic)
+
+Writes hero + 2 variants of Meta paid-ad copy (Facebook + Instagram), audience-temperature-aware (retargeting / cold), with hard char-cap enforcement, policy + claim substantiation gates, and a 6-dimension critic rubric. Automatic humanize terminal pass per variant. Meta-only at v1 — Google RSA, LinkedIn, TikTok Ads reserved for future expansion.
+
+**Use when:**
+- You're shipping a Meta retargeting campaign and want creative that respects the warm-audience objection map (fit / credibility / timing), not cold-creative reused as warm
+- You're shipping Meta cold-traffic for a subscription app and need trial-start-optimized copy, dedicated creative, and Apple-24h-signal-aware framing
+- You're testing 3 distinct angles (hero + A + B) and want them genuinely distinct, not surface-level paraphrases
+
+**Not for:** Google RSA / LinkedIn / TikTok Ads (refs not pre-staged — would force fabrication), audience setup or budget pacing (Ads Manager workflow), landing page copy (use `copywriting` or `lp-brief`), cold-outreach DMs (use `cold-outreach`), creative asset production (this skill produces copy spec only).
+
+**Produces:** `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
+
+---
+
 ### `cold-outreach` — write cold outbound messages
 
 Writes and evaluates cold outreach across email, LinkedIn (DM + connection note), Twitter/X (reply + DM), and platform proposals (Upwork, Fiverr, similar). Signal-based personalization, channel-specific craft, 5-dimension rubric scoring, automatic humanize terminal pass. Supports first-touch compose and inbound-reply handling.
@@ -224,8 +239,8 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 
 ## Cross-Stack
 
-- `brand-system`, `campaign-plan`, `copywriting`, `lp-optimization`, `lp-brief`, `seo`, `cold-outreach`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
-- `cold-outreach` additionally reads `research/icp-research.md` for target persona pain language
+- `brand-system`, `campaign-plan`, `copywriting`, `lp-optimization`, `lp-brief`, `seo`, `cold-outreach`, `ad-copy`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
+- `cold-outreach` and `ad-copy` additionally read `research/icp-research.md` for target persona pain language
 - `campaign-plan` and `lp-brief` can read `.agents/prioritize.md` and `.agents/targets.md` from research-skills
 
 ## Releases

@@ -213,6 +213,7 @@ Match the user's argument against intent buckets:
 | "redesign my LP", "new landing page", "LP brief", "page architecture" | lp-design | lp-brief |
 | "SEO", "keywords", "AI search", "programmatic SEO", "ASO", "search rank" | search-visibility | seo |
 | "TikTok", "Reels", "Shorts", "short-form video", "video hook" | short-form-video | short-form-brief |
+| "Meta ads", "Facebook ads", "Instagram ads", "retargeting ads", "primary text", "ad headline", "paid social", "ad creative copy" | paid-ads | ad-copy |
 | "cold email", "LinkedIn DM", "outbound", "proposal", "first-touch" | outbound | cold-outreach |
 | "this sounds AI-generated", "humanize this", "strip the slop", "make it sound human" | text-polish | humanize |
 | "Vietnamese tone", "polish VN", "this Vietnamese sounds translated" | vn-polish | vn-tone |
@@ -246,9 +247,10 @@ Apply rules in order — first match wins.
 6. **brand done + intent: lp-design** → propose `lp-brief`. If `lp-optimization.md` exists, note it will be consumed.
 7. **Intent: search-visibility** → propose `seo`. Ask user which mode (audit / ai / programmatic / competitor / aso).
 8. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `.agents/skill-artifacts/mkt/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
-9. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
-10. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
-11. **Intent: vn-polish** → propose `vn-tone`. Note: post-translation only, runs on already-translated VN text.
+9. **Intent: paid-ads** → propose `ad-copy`. Hard requires `research/icp-research.md`. Ask which audience-temperature (retargeting / cold) — single-temp per invocation; run twice for campaigns spanning both. Meta-only at v1.
+10. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
+11. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
+12. **Intent: vn-polish** → propose `vn-tone`. Note: post-translation only, runs on already-translated VN text.
 
 **Ambiguity rule:** if user's intent matches 2+ buckets ("I need content for my new product"), propose 2 options with rationale. Don't pick for them.
 

@@ -1,6 +1,6 @@
 # Marketing Skills
 
-Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, short-form video briefs, and platform-native social-copy. 12 skills + orchestrate-marketing.
+Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 13 skills + orchestrate-marketing.
 
 ## Pipeline
 brand-system (visual identity foundation)
@@ -10,6 +10,7 @@ campaign-plan (channel strategy + calendar)
   ├─ lp-brief (per landing page) → design-brief (per asset slot)
   ├─ seo (per mode: audit / ai / programmatic / competitor / aso)
   ├─ short-form-brief (per video asset) ← reads short-form-research.md from research-skills
+  ├─ ad-copy (per audience-temp — Meta retargeting OR cold-traffic)
   └─ cold-outreach (per touch)
 
 Audit existing pages: lp-optimization → (if redesign warranted) lp-brief
@@ -30,6 +31,7 @@ Pipeline outputs write to `.agents/skill-artifacts/mkt/`; cross-stack records li
 - `.agents/skill-artifacts/mkt/content/[slug].humanized.md`
 - `.agents/skill-artifacts/mkt/content/[slug].vn-tone.md`
 - `.agents/skill-artifacts/mkt/cold-outreach/[slug].md` (+ `[slug].rationale.md` + `[slug].critic-score.md`)
+- `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md` (+ `[slug].rationale.md` + `[slug].critic-score.md`) — from ad-copy
 - `brand/BRAND.md` (brand narrative, voice, positioning, archetype)
 - `brand/DESIGN.md` (AI-readable design system with palettes, tokens, components)
 - `brand/ASSETS.md` (per-platform production inventory with auto-scanned checkboxes)
@@ -48,7 +50,7 @@ campaign-plan and lp-brief can read research artifacts for alignment:
 
 ## Pre-Dispatch Protocol
 
-All 12 skills follow the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Cold Start (3-7 bundled questions, one round-trip) when context is missing; Warm Start (summary + optional probe) when artifacts/experience cover what's needed. Answers persist to `.agents/experience/{product,audience,brand,business,goals,content}.md` so subsequent skills never re-ask. Hard-gated skills (`design-brief`, `lp-brief`) gate before cold-start questioning — recommend `brand-system` / `lp-optimization` when gates fail. `cold-outreach` has the most-elaborate cold-start (7 questions + Missing-Input Hard Blocks for mode/channel/target/proof). `brand-system` carries the canonical 13-platform target list as a catalog inside its Pre-Dispatch. `short-form-brief` writes brand_mode + production_mode to `.agents/experience/content.md`.
+All 13 skills follow the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Cold Start (3-7 bundled questions, one round-trip) when context is missing; Warm Start (summary + optional probe) when artifacts/experience cover what's needed. Answers persist to `.agents/experience/{product,audience,brand,business,goals,content}.md` so subsequent skills never re-ask. Hard-gated skills (`design-brief`, `lp-brief`) gate before cold-start questioning — recommend `brand-system` / `lp-optimization` when gates fail. `cold-outreach` has the most-elaborate cold-start (7 questions + Missing-Input Hard Blocks for mode/channel/target/proof); `ad-copy` is a close second (7 questions + audience-temp + creative-format hard-blocks). `brand-system` carries the canonical 13-platform target list as a catalog inside its Pre-Dispatch. `short-form-brief` writes brand_mode + production_mode to `.agents/experience/content.md`.
 
 ## Manifest Spec
 
@@ -56,7 +58,7 @@ State detection across all marketing skills (especially `orchestrate-marketing`)
 
 ## Multi-Agent Skills
 
-All 12 skills use a two-layer multi-agent orchestration pattern:
+All 13 skills use a two-layer multi-agent orchestration pattern:
 
 - `SKILL.md` = **orchestrator** — dispatch graph, routing logic, merge step, critic gate
 - `agents/` = **sub-agent instruction files** — each with role, input/output contracts, domain knowledge, self-check
@@ -82,10 +84,12 @@ All 12 skills use a two-layer multi-agent orchestration pattern:
 - `lp-brief` — 9 agents (audit-anchor, brand-anchor, hypothesis, architecture, section-spec, asset-slot, handoff, conversion-critic, brand-voice-critic). Layer 1 parallel (audit-anchor + brand-anchor) → Layer 1.5 hypothesis → **Approval Gate 1** → Layer 2 architecture → **Approval Gate 2** → Layer 3 section-spec → Layer 3.5 asset-slot (consumes section-spec slot IDs) → Layer 4 handoff → Layer 5 parallel critics (conversion + brand-voice, both binary PASS/FAIL) → **Approval Gate 3**. Page-level orchestrator between strategy and design — produces a campaign-grade landing-page redesign brief with hypothesis, architecture, per-section spec, asset slots, and target-tool hand-off prompts. Internalizes lp-optimization conversion principles via cite-by-line reference (CP-01 → CP-13). Tier-1 only (primary + secondary conversion pages); programmatic SEO templates out of scope.
 - `short-form-brief` — 9 agents (format, voc-extraction, production-mode, hook, storyboard, audio, copy-pack, platform-tailor, critic). Layer 1 parallel foundation (format + voc-extraction + production-mode) → Layer 1.5 parallel craft (hook + storyboard + audio + copy-pack) → Layer 2 sequential (platform-tailor for variants → critic with 4 sub-critics: hook + production + algorithm-fit + brand-fit). Per-asset video brief consuming `.agents/skill-artifacts/research/short-form-research.md`. Hard cap: 1 hero + 2 variants per invocation. Brand modes: founder | company. Polish chain (vn-tone | humanize) auto-routes per (market, brand_mode) on spoken-line section.
 - `social-copy` — 3 agents (copywriter, format-checker, critic). Sequential dispatch: copywriter generates A/B hooks + body + CTA per locked brief or topic → format-checker enforces char/word limits + CTA placement vs algorithm truncation point + format compliance (max 1 revision loop on hard-cap violation; two consecutive failures = FORMAT_FAIL escalated to user) → critic scores against 5-dimension rubric (hook scroll-stop strength / char-word limit compliance / CTA placement vs truncation / pattern-interruption density / format compliance, 0-10 each, total 50, pass ≥ 35, DWC 25-34, fail < 25). Single-platform per invocation: tiktok / reels / shorts / x / linkedin. YouTube long-form excluded. Single-market per artifact. Polish chain default `none`; routes through humanize / vn-tone when set.
+- `ad-copy` — 5 agents (strategist, composer, format-checker, voice-auditor, critic). Layer 1 strategist solo (audience-temp framing + per-variant archetype + per-variant anchor + CTA + ceiling warning) → Layer 2 sequential: composer (hero + 2 variants per Meta char-cap discipline) → format-checker (Meta hard caps + policy banned-phrase + measured-claim substantiation; hard-bounce on REVISION_REQUIRED; FORMAT_FAIL on second-pass violation) → voice-auditor (strip vendor-speak + AI tells + em-dashes, BLOCK on structural issues) → critic (6-dimension rubric: hook scroll-stop / component-char compliance / CTA-LP match / pattern-interruption density across variants / policy+claim compliance / Specificity Floor ≥2; pass aggregate ≥ 42/60 with all per-variant per-dim ≥ 6) → terminal humanize per variant with specificity regression check. Meta-only at v1 (retargeting + cold-traffic). Single audience-temp per invocation — run twice for campaigns spanning both. Hero + 2 distinct variants per artifact. Per-surface practitioner refs at `references/ad-intelligence/{meta-retargeting,meta-cold-traffic,creative-cadence}.md` (single-source-tier; calibrate before adopting numeric thresholds).
 
 ### Reusable template
 `copywriting/agents/_template.md` defines the standard structure for agent instruction files.
 
 ## Recent Changes
+- 2026-05-11: Marketplace 2.4.0 — added new skill `ad-copy` (Phase 1.2). Meta paid-ad copywriting for retargeting + cold-traffic audiences with 5-agent dispatch (strategist + composer + format-checker + voice-auditor + critic), 6-dimension critic rubric, hard char-cap + policy enforcement, hero + 2 variants per audience-temperature, automatic humanize terminal pass per variant. Pre-staged ad-intelligence references (meta-retargeting / meta-cold-traffic / creative-cadence from REB-3) now consumed by the skill. Meta-only at v1; Google RSA / LinkedIn / TikTok Ads reserved for future expansion. Stack surface: 12 → 13 skills.
 - 2026-05-08: Marketplace 2.0.0 wave — renamed `start-marketing` → `orchestrate-marketing` (BREAKING). Added new skill `social-copy` (Phase 1.1 rubric-divergence test passes; operator confirmed Phase 1.2 architecture as separate skills, Option A). Phase 0.5b platform-intel closeout: 11 deferred fresh-eyes findings on tiktok/reels/shorts/x verbatim-example URLs and source attributions resolved (relabeled `[pattern-observed; URL not pinned]` where specific post URLs not locatable; mis-attributions corrected; `s4` X-API doc footnoted for dual API/organic applicability). All 6 platform-intel docs + `_template.md` `last_verified` bumped to 2026-05-08. Stack surface: 11 → 12 skills.
 - 2026-05-04: Removed `content-create`, `content-short` (empty stub), `content-long`, `attribution` from the stack. Renamed `design-create` → `design-brief` and re-scoped to brief-only (no rendering); platform-aware module specs ship as a skeleton pending a follow-up build pass.

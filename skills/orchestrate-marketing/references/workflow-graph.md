@@ -19,6 +19,8 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
                                                     │       ↑
                                                     │       └── consumes short-form-research.md (research-skills)
                                                     │
+                                                    ├── ad-copy (per audience-temp — Meta only at v1)
+                                                    │
                                                     └── cold-outreach (per touch)
 
                                                                                 ↓
@@ -30,7 +32,7 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 
 **Strategy layer:** `campaign-plan` consumes brand + ICP + (optionally) prioritize.md. Produces channel/calendar/GTM blueprint that informs the content layer.
 
-**Content layer (parallel options):** copywriting, lp-brief, seo, short-form-brief, cold-outreach. User picks based on the asset they need.
+**Content layer (parallel options):** copywriting, lp-brief, seo, short-form-brief, social-copy, ad-copy, cold-outreach. User picks based on the asset they need.
 
 **Audit branch:** `lp-optimization` is independent — audits any existing LP URL. Output can feed `lp-brief` for redesign.
 
@@ -117,9 +119,17 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 - **Cost:** $0.50–1.50 · 3 agents · standard budget · ~5 min
 - **Polish chain:** `polish_chain=humanize|vn-tone|none` (default `none`).
 
+### ad-copy
+
+- **Job:** Meta paid-ad copy (retargeting + cold-traffic) — hero + 2 variants per audience-temperature with audience-temp framing, hard char-cap enforcement, policy/claim substantiation, 6-dim rubric scoring, automatic humanize terminal pass per variant.
+- **Produces:** `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md`, `[slug].rationale.md`, `[slug].critic-score.md`
+- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `brand/BRAND.md`; per-surface practitioner refs at `marketing-skills/skills/ad-copy/references/ad-intelligence/{meta-retargeting,meta-cold-traffic,creative-cadence}.md`
+- **When to recommend:** paid-ads intent (Meta retargeting OR cold-traffic). Single audience-temperature per invocation — run twice for campaigns spanning both. Google RSA / LinkedIn / TikTok Ads NOT in v1 (refs not pre-staged).
+- **Cost:** $1–2 · 5 agents · deep budget · ~10 min
+
 ### cold-outreach
 
-- **Job:** cold email / LinkedIn DM / X DM / proposal composition with signal-based personalization, 5-dimension rubric scoring, automatic humanize terminal pass.
+- **Job:** cold email / LinkedIn DM / X DM / iMessage / SMS / proposal composition with signal-based personalization, 5-dimension rubric scoring, automatic humanize terminal pass.
 - **Produces:** `.agents/mkt/cold-outreach/[slug].md`, `[slug].rationale.md`, `[slug].critic-score.md`
 - **Consumes:** `research/product-context.md`, `research/icp-research.md`
 - **When to recommend:** outbound intent. Hard requires icp-research.md.
@@ -161,9 +171,10 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
    f. search-visibility    → seo (ask mode)
    g. short-form-video     → short-form-brief (gate: short-form-research)
    h. social-post          → social-copy (soft-gate: short-form-brief OR brand; ask which platform)
-   i. outbound             → cold-outreach (gate: icp)
-   j. text-polish          → humanize
-   k. vn-polish            → vn-tone
+   i. paid-ads             → ad-copy (gate: icp; ask audience-temp — retargeting OR cold)
+   j. outbound             → cold-outreach (gate: icp)
+   k. text-polish          → humanize
+   l. vn-polish            → vn-tone
 
 4. Polish chain hint:
    - If output of recommended skill is user-facing copy in EN → mention humanize as terminal step.

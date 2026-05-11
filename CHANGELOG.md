@@ -6,6 +6,51 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.2.0] - 2026-05-11
+
+New skill: **`/ad-copy`** — Meta paid-ad copywriting for retargeting and cold-traffic audiences. Phase 1.2 of the marketing-stack content build. Produces a hero plus two distinct variants per invocation, gated by audience-temperature framing, Meta char caps, policy compliance, and a 6-dimension critic rubric.
+
+### Added
+- **`skills/ad-copy/SKILL.md`** — orchestrator (5-agent dispatch). Single audience-temperature per invocation (`retargeting` or `cold`); run twice for campaigns spanning both. Hero plus two variants, each with a distinct angle archetype and a distinct anchor proof. Automatic `humanize` terminal pass per variant with a specificity regression check.
+- **`skills/ad-copy/agents/`** — five agents:
+  - `strategist.md` — picks angle archetype, audience-temperature framing (warm-objection map vs cold-objection map), CTA verb, and the anchor-proof slot per variant. Surfaces a ceiling warning when `creative_format=repurposed-ugc`.
+  - `composer.md` — drafts hero + Variant A + Variant B (primary text + headline + description per variant) within Meta's char caps. Enforces visible-window economy (hook + anchor must land in the first ~125 characters of primary text).
+  - `format-checker.md` — hard-gate. Bounces on any Meta char-cap violation (3,000 / 40 / 30), any policy banned phrase, or any measured claim that doesn't trace to `available_proof[]`. Does not rewrite.
+  - `voice-auditor.md` — peer-voice audit. Strips vendor-speak, AI tells, em-dashes, "just"/"quick" hedges, rhetorical-question openers, generic claim soup. Same auto-fail discipline as `cold-outreach`'s voice-auditor, scoped to ad copy.
+  - `critic.md` — scores hero + A + B across 6 dimensions independently, then aggregates. Pass: aggregate ≥ 42/60 with every per-variant per-dim ≥ 6.
+- **`skills/ad-copy/references/`** — five reference files:
+  - `rubric.md` (v0.1) — 6-dimension bands: Hook scroll-stop, Component-char compliance, CTA-LP match, Pattern-interruption density, Policy + claim compliance, Specificity (Floor ≥ 2 verifiable specifics per variant).
+  - `policy-floor.md` — Meta banned-phrase rules (health / finance / political / protected-class / engagement bait / click bait / misleading buttons) + substantiation hedging templates.
+  - `anti-patterns.md` — vendor-speak banned list, AI-tell structural fails, ad-specific fabrication tells, ceiling-warning triggers, variant-distinctness anti-patterns.
+  - `format-spec.md` — Meta component char caps (hard + soft) with visible-window economics per placement.
+  - `examples.md` — four worked examples (strong-retargeting / weak-retargeting / strong-cold / weak-cold) with per-variant per-dim scorecards. Discriminant gap 33-40 points between strong and weak.
+- **`skills/ad-copy/references/ad-intelligence/`** — three per-surface practitioner references (previously pre-staged in 4.0.4 / 4.0.5; now consumed by the skill):
+  - `meta-retargeting.md` — warm-audience system (3 custom audiences, warm-vs-cold objection map, budget pacing) [George Clem 2026]
+  - `meta-cold-traffic.md` — subscription-app cold playbook (2-campaign structure, trial-start optimization, 3-layer attribution, cross-vertical matrix) [Cali Apps]
+  - `creative-cadence.md` — volume / kill speed / 80/20 budget / dedicated vs repurposed-UGC ceiling [Simplr + Cali + uncited operator vault]
+
+### Wiring
+- **`.claude-plugin/plugin.json`** — `ad-copy` added to the `skills` array (slot 14); description updated; `ad-copy` added to keywords; version 4.2.0.
+- **`skills/orchestrate-marketing/SKILL.md`** — intent buckets table gains a `paid-ads` row matching trigger phrases like "Meta ads", "Facebook ads", "Instagram ads", "retargeting ads", "primary text", "ad headline", "ad creative copy". Routing rules add a `paid-ads → ad-copy` rule between `social-post` and `outbound`, hard-gated on `research/icp-research.md` and asking which audience-temperature.
+- **`skills/orchestrate-marketing/references/workflow-graph.md`** — pipeline diagram now includes `ad-copy (per audience-temp — Meta only at v1)`. Per-skill catalog gains an `ad-copy` entry. Routing rules numbered through `l. vn-polish`.
+- **`CLAUDE.md`** — skill count updated 12 → 13. Pre-Dispatch protocol summary now notes `ad-copy` as the second-most-elaborate cold-start (7 questions plus audience-temp and creative-format hard-blocks). Multi-Agent Skills list gains an `ad-copy` row.
+- **`README.md`** — skill count updated; pipeline diagram now includes `ad-copy`; per-skill section added between `vn-tone` and `cold-outreach`; Cross-Stack section notes `ad-copy` also consumes `research/icp-research.md`.
+
+### Scope at v1
+- **In:** Meta paid-ads (Facebook + Instagram), retargeting + cold-traffic audience temperatures, dedicated and repurposed-UGC creative formats with ceiling warning surfaced on the latter, single audience-temperature per artifact, hero + 2 variants per invocation.
+- **Out:** Google RSA (15 headlines per ad), LinkedIn ads, TikTok Ads, Reddit ads — references not pre-staged at v1; reserved for future expansion when source material lands. Audience setup / pixel setup / budget pacing remain operator-driven in Ads Manager. Landing-page copy uses `copywriting` or `lp-brief`. Cold-outreach DMs use `cold-outreach`.
+
+### Calibration
+- Synthetic-illustrative discriminant test on rubric v0.1 produced strong totals of 54-55/60 and weak totals of 13-22/60 across both audience-temperatures. Discriminant gap 33-40 points (target: ≥15). All per-dim auto-fail conditions fired as designed. Calibration record at `.agents/skill-artifacts/mkt/ad-copy/2026-05-11-calibration-record.md` (local-only).
+- Rubric v0.1 is provisional. Mandatory revision triggers after first 5 real-world invocations OR if Meta announces a substantiation-rule change.
+
+### Notes
+- Phase 1.2 architecture is locked at Option A (separate skills, not a `--surface` flag on `copywriting`) per the 2026-05-08 divergence test.
+- Three ad-intelligence references previously pre-staged at v4.0.4 / v4.0.5 are now load-bearing for this skill. Their re-verification triggers (footer of each ref) fire at first real invocation — Meta's ad system shifts on quarter cadences, so refs should be re-verified before running a real campaign.
+- Independent review (`/fresh-eyes`) is recommended before the first production invocation given this is the largest behavioral addition to the marketing stack since `social-copy` shipped in v4.0.0.
+
+---
+
 ## [4.1.6] - 2026-05-11
 
 `orchestrate-marketing` Step 1 starts from concrete disk state instead of asking the model to derive it. When you run `/orchestrate-marketing`, the skill now sees the actual artifact counts by domain, which top-level canonical folders exist (`research/`, `brand/`, `architecture/`), and the last 5 commits — all rendered inline before the manifest read kicks in.
