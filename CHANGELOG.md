@@ -6,6 +6,19 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.1.6] - 2026-05-11
+
+`orchestrate-marketing` Step 1 starts from concrete disk state instead of asking the model to derive it. When you run `/orchestrate-marketing`, the skill now sees the actual artifact counts by domain, which top-level canonical folders exist (`research/`, `brand/`, `architecture/`), and the last 5 commits — all rendered inline before the manifest read kicks in.
+
+### Changed
+- **`skills/orchestrate-marketing/SKILL.md` §Step 1** — disk-snapshot block lifted from `orchestrate-meta`. Three `! \`<cmd>\`` interpolations (artifact-count-by-domain / canonical-folder check / git-log -5) substitute their output at slash-command invocation time, before the manifest read. The orchestrator starts from a deterministic snapshot instead of speculating about what's on disk.
+
+### Notes
+- Additive context. No behavioral change to routing, recommendations, or output schema. Existing invocations work unchanged.
+- The block only renders when the skill is invoked as a slash command. If `SKILL.md` is read via the Read tool inside another skill, the bang-backtick lines pass through as literal syntax — by design.
+
+---
+
 ## [4.1.5] - 2026-05-11
 
 Discipline patch on the v4.1.4 channel-tightening pass. Independent review caught one source-fidelity violation (the exact stitched-blockquote pattern patched in v4.0.3 / v4.0.5 / v4.1.1) plus two wiring gaps that left the new `imessage | sms` channel discoverable in the artifact spec but invisible to the user-facing input contract.
