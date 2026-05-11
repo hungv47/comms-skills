@@ -6,6 +6,28 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.1.2] - 2026-05-11
+
+Adds a new reference doc to `campaign-plan` covering the paid-CPM clipping ecosystem (Whop/Zagged bounty model) and the Jubilee debate format as a source-engineered-for-clipping pattern. Channel-agent consults it conditionally when the target demographic skews male 21–30 or habitat data flags live-streaming density. No behavioral change to any existing skill.
+
+### What's new
+- **`campaign-plan/references/distribution-models/clipping-and-live.md`** — covers the Normie-to-Fringe awareness ladder, the three operational modes of clipping (in-house team / paid-CPM bounty network / curator cross-post), the Whop+Zagged+TJR-army-of-clippers cohort, the Jubilee format with three named instances (Brez Scales 1M views/day, Air's three-generations-of-marketers piece, the David Protein crisis-comms hypothetical), and the compelling-source test (boring source × paid CPM = expensive nothing). Includes a habitat-to-channel mapping table for when to allocate to clipping vs. stay on the default 9-channel map.
+- Sourced from Oren John, *How streaming and clipping work, and why brands should care* (2026-03-17). Verbatim quotes blockquoted; vetting checklist and rate-range guidance tagged `[inferred from creator-economy norms; not source-attributed]` per the stack anti-fabrication convention.
+
+### Wiring
+- `campaign-plan/SKILL.md` Shared References lists the new doc.
+- `campaign-plan/SKILL.md` Multi-Agent Dispatch Map gates channel-agent to consult it conditionally on demo / habitat triggers.
+- `campaign-plan/agents/channel-agent.md` input contract updated.
+
+### Why it's its own primitive (not a UGC sub-tactic)
+- Bounty economics (Whop/Zagged pay CPM per view; the clip account is the unit of inventory).
+- Distributed-network reach (hundreds of clippers per personality; millions to hundreds-of-millions of views/day).
+- Decoupled source and distribution (one source → N clip accounts → M derivative clips).
+
+These properties make clipping behaviorally closer to *paid acquisition with creator-as-format-supplier* than to *organic social posting* — hence the separate doc rather than another row inside `channel-strategy.md`.
+
+---
+
 ## [4.1.1] - 2026-05-11
 
 Four fixes to the `cold-outreach` Saraev framework that landed in 4.1.0. Independent review caught one strategist routing bug and one source-fidelity issue.

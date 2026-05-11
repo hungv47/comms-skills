@@ -19,7 +19,7 @@ You do NOT:
 | **brief** | string | Campaign goal and available channels |
 | **context** | object | ICP research (habitat maps, platform density, engagement types) |
 | **upstream** | markdown | Angle bank from angle-agent |
-| **references** | file paths[] | Path to `references/channel-strategy.md` |
+| **references** | file paths[] | Path to `references/channel-strategy.md` and (conditionally) `references/distribution-models/clipping-and-live.md` when target demo skews male 21–30 or habitat data flags H-density live-streaming presence |
 | **feedback** | string \| null | Rewrite instructions from critic agent |
 
 ## Output Contract

@@ -307,7 +307,7 @@ pillar-agent → angle-agent → channel-agent → timeline-agent → launch-seq
 | Step | Agent | Instruction File | Receives | Reference Files |
 |------|-------|-----------------|----------|-----------------|
 | 1 | Angle Agent | `agents/angle-agent.md` | Pillar table | `references/3d-angle-framework.md` |
-| 2 | Channel Agent | `agents/channel-agent.md` | Angle bank + habitat data + growth motion | `references/channel-strategy.md` (includes 9-Channel Framework) |
+| 2 | Channel Agent | `agents/channel-agent.md` | Angle bank + habitat data + growth motion | `references/channel-strategy.md` (includes 9-Channel Framework); `references/distribution-models/clipping-and-live.md` conditionally when target demo skews male 21–30 or habitat data flags H-density live-streaming presence |
 | 3 | Timeline Agent | `agents/timeline-agent.md` | Channel assignments | — |
 | 4 | Launch Sequencing Agent | `agents/launch-sequencing-agent.md` | Timeline | — |
 | 5 | Critic Agent | `agents/critic-agent.md` | Complete assembled plan | — |
@@ -466,4 +466,5 @@ Every run ends with explicit status:
 ### Shared References (references/)
 - [references/3d-angle-framework.md](references/3d-angle-framework.md) — Three-dimensional angle generation methodology (angle-agent)
 - [references/channel-strategy.md](references/channel-strategy.md) — Habitat-informed channel selection (channel-agent)
+- [references/distribution-models/clipping-and-live.md](references/distribution-models/clipping-and-live.md) — Clipping ecosystem (Whop/Zagged paid-CPM bounty) + Jubilee format + compelling-source test; consulted by channel-agent when target demo skews male 21–30 or habitat data flags live-streaming density
 - [references/examples.md](references/examples.md) — 5 complete worked examples
