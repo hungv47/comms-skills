@@ -64,12 +64,14 @@ You do NOT:
 |-----------------|---------|------|-------------------|
 | 4-5 | email / linkedin-dm | any | Observation → Problem → Proof → Ask |
 | 3 | email / linkedin-dm | any | Trigger → Insight → Ask |
-| 1-2 | email / linkedin-dm | any | Question → Value → Ask (pain-first) |
 | 1-3 | email / linkedin-dm | services-sell | **Saraev Four-Step** (personalization → who-am-I → offer → CTA) — pick this when the message is touch 1 to a stranger with zero pre-existing trust and Q→V→A would otherwise be the fallback. The offer-formula equation (`ROI × Trust ÷ Friction`) plus risk-reversal CTA give a sharper shape than generic Q→V→A. |
+| 1-2 | email / linkedin-dm | any | Question → Value → Ask (pain-first) |
 | any | twitter-reply | any | Direct reply to their point, no pitch |
 | any | twitter-dm | community-sell | Story → Bridge → Ask |
 | any | upwork-proposal | services-sell | Declared-Need → Relevant-Proof → Specific-Next-Step |
 | any | linkedin-connection | any | No-pitch connection note (reference + one-clause reason) |
+
+**Row matching is top-down with more-specific rows winning** — the Saraev row sits ABOVE the generic `1-2 / any` Q→V→A row so services-sell touches with signal 1-2 select Saraev rather than falling through to the generic fallback. When adding new rows, place narrower (named-mode / named-channel) above broader (`any` mode / `any` channel) for the same signal range.
 
 Deviate from defaults only if you can articulate why in the change log.
 

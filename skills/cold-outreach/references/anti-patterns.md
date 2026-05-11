@@ -129,12 +129,15 @@ Specific patterns that mark personalization as AI-written or scraper-driven. Pul
 **Verbatim examples from source:**
 
 - "Hi Nick Daily Updates" — scraper pulled YouTube channel name as first-name field
-- "Hi Nick Automates, congrats on 35K subs" — same failure mode
-- "Hi Pacific Creative Group LLC team" — entire company-name field landed in salutation
+- "Hi [Nick automates], congrats on 35K subs" — same failure mode (source-original bracket annotation + lowercase preserved; reflects how the raw YouTube handle would land in the salutation pre-cleanup)
+
+**Inferred from source's casualization rule** (not in source verbatim — extrapolated from Saraev's "casualize company name: Leftclick Inc. → Leftclick; Pacific Creative Group LLC → PCG"):
+
+- A scraper using an unfiltered company-name column produces salutations like "Hi Pacific Creative Group LLC team" instead of the casualized "Hi PCG team."
 
 **Why it tells:** Real people don't address messages to channel names or LLC entities. Pattern-matches as: bulk-scraped, no human pre-send review.
 
-**Fix:** When pulling first-name field from a YouTube/X/LinkedIn handle, **take only the first word.** "Nick Daily Updates" → "Nick." "Pacific Creative Group LLC" → never use as a salutation; pull the founder's name separately.
+**Fix:** When pulling first-name field from a YouTube/X/LinkedIn handle, **take only the first word.** "Nick Daily Updates" → "Nick." Apply Saraev's casualization rule to company-name fields before injection into salutations.
 
 ### Pattern 3: Bolded / quoted / bracketed variables ("template leak")
 

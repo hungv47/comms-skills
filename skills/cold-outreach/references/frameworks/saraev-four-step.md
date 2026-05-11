@@ -71,7 +71,7 @@ Worked examples (verbatim from source, attributed):
 
 **Anchor to prospect's scale.** Pitching a $5M/yr business that you'll add $100K in 60 days = asking to lift revenue by 2%. Frame it that way mentally and the guarantee stops feeling reckless.
 
-**Saraev's claimed lift:** offers 3x top-of-funnel at a cost of ~10% margin (occasional non-fulfillment). Net: 2.7x. Source-claimed; do not pass as stack endorsement.
+**Source-claimed lift:** 3x top-of-funnel at ~10% margin cost (occasional non-fulfillment), net 2.7x.
 
 ---
 

@@ -149,7 +149,7 @@ Concrete nouns, numbers, named entities — no vague claims?
 
 1. **Generic self-claim language present.** "Leading provider," "trusted by," "industry-leading," or similar.
 
-2. **Specificity Floor — fewer than 2 verifiable specifics in the body.** A "verifiable specific" is any one of:
+2. **Specificity Floor — fewer than 2 verifiable specifics in the body.** **The Floor overrides the rubric bands below.** A draft scored at the 7-8 band ("either named proof OR specific prospect detail, not both") or the 5-6 band ("specific claim with number but no named entity") has exactly 1 verifiable specific — Floor auto-fails the draft regardless of band score. The band wording is retained for diagnostic continuity with prior reviews; practically, a 7-8 score is only awarded when both halves carry weight (≥2 specifics) AND the integration is partial. A "verifiable specific" is any one of:
    - Named entity (Ramp, Linear, Vercel, "10M-sub YouTuber Mr. X", a specific post or thread the prospect published)
    - Named number with context (`9 days → 4 days`, `$3M last month`, `38% to 6%`, `20 booked meetings in 90 days`)
    - Named research or source (`Saraev's 2026 course`, `Buffer's 2024 reply-rate study`)

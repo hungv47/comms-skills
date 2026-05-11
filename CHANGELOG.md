@@ -6,6 +6,25 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.1.1] - 2026-05-11
+
+Four fixes to the `cold-outreach` Saraev framework that landed in 4.1.0. Independent review caught one strategist routing bug and one source-fidelity issue.
+
+### Behavioral fix worth knowing about
+- **Strategist Framework Selection Logic now reaches Saraev for services-sell touches with signal 1-2.** The table previously listed the Saraev row below the generic `1-2 / any → Question → Value → Ask` row, and row-matching is top-down — services-sell touches with signal 1-2 were never reaching Saraev. Now the Saraev row sits above the generic Q→V→A row, so the narrower (services-sell) match wins. A precedence note also documents the "narrower row above broader" convention for future additions.
+
+### Source fidelity fix
+- **`anti-patterns.md` Pattern 2 (Variable mishaps) separates verbatim from inferred.** The previous list mixed two source-verbatim examples ("Hi Nick Daily Updates", "Hi Nick Automates, congrats on 35K subs") with one inferred example ("Hi Pacific Creative Group LLC team") under a single "Verbatim examples from source" header. The inferred example is now in a separate "Inferred from source's casualization rule" block. The verbatim entries also restore the source-original bracket annotation and lowercase ("Hi [Nick automates]") rather than the post-cleanup form.
+
+### Documentation fixes (no behavioral change)
+- **`critic.md` Specificity dimension** now explicitly states that the Floor (≥2 verifiable specifics) overrides the rubric bands. A draft scored at the 7-8 or 5-6 band today has exactly 1 verifiable specific — the Floor auto-fails it. Band wording is retained for diagnostic continuity with prior reviews; practically a 7-8 score is awarded only when both halves carry weight AND the integration is partial.
+- **`saraev-four-step.md` source-claim caveat** trimmed from a sentence to a phrase ("Source-claimed lift: 3x top-of-funnel at ~10% margin cost, net 2.7x"). The "do not pass as stack endorsement" disclaimer is already covered by the top-of-file caveat — duplicate caveat removed.
+
+### What did NOT change
+- The Saraev framework reference itself, the offer-formula equation, the seven Cialdini levers, the verbatim $15M template, the email iteration section, the Specificity Floor auto-fail rule — all stand. This is a discipline patch, not a substance patch.
+
+---
+
 ## [4.1.0] - 2026-05-11
 
 `cold-outreach` gains an opinionated four-step framework reference from Nick Saraev's 2026 cold-email course, plus a Specificity Floor in the critic that tightens what counts as a passable cold message. Touch 1 to a stranger now has a sharper structural option than the generic Q→V→A fallback.
