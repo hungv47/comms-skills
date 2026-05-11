@@ -184,14 +184,14 @@ This skill's examples are marketing-focused, but it works on any content type. A
 |-------------|----------------|-----------------|-------------------|
 | Marketing copy | Full — all 47 patterns | Full — brand voice adjectives | 20-30% |
 | Blog posts / thought leadership | Full | Moderate — author voice, not brand voice | 15-25% |
-| Short outbound — `content-type: "short-outbound"` (cold email, DM, proposal) | Light — AI telltales only | Full — sender voice | 0-10% (already compressed; further cuts kill specificity) |
+| Short outbound — `content-type: "short-outbound"` (cold email, DM, proposal, Meta ad copy) | Light — AI telltales only | Full — sender voice | 0-10% (already compressed; further cuts kill specificity) |
 | Documentation / technical writing | Light — focus on clarity patterns only | Minimal — accuracy over personality | 10-15% |
 | Internal communications | Moderate | Light — conversational, not branded | 15-20% |
 | Academic / research | Light — remove only Hard Tells | None — maintain formal register | 5-10% |
 
 **Key principle:** The further from marketing, the lighter the touch. Documentation that sounds like a blog post is worse than documentation with a few AI tells. Short outbound (cold email, DM, Upwork proposal) is a special case: it's typically 4-6 sentences with a named entity + number doing heavy lifting — compress further and you strip the thing that earns the reply.
 
-**Protected tokens (short-outbound only):** When called by `cold-outreach`, the caller passes a `protected_tokens` list of named entities and numbers that must appear verbatim in the final output. Do not paraphrase, round, or remove these.
+**Protected tokens (short-outbound only):** When called by `cold-outreach` or `ad-copy`, the caller passes a `protected_tokens` list of named entities and numbers that must appear verbatim in the final output. Do not paraphrase, round, or remove these.
 
 ---
 

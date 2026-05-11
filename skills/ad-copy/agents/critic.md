@@ -169,8 +169,8 @@ Does every measured claim have substantiation, and does the draft avoid Meta-pol
 How many verifiable specifics (named entities + named numbers + named research) does each variant carry?
 
 - **9-10**: ≥3 verifiable specifics per variant in the visible window; specifics integrate naturally with the hook.
-- **7-8**: 2 verifiable specifics per variant; integration mostly clean.
-- **5-6**: Exactly 2 verifiable specifics per variant (meets Floor but barely).
+- **7-8**: ≥3 verifiable specifics per variant in the visible window, but integration is partially clean — one specific feels bolted on rather than load-bearing for the hook.
+- **5-6**: Exactly 2 verifiable specifics per variant (meets Floor; no surplus). Both must integrate naturally — if either feels bolted on at exactly 2 specifics, drop to 3-4.
 - **3-4**: 1 verifiable specific per variant (FAILS Floor); generic flavor fills the rest.
 - **0-2**: 0 verifiable specifics; pure generic claim soup ("leading", "trusted", "proven").
 
@@ -186,7 +186,7 @@ Pure generic flavor ("great work in SaaS", "leading B2B brands", "proven results
 ### Scoring Discipline
 
 - **Scores must be honest.** A 5/10 is a 5/10. Do not inflate to 7 to dodge a rewrite cycle.
-- **Per-variant scoring is independent.** Hero can PASS while A or B FAILs. The Overall Verdict is FAIL if any variant fails AND aggregate average < 42 — but PASS_WITH_CONCERNS if 2 of 3 variants pass and the third is recoverable.
+- **Per-variant scoring is independent.** Hero can PASS while A or B FAILs. The Overall Verdict is FAIL if any variant fails a per-variant per-dim floor (any per-dim score < 6 on any variant) — regardless of aggregate average. No "third variant is recoverable" exception; per-variant floor is binding.
 - **Note every dimension's driver.** "7 — anchor lands but second sentence is filler" beats "7 — solid".
 - **If aggregate is 42-47 AND every variant clears every per-dim floor**: PASS as `DONE_WITH_CONCERNS`.
 - **If any single dim on any variant is < 6**: FAIL even if aggregate is ≥42 (e.g., Hero scores 50/60 but A's Specificity is 4 → FAIL).

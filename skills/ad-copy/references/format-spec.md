@@ -75,8 +75,8 @@ Description is the most-often-invisible component — many placements skip it en
 |---------|------|
 | **Hashtags in body** | 0 hashtags. Meta doesn't reward paid-ad hashtags the way organic does. Wasted chars. |
 | **Hashtags in caption (organic crosspost)** | Different rules — see `short-form-brief` or `social-copy` for organic. |
-| **Emoji in headline** | 0-1 emoji. 2+ reads as low-effort. |
-| **Emoji in primary text** | 1 emoji as stop-cue is fine. 3+ in primary text is excessive. |
+| **Emoji in headline** | 0-2 emoji. 3+ reads as low-effort. |
+| **Emoji in primary text** | 1-2 emoji as stop-cues are fine. 5+ in primary text is excessive. |
 | **All-caps** | Banned in headlines (Meta auto-reject). Use sparingly in primary text (1 word max, for emphasis). |
 
 ---

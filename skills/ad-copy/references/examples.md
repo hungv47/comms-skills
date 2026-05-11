@@ -246,11 +246,11 @@ Same as Example 3, but `creative_format=repurposed-ugc` and target daily spend =
 |---------|------|------|--------|---------|--------|------|-------|
 | Hero | 2 | 5 | 2 | 3 | 0* | 1 | **13** |
 | A | 2 | 6 | 2 | 3 | 1 | 1 | **15** |
-| B | 2 | 7 | 2 | 3 | 0* | 1 | **14** |
+| B | 2 | 7 | 2 | 3 | 0* | 1 | **15** |
 
 \* Policy auto-fail (banned wording: "guaranteed", "risk-free", "doctors hate this", ALL-CAPS headline)
 
-**Aggregate: 14/60.** Multiple per-dim auto-fails. **Verdict: FAIL (multiple critical issues).**
+**Aggregate: 14.3/60.** Multiple per-dim auto-fails. **Verdict: FAIL (multiple critical issues).**
 
 **Driver notes:**
 - Hook 2: rhetorical question openers ("Tired of dieting?"), generic claim openers ("Lose weight fast!"), "Doctors hate this trick" click-bait
@@ -278,7 +278,7 @@ Same as Example 3, but `creative_format=repurposed-ugc` and target daily spend =
 | 1 (strong retargeting) | 54.7 | 8 | PASS |
 | 2 (weak retargeting) | 21.7 | 1 | FAIL |
 | 3 (strong cold-traffic) | 54.3 | 8 | PASS |
-| 4 (weak cold-traffic) | 14.0 | 0 | FAIL |
+| 4 (weak cold-traffic) | 14.3 | 0 | FAIL |
 
 **Discriminant gap:** strong vs weak across both audience-temps shows a 33-40 point gap on aggregate, with weak examples failing per-dim floors on Specificity, Policy, and CTA-LP regardless of audience-temp. The rubric discriminates cleanly.
 

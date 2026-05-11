@@ -110,8 +110,8 @@ Cross-variant test — scored once per variant but reflects the trio's collectiv
 | Band | Description |
 |------|-------------|
 | 9-10 | ≥3 verifiable specifics per variant in visible window. Specifics integrate naturally with hook. |
-| 7-8 | 2 verifiable specifics per variant. Integration mostly clean. |
-| 5-6 | Exactly 2 verifiable specifics per variant (meets Floor but barely). |
+| 7-8 | ≥3 verifiable specifics in visible window, but integration is partially clean — one specific feels bolted on rather than load-bearing for the hook. |
+| 5-6 | Exactly 2 verifiable specifics per variant (meets Floor; no surplus). Both must integrate naturally — if either feels bolted on at exactly 2 specifics, drop to 3-4. |
 | 3-4 | 1 verifiable specific per variant (FAILS Floor). Generic flavor fills the rest. |
 | 0-2 | 0 verifiable specifics. Pure generic claim soup ("leading", "trusted", "proven", "transformative"). |
 

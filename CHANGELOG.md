@@ -6,6 +6,44 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.2.1] - 2026-05-11
+
+Discipline patch on the v4.2.0 `/ad-copy` scaffold. Independent review caught three rubric/contract issues plus a humanize-integration gap that would have surfaced on first real invocation. None are source-fidelity violations.
+
+### Rubric fixes
+- **Specificity band wording aligned to the Floor.** In v4.2.0 the 7-8 band and 5-6 band both said "2 verifiable specifics per variant" — same numeric condition with no deterministic rule for the critic to pick between them. (Sibling skill `cold-outreach` caught the same pattern in its v4.1.1 patch; v4.2.0 reproduced it.) 7-8 now requires ≥3 specifics with one feeling bolted on; 5-6 requires exactly 2 with both integrating naturally. Applied identically in `references/rubric.md` and `agents/critic.md`.
+- **Per-variant floor is binding.** `agents/critic.md` Scoring Discipline previously included "PASS_WITH_CONCERNS if 2 of 3 variants pass and the third is recoverable" — a sycophancy escape hatch that contradicted the per-variant per-dim floor rule the rest of the rubric enforced. Removed. Overall Verdict is FAIL if any variant fails a per-dim floor, regardless of aggregate average.
+
+### Pre-Dispatch fixes
+- **Hard-block trigger widened.** v4.2.0 only fired the cold-traffic + 3-day-trial soft warn on a literal "3-day trial" string match. A user typing "7-day free trial" (which one of the worked examples actually uses) would bypass the warn entirely. The Apple 24h signal window is structural — it affects all short free trials, not only 3-day. Hard-block now fires on `(offer contains "free trial" OR trial duration ≤ 14 days)`, matching the broader `anti-patterns.md` §4c scope.
+
+### Humanize integration fix
+- **Terminal pass content-type token now registered.** v4.2.0 passed `content-type: "ad-creative"` to humanize, but humanize's Content Type Calibration table has no `ad-creative` row — the call would fall to a default and bypass the 0-10% compression cap that critic just enforced. The closest match is `short-outbound` (Light strip / Full voice / 0-10% compression / protected_tokens enabled — exact semantic fit). `ad-copy` now passes `short-outbound`, and humanize's table at `humanize/SKILL.md` lines 187 + 194 explicitly registers ad-copy as another caller of that content-type alongside cold-outreach.
+
+### Discipline fixes
+- **Example 4 arithmetic.** Variant B scorecard summed to 15 (2+7+2+3+0+1) but printed 14; aggregate 14.3, not 14.0. Corrected scorecard and Calibration Discriminant table.
+- **Emoji threshold alignment.** `references/format-spec.md` said "0-1 emoji in headline; 2+ excessive" while `references/anti-patterns.md` §5d said "3+ in headline; 5+ in primary text excessive". format-checker reads format-spec; voice-auditor reads anti-patterns — same draft would flag inconsistently. Aligned to anti-patterns' more lenient threshold (3+ headline, 5+ primary text).
+- **Strategist verification phrasing.** SKILL.md Layer 1 Strategy Dispatch previously said "Extract `angle_archetype` per variant..." but strategist returns markdown prose with no machine-parseable keys. Rewrote as a checklist that the orchestrator can apply by reading the Variant Assignments section.
+
+### What did NOT change
+- All v4.2.0 behavioral content is preserved — 5-agent dispatch, 6-dimension rubric, hero + 2 variants per audience-temperature, Meta-only scope, automatic humanize terminal pass per variant.
+- Source-fidelity verification on v4.2.0 was clean throughout — every numeric figure traces to a substantiated reference, no fabricated claims, no stitched-quote violations. None of the 7 fixes touch source attribution; they're all internal-consistency repairs.
+- Two simplifications surfaced by the review (consolidating the Pattern-Interruption rule's 5-place definition into a single source of truth; folding Pattern-Interruption out of the critic and into a pre-critic structural gate to reduce to 5 dims matching siblings) are real architectural questions worth revisiting in v0.2 but not applied here — they're refinements, not bugs.
+
+### Independent review report
+`.agents/skill-artifacts/meta/records/2026-05-11-fresh-eyes-ad-copy.md` (local-only artifact).
+
+### Files changed
+~15 net lines across 6 files:
+- `skills/ad-copy/SKILL.md`
+- `skills/ad-copy/agents/critic.md`
+- `skills/ad-copy/references/rubric.md`
+- `skills/ad-copy/references/examples.md`
+- `skills/ad-copy/references/format-spec.md`
+- `skills/humanize/SKILL.md`
+
+---
+
 ## [4.2.0] - 2026-05-11
 
 New skill: **`/ad-copy`** — Meta paid-ad copywriting for retargeting and cold-traffic audiences. Phase 1.2 of the marketing-stack content build. Produces a hero plus two distinct variants per invocation, gated by audience-temperature framing, Meta char caps, policy compliance, and a 6-dimension critic rubric.

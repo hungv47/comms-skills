@@ -250,7 +250,7 @@ Single route — no reply mode (paid ads don't have an inbound channel). Optiona
 4. Critic FAIL → re-dispatch FULL Layer 2 chain with feedback (max 2 cycles). Never feed critic a raw composer draft without format-checker + voice-auditor between.
 4a. Format-checker FORMAT_FAIL (second pass, hard caps still violated) → escalate to user; do not consume a critic cycle.
 4b. Format-checker REVISION_REQUIRED on policy/substantiation → re-dispatch composer with the named violation; do not consume a critic cycle.
-5. TERMINAL: invoke `humanize` per variant with `content-type: "ad-creative"` (Full strip, Full voice, 0-10% compression — ad copy is already tight; further compression kills specificity)
+5. TERMINAL: invoke `humanize` per variant with `content-type: "short-outbound"` (Light strip on AI telltales only, Full sender voice, 0-10% compression — ad copy is already tight; further compression kills specificity)
 6. POST-HUMANIZE REGRESSION: re-run critic's Specificity dim only per variant. Drops ≥2 OR any named entity/number absent post-humanize → revert to critic-approved variant.
 7. Write artifacts to `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md` (+ .rationale.md + .critic-score.md)
 8. Deliver hero + 2 variants + rationale inline; show scorecard only if user asks or any dim scored 6-7 OR if creative_format=repurposed-ugc (variant-level ceiling warning prominent in artifact)
@@ -332,7 +332,7 @@ These dimensions cannot be substituted via fallback — composer fails without t
 - **Audience-temp missing** → ask explicitly; no fallback (drives the entire strategist tree)
 - **Offer missing** → BLOCK (composer needs a destination)
 - **Proof missing + no product-context** → ask for at least 2 named candidates; **BLOCK** if user insists "no proof" (uncheckable claims fail Specificity Floor)
-- **Cold-traffic + subscription-app + conversion_event=purchase + 3-day-trial** → soft warn per `meta-cold-traffic.md` §3; recommend trial-start; proceed as `done_with_concerns` only if user insists
+- **Cold-traffic + subscription-app + conversion_event=purchase + (offer contains "free trial" OR trial duration ≤ 14 days)** → soft warn per `meta-cold-traffic.md` §3. The Apple 24h signal window is structural — affects all short free trials, not only 3-day. Recommend trial-start; proceed as `done_with_concerns` only if user insists.
 - **Creative-format = repurposed-ugc + target daily-spend > $15K** → soft warn per `creative-cadence.md` §5; ceiling will be hit; proceed as `done_with_concerns` only if user accepts
 
 **Write-back:**
@@ -378,12 +378,14 @@ Strategist runs SOLO. There's no parallel signal-analyst-equivalent because the 
 |-------|-----------------|-------------------|---------------------------|
 | Strategist | `agents/strategist.md` | pre-writing (all) + audience-temp + offer + creative-format + conversion-event + available-proof + LP-description | `references/ad-intelligence/meta-retargeting.md` (if audience-temp=retargeting) OR `references/ad-intelligence/meta-cold-traffic.md` (if audience-temp=cold), `references/ad-intelligence/creative-cadence.md`, `references/anti-patterns.md` |
 
-Wait for output. Extract:
-- `angle_archetype` per variant (each must differ — 3 distinct archetypes for hero + 2 variants)
-- `anchor_proof` per variant (each must differ — no repeated entity/number across variants)
-- `cta_verb` per variant
-- `ceiling_warning` (set if creative_format=repurposed-ugc)
-- `policy_flags` (set if offer hits health/finance/political — composer + format-checker pre-warn)
+Wait for output. The strategist returns markdown (no machine-parseable keys). Verify by reading the Variant Assignments section:
+- The 3 Variant Assignment blocks (Hero / A / B) name 3 DISTINCT `Angle archetype` values (no surface-level repeats)
+- The 3 `Anchor proof` lines name 3 DISTINCT entities or numbers (no repeats across variants)
+- Each variant carries a `CTA verb` matching the conversion-event default
+- The `Ceiling Warning` section is present if and only if `creative_format=repurposed-ugc`
+- The `Policy Flags` section pre-warns on health/finance/political offers (composer + format-checker pick this up when reading the strategy brief)
+
+If any check fails, re-dispatch strategist with the specific gap named. Do not paper over — variant distinctness is load-bearing for the A/B test signal.
 
 ---
 
@@ -424,7 +426,7 @@ After critic PASS, invoke `humanize` on each variant (hero / A / B) independentl
 1. Spawn agent with humanize's `SKILL.md` content
 2. Pass:
    - Final variant text (primary text + headline + description as one unit)
-   - `content-type: "ad-creative"` (humanize's Content Type Calibration: ad copy already runs ≤125 chars visible — Full strip on AI tells, Full voice injection, **0-10% compression cap** because further compression strips specificity that critic just scored)
+   - `content-type: "short-outbound"` (humanize's Content Type Calibration: ad copy already runs ≤125 chars visible — Light strip on AI telltales only, Full sender voice, **0-10% compression cap** because further compression strips specificity that critic just scored. Same calibration cold-outreach uses; humanize's table explicitly registers ad copy under this content-type.)
    - Audience-temp (humanize voice-extraction reads brand voice differently for warm vs cold register)
    - `protected_tokens`: every named entity + number + URL in the critic-approved variant (humanize must not remove or paraphrase)
 3. Receive humanized variant
