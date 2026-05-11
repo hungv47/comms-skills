@@ -6,6 +6,35 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.3.0] - 2026-05-12
+
+Substantive expansion of `mode=ai` in the `seo` skill — four sequential enrichments deepening AEO methodology across `references/ai-seo.md` and `agents/ai-presence-agent.md`. References grew from 308 → 640 lines; agent file from 181 → 316 lines. Five fresh-eyes rounds (one per enrichment + one cumulative) caught 32 issues, applied 31, declined 2.
+
+### Enrichments
+- **GEO vs AEO taxonomy + diagnostic flowchart + dual audit recipes** (`references/ai-seo.md`). Adds a 6-dimension GEO-vs-AEO comparison table, term-origin note correcting Princeton paper scope (paper studied standalone generative engines, not SERP-embedded AI Overviews — industry reappropriated the term), symptom-to-diagnosis routing table, separate GEO and AEO audit recipes, and a failure-mode pairing explaining why single-surface optimization can hide a compound loss.
+- **Citation Audit Protocol** (`agents/ai-presence-agent.md`). New H3 subsection with per-model audit weights (ChatGPT / Perplexity / Claude / Grok / Gemini with verification confidence ratings), stochasticity protocol (N=3 fresh-session runs with citation-frequency thresholds <20% / 20-60% / >60%), persona-shifted prompts sourced from `icp-research.md`, share-of-voice matrix vs competitors, per-model verification protocol (Perplexity URL extraction / ChatGPT quoted-search / Claude follow-up), model-version pinning, and a 10-column auditor tracking template.
+- **Measure AI Traffic — Analytics Layer** (`references/ai-seo.md`). Canonical AI-referrer hostname list (12 surfaces with confidence ratings, versioned with `last-updated` date and quarterly verification note), dark-AI attribution heuristic (5 detection signals for referrer-stripping clients), platform-specific setup blocks for GA4 (regex segment + custom event) / Plausible (Stats API with v1/v2 caveat) / Vercel Web Analytics (track() SDK call) / Fathom / Pirsch, KPI dashboard spec (6 metrics × chart type × baseline), time-series baseline protocol with difference-in-differences math against non-AI organic traffic as the control group, and a citation-honesty source list (HubSpot / Ahrefs / BrightEdge / Search Engine Land / Pew / Seer Interactive).
+- **llms.txt deepened** (`references/ai-seo.md`). Replaces ~25-line llms.txt block with a deepened subsection: spec semantics table (H1 / blockquote-optional / `## Optional` rules), four-tier discovery hierarchy (`llms.txt` / `llms-full.txt` / per-URL `.md` companions / `/.well-known/llms.json` proposal with prominent callout that Tier 4 is a community proposal), caveated adoption matrix per AI provider (Anthropic endorsed publicly; OpenAI / Perplexity / Google / Bing silent — framed as "low-cost bet with asymmetric upside, not guaranteed lift"), validation checklist with convention-vs-spec qualifiers on Content-Type and 50KB items, generation tooling (Mintlify auto-gen with alphabetical-order caveat / Firecrawl API/SDK with mid-2025 deprecation flag / manual / mixed), and the MCP-as-successor-pattern note.
+
+### Anti-goals respected
+- Did NOT split into a separate `aeo` skill (rejected per the High-Standard memory rule — preferred techniques into existing skill over new skill).
+- Did NOT pull in external CLIs (`fixseo`, `searchstack-aeo`) as skill mechanisms — only the taxonomy and technique knowledge was portable.
+- Did NOT rename `mode=ai` → `mode=aeo`.
+- No baked time-sensitive percentages — cite-source-and-go pattern applied throughout. Also retroactively applied to a pre-enrichment Google AI Overviews note that the cumulative pass caught (none of the 4 per-enrichment passes had reviewed pre-existing content).
+- 5-model hard cap (ChatGPT / Perplexity / Claude / Grok / Gemini) respected in all actionable audit sections.
+
+### Fresh-eyes pattern
+The 5-round verification was load-bearing every round. Dominant error mode caught across rounds: training-data-recall lag on fast-moving platform behaviors (GSC field affordances, ChatGPT browsing-toggle semantics, Vercel SDK call signatures, Gemini version strings, Firecrawl CLI naming, llms.txt spec semantics) + cross-section terminology drift only the cumulative pass could see. Critical fixes caught include: a Vercel SDK signature using legacy `va()` API instead of current `track()` import, a non-existent GSC "AI Overview Present" filter being recommended in the GEO audit recipe, and the legacy `browsing-on/off` framing surviving in 5 places across both files.
+
+### Independent review reports
+Five fresh-eyes reports archived at `.agents/skill-artifacts/meta/records/2026-05-11-fresh-eyes-seo-{geo-aeo-enrichment,citation-audit-protocol,measure-ai-traffic,llms-txt-deepened}.md` + `2026-05-12-fresh-eyes-seo-cumulative.md` (local-only artifacts).
+
+### Files changed
+- `skills/seo/references/ai-seo.md` (+332 net lines, 308 → 640)
+- `skills/seo/agents/ai-presence-agent.md` (+135 net lines, 181 → 316)
+
+---
+
 ## [4.2.1] - 2026-05-11
 
 Discipline patch on the v4.2.0 `/ad-copy` scaffold. Independent review caught three rubric/contract issues plus a humanize-integration gap that would have surfaced on first real invocation. None are source-fidelity violations.
