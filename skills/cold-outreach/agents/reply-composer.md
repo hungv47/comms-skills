@@ -21,7 +21,7 @@ You do NOT:
 | **prior_touches** | array | Verbatim prior messages sent |
 | **channel** | string | Target channel |
 | **mode** | string | Business mode |
-| **references** | file paths[] | `references/frameworks/objections.md`, `references/channels/{channel}.md` |
+| **references** | file paths[] | `references/frameworks/objections.md`, `references/channels/{channel}.md` (channel→file mapping: linkedin sub-formats read `linkedin.md`; twitter sub-formats read `twitter.md`; `imessage` and `sms` both read `imessage.md`) |
 | **feedback** | string \| null | Critic rewrite instructions |
 
 ## Output Contract

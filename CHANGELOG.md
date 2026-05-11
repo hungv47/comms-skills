@@ -6,6 +6,29 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.1.5] - 2026-05-11
+
+Discipline patch on the v4.1.4 channel-tightening pass. Independent review caught one source-fidelity violation (the exact stitched-blockquote pattern patched in v4.0.3 / v4.0.5 / v4.1.1) plus two wiring gaps that left the new `imessage | sms` channel discoverable in the artifact spec but invisible to the user-facing input contract.
+
+### Source-fidelity fix
+- **`channels/imessage.md` Teaser Preview blockquote — split into two sequential quotes.** The Saraev source has the two iMessage teaser rules as separate bullets (one about the ~90-char preview + ≥135 char minimum, one about cliffhanger placement at the truncation boundary). v4.1.4 stitched them into a single prose blockquote under one source attribution — the same auto-fail pattern caught by prior anti-fab patches. Now rendered as two separate blockquotes, each individually attributed.
+- **`channels/imessage.md` Links row — source quote restored.** Saraev line 142 explicitly says "Same applies (lower-priority) to LinkedIn and SMS" about the cold-email no-links rule. v4.1.4 paraphrased the reasoning without quoting source; the row now carries the verbatim Saraev quote alongside the derived application.
+
+### Discoverability fix
+- **`SKILL.md` §Inputs Required — channel enum widened.** v4.1.4 updated the artifact frontmatter spec (line 139) to include `imessage | sms` but missed line 102, the human-facing Inputs Required block that's the first place a user learns which channels the skill accepts. Both lines now match.
+
+### Wiring fix
+- **`composer.md` and `reply-composer.md` — channel→file mapping documented.** The composer's auto-read pattern is `references/channels/{channel}.md`. With `channel: sms`, that resolves to a non-existent `sms.md` (the file is `imessage.md` and covers both messaging types). The mapping was implicit for `linkedin-dm`→`linkedin.md` and `twitter-dm`→`twitter.md` already; a one-liner in both composer files now documents the grouped-channel convention explicitly, including the iMessage/SMS case.
+
+### What did NOT change
+- All v4.1.4 behavioral content is preserved — the LinkedIn / X DM Teaser Preview Constraint sub-sections, the new `imessage.md` file's overall structure, the composer + voice-auditor + strategist row additions, the channel enum widening in frontmatter, and the SKILL.md description update.
+- No new content beyond fixing the issues called out by the review. Net ~6 lines edited across 4 files.
+
+### Independent review report
+Report at `.agents/skill-artifacts/meta/records/2026-05-11-fresh-eyes-channel-tightening.md` (local-only artifact).
+
+---
+
 ## [4.1.4] - 2026-05-11
 
 Tightens `cold-outreach` with per-channel teaser-preview rules from the Saraev source and adds first-class support for iMessage / SMS as a cold-outreach channel. Drafts targeting any of these channels now respect the visible-preview window before recipients open the thread.

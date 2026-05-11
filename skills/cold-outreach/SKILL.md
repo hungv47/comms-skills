@@ -99,7 +99,7 @@ The orchestrator separates strategy from craft: specialists pick angle/signal/pr
 ## Inputs Required
 
 **Always:**
-- **Channel**: email | linkedin-dm | linkedin-connection | twitter-reply | twitter-dm | upwork-proposal | other-platform
+- **Channel**: email | linkedin-dm | linkedin-connection | twitter-reply | twitter-dm | imessage | sms | upwork-proposal | other-platform
 - **Mode**: services-sell | saas-sell | partnership-sell | community-sell
 
 **Strongly recommended (skill asks if missing and signal is weak):**

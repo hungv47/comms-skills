@@ -9,11 +9,13 @@
 | Total message length | ≥135 chars (~1.5× the visible preview window) |
 | Visible preview | ~90 chars before recipient must open the thread |
 | Bubble color (iPhone target) | Blue (iMessage) preferred over green (SMS) — trust signal |
-| Links | Avoid in body (carrier/iMessage spam filters flag at scale; same logic as email, lower priority — see `email.md`) |
+| Links | Avoid in body. Saraev: "Same applies (lower-priority) to LinkedIn and SMS" (re: the cold-email no-links rule). Same logic — carrier/iMessage spam filters flag at scale. See `email.md`. |
 
 ## Teaser Preview Constraint
 
-> "Teaser shows ~90 chars — often the entire message. Write at least 1.5x that length so they have to click to read. Bury something provocative right at the visible-truncation boundary to force the open." — Saraev source
+> "Teaser shows ~90 chars — often the entire message. Write at least 1.5x that length so they have to click to read." — Saraev source
+
+> "Bury something provocative right at the visible-truncation boundary to force the open." — Saraev source
 
 **Practical implications:**
 - If your full message fits inside ~90 chars, the recipient has no reason to open — the preview already gave them everything. They dismiss in-notification.

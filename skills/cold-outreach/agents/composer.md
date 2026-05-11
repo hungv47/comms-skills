@@ -92,7 +92,7 @@ Upwork/Fiverr proposal:
 
 ### Channel-Specific Craft
 
-Read the relevant `references/channels/{channel}.md` for the full spec. Summary:
+Read the relevant `references/channels/{channel}.md` for the full spec. Channel-to-file mapping is mostly literal (`channel: email` reads `email.md`), with two grouped channels: LinkedIn sub-formats (`linkedin-dm`, `linkedin-connection`) read `linkedin.md`; Twitter/X sub-formats (`twitter-reply`, `twitter-dm`) read `twitter.md`; iMessage and SMS (`imessage`, `sms`) read `imessage.md`. Summary:
 
 | Channel | Key constraints |
 |---------|-----------------|
