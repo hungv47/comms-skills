@@ -6,6 +6,20 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [4.1.3] - 2026-05-11
+
+One-line discipline patch on the `campaign-plan/references/distribution-models/clipping-and-live.md` ref shipped in 4.1.2. Independent review caught one row of operational guidance that wasn't carrying the inferred-tag the rest of the doc uses.
+
+### Source fidelity fix
+- **§6 habitat-to-channel table — B2B enterprise row now tagged inferred.** The row claiming "B2B enterprise buyer in a regulated category → No (clipping bounty networks are not currently structured for compliance-sensitive distribution)" is a reasonable allocation call, but Oren John's source essay frames clipping in consumer-market terms (male 21–30, Gen Alpha / younger Gen Z). The B2B-enterprise row is a generalization from that consumer framing, not source-attributed. It now carries `[inferred — generalization from source's male-21-30 consumer framing; not source-attributed]` matching the convention already used by §3 vetting checklist, §3 rate-range guidance, and §5 pre-production clip-density test.
+
+### What did NOT change
+- All source-attributed content (blockquotes from Oren's essay, named platforms Whop+Zagged, named operators TJR+FearBuck+Brez Scales+Air piece+David Protein, the verbatim compelling-source test). All source-verified clean by the independent review.
+- The clip-density characterization sub-section in `research-skills@3.0.2` cleared review with no findings — no companion patch.
+- All other §6 rows (Gen Alpha + younger Gen Z, tech-worker + vibe-coding / TBPN-on-X, live-streaming H-density Lurker pattern, all-L-density No-allocation guidance) — these are source-grounded or are direct implications of channel-strategy.md's existing habitat-density rules.
+
+---
+
 ## [4.1.2] - 2026-05-11
 
 Adds a new reference doc to `campaign-plan` covering the paid-CPM clipping ecosystem (Whop/Zagged bounty model) and the Jubilee debate format as a source-engineered-for-clipping pattern. Channel-agent consults it conditionally when the target demographic skews male 21–30 or habitat data flags live-streaming density. No behavioral change to any existing skill.

@@ -165,7 +165,7 @@ Per the habitat-to-channel rules in `references/channel-strategy.md` §Habitat-I
 | Persona has H-density habitat in **live streaming (Twitch / Kick / YouTube live / TBPN-on-X)** with **Lurker** engagement type | Yes — clipping captures the passive-background layer at scale. The lurker pattern is *why* the clips work (single quotable moment breaks through the passive surface). |
 | Persona is **Gen Alpha** or **younger end of Gen Z**, target demo skews male 21–30 | Yes — Oren's primary thesis: this demographic's first brand encounters are increasingly in/around streaming. |
 | Persona is **Tech-worker professional** with **vibe-coding / always-on-stream** behavior | Yes — TBPN-on-X is the explicit named cohort; same passive-background dynamic. |
-| Persona is **B2B enterprise buyer** in a regulated category | No — clipping bounty networks are not currently structured for compliance-sensitive distribution. Stick to earned/owned. |
+| Persona is **B2B enterprise buyer** in a regulated category `[inferred — generalization from source's male-21-30 consumer framing; not source-attributed]` | No — clipping bounty networks are not currently structured for compliance-sensitive distribution. Stick to earned/owned. |
 | Persona density across all live-streaming habitats is **L** | No — without habitat-driven reach, paid-CPM clipping is buying impressions in cold inventory. |
 
 **Cross-reference rule:** if `references/channel-strategy.md` §Step 3 (Habitat-to-Channel Strategy per Persona) already produces a Discovery → Trust-Building → Conversion row for the persona where Discovery cites Twitch/YouTube-live/TBPN-on-X, this doc becomes the implementation reference for that row.
