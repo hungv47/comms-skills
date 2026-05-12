@@ -4,7 +4,7 @@
 
 > **v4.0.0 BREAKING:** `start-marketing` renamed to `orchestrate-marketing`. Update any `/start-marketing` invocations in your workflows to `/orchestrate-marketing`.
 
-Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 13 skills (incl. `/orchestrate-marketing` orchestrator).
+Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 12 skills (incl. `/orchestrate-marketing` orchestrator).
 
 **New here?** Run `/orchestrate-marketing` — it reads brand/research state, parses your ask, and proposes the next skill to invoke with rationale + cost + duration.
 
@@ -61,7 +61,7 @@ campaign-plan                             → .agents/mkt/campaign-plan.md
            design-brief
            (per slot)
 
-Horizontal: copywriting, humanize, vn-tone — invoked at any stage. `lp-optimization` is deprecated and only kept for explicit heuristic teardown requests.
+Horizontal: copywriting, humanize, vn-tone — invoked at any stage.
 ```
 
 ## Skills
@@ -108,21 +108,6 @@ Headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring
 **Not for:** AI pattern removal (use `humanize`)
 
 **Produces:** `.agents/mkt/content/[slug].copy.md`
-
----
-
-### `lp-optimization` — deprecated heuristic landing-page teardown
-
-Deprecated as a normal pipeline step. Produces a best-practice teardown of a live page only when explicitly requested. It is not true CRO unless the user supplies behavioral evidence such as analytics, recordings, experiments, or conversion data.
-
-**Use when:**
-- You explicitly want a quick best-practice teardown of an existing page
-- You have post-launch evidence but no dedicated CRO skill exists yet
-- You understand the output is heuristic unless evidence is supplied
-
-**Not for:** creating or redesigning landing pages (use `lp-brief`), construction-time conversion checks, or designing A/B test variants.
-
-**Produces:** `.agents/mkt/lp-optimization.md`
 
 ---
 

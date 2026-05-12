@@ -369,7 +369,7 @@ critic_score: [N]/36
 
 ## Next Step
 
-Polished Vietnamese text is ready for publication. If the content is for a landing page, run `lp-optimization` for conversion checks on the Vietnamese version.
+Polished Vietnamese text is ready for publication.
 
 ---
 

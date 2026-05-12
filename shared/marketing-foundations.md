@@ -116,7 +116,6 @@ humanize → content/[slug].humanized.md → final-stage polish
 vn-tone → content/[slug].vn-tone.md → Vietnamese register polish
 
 lp-brief → mkt/lp-brief/[slug]/brief.md → owns landing-page construction + conversion-principles gate; consumed by design-brief (per asset slot) and external designer/image-gen
-lp-optimization → deprecated heuristic teardown → explicit requests only; future replacement should be data-backed CRO
 design-brief → mkt/design-briefs/[slug].md → consumed by external designer or image-gen tool
 seo → seo-[mode].md → consumed by copywriting (SEO content), campaign-plan
 

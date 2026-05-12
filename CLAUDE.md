@@ -1,6 +1,6 @@
 # Marketing Skills
 
-Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 13 skills + orchestrate-marketing.
+Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 12 skills + orchestrate-marketing.
 
 ## Pipeline
 brand-system (visual identity foundation)
@@ -13,7 +13,7 @@ campaign-plan (channel strategy + calendar)
   ├─ ad-copy (per audience-temp — Meta retargeting OR cold-traffic)
   └─ cold-outreach (per touch)
 
-Landing pages: lp-brief owns construction-time conversion best practices for new pages and redesigns. `lp-optimization` is deprecated; use only for explicit heuristic teardown requests until a data-backed CRO skill exists.
+Landing pages: lp-brief owns construction-time conversion best practices for new pages and redesigns.
 
 Horizontal: copywriting, humanize, vn-tone — invoked at any stage.
 
@@ -50,7 +50,7 @@ campaign-plan and lp-brief can read research artifacts for alignment:
 
 ## Pre-Dispatch Protocol
 
-All 13 skills follow the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Cold Start (3-7 bundled questions, one round-trip) when context is missing; Warm Start (summary + optional probe) when artifacts/experience cover what's needed. Answers persist to `.agents/experience/{product,audience,brand,business,goals,content}.md` so subsequent skills never re-ask. Hard-gated skills (`design-brief`, `lp-brief`) gate before cold-start questioning — recommend `brand-system` when gates fail. `cold-outreach` has the most-elaborate cold-start (7 questions + Missing-Input Hard Blocks for mode/channel/target/proof); `ad-copy` is a close second (7 questions + audience-temp + creative-format hard-blocks). `brand-system` carries the canonical 13-platform target list as a catalog inside its Pre-Dispatch. `short-form-brief` writes brand_mode + production_mode to `.agents/experience/content.md`.
+All 12 skills follow the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Cold Start (3-7 bundled questions, one round-trip) when context is missing; Warm Start (summary + optional probe) when artifacts/experience cover what's needed. Answers persist to `.agents/experience/{product,audience,brand,business,goals,content}.md` so subsequent skills never re-ask. Hard-gated skills (`design-brief`, `lp-brief`) gate before cold-start questioning — recommend `brand-system` when gates fail. `cold-outreach` has the most-elaborate cold-start (7 questions + Missing-Input Hard Blocks for mode/channel/target/proof); `ad-copy` is a close second (7 questions + audience-temp + creative-format hard-blocks). `brand-system` carries the canonical 13-platform target list as a catalog inside its Pre-Dispatch. `short-form-brief` writes brand_mode + production_mode to `.agents/experience/content.md`.
 
 ## Complexity Routing
 
@@ -77,11 +77,11 @@ Conflict rules: `--fast` on a `fast`-tier skill is a no-op. `--fast` + "run thor
 
 ## Manifest Spec
 
-State detection across all marketing skills (especially `orchestrate-marketing`) reads `.agents/manifest.json` — a derived index of artifact metadata (producer, date, status, schema version, staleness, summary). The manifest is rebuilt from artifact frontmatter by `meta-skills/scripts/manifest-sync.ts`; skills don't write to it directly. See [`../meta-skills/references/manifest-spec.md`](../meta-skills/references/manifest-spec.md) for the full contract. Skills that produce artifacts (brand-system, copywriting, campaign-plan, lp-brief, lp-optimization, seo, cold-outreach, design-brief, humanize, vn-tone, short-form-brief) must write the required frontmatter fields (`skill`, `version`, `date`, `status`) and call sync as their last step.
+State detection across all marketing skills (especially `orchestrate-marketing`) reads `.agents/manifest.json` — a derived index of artifact metadata (producer, date, status, schema version, staleness, summary). The manifest is rebuilt from artifact frontmatter by `meta-skills/scripts/manifest-sync.ts`; skills don't write to it directly. See [`../meta-skills/references/manifest-spec.md`](../meta-skills/references/manifest-spec.md) for the full contract. Skills that produce artifacts (brand-system, copywriting, campaign-plan, lp-brief, seo, cold-outreach, design-brief, humanize, vn-tone, short-form-brief) must write the required frontmatter fields (`skill`, `version`, `date`, `status`) and call sync as their last step.
 
 ## Multi-Agent Skills
 
-All 13 skills use a two-layer multi-agent orchestration pattern:
+All 12 skills use a two-layer multi-agent orchestration pattern:
 
 - `SKILL.md` = **orchestrator** — dispatch graph, routing logic, merge step, critic gate
 - `agents/` = **sub-agent instruction files** — each with role, input/output contracts, domain knowledge, self-check
@@ -100,7 +100,6 @@ All 13 skills use a two-layer multi-agent orchestration pattern:
 - `campaign-plan` — 6 agents (pillar, angle, channel, timeline, launch-sequencing, critic). Primarily sequential.
 - `humanize` — 6 agents (pattern-scanner, voice-extractor, strip, soul-injection, compression, critic). Layer 1 parallel (scan + extract) → Layer 2 sequential (strip→inject→compress→critic).
 - `vn-tone` — 3 agents (diagnostic, polisher, critic). Layer 1 (diagnostic) → Layer 2 sequential (polisher→critic). Post-translation Vietnamese register polish across 4 registers (báo chí, semi-casual, bro, pop-marketing) backed by a live-scraped corpus reference.
-- `lp-optimization` — DEPRECATED heuristic teardown. 7 agents (hero-audit, trust-audit, cta-audit, ux-audit, message-match, prioritization, critic). Kept only for explicit best-practice teardown requests; not normal landing-page routing and not true CRO without behavioral evidence.
 - `seo` — 11 agents across 4 modes (technical, AI, programmatic, competitor). Mode-based routing.
 - `cold-outreach` — 8 agents (signal-analyst, strategist, proof-selector, composer, voice-auditor, critic, reply-classifier, reply-composer). Two-stage Layer 1 (signal-analyst solo → strategist + proof-selector parallel) → Layer 2 sequential (composer→voice-auditor→critic) → terminal humanize with specificity regression check. Reply route replaces Layer 1 with reply-classifier and Layer 2's composer slot with reply-composer.
 - `design-brief` — 7 agents (brand-anchor, concept, copy-anchor, brief-synth, prompt-craft, figma-spec, critic). Layer 1 parallel (brand-anchor + concept + copy-anchor) → Layer 1.5 brief-synth → **Approval Gate 1** → Layer 2 downstream-route augmentation (image-gen prompt-craft OR designer-handoff figma-spec OR vector-tool spec inline) → Layer 3 critic (rubric + generic-AI + platform-fit) → **Approval Gate 2**. Re-scoped from previous render-focused skill (design-create) — now brief-only, rendering happens downstream. Per-platform module specs ship as a skeleton — needs follow-up build pass.

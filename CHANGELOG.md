@@ -6,6 +6,30 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [6.0.0] - 2026-05-12
+
+BREAKING: `lp-optimization` removed from the stack. Deprecated in 5.1.0 once `lp-brief` absorbed the conversion principles; this release deletes the skill rather than leaving it shipping unused.
+
+### Removed
+- `skills/lp-optimization/` directory (SKILL.md + 7 agents: hero-audit, trust-audit, cta-audit, ux-audit, message-match, prioritization, critic). `/lp-optimization` invocations will now fail with a missing-skill error; use `/lp-brief` instead, which owns construction-time conversion best practices for new pages and redesigns under `references/conversion/`.
+
+### Changed
+- `.claude-plugin/plugin.json` — dropped `./skills/lp-optimization/` from `skills` array; description updated to "12 skills".
+- `orchestrate-marketing` workflow-graph — removed `lp-optimization` skill entry, removed "explicit teardown" routing row (was step `e.` in pipeline routing), removed deprecated-skill caveat from landing-page branch note.
+- Cross-skill descriptions and decision trees in `copywriting`, `humanize`, `vn-tone`, `campaign-plan` SKILL.md — references to `lp-optimization` either replaced with `lp-brief` (where the intent was landing-page architecture) or dropped (where the deference was specifically to a heuristic teardown that no longer exists).
+- `README.md`, `CLAUDE.md`, `shared/marketing-foundations.md` — removed deprecation paragraphs, skill-count references updated from 13 → 12, producer list in manifest spec dropped `lp-optimization`.
+
+### Migration
+- For new pages and redesigns: use `/lp-brief` — it gates on `brand/BRAND.md` + `brand/DESIGN.md` and applies the CP-01 → CP-13 conversion-principles rubric during construction.
+- For post-launch CRO with behavioral evidence (analytics, recordings, experiments): no replacement skill yet. Author the analysis manually until a data-backed CRO skill ships.
+
+### Files changed
+- `.claude-plugin/plugin.json`
+- `README.md`, `CLAUDE.md`, `shared/marketing-foundations.md`
+- `skills/copywriting/SKILL.md`, `skills/humanize/SKILL.md`, `skills/vn-tone/SKILL.md`, `skills/campaign-plan/SKILL.md`
+- `skills/orchestrate-marketing/references/workflow-graph.md`
+- `skills/lp-optimization/` — removed entirely
+
 ## [5.1.0] - 2026-05-12
 
 Landing-page architecture consolidation: `lp-brief` now owns construction-time conversion best practices directly, and `lp-optimization` is deprecated as a normal routing path.

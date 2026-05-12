@@ -1,6 +1,6 @@
 ---
 name: campaign-plan
-description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/skill-artifacts/mkt/campaign-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing page optimization, see lp-optimization."
+description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/skill-artifacts/mkt/campaign-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing-page architecture, see lp-brief."
 argument-hint: "[product or campaign to plan]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT

@@ -34,7 +34,7 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 
 **Content layer (parallel options):** copywriting, lp-brief, seo, short-form-brief, social-copy, ad-copy, cold-outreach. User picks based on the asset they need.
 
-**Landing-page branch:** `lp-brief` owns new LPs, redesigns, and construction-time conversion best practices. `lp-optimization` is deprecated; keep it only for explicit heuristic teardown requests until a data-backed CRO skill exists.
+**Landing-page branch:** `lp-brief` owns new LPs, redesigns, and construction-time conversion best practices.
 
 **Polish layer (terminal):** `humanize` strips AI patterns from any text. `vn-tone` polishes already-translated Vietnamese into native register. Both run AFTER content production.
 
@@ -66,15 +66,6 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 - **Consumes:** `research/product-context.md`, `research/icp-research.md`, `.agents/mkt/campaign-plan.md` (optional), `.agents/mkt/content-research.md` (optional)
 - **When to recommend:** copy-production intent. Works without campaign-plan but sharper with it.
 - **Cost:** $1–3 · 9 agents · deep budget · ~10 min
-
-### lp-optimization
-
-- **Job:** deprecated heuristic teardown of an existing landing page. Not a normal route; not true CRO without behavioral evidence.
-- **Produces:** `.agents/mkt/lp-optimization.md`
-- **Consumes:** `research/product-context.md`, `research/icp-research.md`
-- **When to recommend:** only when the user explicitly asks for `lp-optimization` or a quick best-practice teardown and understands it is heuristic.
-- **Cost:** $1–3 · 7 agents · deep budget · ~10 min
-- **Replacement:** `lp-brief` for construction/redesign; future data-backed CRO skill for analytics/experiment workflows.
 
 ### lp-brief
 
@@ -167,14 +158,13 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
    b. campaign-planning    → campaign-plan (gate: brand)
    c. copy-production      → copywriting   (soft-gate: brand + campaign)
    d. lp-page              → lp-brief      (gate: brand)
-   e. explicit teardown    → lp-optimization (deprecated, explicit only)
-   f. search-visibility    → seo (ask mode)
-   g. short-form-video     → short-form-brief (gate: short-form-research)
-   h. social-post          → social-copy (soft-gate: short-form-brief OR brand; ask which platform)
-   i. paid-ads             → ad-copy (gate: icp; ask audience-temp — retargeting OR cold)
-   j. outbound             → cold-outreach (gate: icp)
-   k. text-polish          → humanize
-   l. vn-polish            → vn-tone
+   e. search-visibility    → seo (ask mode)
+   f. short-form-video     → short-form-brief (gate: short-form-research)
+   g. social-post          → social-copy (soft-gate: short-form-brief OR brand; ask which platform)
+   h. paid-ads             → ad-copy (gate: icp; ask audience-temp — retargeting OR cold)
+   i. outbound             → cold-outreach (gate: icp)
+   j. text-polish          → humanize
+   k. vn-polish            → vn-tone
 
 4. Polish chain hint:
    - If output of recommended skill is user-facing copy in EN → mention humanize as terminal step.

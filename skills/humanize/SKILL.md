@@ -71,7 +71,7 @@ routing:
 AI-generated content fails in three ways: it reads like AI wrote it (patterns), it sounds like nobody wrote it (no voice), and it says too much with too little (bloat). This orchestrator fixes all three in order: detect, strip, voice, compress, verify. Each concern gets a specialist agent. The critic ensures nothing ships below the bar.
 
 ## Inputs Required
-- Any content artifact (from `copywriting`, `lp-optimization`, or any other skill) or raw text
+- Any content artifact (from `copywriting` or any other skill) or raw text
 
 ## Output
 - `.agents/skill-artifacts/mkt/content/[slug].humanized.md`
@@ -104,7 +104,7 @@ Horizontal — works on output from any skill. If content passed the `copywritin
 
 ### Skill Deference
 - **Need new copy written from scratch?** Use `copywriting` — this skill cleans existing content, not creates new.
-- **Conversion optimization needed?** Use `lp-optimization` — this skill focuses on voice and AI pattern removal, not conversion mechanics.
+- **Conversion-focused landing page needed?** Use `lp-brief` — this skill focuses on voice and AI pattern removal, not landing-page architecture.
 - **Content already passed the copywriting skill?** Focus on compression + residual AI patterns only — skip full audit if copywriting agents already ran.
 
 ---
@@ -162,7 +162,7 @@ Classify the task, then follow the matching route.
 ```
 
 ### Route C: Called by Another Skill
-**When:** Invoked by `lp-optimization`, `copywriting`, or another skill for inline humanization.
+**When:** Invoked by `copywriting`, `lp-brief`, or another skill for inline humanization.
 
 ```
 1. Pre-dispatch: Read context from calling skill's artifacts
