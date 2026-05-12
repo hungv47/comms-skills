@@ -52,6 +52,29 @@ campaign-plan and lp-brief can read research artifacts for alignment:
 
 All 13 skills follow the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Cold Start (3-7 bundled questions, one round-trip) when context is missing; Warm Start (summary + optional probe) when artifacts/experience cover what's needed. Answers persist to `.agents/experience/{product,audience,brand,business,goals,content}.md` so subsequent skills never re-ask. Hard-gated skills (`design-brief`, `lp-brief`) gate before cold-start questioning — recommend `brand-system` / `lp-optimization` when gates fail. `cold-outreach` has the most-elaborate cold-start (7 questions + Missing-Input Hard Blocks for mode/channel/target/proof); `ad-copy` is a close second (7 questions + audience-temp + creative-format hard-blocks). `brand-system` carries the canonical 13-platform target list as a catalog inside its Pre-Dispatch. `short-form-brief` writes brand_mode + production_mode to `.agents/experience/content.md`.
 
+## Complexity Routing
+
+Every skill declares a `budget` tier in frontmatter: `fast`, `standard`, or `deep`. The harness reads the tier and adjusts execution before dispatch:
+
+| Budget | Execution |
+|--------|-----------|
+| **fast** | Single-agent, no sub-agent dispatch, no critic gate. Respond directly. |
+| **standard** | Reduced orchestration — essential agents only, one critic pass. |
+| **deep** | Full orchestration as documented — all agents, all layers, full critic gate. |
+
+**Auto-downgrade** (before dispatch): ≤3 sentences AND no prior artifacts AND not deep → fast; single-topic clear-scope → cap at standard; multi-artifact / cross-domain / ambiguous → full tier.
+
+**Override — bidirectional.** Auto-downgrade is heuristic; operator intent wins.
+
+- **Upward (force deeper):** "run this thoroughly", "full analysis", "deep mode" → use the documented tier even on small inputs.
+- **Downward (`--fast`):** `--fast` flag on the slash command, OR phrases "fast mode" / "quick pass" / "skip the orchestration" in the same turn → force single-agent execution regardless of tier. No sub-agents, no critic gate, no rewrite loops, no warm-start Pre-Dispatch interrogation. Skill produces its core deliverable in one pass and ends with "Ran in --fast mode; rerun without the flag for full critique."
+
+**`--fast` does NOT skip Cold Start.** When no context is resolvable from artifacts or `.agents/experience/`, the skill still asks its bundled cold-start questions. `--fast` only bypasses multi-agent orchestration *after* context is resolved — it does not authorize hallucinating against missing audience/business/brand decisions.
+
+**Safety gates supersede `--fast`.** Hard-gated skills enforce gates regardless of `--fast`: `design-brief` and `lp-brief` cannot ship a brief without brand-system context (the gate fires before orchestration); `ad-copy`'s Meta policy + claim-substantiation format-checker runs regardless of speed (ad-policy compliance is not optional); `cold-outreach`'s Missing-Input Hard Blocks for mode/channel/target/proof still fire. The contract is "skip the heavy lift, not the guardrails."
+
+Conflict rules: `--fast` on a `fast`-tier skill is a no-op. `--fast` + "run thoroughly" → `--fast` wins (explicit flag > upward phrase). `--fast` + `--deep` → `--fast` wins (downward bias on conflicting explicit flags). Budget is the default — never a ceiling, never a floor.
+
 ## Manifest Spec
 
 State detection across all marketing skills (especially `orchestrate-marketing`) reads `.agents/manifest.json` — a derived index of artifact metadata (producer, date, status, schema version, staleness, summary). The manifest is rebuilt from artifact frontmatter by `meta-skills/scripts/manifest-sync.ts`; skills don't write to it directly. See [`../meta-skills/references/manifest-spec.md`](../meta-skills/references/manifest-spec.md) for the full contract. Skills that produce artifacts (brand-system, copywriting, campaign-plan, lp-brief, lp-optimization, seo, cold-outreach, design-brief, humanize, vn-tone, short-form-brief) must write the required frontmatter fields (`skill`, `version`, `date`, `status`) and call sync as their last step.
