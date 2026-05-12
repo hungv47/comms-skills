@@ -6,6 +6,17 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [5.0.0] - 2026-05-12
+
+Stack-major cut coordinated across the 4-stack marketplace to mark the post-tier-discipline stable era. No marketing skill removed or renamed; no API breaking change. The orchestrator declares itself fast-tier. Major bump signals the alignment, not breakage.
+
+### Changed
+- `orchestrate-marketing` budget reclassified standard → fast; body declares it is a pure router (no agent dispatch, no critic gate).
+
+Full review: `.agents/skill-artifacts/meta/records/2026-05-12-fresh-eyes-tier-discipline-phase-ab.md`
+
+---
+
 ## [4.3.0] - 2026-05-12
 
 Substantive expansion of `mode=ai` in the `seo` skill — four sequential enrichments deepening AEO methodology across `references/ai-seo.md` and `agents/ai-presence-agent.md`. References grew from 308 → 640 lines; agent file from 181 → 316 lines. Five fresh-eyes rounds (one per enrichment + one cumulative) caught 32 issues, applied 31, declined 2.

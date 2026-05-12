@@ -8,8 +8,8 @@ license: MIT
 metadata:
   author: hungv47
   version: "1.0.0"
-  budget: standard
-  estimated-cost: "$0.10-0.30"
+  budget: fast
+  estimated-cost: "$0.03-0.10"
 promptSignals:
   phrases:
     - "where do i start with marketing"
@@ -115,6 +115,8 @@ This skill does NOT execute marketing work. It is a router and progress-tracker.
 ---
 
 ## How It Works
+
+**Tier note (`metadata.budget: fast`):** This is a pure router — no sub-agent dispatch, no critic gate. The body below runs in-line: read state, parse intent, propose next skill, await user confirmation. No `agents/` directory, no L1/L2 layers, no rewrite cycles. The premium-orchestration substrate (multi-agent + critic) lives in the skills this router proposes; running it here would be theater.
 
 1. **State detection** — silently read `research/`, `brand/`, `.agents/skill-artifacts/mkt/`, `.agents/experience/*.md`.
 2. **Intention analysis** — parse the user's free-form ask. If empty, ask one bundled scoping question.
