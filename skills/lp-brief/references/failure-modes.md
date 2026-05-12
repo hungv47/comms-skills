@@ -18,7 +18,7 @@
 **Symptom:** Hero copy starts with "Founded in...", "We are...", "Our mission is..."
 **Why it kills:** CP-02 violation. Buyer cares about themselves, not the company's history.
 **Where it appears:** Hero headline or subhead candidates.
-**Fix direction:** Section-spec re-dispatch with VoC phrases from audit_digest as anchor.
+**Fix direction:** Section-spec re-dispatch with VoC phrases from evidence_digest as anchor.
 
 ### FM-03 — Mobile Fold Violation
 **Symptom:** Section-spec or architecture places primary CTA below the mobile fold (390×844).
@@ -109,7 +109,7 @@
 **Fix direction:** Section-spec re-dispatch to compress sentences and active-voice rewrites.
 
 ### FM-15 — No Objection Handling
-**Symptom:** ICP research lists objections (in audit_digest); brief has no Objection section AND no objection handling embedded in other sections.
+**Symptom:** ICP research lists objections (in evidence_digest); brief has no Objection section AND no objection handling embedded in other sections.
 **Why it kills:** Bounce trigger left intact. Buyer hits the objection internally and leaves.
 **Where it appears:** Architecture section list, or section-spec cross-cutting check.
 **Fix direction:** Architecture re-dispatch to add Objection section, or section-spec re-dispatch to fold objection handling into existing sections.
@@ -202,14 +202,14 @@
 
 ## Process Failures
 
-### FM-28 — Skipping the Audit on an Existing Page
-**Symptom:** Brief generated via Route A on a page that exists, when lp-optimization could have been run.
-**Why it kills:** Hypothesis is unanchored — guessing what's broken.
-**Where it appears:** Brief frontmatter (Route A on existing page) or skipping audit at Step 0.
-**Fix direction:** Block at Step 0 per SKILL.md Q4 resolution. User runs lp-optimization first.
+### FM-28 — Pretending Heuristic Review Is CRO
+**Symptom:** Brief claims "optimized" or "CRO-backed" with no post-launch analytics, recordings, experiments, or conversion evidence.
+**Why it kills:** Best-practice review can improve a page, but real optimization requires behavioral evidence. Calling assumptions optimization hides risk.
+**Where it appears:** Hypothesis, Launch Plan, Results, or Change Log.
+**Fix direction:** Revise language to "conversion-principles-backed" or "assumption-backed"; add instrumentation to Launch Plan and reserve CRO claims for post-launch evidence.
 
 ### FM-29 — Vibe Hypothesis
-**Symptom:** Hypothesis isn't falsifiable, doesn't trace to audit/audience signal.
+**Symptom:** Hypothesis isn't falsifiable, doesn't trace to evidence/audience signal.
 **Why it kills:** Brief has nothing to learn from post-launch.
 **Where it appears:** Hypothesis-agent output, Approval Gate 1.
 **Fix direction:** Hypothesis re-dispatch with anchor-trace requirement.

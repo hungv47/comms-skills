@@ -18,7 +18,7 @@ You do NOT:
 |-------|------|-------------|
 | **approved_architecture** | object | Surface rhythm + section list + ASCII + scroll velocity (from Gate 2) |
 | **brand_digest** | markdown | From brand-anchor-agent — palette, type tokens, motion tokens, voice rules, sacred elements |
-| **audit_digest** | markdown | From audit-anchor-agent — Route B failure modes to fix, ICP top 3 objections, top 5 VoC phrases |
+| **evidence_digest** | markdown | From evidence-anchor-agent — page-state/evidence signals to address, ICP top 3 objections, top 5 VoC phrases |
 | **campaign_context** | object | Traffic source, awareness stage, conversion target |
 | **references** | file paths[] | `references/section-templates.md`, `references/conversion-principles.md`, `references/failure-modes.md` |
 | **feedback** | string \| null | If critic returned FAIL, address every cited principle ID |
@@ -128,7 +128,7 @@ After all sections, end with:
 
 ## Change Log
 
-- [Per-section: rule that drove the recommended copy choice, what was rejected and why, audit findings closed]
+- [Per-section: rule that drove the recommended copy choice, what was rejected and why, evidence signals addressed]
 ```
 
 **Rules:**
@@ -146,7 +146,7 @@ After all sections, end with:
 1. **Specificity over flexibility.** A spec that says "punchy hero headline" lets the designer pick anything. A spec that lists 3 candidates scored on 4-U leaves no room for interpretation drift.
 2. **Copy candidates, not copy commits.** ≥3 candidates per slot lets the brief survive Approval Gate 3 — user picks the winner without forcing a re-spec.
 3. **Conversion checklist is the gate.** Skipping a CP citation = critic FAIL. The checklist is not boilerplate — it's the contract between this agent and the conversion-critic.
-4. **VoC over invention.** When `audit_digest` provides VoC phrases, prefer them in copy candidates over invented phrasing. The audience already chose the words.
+4. **VoC over invention.** When `evidence_digest` provides VoC phrases, prefer them in copy candidates over invented phrasing. The audience already chose the words.
 
 ### Techniques
 
@@ -189,7 +189,7 @@ After all sections, end with:
 
 ```
 ## Section 1: Hero
-Purpose: First-impression conversion gate. Closes audit's mobile-fold issue.
+Purpose: First-impression conversion gate. Closes the current page's mobile-fold issue.
 Hypothesis trace: lands "Right-size proof leads" — hero CTA targets primary action.
 
 ### Copy
@@ -197,7 +197,7 @@ Headline candidates (3, 4-U scored; CP-01):
 1. "Pricing built for teams of 5 — not 5,000" — U:Y, Un:Y, Ur:N, US:Y → 3/4
 2. "See the price your team actually pays — in 8 seconds" — U:Y, Un:Y, Ur:Y, US:Y → 4/4
 3. "Quotes by team size. No 'contact sales' detours." — U:Y, Un:Y, Ur:N, US:Y → 3/4
-Recommended: #2 — closes audit finding (price opacity) and addresses ICP top objection ("how long until I see real numbers")
+Recommended: #2 — closes the page-state signal (price opacity) and addresses ICP top objection ("how long until I see real numbers")
 ```
 
 **Weak hero spec (FAILs critic):**
@@ -212,7 +212,7 @@ Headline: "The best pricing experience for modern teams."
 - **Single candidate per slot** — denies the user choice at Gate 3. Always ≥3.
 - **All candidates score 4/4** — implausible; reads as inflated. Score honestly; if 2 candidates score 3/4 and 1 scores 4/4, that's normal.
 - **Skipping the checklist** — even when n/a, write "n/a — section has no CTA" not silence.
-- **Inventing VoC** — using made-up phrases when `audit_digest` provided real ones. The audience didn't say "leverage" — your audience research did or didn't capture phrases. Use what's there.
+- **Inventing VoC** — using made-up phrases when `evidence_digest` provided real ones. The audience didn't say "leverage" — your audience research did or didn't capture phrases. Use what's there.
 - **Sacred-element drift** — proposing a hero that violates a sacred element to "make it pop." Auto-FAIL via brand-voice critic.
 - **Form-field bloat** — 7-field form with no exception note. Auto-FAIL on CP-04.
 - **Stale proof in spec** — copying the existing testimonial that's 18 months old without flagging "verify date / replace if stale." Auto-FAIL on CP-09.

@@ -6,6 +6,31 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [5.1.0] - 2026-05-12
+
+Landing-page architecture consolidation: `lp-brief` now owns construction-time conversion best practices directly, and `lp-optimization` is deprecated as a normal routing path.
+
+### Changed
+- `lp-brief` now treats conversion principles as local canonical references under `skills/lp-brief/references/conversion/`, covering the 4-U headline rubric, above-fold clarity, CTA psychology, form discipline, message match, PAS, reading level, benefit-first language, social proof, trust clustering, pre-launch checks, and 3-second test.
+- `lp-brief` routing no longer blocks existing-page redesigns on a prior `lp-optimization` artifact. It uses page state, ICP, campaign context, prior briefs, and any post-launch evidence as an `evidence_digest`; absent analytics are labeled as assumptions rather than treated as CRO.
+- `orchestrate-marketing` routes landing-page audit/review/redesign/new-page language to `lp-brief`, because best-practice evaluation is now part of page construction.
+- `orchestrate-marketing` intent buckets `lp-audit` + `lp-design` consolidated into a single `lp-page` bucket (router internals; operator-visible routing unchanged).
+- Renamed `skills/lp-brief/agents/audit-anchor-agent.md` → `skills/lp-brief/agents/evidence-anchor-agent.md` to match the agent's renamed role (Evidence-Anchor).
+
+### Deprecated
+- `lp-optimization` remains installed for explicit heuristic teardown requests, but is no longer the default landing-page path. It now labels outputs as `heuristic_teardown` unless analytics, recordings, experiments, or conversion data make them data-backed.
+
+### Files changed
+- `skills/lp-brief/SKILL.md`
+- `skills/lp-brief/agents/{evidence-anchor-agent,architecture-agent,conversion-critic-agent,hypothesis-agent,section-spec-agent}.md` (audit-anchor renamed to evidence-anchor)
+- `skills/lp-brief/references/{conversion-principles,examples,failure-modes,hypothesis-rubric,section-templates,surface-rhythm}.md`
+- `skills/lp-brief/references/conversion/*.md`
+- `skills/lp-optimization/SKILL.md`
+- `skills/orchestrate-marketing/SKILL.md`
+- `skills/orchestrate-marketing/references/workflow-graph.md`
+- `skills/seo/SKILL.md`
+- `README.md`, `CLAUDE.md`, `shared/marketing-foundations.md`
+
 ## [5.0.0] - 2026-05-12
 
 Stack-major cut coordinated across the 4-stack marketplace to mark the post-tier-discipline stable era. No marketing skill removed or renamed; no API breaking change. The orchestrator declares itself fast-tier. Major bump signals the alignment, not breakage.

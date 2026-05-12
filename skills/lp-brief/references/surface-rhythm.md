@@ -24,7 +24,7 @@
 
 ## SR-02 — Proof-Led Rhythm
 
-**Use when:** audience has high trust requirements (regulated industries, enterprise procurement, security-sensitive buyers). Hypothesis often anchored in "trust gap" audit findings.
+**Use when:** audience has high trust requirements (regulated industries, enterprise procurement, security-sensitive buyers). Hypothesis often anchored in trust-gap evidence or audience signals.
 
 **Order:** Hero → Social Proof (immediate) → Value Prop → Features → CTA Block
 

@@ -1,6 +1,6 @@
 ---
 name: seo
-description: "Audits and plans search visibility — keyword research, on-page optimization, technical SEO, link building strategy, and AI search optimization. Produces `.agents/skill-artifacts/mkt/seo-[mode].md`. Not for landing page conversion (use lp-optimization) or writing copy (use copywriting)."
+description: "Audits and plans search visibility — keyword research, on-page optimization, technical SEO, link building strategy, and AI search optimization. Produces `.agents/skill-artifacts/mkt/seo-[mode].md`. Not for landing-page construction/conversion brief work (use lp-brief) or writing copy (use copywriting)."
 argument-hint: "[url or mode]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -58,10 +58,10 @@ routing:
   defers-to:
     - skill: copywriting
       when: "need to write headlines/copy for SEO-targeted pages"
-    - skill: lp-optimization
-      when: "optimizing for conversion, not search"
+    - skill: lp-brief
+      when: "building or evaluating landing pages for conversion, not search"
   parallel-with:
-    - lp-optimization
+    - lp-brief
   interactive: false
   estimated-complexity: heavy
 ---

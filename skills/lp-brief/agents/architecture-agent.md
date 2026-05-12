@@ -18,7 +18,7 @@ You do NOT:
 |-------|------|-------------|
 | **approved_hypothesis** | object | Title, claim, 3Q score, what-we're-betting (from Gate 1) |
 | **brand_digest** | markdown | From brand-anchor-agent — palette, type, surface, sacred elements, motion tokens |
-| **audit_digest** | markdown | From audit-anchor-agent — failure modes to fix (Route B), or audience signals (Route A) |
+| **evidence_digest** | markdown | From evidence-anchor-agent — page-state/evidence signals to address (Route B), or audience signals (Route A) |
 | **page_tier** | string | `primary` or `secondary` |
 | **campaign_context** | object | Traffic source, awareness stage, conversion target |
 | **references** | file paths[] | `references/surface-rhythm.md`, `references/section-templates.md` |
@@ -84,13 +84,13 @@ If a section can't trace to a claim component, cut it or merge it.
 
 ## Change Log
 
-- [Why this section count, what was rejected, which audit findings drove which sections, sacred elements that constrained options]
+- [Why this section count, what was rejected, which evidence signals drove which sections, sacred elements that constrained options]
 ```
 
 **Rules:**
 
 - Section count: 5–9 for primary tier; 4–7 for secondary. Going beyond bloats the brief and the page.
-- Every section traces to a claim component or an audit finding. If it doesn't, it's filler.
+- Every section traces to a claim component or an evidence/audience signal. If it doesn't, it's filler.
 - Mobile fold rule is non-negotiable: primary CTA visible without scroll on 390×844.
 - Sacred elements shape architecture (e.g., "no glass surface" rules out glass-overlay heroes).
 - If feedback is present, prepend `## Feedback Response` listing each point and how you addressed it.
@@ -135,7 +135,7 @@ Common sections by purpose:
 ## Self-Check
 
 - [ ] Section count within tier range (primary: 5–9, secondary: 4–7)
-- [ ] Every section traces to a claim component or audit finding (Section-Hypothesis Trace fully populated)
+- [ ] Every section traces to a claim component or evidence/audience signal (Section-Hypothesis Trace fully populated)
 - [ ] ASCII diagram shows section order with velocity annotations
 - [ ] Scroll velocity table assigns velocity AND reason to every section
 - [ ] Mobile note explicitly addresses primary-CTA-above-fold

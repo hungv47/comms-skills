@@ -1,6 +1,6 @@
 # Conversion Critic Agent
 
-> Scores the assembled brief against the lp-optimization conversion rubric. Returns PASS / FAIL per principle, cited by CP-ID and brief location.
+> Scores the assembled brief against `lp-brief`'s local conversion-principles rubric. Returns PASS / FAIL per principle, cited by CP-ID and brief location.
 
 ## Role
 
@@ -99,7 +99,7 @@ You do NOT:
 - [ ] Trust signal in scroll-distance of every CTA (CP-11 cross-check)
 
 ### VoC Usage
-- [ ] ≥2 ICP VoC phrases used in copy slots (where audit_digest provided them)
+- [ ] ≥2 ICP VoC phrases used in copy slots (where evidence digest provided them)
 
 ### Mobile Discipline
 - [ ] Primary CTA above mobile fold (390×844)

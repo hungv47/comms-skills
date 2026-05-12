@@ -1,6 +1,6 @@
 ---
 name: lp-brief
-description: "Generates a campaign-grade brief for a landing-page redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts. Internalizes lp-optimization conversion principles as evaluation rubric. Produces `.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md` ready to hand to Claude Design, a designer in Figma, or `design-brief` for per-asset spec. Not for auditing an existing page (use lp-optimization first — its output feeds this skill). Not for non-conversion pages like blogs or docs hubs (those use different rubrics). Not for spec'ing a single visual asset in isolation (use design-brief)."
+description: "Generates a campaign-grade brief for a high-converting landing page or redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts, and built-in conversion-principles gate. Produces `.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md` ready to hand to Claude Design, a designer in Figma, or `design-brief` for per-asset spec. Not for post-launch CRO analysis from analytics/experiments (future CRO skill). Not for non-conversion pages like blogs or docs hubs (those use different rubrics). Not for spec'ing a single visual asset in isolation (use design-brief)."
 argument-hint: "[page route or campaign name, e.g. '/pricing' or 'q3-launch-lp']"
 allowed-tools: Read Edit Write Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -13,6 +13,8 @@ promptSignals:
   phrases:
     - "page brief"
     - "landing page brief"
+    - "landing page"
+    - "new landing page"
     - "redesign brief"
     - "lp brief"
     - "campaign brief"
@@ -48,7 +50,6 @@ routing:
   consumes:
     - brand/BRAND.md
     - brand/DESIGN.md
-    - skill-artifacts/mkt/lp-optimization.md
     - research/icp-research.md
     - research/product-context.md
     - skill-artifacts/mkt/campaign-plan.md
@@ -56,8 +57,6 @@ routing:
     - brand/BRAND.md
     - brand/DESIGN.md
   defers-to:
-    - skill: lp-optimization
-      when: "page exists and the task is diagnosis, not redesign"
     - skill: design-brief
       when: "spec'ing an individual asset slot from this brief in detail (per-asset graphic-design brief)"
     - skill: brand-system
@@ -71,14 +70,14 @@ routing:
 
 # Landing Page Brief — Orchestrator
 
-*Communication — Step between strategy and design. Coordinates audit anchoring, hypothesis generation, architecture, per-section specification, asset slotting, and hand-off prompt composition into a single approved brief.*
+*Communication — Step between strategy and design. Coordinates evidence anchoring, hypothesis generation, architecture, per-section specification, asset slotting, conversion gating, and hand-off prompt composition into a single approved brief.*
 
 **Core Question:** "Could a designer (or Claude Design) build the right page from this brief without a single follow-up question?"
 
 ## Critical Gates — Read First
 
 - **Do NOT generate a brief without brand artifacts.** Missing `brand/BRAND.md` or `brand/DESIGN.md` → return `NEEDS_CONTEXT`. Brief depends on tokens, voice rules, sacred elements.
-- **Do NOT skip the conversion rubric.** Every section spec is gated by lp-optimization's craft rules (4-U headline, message match, CTA psychology, social proof placement, objection handling, form-field discipline). Brand-good but conversion-bad = failure.
+- **Do NOT skip the conversion rubric.** Every section spec is gated by this skill's local conversion-principles rules (4-U headline, message match, CTA psychology, social proof placement, objection handling, form-field discipline). Brand-good but conversion-bad = failure.
 - **Do NOT propose changing sacred elements.** Logo geometry, primary palette anchor, tagline wording, signature treatments are "do not touch" rails, not options.
 - **Do NOT exceed the brief length envelope.** Useful brief is 250–500 lines. <250 = insufficient depth (designer asks follow-ups). >500 = bloat (designer skims, misses spec). Critic enforces.
 - **Do NOT inline the full skill chain.** If project has a shared chain doc (e.g., `growth/page-redesigns/_prompts.md`), reference by section header; add page-specific overrides only.
@@ -86,7 +85,7 @@ routing:
 
 ## Philosophy
 
-Operates between strategy and design. By invocation, WHY (hypothesis) and WHO (audience) should be stable; the brief turns those into HOW (architecture + section spec + asset slots) precise enough for execution. Conversion rubric from lp-optimization is internalized — every section evaluated against the same craft rules used to audit existing pages, but applied at brief time so the page is *built* right rather than *audited* later.
+Operates between strategy and design. By invocation, WHY (hypothesis) and WHO (audience) should be stable; the brief turns those into HOW (architecture + section spec + asset slots) precise enough for execution. The conversion rubric is internalized here — every section is evaluated against landing-page best practices at brief time so the page is *built* right rather than waiting for a separate heuristic audit.
 
 Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity > flexibility. Designer executes, doesn't interpret.
 
@@ -97,7 +96,8 @@ Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity
 | Page route or campaign name (e.g. `/pricing`, `q3-launch-lp`) — current state if page exists (URL/screenshot/code) | **required** | Subject of the brief |
 | `brand/BRAND.md` | **required** (NEEDS_CONTEXT if absent) | Voice, archetype, sacred elements, lexicon rules |
 | `brand/DESIGN.md` | **required** (NEEDS_CONTEXT if absent) | Palette, typography, surface language, motion tokens |
-| `.agents/skill-artifacts/mkt/lp-optimization.md` | **required for Route B** (existing-page redesign blocks without it; user can downgrade to Route A) | Audit-anchored hypothesis basis |
+| Existing page state (URL/screenshot/code), if redesigning | optional but recommended | What exists today; page-state signals inform the redesign but do not block the brief |
+| Post-launch evidence (analytics, heatmaps, experiment notes), if available | optional | Stronger evidence for redesign hypotheses; absent evidence is labeled as assumption |
 | `research/icp-research.md` | optional | Objections + VoC for copy candidates |
 | `research/product-context.md` | optional | Product accuracy in features/proof |
 | `.agents/skill-artifacts/mkt/campaign-plan.md` | optional | Traffic source, awareness stage, role in funnel |
@@ -129,13 +129,13 @@ Verdict logic: see `## Layer 5: Critic Gate` below.
 
 ## Chain Position
 
-Previous: `lp-optimization` (optional — existing page redesign), `campaign-plan` (optional — campaign context), `brand-system` (required) | Next: `design-brief` per asset slot (optional), then implementation (Claude Design / image-gen / human designer)
+Previous: `campaign-plan` (optional — campaign context), `brand-system` (required) | Next: `design-brief` per asset slot (optional), then implementation (Claude Design / image-gen / human designer)
 
-**Re-run triggers:** new audit revision, BRAND.md/DESIGN.md update, ICP refresh, traffic source pivot. Increment `--rev=N`.
+**Re-run triggers:** post-launch performance evidence, BRAND.md/DESIGN.md update, ICP refresh, traffic source pivot. Increment `--rev=N`.
 
 ### Skill Deference
 
-- **Page exists; need to know what to fix?** → `lp-optimization` first. Output (`.agents/skill-artifacts/mkt/lp-optimization.md`) feeds this skill.
+- **Need post-launch CRO from real evidence?** → Future CRO/analytics skill. This skill can read analytics notes when provided, but does not pretend best-practice review is optimization.
 - **Single visual asset spec, not whole page?** → `design-brief`.
 - **No brand?** → `brand-system` first.
 - **Need only headline variations?** → `copywriting`.
@@ -148,14 +148,14 @@ Previous: `lp-optimization` (optional — existing page redesign), `campaign-pla
 
 | Agent | Layer | File | Focus |
 |-------|-------|------|-------|
-| Audit-Anchor Agent | 1 (parallel) | `agents/audit-anchor-agent.md` | Pulls signals from lp-optimization audit (if exists) or gathers signals from page state and ICP |
+| Evidence-Anchor Agent | 1 (parallel) | `agents/evidence-anchor-agent.md` | Pulls signals from page state, ICP, campaign context, prior briefs, and any post-launch evidence |
 | Brand-Anchor Agent | 1 (parallel) | `agents/brand-anchor-agent.md` | Pulls relevant tokens, sacred elements, voice rules from BRAND.md + DESIGN.md |
 | Hypothesis Agent | 1.5 (after L1) | `agents/hypothesis-agent.md` | Generates 3 hypothesis candidates with 3Q rubric (Visual / Falsifiable / Unique) |
 | Architecture Agent | 2 (after hypothesis approved) | `agents/architecture-agent.md` | Surface rhythm + section list + ASCII diagram + scroll velocity plan |
 | Section-Spec Agent | 3 (after architecture approved) | `agents/section-spec-agent.md` | Per-section spec — copy slots, layout, motion, asset slots, conversion-checklist embed |
 | Asset-Slot Agent | 3.5 (after section-spec — consumes its slot references) | `agents/asset-slot-agent.md` | Named asset slots with file paths, dimensions, formats, fallbacks, generation prompt templates |
 | Hand-Off Agent | 4 (after L3) | `agents/handoff-agent.md` | Composes Claude Design / Figma / designer hand-off prompt block |
-| Conversion Critic | 5 (parallel) | `agents/conversion-critic-agent.md` | Scores brief against lp-optimization rubric |
+| Conversion Critic | 5 (parallel) | `agents/conversion-critic-agent.md` | Scores brief against this skill's local conversion-principles rubric |
 | Brand-Voice Critic | 5 (parallel) | `agents/brand-voice-critic-agent.md` | Scores brand fidelity + voice + envelope |
 
 ---
@@ -165,7 +165,7 @@ Previous: `lp-optimization` (optional — existing page redesign), `campaign-pla
 ### Route A: Fresh LP (no existing page)
 
 ```
-Step 0 → L1 (audit-anchor ∥ brand-anchor) → L1.5 (hypothesis) → ★ Gate 1
+Step 0 → L1 (evidence-anchor ∥ brand-anchor) → L1.5 (hypothesis) → ★ Gate 1
        → L2 (architecture) → ★ Gate 2
        → L3 (section-spec) → L3.5 (asset-slot) → L4 (handoff)
        → L5 (conversion-critic ∥ brand-voice-critic) → critic merge → ★ Gate 3
@@ -174,17 +174,17 @@ Step 0 → L1 (audit-anchor ∥ brand-anchor) → L1.5 (hypothesis) → ★ Gate
 
 Per-layer details, contracts, and references are in the layer sections below.
 
-### Route B: Existing LP redesign (audit-anchored — audit REQUIRED)
+### Route B: Existing LP redesign (evidence-anchored)
 
-Existing page redesign. **Requires `.agents/skill-artifacts/mkt/lp-optimization.md`.** If absent, Step 0 blocks; user runs lp-optimization first or explicitly downgrades to Route A.
+Existing page redesign. Requires current page state (URL/screenshot/code) when available, and consumes analytics/heatmaps/experiment notes if the user has them. No separate heuristic audit blocks the brief.
 
-Same dispatch as Route A, but Layer 1 audit-anchor-agent reads the audit. Hypothesis anchored in audit findings ("rev N → rev N+1: what changed and why"). Architecture and section spec address audit failure modes explicitly. "What Changed from rev N-1" section becomes mandatory.
+Same dispatch as Route A, but Layer 1 evidence-anchor reads current page state and any post-launch evidence. Hypothesis anchored in page-state gaps, audience objections, and evidence ("rev N -> rev N+1: what changed and why"). Architecture and section spec address the strongest signals explicitly. "What Changed from rev N-1" section becomes mandatory when a prior brief exists.
 
 ### Route C: Re-run with `--rev=N`
 
 ```
 1. Read prior brief at .agents/skill-artifacts/mkt/lp-brief/[slug]/v[N-1]/brief.md
-2. Read fresh inputs (new audit, new ICP)
+2. Read fresh inputs (page-state/evidence notes, new ICP)
 3. Run Layer 1 — diff prior brief against fresh inputs
 4. Hypothesis-agent receives "what's new since rev N-1" context
 5. Continue Route A/B from Layer 1.5
@@ -195,25 +195,24 @@ Same dispatch as Route A, but Layer 1 audit-anchor-agent reads the audit. Hypoth
 
 ## Pre-Dispatch
 
-This skill has **hard gates** before any cold-start questioning — brand artifacts and audit availability gate routing. Cold-start questions are bundled after gates pass. Approval Gates 1/2/3 (mid-flow user reviews) are separate from Pre-Dispatch and happen after Layer 1.5 / Layer 2 / Layer 5. Full Pre-Dispatch protocol pattern: `meta-skills/references/pre-dispatch-protocol.md`.
+This skill has **hard gates** before any cold-start questioning — brand artifacts gate routing. Cold-start questions are bundled after gates pass. Approval Gates 1/2/3 (mid-flow user reviews) are separate from Pre-Dispatch and happen after Layer 1.5 / Layer 2 / Layer 5. Full Pre-Dispatch protocol pattern: `meta-skills/references/pre-dispatch-protocol.md`.
 
 ### Hard gates (before any questioning)
 
 1. **Brand artifacts.** `brand/BRAND.md` AND `brand/DESIGN.md` must be present. If either missing → return **NEEDS_CONTEXT**, recommend `brand-system`. If either >60 days stale, warn and ask before proceeding.
-2. **Audit availability gate (existing-page redesign).** `.agents/skill-artifacts/mkt/lp-optimization.md` present? If yes → Route B. Page exists but no audit → Route B **blocked**; offer: (a) run `lp-optimization` first then re-invoke (recommended), or (b) explicitly downgrade to Route A. Never silently treat existing-page redesign as Route A — guessing what's broken when you could measure it is a quality failure.
-3. No existing page (greenfield) → Route A.
+2. **Route classification.** No existing page → Route A. Existing page or prior brief → Route B. Absence of analytics is not a blocker; label assumptions clearly and rely on conversion-principles + ICP signals.
 
 If hard gates pass, proceed to Pre-Dispatch flows.
 
 ### Needed dimensions
 - Page identity — route + name (always supplied as input — not asked)
 - Tier — conversion-primary (hero LP, /pricing, /services) or conversion-secondary (/about, /story). Programmatic out of scope.
-- Hypothesis intent — what's the redesign trying to prove?
+- Hypothesis intent — what's this page trying to prove?
 - Goal — leads / signups / purchases / demos
 - Route (A or B) — already resolved by hard gates above
 
 ### Read order
-1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (both confirmed by hard gate). `.agents/skill-artifacts/mkt/lp-optimization.md` if Route B. `research/icp-research.md`, `research/product-context.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `.agents/skill-artifacts/meta/records/targets-*.md` (all optional, read when present).
+1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (both confirmed by hard gate). `research/icp-research.md`, `research/product-context.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `.agents/skill-artifacts/meta/records/targets-*.md` (all optional, read when present).
 2. Experience: `.agents/experience/goals.md` for prior hypothesis/goal context. `.agents/experience/audience.md` for ICP fallback if no `icp-research.md`.
 
 ### Warm Start (page identity supplied + goal/hypothesis derivable)
@@ -221,11 +220,11 @@ If hard gates pass, proceed to Pre-Dispatch flows.
 Common when invoked from a campaign-plan that already declared the page's role:
 
 ```
-Hard gates passed: brand artifacts present, [Route A | Route B with audit].
+Hard gates passed: brand artifacts present, [Route A fresh | Route B existing/rev].
 Found:
 - page → "[route, tier]"
 - goal → "[from experience/goals.md or campaign context]"
-- hypothesis seed → "[from prior brief if rev > 1, or audit if Route B]"
+- hypothesis seed → "[from prior brief if rev > 1, campaign context, ICP, or page-state evidence]"
 
 Anything to override, or proceed to Layer 1?
 ```
@@ -233,18 +232,18 @@ Anything to override, or proceed to Layer 1?
 ### Cold Start (no campaign context, no prior rev, fresh hypothesis)
 
 ```
-lp-brief produces a campaign-grade redesign brief — hypothesis, surface rhythm,
+lp-brief produces a campaign-grade landing-page brief — hypothesis, surface rhythm,
 section spec, asset slots, hand-off prompts. Before I dispatch, I need:
 
 1. **Page route + tier** — e.g., "/pricing, conversion-primary" or
    "/about, conversion-secondary". (Programmatic templates out of scope.)
-2. **Hypothesis intent** — what's this redesign trying to prove or fix?
+2. **Hypothesis intent** — what is this page trying to prove or fix?
    One sentence. (Examples: "show pricing above the fold drives more
    trial starts" / "add objection-handling to address scaling concerns".)
 3. **Goal** — what does the redesigned page need to do? Generate leads,
    drive trial signups, drive purchases, book demos, or other?
-4. **Route confirmation** — [A: greenfield, no existing page] or
-   [B: existing-page redesign with audit at .agents/skill-artifacts/mkt/lp-optimization.md].
+4. **Route confirmation** — [A: greenfield/new page] or
+   [B: existing-page redesign/rev]. If B, include URL/screenshot/code and any analytics notes you have.
 
 Answer 1-4 in one response. I'll confirm and dispatch Layer 1.
 ```
@@ -274,9 +273,9 @@ Rationale: project-level default locks teams into our chain. Per-page is correct
 After Pre-Dispatch resolves:
 1. **Page identity** — route, name, current state (URL/screenshot/code if exists)
 2. **Tier** — conversion-primary or conversion-secondary
-3. **Audit signals** — from lp-optimization.md if Route B
+3. **Evidence signals** — from current page state, prior brief, ICP, campaign context, and any analytics/experiment notes
 4. **Brand digest** — palette, type, motion, sacred, voice rules (from brand-anchor after L1)
-5. **Audience digest** — top 3 ICP objections, top 5 VoC phrases, awareness stage (from audit-anchor after L1)
+5. **Audience digest** — top 3 ICP objections, top 5 VoC phrases, awareness stage (from evidence-anchor after L1)
 6. **Campaign context** — traffic source, awareness stage, conversion target
 
 ---
@@ -288,7 +287,7 @@ After Pre-Dispatch resolves:
 1. Read agent instruction file — include FULL content in Agent prompt
 2. Append context (digest excerpts, prior layer outputs, asset slot list, etc.)
 3. Resolve all file paths to absolute (rooted at skill directory)
-4. Pass upstream artifacts by content — orchestrator reads `.agents/skill-artifacts/mkt/lp-optimization.md`, `research/icp-research.md`, etc. FIRST and includes excerpts; sub-agents don't read these directly
+4. Pass upstream artifacts by content — orchestrator reads `research/icp-research.md`, `research/product-context.md`, campaign artifacts, prior briefs, and provided page/evidence notes FIRST and includes excerpts; sub-agents don't read these directly
 5. If critic feedback exists, append with `## Critic Feedback — Address Every Point`
 
 ### Single-agent fallback
@@ -301,7 +300,7 @@ If multi-agent dispatch is unavailable, execute layers sequentially. Approval ga
 
 | Agent | Pass These Inputs | Reference Files |
 |-------|-------------------|-----------------|
-| Audit-Anchor Agent | page identity + tier + lp-optimization.md (if present) + ICP | — |
+| Evidence-Anchor Agent | page identity + tier + current page state/evidence (if present) + ICP | — |
 | Brand-Anchor Agent | full BRAND.md + DESIGN.md + page identity | — |
 
 Wait for both — outputs feed Layer 1.5.
@@ -312,7 +311,7 @@ Wait for both — outputs feed Layer 1.5.
 
 | Agent | Pass These Inputs | Reference Files |
 |-------|-------------------|-----------------|
-| Hypothesis Agent | audit digest + brand digest + page tier + campaign context | `references/hypothesis-rubric.md`, `references/conversion-principles.md` |
+| Hypothesis Agent | evidence digest + brand digest + page tier + campaign context | `references/hypothesis-rubric.md`, `references/conversion-principles.md` |
 
 Output: 3 candidates, each scored 3Q (Visual / Falsifiable / Uniquely Ours).
 
@@ -328,7 +327,7 @@ Output: 3 candidates, each scored 3Q (Visual / Falsifiable / Uniquely Ours).
 ### A. [Title]
 **Claim:** [single sentence — falsifiable]
 **3Q score:** Visual [Y/N] / Falsifiable [Y/N] / Unique [Y/N] = N/3
-**Why this:** [argument tied to audit findings or audience signals]
+**Why this:** [argument tied to evidence signals or audience signals]
 **Risk:** [main concern]
 
 ### B. [Title]
@@ -352,7 +351,7 @@ User responses:
 
 | Agent | Pass These Inputs | Reference Files |
 |-------|-------------------|-----------------|
-| Architecture Agent | approved hypothesis + brand digest + audit digest + tier | `references/surface-rhythm.md`, `references/section-templates.md` |
+| Architecture Agent | approved hypothesis + brand digest + evidence digest + tier | `references/surface-rhythm.md`, `references/section-templates.md` |
 
 Output: surface rhythm plan + section list + ASCII diagram + scroll velocity notes (where eye accelerates/decelerates/pauses).
 
@@ -393,7 +392,7 @@ User responses:
 
 | Agent | Pass These Inputs | Reference Files |
 |-------|-------------------|-----------------|
-| Section-Spec Agent | architecture + audit digest + brand digest + ICP objections + VoC | `references/section-templates.md`, `references/conversion-principles.md`, `references/failure-modes.md` |
+| Section-Spec Agent | architecture + evidence digest + brand digest + ICP objections + VoC | `references/section-templates.md`, `references/conversion-principles.md`, `references/failure-modes.md` |
 
 ## Layer 3.5: Asset Slots (after section-spec)
 
@@ -517,12 +516,12 @@ shared_skill_chain: [path to project's _prompts.md if referenced]
 
 **Claim:** [single sentence — falsifiable]
 **3Q score:** Visual [Y/N] / Falsifiable [Y/N] / Unique [Y/N]
-**Why this:** [argument tied to audit findings or audience signals]
+**Why this:** [argument tied to evidence signals or audience signals]
 **What we're betting:** [the falsifiable bet — what success looks like, what failure looks like]
 
 ## What Changed from rev N-1 (if rev > 1)
 
-[Bullet list — only present if --rev=N. Tied to audit findings or new ICP signals.]
+[Bullet list — only present if --rev=N. Tied to page-state changes, post-launch evidence, or new ICP signals.]
 
 ## Page Architecture
 
@@ -657,7 +656,7 @@ N. **CTA Block** — [purpose]
 2. `copywriting` — polish 3 headline candidates against 4-U + voice
 3. [implementation step — Claude Design / Figma / designer]
 4. `humanize` — final pass on any AI-generated body copy
-5. [post-launch] re-run `lp-optimization` 30d after launch → next rev
+5. [post-launch] collect analytics/recordings/experiment notes → feed future CRO analysis or next `lp-brief --rev=N`
 
 Page-scoped only. No project-level default is created.
 
@@ -680,13 +679,13 @@ Page-scoped only. No project-level default is created.
 
 ## Worked Examples
 
-See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP, Route B audit-anchored redesign, Route C `--rev=N` with mixed-critic verdict).
+See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP, Route B evidence-anchored redesign, Route C `--rev=N` with mixed-critic verdict).
 
 ---
 
 ## Anti-Patterns
 
-**Skipping audit when page exists** — Route A on an existing page wastes the rev signal. INSTEAD: run lp-optimization first, anchor the hypothesis in real findings.
+**Pretending heuristic review is CRO** — a best-practice teardown is not optimization. INSTEAD: build with the conversion rubric inside this brief; after launch, use real analytics/recordings/experiment evidence to inform rev N+1.
 
 **Generic hypothesis** — "This page should convert better." Not falsifiable. INSTEAD: "Engineering managers reject /pricing because they perceive overkill for small teams; segmenting proof by team size lifts conversion."
 
@@ -716,7 +715,7 @@ See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP
 
 - **DONE** — both critics PASS (cycle 1 or 2), brief approved, artifacts written
 - **DONE_WITH_CONCERNS** — after 2 cycles, ≥1 critic still FAIL or mixed; concerns pinned at top of brief.md AND in frontmatter. User sees both reports at Approval Gate 3 and ships consciously.
-- **BLOCKED** — user rejected at a gate, Route B audit missing without explicit downgrade, or required input missing mid-flow
+- **BLOCKED** — user rejected at a gate or required input missing mid-flow
 - **NEEDS_CONTEXT** — BRAND.md or DESIGN.md missing; cannot proceed
 
 ---
@@ -725,19 +724,19 @@ See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP
 
 ### Sub-Agent Instructions (agents/)
 
-- [agents/audit-anchor-agent.md](agents/audit-anchor-agent.md) — Audit signal pull
+- [agents/evidence-anchor-agent.md](agents/evidence-anchor-agent.md) — Evidence signal pull
 - [agents/brand-anchor-agent.md](agents/brand-anchor-agent.md) — Token + sacred + voice digest
 - [agents/hypothesis-agent.md](agents/hypothesis-agent.md) — 3 hypothesis candidates with 3Q
 - [agents/architecture-agent.md](agents/architecture-agent.md) — Surface rhythm + section list
 - [agents/section-spec-agent.md](agents/section-spec-agent.md) — Per-section spec
 - [agents/asset-slot-agent.md](agents/asset-slot-agent.md) — Named asset slots with prompts
 - [agents/handoff-agent.md](agents/handoff-agent.md) — Tool-specific hand-off
-- [agents/conversion-critic-agent.md](agents/conversion-critic-agent.md) — lp-optimization rubric
+- [agents/conversion-critic-agent.md](agents/conversion-critic-agent.md) — Local conversion-principles rubric
 - [agents/brand-voice-critic-agent.md](agents/brand-voice-critic-agent.md) — Brand fidelity + voice + envelope
 
 ### Shared References (references/)
 
-- [references/conversion-principles.md](references/conversion-principles.md) — Curated from lp-optimization (4-U, above-fold, CTA, message-match, objection handling, social proof); cites lp-optimization references
+- [references/conversion-principles.md](references/conversion-principles.md) — Canonical LP construction rubric (4-U, above-fold, CTA, message-match, objection handling, social proof); cites local `references/conversion/*`
 - [references/surface-rhythm.md](references/surface-rhythm.md) — Page-architecture patterns (scroll velocity, section beats, breathing room)
 - [references/section-templates.md](references/section-templates.md) — Hero, value prop, social proof, features, objection, FAQ, CTA — each with conversion-checklist
 - [references/hypothesis-rubric.md](references/hypothesis-rubric.md) — 3Q scoring (Visual / Falsifiable / Uniquely Ours)

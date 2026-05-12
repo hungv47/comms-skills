@@ -61,7 +61,7 @@ Each hypothesis gets one Y or N per question, totaled out of 3.
 
 **Bar:** all 3 candidates surfaced to the user must score ≥2/3. Aim for at least one to score 3/3.
 
-If you can't generate 3 candidates that all score ≥2/3, re-anchor: pull more aggressively from audit_digest, ICP objections, or VoC phrases. The signal is the constraint that produces strong hypotheses.
+If you can't generate 3 candidates that all score ≥2/3, re-anchor: pull more aggressively from evidence_digest, ICP objections, or VoC phrases. The signal is the constraint that produces strong hypotheses.
 
 ---
 

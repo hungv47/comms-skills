@@ -1,36 +1,38 @@
 ---
 name: lp-optimization
-description: "Audits a landing page for conversion — analyzes hero, CTA, social proof, objection handling, and page flow. Produces specific copy and structure change recommendations. Not for designing A/B test variants or full site SEO audits (use seo). For brand identity and design tokens, see brand-system. For content strategy, see campaign-plan."
+description: "Deprecated heuristic landing-page audit. Use `lp-brief` to build or redesign high-converting landing pages; it now owns the conversion-principles rubric. This skill remains only for explicit best-practice teardown requests and is not true CRO unless the user supplies analytics, recordings, experiments, or conversion data. Future work should rebuild this as post-launch CRO analysis. Not for new landing pages, redesign briefs, A/B test design, or full site SEO audits (use seo)."
 argument-hint: "[url or description]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
 metadata:
   author: hungv47
-  version: "3.0.0"
+  version: "3.1.0"
   budget: deep
+  deprecated: true
+  replacement: "lp-brief for construction/redesign; future CRO skill for data-backed optimization"
   estimated-cost: "$1-3"
 promptSignals:
   phrases:
-    - "conversion rate optimization"
-    - "page optimization"
-    - "cro audit"
-    - "landing page audit"
-    - "optimize the landing page"
+    - "lp-optimization"
+    - "heuristic lp audit"
+    - "best-practice landing page teardown"
+    - "quick landing page teardown"
   allOf:
-    - [landing, page]
-    - [conversion, audit]
+    - [landing, page, teardown]
+    - [heuristic, audit]
   anyOf:
-    - "conversion"
-    - "cro"
-    - "bounce rate"
-    - "above the fold"
-    - "page audit"
+    - "teardown"
+    - "heuristic"
+    - "best-practice"
+    - "audit"
   noneOf:
     - "write copy"
     - "brand identity"
     - "redesign"
     - "page brief"
-  minScore: 6
+    - "new landing page"
+    - "build landing page"
+  minScore: 10
 routing:
   intent-tags:
     - conversion-audit
@@ -46,33 +48,36 @@ routing:
     - icp-research.md
   requires: []
   defers-to:
+    - skill: lp-brief
+      when: "building, redesigning, or creating a high-converting landing page brief"
     - skill: copywriting
       when: "need to write new copy, not audit existing page"
     - skill: seo
       when: "optimizing for search, not conversion"
-    - skill: lp-brief
-      when: "audit findings call for a full redesign, not incremental fixes — lp-brief consumes this skill's audit as Route B input"
   parallel-with:
     - seo
   interactive: false
   estimated-complexity: medium
 ---
 
-# Landing Page Conversion Optimization — Orchestrator
+# Landing Page Heuristic Audit — Deprecated Orchestrator
 
-*Communication — Horizontal. Coordinates specialized audit agents to diagnose conversion blockers and produce prioritized, evidence-based fix recommendations.*
+*Communication — Horizontal. Coordinates specialized audit agents to produce a best-practice teardown of an existing page. Deprecated as a normal pipeline step; `lp-brief` owns landing-page construction and conversion-principles gating.*
 
-**Core Question:** "What's stopping visitors from converting?"
+**Core Question:** "Which visible page issues violate landing-page conversion principles?"
+
+> **Deprecation note:** This is not true CRO by itself. True optimization needs post-launch behavioral evidence: analytics, recordings, funnel dropoff, experiments, traffic-source data, or sales/support feedback. Without that evidence, this skill must label output as a heuristic teardown.
 
 ## Philosophy
 
-The frameworks here (PAS, 4-U, social proof hierarchy) are evidence-backed defaults. They work in most situations. But landing pages serve different audiences, traffic sources, and goals. When your data or testing reveals a different optimal approach, follow the data. The principles matter more than the specific numbers. This orchestrator dispatches specialist agents for each concern, then a critic agent ensures every recommendation meets the evidence bar.
+The frameworks here (PAS, 4-U, social proof hierarchy) are evidence-backed defaults. They now live under `lp-brief/references/conversion/` as the construction-time rubric. This deprecated skill can still inspect an existing page against those defaults, but it must not claim optimization unless actual behavioral evidence is supplied. When your data or testing reveals a different optimal approach, follow the data.
 
 ## Critical Gates — Read First
 
-1. **Do NOT recommend fixes without evidence.** Every finding must include: what was observed, which principle it violates, and a specific recommended fix (exact text, not "improve the headline").
+1. **Do NOT call heuristic review optimization.** If there is no analytics/recording/experiment/conversion evidence, label the output `Heuristic teardown`, not CRO.
 2. **Check message match BEFORE optimizing copy.** A perfectly written headline that doesn't match the traffic source will still bounce visitors. Message match is the first conversion gate.
 3. **Form fields: every field >5 costs ~10% conversion.** This is an evidence-backed default (Unbounce/HubSpot research). Exceptions exist for high-intent enterprise traffic — but the exception must be justified, not assumed.
+4. **Do NOT create new pages here.** New landing pages and redesign briefs route to `lp-brief`, which already embeds the full conversion rubric.
 
 ## Inputs Required
 - Landing page URL or description of the page
@@ -80,8 +85,8 @@ The frameworks here (PAS, 4-U, social proof hierarchy) are evidence-backed defau
 - Traffic source context (where visitors come from)
 
 ## Output
-- Optimization recommendations with specific copy/structure changes
-- For new pages: complete page structure with copy
+- Heuristic teardown or data-backed CRO findings, clearly labeled
+- Specific copy/structure recommendations for the existing page only
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
@@ -96,11 +101,11 @@ Before delivering, the **critic agent** verifies:
 - [ ] No vague recommendations ("improve the headline" — must be specific replacement text)
 
 ## Chain Position
-Horizontal — works with `icp-research` (audience data), `copywriting` (copy craft), and `lp-brief` (page redesigns from this audit).
-**Re-run triggers:** After major page redesigns, when conversion drops >10%, when traffic source mix changes significantly, or quarterly.
+Deprecated horizontal teardown — works with `icp-research` (audience data) and `copywriting` (copy craft). `lp-brief` is the normal landing-page build/redesign path.
+**Re-run triggers:** Only when explicitly requested for a teardown, or when post-launch behavioral evidence exists and no dedicated CRO skill has been built yet.
 
 ### Skill Deference
-- **Need a redesigned page (not just an audit)?** → Run `lp-brief` — it consumes this skill's audit and produces a redesign brief.
+- **Need a redesigned or new page?** → Run `lp-brief` — it owns page construction and conversion-principles gating.
 - **Need craft-quality headline rewrites or CTA copy?** → Run `copywriting` for variation workflow and evaluation rubric.
 - **AI pattern cleanup needed?** → Use `humanize` — this skill focuses on conversion mechanics, not voice/pattern editing.
 
@@ -158,37 +163,9 @@ Classify the task, then follow the matching route.
 6. Deliver final audit artifact
 ```
 
-### Route C: New Landing Page (Write Mode)
-**When:** User wants to create a new landing page, not audit an existing one.
+### Removed Route: New Landing Page / Write Mode
 
-This is a write workflow, not an audit workflow. The agents are repurposed as planning advisors.
-
-```
-1. Pre-dispatch: Gather context (Step 0 below)
-2. Read ICP research (if available) for VoC language and pain points
-3. Define primary conversion goal (one per page)
-4. Generate headline using hero-audit-agent's 4-U framework:
-   - Generate 10+ headline variations using formula library
-   - Score each with 4-U formula
-   - Select top 3 for presentation
-5. Structure body with PAS framework (from core-principles reference)
-6. Plan social proof using trust-audit-agent's hierarchy:
-   - Identify strongest proof available
-   - Place above fold
-7. Design form using cta-audit-agent's form rules:
-   - Minimal fields (start with email only)
-   - First-person CTA formula
-   - Risk reversal placement
-8. Plan UX using ux-audit-agent's checklist:
-   - Remove navigation
-   - Mobile-first layout
-   - Trust signals near every CTA
-9. Verify message match with traffic source(s)
-10. Run through quality gate checklist
-11. Deliver page structure with copy recommendations
-```
-
-**Note:** Route C uses the agent frameworks and reference files as planning tools but follows the sequential workflow rather than parallel dispatch, since the page doesn't exist yet to audit in parallel.
+New landing pages and redesigns now route to `lp-brief`. The conversion best practices that used to make write-mode useful have been moved into `lp-brief/references/conversion/` and enforced by `lp-brief`'s section-spec and conversion-critic agents.
 
 ---
 
@@ -368,7 +345,7 @@ The critic returns specific failures with:
 
 ## Artifact Template
 
-When saving optimization artifacts, use this frontmatter:
+When saving teardown artifacts, use this frontmatter:
 
 ```yaml
 ---
@@ -376,6 +353,8 @@ skill: lp-optimization
 version: 1
 date: [today's date]
 status: done | done_with_concerns | blocked | needs_context
+analysis_type: heuristic_teardown | data_backed_cro
+evidence_supplied: true | false
 ---
 ```
 
@@ -383,13 +362,13 @@ status: done | done_with_concerns | blocked | needs_context
 
 ## Next Step
 
-Run `copywriting` to rewrite specific sections. Run `seo` for technical search optimization. For sweeping redesigns, run `lp-brief` to spec the next iteration.
+Run `copywriting` to rewrite specific sections. Run `seo` for technical search optimization. For sweeping redesigns or new pages, run `lp-brief` to spec the next iteration.
 
 ---
 
 ## Worked Example — Full Audit (Route B)
 
-**Brief:** Audit the Acme Analytics free trial page for conversion optimization.
+**Brief:** Heuristically audit the Acme Analytics free trial page and label findings that need behavioral evidence.
 **Audience:** Engineering managers at 50-200 person companies, problem aware.
 **Traffic:** Google Ads ("real-time analytics dashboard"), LinkedIn ads (cold), and organic search.
 
@@ -430,6 +409,8 @@ skill: lp-optimization
 version: 1
 date: 2026-03-17
 status: done
+analysis_type: heuristic_teardown
+evidence_supplied: false
 ---
 
 # LP Audit — Acme Analytics Free Trial Page
@@ -472,7 +453,9 @@ Expected impact: ~40% form completion improvement
 
 ## Anti-Patterns
 
-**Redesign without diagnosis** — Jumping to "make it look better" without identifying what's actually blocking conversion. Diagnose before prescribing. **INSTEAD:** Run the full audit (Route B) to identify specific blockers, then fix in priority order.
+**Calling heuristic review CRO** — A best-practice teardown can find obvious friction, but it cannot prove what is stopping conversion. **INSTEAD:** Label the output heuristic unless analytics, recordings, experiments, or conversion data were supplied.
+
+**Building pages here** — Using this deprecated skill to create a new page or redesign brief. **INSTEAD:** Run `lp-brief`; it owns construction-time conversion best practices.
 
 **Testing design before copy** — A/B testing button colors or layouts when the headline doesn't pass the 4-U test. Copy is responsible for 80%+ of conversion impact. **INSTEAD:** Fix the words before the visuals. Follow the testing priority order: headlines > offers > CTAs > layout > forms.
 
@@ -491,8 +474,8 @@ Expected impact: ~40% form completion improvement
 ## Completion Status
 
 Every run ends with explicit status:
-- **DONE** — audit complete (Route A or B), findings prioritized by ICE, critic PASS, recommendations specific and actionable
-- **DONE_WITH_CONCERNS** — audit delivered but with limited evidence (page rendered but analytics unavailable, traffic source unclear); recommendations note evidence gaps
+- **DONE** — teardown complete (Route A or B), findings prioritized by ICE, critic PASS, recommendations specific and actionable; `analysis_type` states whether evidence made it data-backed
+- **DONE_WITH_CONCERNS** — teardown delivered but with limited evidence (page rendered but analytics unavailable, traffic source unclear); recommendations note evidence gaps
 - **BLOCKED** — page URL inaccessible or behind auth wall the agent cannot pass; needs user-supplied screenshots or paste
 - **NEEDS_CONTEXT** — audit useful but `research/icp-research.md` missing for audience-fit checks; recommend `icp-research` or proceed with reduced scope
 

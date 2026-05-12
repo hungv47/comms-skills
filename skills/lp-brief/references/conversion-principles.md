@@ -1,8 +1,8 @@
 # Conversion Principles — lp-brief Reference
 
-> **This file does not duplicate.** It is a curated index into `marketing-skills/skills/lp-optimization/references/*` so updates to the audit principles automatically propagate to lp-brief. Sub-agents (section-spec-agent, conversion-critic-agent) read this file, then read the cited source ranges as needed. If a principle here disagrees with the cited source, the source wins — fix the citation in the same commit per the Update Protocol below.
+> **This is the canonical landing-page construction rubric for `lp-brief`.** It indexes the local `references/conversion/*` files so best-practice conversion rules are applied while the page is being designed, not deferred to a separate heuristic audit pass. Sub-agents (section-spec-agent, conversion-critic-agent) read this file, then read the cited source ranges as needed. If a principle here disagrees with the cited source, the source wins — fix the citation in the same commit per the Update Protocol below.
 >
-> **Path convention:** all citations are relative to `marketing-skills/skills/lp-optimization/references/`.
+> **Path convention:** all citations are relative to `marketing-skills/skills/lp-brief/references/conversion/`.
 
 ---
 
@@ -39,7 +39,7 @@
 
 ### CP-04 — 5-Field Form Maximum
 
-- **Source:** `core-principles.md` lines 106–141 (especially the conversion-impact table at lines 134–141)
+- **Source:** `core-principles.md` lines 106–140 (especially the conversion-impact table at lines 134–140)
 - **Rule:** Forms ≤5 fields OR exception justified inline.
 - **Applies to:** any section containing a form (signup, demo-request, contact, gated download)
 - **lp-brief application:** form spec lists every field with reason. Critic FAILs forms with >5 fields unless brief contains explicit exception ("field N required because [reason]"). Source's field-priority list at lines 119–124 informs prioritization.
@@ -88,7 +88,7 @@
 
 ### CP-11 — Trust Signal Clustering
 
-- **Source:** `social-proof-trust.md` lines 112–159
+- **Source:** `social-proof-trust.md` lines 112–156
 - **Rule:** Trust signals (security badges, logos, awards, testimonials) clustered near every CTA — not relegated to footer.
 - **Applies to:** every CTA slot
 - **lp-brief application:** every CTA spec must list at least one trust signal within scroll-distance (defined as: same viewport at desktop 1440×900, or within 1 swipe at mobile 390×844). Critic FAILs CTAs with no trust signal in scroll-distance.
@@ -111,7 +111,7 @@
 
 ## Principles Intentionally NOT in Critic Rubric
 
-These principles from lp-optimization are valuable for diagnosis but produce noisy gates at brief-time. They appear in section spec **as guidance**, not in the critic checklist:
+These principles are valuable for post-launch diagnosis but produce noisy gates at brief-time. They appear in section spec **as guidance**, not in the critic checklist:
 
 - **Advanced psychology stack** (`advanced-psychology.md`) — useful for narrative tone-setting but too subjective to FAIL on.
 - **UX micro-interactions** (`ux-design.md`) — most belong in a UX-detail review pass, not lp-brief's critic.
@@ -123,6 +123,6 @@ If a critic wants to flag one of these, use a **note** (advisory) not a **FAIL**
 
 ## Update Protocol
 
-- If `lp-optimization/references/core-principles.md` line numbers shift (new principle added, formula tweaked), update the line ranges here in the same commit. Stale citations are worse than no citations.
-- If a new principle appears in lp-optimization that materially changes brief-time decisions, add a `CP-XX` entry here. New IDs are append-only — never renumber.
-- If a principle is retired in lp-optimization, mark it `DEPRECATED` here with the deprecation date — do not delete (existing briefs may reference it).
+- If `references/conversion/core-principles.md` line numbers shift (new principle added, formula tweaked), update the line ranges here in the same commit. Stale citations are worse than no citations.
+- If a new principle appears in the local conversion references that materially changes brief-time decisions, add a `CP-XX` entry here. New IDs are append-only — never renumber.
+- If a principle is retired from the local conversion references, mark it `DEPRECATED` here with the deprecation date — do not delete (existing briefs may reference it).

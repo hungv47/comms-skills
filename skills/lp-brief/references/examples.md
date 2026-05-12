@@ -14,13 +14,12 @@
 - BRAND.md + DESIGN.md present (fresh).
 - ICP at `research/icp-research.md` (last week).
 - Product context at `research/product-context.md` (last week).
-- No `lp-optimization.md` (no existing page).
 - Tier: primary.
-- **Route: A** (no audit, no prior brief).
+- **Route: A** (fresh page, no prior brief).
 
 ### Layer 1 (parallel)
 
-**audit-anchor-agent** (no audit, pulling signals from ICP instead):
+**evidence-anchor-agent** (fresh page, pulling signals from ICP and campaign context):
 > ICP top 3 objections:
 > 1. "Pricing is opaque on most SaaS — I need to see numbers fast."
 > 2. "Will this scale to 50 people without re-platforming?"
@@ -103,23 +102,23 @@ User approves at Approval Gate 3.
 
 ---
 
-## Example 2 — Route B: Audit-Anchored Redesign
+## Example 2 — Route B: Evidence-Anchored Redesign
 
-**Scenario:** Same product 6 weeks post-launch. `/pricing` rev 1 underperformed. Audit run 3 days ago. Time for rev 2.
+**Scenario:** Same product 6 weeks post-launch. `/pricing` rev 1 underperformed. Analytics, heatmap notes, and support-ticket notes are available. Time for rev 2.
 
 **Invocation:** `/lp-brief /pricing --rev=2`
 
 ### Step 0: Pre-Dispatch
 - BRAND.md + DESIGN.md present.
-- `.agents/mkt/lp-optimization.md` present (3 days old).
+- Post-launch evidence notes present: mobile heatmap summary, CTA click split, support-ticket themes.
 - Prior brief: `.agents/mkt/lp-brief/pricing/v1/brief.md`.
-- **Route: B** (audit-anchored required).
+- **Route: B** (evidence-anchored).
 - Tier: primary.
 
 ### Layer 1 (parallel)
 
-**audit-anchor-agent** (with audit):
-> Audit findings (rev 1 weaknesses):
+**evidence-anchor-agent** (with post-launch evidence):
+> Evidence signals (rev 1 weaknesses):
 > 1. Hero receipt visual was too dense — mobile users tapped away before parsing (heatmap evidence).
 > 2. CTA copy "Get my honest price" — message-match scoring fine but action ambiguity (do I see price or get a quote?).
 > 3. FAQ section omitted question: "What happens if my team grows mid-cycle?" (12% of support tickets in rev 1 period asked it).
@@ -131,15 +130,15 @@ User approves at Approval Gate 3.
 
 **Hypothesis A — "Mobile-first receipt simplification"** (3/3)
 - Claim: Rev 1's dense receipt hero killed mobile parse. Simplified 3-line receipt preview with progressive disclosure on tap lifts mobile conversion ≥18% in 3 weeks.
-- Anchor: Audit finding #1.
+- Anchor: evidence signal #1.
 
 **Hypothesis B — "Action-clarified CTA"** (2/3)
 - Claim: Rev 1's CTA ambiguity reduced direct-action click. Splitting into "See full pricing" vs "Get my custom quote" lifts intent-routed conversion ≥12% in 3 weeks.
-- Anchor: Audit finding #2.
+- Anchor: evidence signal #2.
 
 **Hypothesis C — "Team-growth FAQ as objection section"** (3/3)
 - Claim: Team-growth question is the top unaddressed objection. Promoting it from FAQ to dedicated Objection section lifts conversion on growing-team segment ≥20% in 4 weeks.
-- Anchor: Audit finding #3 + ICP refresh.
+- Anchor: evidence signal #3 + ICP refresh.
 
 User picks **C**.
 
@@ -154,7 +153,7 @@ Mobile note: receipt hero adopts hypothesis-A-style simplification as a side eff
 ### Layer 3, 4, 5 proceed as Example 1.
 
 **Critic outputs:**
-- Conversion: 13/13 PASS (rev 2 closes audit findings 1, 2 partially via simplified hero; finding 3 fully via new section).
+- Conversion: 13/13 PASS (rev 2 addresses evidence signals 1, 2 partially via simplified hero; signal 3 fully via new section).
 - Brand-voice: 8/8 PASS, envelope 438 lines.
 
 ### Output
@@ -166,15 +165,15 @@ Mobile note: receipt hero adopts hypothesis-A-style simplification as a side eff
 
 ## Example 3 — Route C: Re-run with --rev=N (mixed-critic verdict)
 
-**Scenario:** Same product 8 weeks later. Rev 2 of `/pricing` underperformed on enterprise-tier conversion. New audit shows tier breakdown was confusing. Time for rev 3.
+**Scenario:** Same product 8 weeks later. Rev 2 of `/pricing` underperformed on enterprise-tier conversion. New analytics and sales-call notes show the tier breakdown was confusing. Time for rev 3.
 
 **Invocation:** `/lp-brief /pricing --rev=3`
 
 ### Step 0: Pre-Dispatch + diff
-- New audit at `lp-optimization.md`.
+- New evidence notes: enterprise conversion segment, sales-call objections, tier-click data.
 - Prior briefs: v1, v2 at `.agents/mkt/lp-brief/pricing/`.
-- **Route: B** (existing page redesign, audit present).
-- The `--rev=3` flag tells orchestrator to read v2 brief and diff against new audit.
+- **Route: B** (existing page redesign, evidence present).
+- The `--rev=3` flag tells orchestrator to read v2 brief and diff against new evidence.
 
 ### Pipeline runs as Example 2, with one difference:
 
@@ -201,8 +200,8 @@ User decides to ship as-is (envelope is 522 — only 22 over the ceiling, design
 
 ## What These Examples Show
 
-1. **Route A is real-world for new products.** Don't pretend you have an audit when you don't.
-2. **Route B is the strongest path.** Anchored hypotheses are sharper than vibe-hypotheses. Always run lp-optimization before redesigning a live page.
+1. **Route A is real-world for new products.** Don't pretend you have post-launch evidence when you don't.
+2. **Route B gets stronger with real evidence.** Anchored hypotheses are sharper than vibe-hypotheses. Use analytics, recordings, experiments, support tickets, and sales-call notes when a live page exists; do not block on a separate heuristic audit.
 3. **Mixed-critic verdict is normal at cycle 2.** The DONE_WITH_CONCERNS path with concerns pinned at top is the correct off-ramp — don't loop forever trying to chase 13/13 + 8/8.
 4. **The brief's job is to be paste-ready.** Once approved, the user (or claude-design / designer) can build without follow-up questions. If they're asking questions, the brief failed.
 

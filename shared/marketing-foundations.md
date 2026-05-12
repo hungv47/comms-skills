@@ -115,8 +115,8 @@ copywriting → content/[slug].copy.md → consumed by humanize, vn-tone
 humanize → content/[slug].humanized.md → final-stage polish
 vn-tone → content/[slug].vn-tone.md → Vietnamese register polish
 
-lp-optimization → audit + inline recommendations → consumed by lp-brief (when redesign warranted)
-lp-brief → mkt/lp-brief/[slug]/brief.md → consumed by design-brief (per asset slot) and external designer/image-gen
+lp-brief → mkt/lp-brief/[slug]/brief.md → owns landing-page construction + conversion-principles gate; consumed by design-brief (per asset slot) and external designer/image-gen
+lp-optimization → deprecated heuristic teardown → explicit requests only; future replacement should be data-backed CRO
 design-brief → mkt/design-briefs/[slug].md → consumed by external designer or image-gen tool
 seo → seo-[mode].md → consumed by copywriting (SEO content), campaign-plan
 
@@ -142,7 +142,7 @@ All marketing skills follow the same re-run protocol:
 | **Pillar** | A core messaging theme (3-5 per brand) | campaign-plan |
 | **Angle** | A specific perspective within a pillar (3D: hook × trigger × stage) | campaign-plan, copywriting |
 | **Hook** | The opening line/visual that captures attention | copywriting, cold-outreach |
-| **CTA** | Call-to-action: specific next step for the audience | copywriting, lp-optimization, lp-brief |
+| **CTA** | Call-to-action: specific next step for the audience | copywriting, lp-brief |
 | **VoC** | Voice of Customer: authentic audience language | icp-research, copywriting |
 | **3Q Test** | Visual + Falsifiable + Uniquely Ours quality gate | copywriting |
 | **Route** | Execution path within a skill (A/B/C/D) | seo, copywriting, lp-brief |

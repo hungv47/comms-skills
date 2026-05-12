@@ -1,6 +1,6 @@
 # Hypothesis Agent
 
-> Generates 3 falsifiable hypothesis candidates for the landing-page redesign, each scored on the 3Q rubric (Visual / Falsifiable / Uniquely Ours), each grounded in audit findings or audience signals.
+> Generates 3 falsifiable hypothesis candidates for the landing page or redesign, each scored on the 3Q rubric (Visual / Falsifiable / Uniquely Ours), each grounded in evidence signals or audience signals.
 
 ## Role
 
@@ -15,7 +15,7 @@ You do NOT:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **audit_digest** | markdown | From audit-anchor-agent |
+| **evidence_digest** | markdown | From evidence-anchor-agent |
 | **brand_digest** | markdown | From brand-anchor-agent |
 | **page_tier** | string | primary / secondary (programmatic out of scope per SKILL.md) |
 | **campaign_context** | object | traffic source, awareness stage, conversion target |
@@ -36,7 +36,7 @@ You do NOT:
 
 **Score:** [N/3]
 
-**Why this:** [Argument tied to specific audit finding, ICP objection, or VoC phrase. Not vibe.]
+**Why this:** [Argument tied to specific page-state/evidence signal, ICP objection, or VoC phrase. Not vibe.]
 
 **What we're betting:** [Success looks like X (specific metric move). Failure looks like Y. Decision rule: if Y, abandon; if X, double down.]
 
@@ -69,10 +69,10 @@ If any two columns share 3+ values → REVISE one to make it materially differen
 
 ## Anchor Trace
 
-For each hypothesis, name the specific audit finding or audience signal it builds on:
-- A → [audit finding L## or ICP objection #N]
-- B → [audit finding or ICP objection]
-- C → [audit finding or ICP objection]
+For each hypothesis, name the specific evidence signal or audience signal it builds on:
+- A → [page/evidence signal L## or ICP objection #N]
+- B → [page/evidence signal or ICP objection]
+- C → [page/evidence signal or ICP objection]
 
 If a hypothesis cannot trace to a finding/signal, it's a vibe and should be revised.
 
@@ -93,13 +93,13 @@ If a hypothesis cannot trace to a finding/signal, it's a vibe and should be revi
 ### Core Principles
 
 1. **Falsifiable always.** "This page should convert better" is not a hypothesis. "Engineering managers reject /pricing because they perceive it as overkill for small teams; segmenting proof by team size lifts conversion 15%+" is.
-2. **Anchor in signal, not aesthetic.** Every hypothesis must cite an audit finding or an audience signal. No "let's try a calculator" without "ICP says they want to see numbers before talking to us."
+2. **Anchor in signal, not aesthetic.** Every hypothesis must cite a page-state/evidence signal or an audience signal. No "let's try a calculator" without "ICP says they want to see numbers before talking to us."
 3. **3Q is the gate.** All 3 must score 2/3 minimum to pass. Aim for 3/3 on at least one.
 4. **Material difference.** A redesign that changes only color is not 3 hypotheses — it's one with variations. Force lead message + conversion mechanism + architecture to vary.
 
 ### Techniques
 
-- **Audit-anchored hypothesis pattern:** "Audit found [finding]; rev N+1 closes it by [structural change]; success metric = [metric]."
+- **Evidence-anchored hypothesis pattern:** "[Source] shows [signal]; rev N+1 closes it by [structural change]; success metric = [metric]."
 - **Audience-anchored hypothesis pattern:** "ICP objects to [objection]; rev N+1 addresses by [content/structural treatment]; success metric = [metric]."
 - **Bet-stating sentence:** "If conversion lifts X% on Y traffic source, the hypothesis holds. If not, abandon and consider [alternative]."
 

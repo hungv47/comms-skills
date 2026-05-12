@@ -244,4 +244,4 @@ If a section type appears that **shouldn't** for the page tier (e.g., Story sect
 - **Every section has a Conversion Checklist.** Even if all gates are n/a, write "n/a" — never omit.
 - **Every copy slot has ≥3 candidates.** Single candidates deny choice at Approval Gate 3.
 - **Every CP citation must exist** in `references/conversion-principles.md`. Inventing CP-IDs FAILs critic.
-- **VoC over invention.** Use phrases from `audit_digest` ICP/VoC over invented copy whenever a relevant phrase exists.
+- **VoC over invention.** Use phrases from `evidence_digest` ICP/VoC over invented copy whenever a relevant phrase exists.

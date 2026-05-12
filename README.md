@@ -61,7 +61,7 @@ campaign-plan                             → .agents/mkt/campaign-plan.md
            design-brief
            (per slot)
 
-Horizontal: copywriting, lp-optimization, humanize, vn-tone — invoked at any stage.
+Horizontal: copywriting, humanize, vn-tone — invoked at any stage. `lp-optimization` is deprecated and only kept for explicit heuristic teardown requests.
 ```
 
 ## Skills
@@ -111,31 +111,32 @@ Headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring
 
 ---
 
-### `lp-optimization` — audit a live landing page for conversion
+### `lp-optimization` — deprecated heuristic landing-page teardown
 
-Audits hero section, CTAs, social proof, objection handling, and page flow. Produces specific copy and structure change recommendations on the existing page. Diagnostic, not redesign.
+Deprecated as a normal pipeline step. Produces a best-practice teardown of a live page only when explicitly requested. It is not true CRO unless the user supplies behavioral evidence such as analytics, recordings, experiments, or conversion data.
 
 **Use when:**
-- Your landing page isn't converting and you need a diagnostic
-- You want a prioritized list of changes ranked by expected conversion impact
-- You're preparing for a paid traffic campaign and want the live page tightened
+- You explicitly want a quick best-practice teardown of an existing page
+- You have post-launch evidence but no dedicated CRO skill exists yet
+- You understand the output is heuristic unless evidence is supplied
 
-**Not for:** redesigning a page from scratch (use `lp-brief`) or designing A/B test variants.
+**Not for:** creating or redesigning landing pages (use `lp-brief`), construction-time conversion checks, or designing A/B test variants.
 
 **Produces:** `.agents/mkt/lp-optimization.md`
 
 ---
 
-### `lp-brief` — architect a landing-page redesign
+### `lp-brief` — architect a high-converting landing page
 
-Generates a campaign-grade brief for a landing-page redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts. Internalizes lp-optimization's conversion principles as evaluation rubric.
+Generates a campaign-grade brief for a landing page or redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts. Owns the landing-page conversion-principles rubric directly, so best practices are built into the page before launch.
 
 **Use when:**
-- The audit said "redesign the page" — now you need a brief precise enough for a designer or AI tool to execute
+- You need a brief precise enough for a designer or AI tool to execute
 - You're shipping a new campaign landing page and want one document that holds hypothesis + architecture + per-section spec + asset routing
+- You're revising an existing page and want the next rev anchored in page state, ICP, and any post-launch evidence
 - You want copy candidates and design-tool handoff prompts in one artifact
 
-**Not for:** auditing an existing page (run `lp-optimization` first — its output feeds this skill) or single-asset creative (use `design-brief`)
+**Not for:** post-launch CRO analysis from analytics/experiments, or single-asset creative (use `design-brief`)
 
 **Produces:** `.agents/mkt/lp-brief/[slug]/brief.md` + per-target handoff prompts + per-slot prompts
 
@@ -168,7 +169,7 @@ Technical audit, keyword research, AI/AEO optimization, programmatic SEO, compet
 - You want to build programmatic SEO pages at scale
 - You need app store optimization for iOS or Android
 
-**Not for:** landing page conversion (use `lp-optimization`) or writing copy (use `copywriting`)
+**Not for:** landing-page construction/conversion brief work (use `lp-brief`) or writing copy (use `copywriting`)
 
 **Produces:** `.agents/mkt/seo-[mode].md`
 
@@ -239,7 +240,7 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 
 ## Cross-Stack
 
-- `brand-system`, `campaign-plan`, `copywriting`, `lp-optimization`, `lp-brief`, `seo`, `cold-outreach`, `ad-copy`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
+- `brand-system`, `campaign-plan`, `copywriting`, `lp-brief`, `seo`, `cold-outreach`, `ad-copy`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
 - `cold-outreach` and `ad-copy` additionally read `research/icp-research.md` for target persona pain language
 - `campaign-plan` and `lp-brief` can read `.agents/prioritize.md` and `.agents/targets.md` from research-skills
 

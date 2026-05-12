@@ -11,7 +11,7 @@ Canonical pipeline definition for the marketing-skills stack. `orchestrate-marke
                                                     │
                                                     ├── lp-brief ──→ design-brief (per slot)
                                                     │       ↑
-                                                    │       └── (optional) lp-optimization (audit feeds redesign)
+                                                    │       └── consumes page state / post-launch evidence when available
 brand-system ──→ campaign-plan ──→ content layer ───┤
                                                     ├── seo (5 modes)
                                                     │
@@ -34,7 +34,7 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 
 **Content layer (parallel options):** copywriting, lp-brief, seo, short-form-brief, social-copy, ad-copy, cold-outreach. User picks based on the asset they need.
 
-**Audit branch:** `lp-optimization` is independent — audits any existing LP URL. Output can feed `lp-brief` for redesign.
+**Landing-page branch:** `lp-brief` owns new LPs, redesigns, and construction-time conversion best practices. `lp-optimization` is deprecated; keep it only for explicit heuristic teardown requests until a data-backed CRO skill exists.
 
 **Polish layer (terminal):** `humanize` strips AI patterns from any text. `vn-tone` polishes already-translated Vietnamese into native register. Both run AFTER content production.
 
@@ -47,7 +47,7 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 - **Job:** brand identity — narrative, voice, positioning, archetype, design tokens.
 - **Produces:** `brand/BRAND.md`, `brand/DESIGN.md` (sometimes `brand/ASSETS.md`)
 - **Consumes:** `research/product-context.md`
-- **When to recommend:** no `brand/BRAND.md` AND user wants brand-foundation OR campaign-planning OR copy-production OR lp-design.
+- **When to recommend:** no `brand/BRAND.md` AND user wants brand-foundation OR campaign-planning OR copy-production OR lp-page.
 - **Cost:** $2–5 · 8 agents · deep budget · ~12 min
 - **Foundation for:** every downstream marketing skill that produces customer-facing content.
 
@@ -69,19 +69,19 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 
 ### lp-optimization
 
-- **Job:** audit existing landing page for conversion — hero, CTA, social proof, objection handling, page flow.
+- **Job:** deprecated heuristic teardown of an existing landing page. Not a normal route; not true CRO without behavioral evidence.
 - **Produces:** `.agents/mkt/lp-optimization.md`
 - **Consumes:** `research/product-context.md`, `research/icp-research.md`
-- **When to recommend:** lp-audit intent (user has a live URL). No brand gate — works standalone, but with brand context the audit references brand voice.
+- **When to recommend:** only when the user explicitly asks for `lp-optimization` or a quick best-practice teardown and understands it is heuristic.
 - **Cost:** $1–3 · 7 agents · deep budget · ~10 min
-- **Output can feed:** `lp-brief` for redesign.
+- **Replacement:** `lp-brief` for construction/redesign; future data-backed CRO skill for analytics/experiment workflows.
 
 ### lp-brief
 
-- **Job:** campaign-grade landing page redesign brief — hypothesis, surface rhythm, section spec, asset slots, copy candidates, hand-off prompts.
+- **Job:** campaign-grade landing page brief — hypothesis, surface rhythm, section spec, asset slots, copy candidates, hand-off prompts, conversion-principles gate.
 - **Produces:** `.agents/mkt/lp-brief/[slug]/brief.md`, `.agents/mkt/lp-brief/[slug]/asset-slots/*.prompt.md`
-- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `brand/BRAND.md`, `brand/DESIGN.md`, `.agents/mkt/campaign-plan.md`, `.agents/mkt/lp-optimization.md` (optional)
-- **When to recommend:** lp-design intent + brand done.
+- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `brand/BRAND.md`, `brand/DESIGN.md`, `.agents/mkt/campaign-plan.md`, page state / post-launch evidence (optional)
+- **When to recommend:** lp-page intent + brand done.
 - **Cost:** $2–4 · 9 agents · deep budget · ~12 min
 - **Hard-gated:** without brand artifacts, recommends brand-system first.
 
@@ -158,7 +158,7 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 ```
 1. Read state. Critical gates:
    - no research/product-context.md  →  defer to /orchestrate-research
-   - no brand/BRAND.md AND intent in {brand, campaign, copy, lp-design}  →  propose brand-system
+   - no brand/BRAND.md AND intent in {brand, campaign, copy, lp-page}  →  propose brand-system
 
 2. Parse user intent → bucket (see Step 2 in SKILL.md)
 
@@ -166,8 +166,8 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
    a. brand-foundation     → brand-system
    b. campaign-planning    → campaign-plan (gate: brand)
    c. copy-production      → copywriting   (soft-gate: brand + campaign)
-   d. lp-audit             → lp-optimization (no gate)
-   e. lp-design            → lp-brief      (gate: brand)
+   d. lp-page              → lp-brief      (gate: brand)
+   e. explicit teardown    → lp-optimization (deprecated, explicit only)
    f. search-visibility    → seo (ask mode)
    g. short-form-video     → short-form-brief (gate: short-form-research)
    h. social-post          → social-copy (soft-gate: short-form-brief OR brand; ask which platform)

@@ -55,7 +55,6 @@ routing:
     - .agents/skill-artifacts/mkt/campaign-plan.md
     - .agents/skill-artifacts/mkt/content/*.md
     - .agents/skill-artifacts/mkt/lp-brief/**/brief.md
-    - .agents/skill-artifacts/mkt/lp-optimization.md
     - .agents/skill-artifacts/mkt/seo-*.md
     - .agents/skill-artifacts/mkt/cold-outreach/*.md
     - .agents/skill-artifacts/mkt/short-form-brief/**/brief.md
@@ -68,10 +67,8 @@ routing:
       when: "brand done, no integrated campaign yet"
     - skill: copywriting
       when: "need specific copy — headline, hook, CTA, section"
-    - skill: lp-optimization
-      when: "auditing an existing landing page for conversion"
     - skill: lp-brief
-      when: "designing a new landing page or full redesign"
+      when: "building, redesigning, or evaluating a landing page against construction-time conversion best practices"
     - skill: seo
       when: "search visibility — keyword research, AI search, programmatic, technical"
     - skill: short-form-brief
@@ -176,8 +173,7 @@ See [`../../../meta-skills/references/manifest-spec.md`](../../../meta-skills/re
 | `brand/ASSETS.md` | Per-platform asset inventory tracked. |
 | `.agents/skill-artifacts/mkt/campaign-plan.md` | Integrated campaign plan exists. |
 | `.agents/skill-artifacts/mkt/content/*.copy.md` | Specific copy artifacts produced. |
-| `.agents/skill-artifacts/mkt/lp-optimization.md` | Existing LP audit done. |
-| `.agents/skill-artifacts/mkt/lp-brief/**/brief.md` | LP redesign brief exists. |
+| `.agents/skill-artifacts/mkt/lp-brief/**/brief.md` | LP brief exists. |
 | `.agents/skill-artifacts/mkt/seo-*.md` | SEO mode artifact (audit / ai / programmatic / competitor / aso). |
 | `.agents/skill-artifacts/mkt/cold-outreach/*.md` | Outbound touch composed. |
 | `.agents/skill-artifacts/mkt/short-form-brief/**/brief.md` | Video brief exists. |
@@ -193,7 +189,6 @@ brand-narrative:   done | partial | missing
 brand-design:      done | partial | missing
 campaign-plan:     done | partial | missing
 content-produced:  [list of slugs that exist]
-lp-audit:          done | not run
 lp-brief:          [list of LP brief slugs]
 seo:               [list of modes run]
 cold-outreach:     [list of touches]
@@ -211,8 +206,7 @@ Match the user's argument against intent buckets:
 | "set up brand", "brand identity", "voice", "logo system", "design tokens", "BRAND.md" | brand-foundation | brand-system |
 | "campaign", "marketing plan", "channel strategy", "content calendar", "GTM" | campaign-planning | campaign-plan |
 | "write copy", "headline", "tagline", "CTA", "hook", "section copy" | copy-production | copywriting |
-| "audit my landing page", "why isn't this LP converting", "LP review" | lp-audit | lp-optimization |
-| "redesign my LP", "new landing page", "LP brief", "page architecture" | lp-design | lp-brief |
+| "landing page", "audit my landing page", "why isn't this LP converting", "LP review", "redesign my LP", "new landing page", "LP brief", "page architecture" | lp-page | lp-brief |
 | "SEO", "keywords", "AI search", "programmatic SEO", "ASO", "search rank" | search-visibility | seo |
 | "TikTok", "Reels", "Shorts", "short-form video", "video hook" | short-form-video | short-form-brief |
 | "Meta ads", "Facebook ads", "Instagram ads", "retargeting ads", "primary text", "ad headline", "paid social", "ad creative copy" | paid-ads | ad-copy |
@@ -240,19 +234,18 @@ Apply rules in order — first match wins.
 
 **Foundation gates (highest priority):**
 1. **No `research/product-context.md`** → defer to research-skills. "Marketing produces hollow output without audience clarity. Run `/orchestrate-research` (specifically `icp-research`) first." Stop here.
-2. **No `brand/BRAND.md` AND user wants brand-foundation OR campaign-planning OR copy-production OR lp-design** → propose `brand-system`. Rationale: brand voice and design tokens feed every downstream content skill.
+2. **No `brand/BRAND.md` AND user wants brand-foundation OR campaign-planning OR copy-production OR lp-page** → propose `brand-system`. Rationale: brand voice and design tokens feed every downstream content skill.
 
 **Pipeline routing:**
 3. **brand done + intent: campaign-planning** → propose `campaign-plan`.
 4. **brand done + intent: copy-production** → propose `copywriting`. If campaign-plan missing, note: "copywriting works without it but is sharper with campaign positioning context."
-5. **Intent: lp-audit** → propose `lp-optimization`. No upstream gate — works on any LP URL.
-6. **brand done + intent: lp-design** → propose `lp-brief`. If `lp-optimization.md` exists, note it will be consumed.
-7. **Intent: search-visibility** → propose `seo`. Ask user which mode (audit / ai / programmatic / competitor / aso).
-8. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `.agents/skill-artifacts/mkt/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
-9. **Intent: paid-ads** → propose `ad-copy`. Hard requires `research/icp-research.md`. Ask which audience-temperature (retargeting / cold) — single-temp per invocation; run twice for campaigns spanning both. Meta-only at v1.
-10. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
-11. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
-12. **Intent: vn-polish** → propose `vn-tone`. Note: post-translation only, runs on already-translated VN text.
+5. **brand done + intent: lp-page** → propose `lp-brief`. Rationale: it owns both landing-page construction and best-practice conversion evaluation. If the user supplied post-launch analytics/recordings/experiment notes, note that `lp-brief` will use them as evidence for the next rev; otherwise it will label the hypothesis assumption-backed.
+6. **Intent: search-visibility** → propose `seo`. Ask user which mode (audit / ai / programmatic / competitor / aso).
+7. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `.agents/skill-artifacts/mkt/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
+8. **Intent: paid-ads** → propose `ad-copy`. Hard requires `research/icp-research.md`. Ask which audience-temperature (retargeting / cold) — single-temp per invocation; run twice for campaigns spanning both. Meta-only at v1.
+9. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
+10. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
+11. **Intent: vn-polish** → propose `vn-tone`. Note: post-translation only, runs on already-translated VN text.
 
 **Ambiguity rule:** if user's intent matches 2+ buckets ("I need content for my new product"), propose 2 options with rationale. Don't pick for them.
 
@@ -272,7 +265,7 @@ Output format:
 - Brand design: ✅ done (brand/DESIGN.md)
 - Campaign plan: ❌ missing
 - Content produced: hero-copy.md, about-page.md
-- LP audit: not run
+- LP briefs: not run
 - SEO: not run
 - Short-form: not run
 
@@ -302,7 +295,7 @@ Append to `.agents/experience/marketing-workflow.md`:
 ```markdown
 ## Session 2026-05-06
 
-- Read state: icp ✅, brand ✅, campaign ❌, copy [hero, about], LP not audited
+- Read state: icp ✅, brand ✅, campaign ❌, copy [hero, about], LP briefs not run
 - User intent: campaign-planning
 - Recommended: campaign-plan
 - User confirmed: yes
@@ -330,7 +323,7 @@ For canonical pipeline, decision rules, per-skill catalog, and polish-chain logi
 - **Don't recommend more than 3 skills** in one proposal.
 - **Don't lecture.** Show only what's relevant to where the user is.
 - **Don't recommend skills outside this stack.** If intent is research or product, point at `/orchestrate-research` or `/orchestrate-product`.
-- **Don't conflate `lp-optimization` and `lp-brief`.** Optimization audits an existing page; brief designs a new one (or full redesign). Audit can feed brief.
+- **Don't route landing-page work to deprecated heuristic audit.** `lp-brief` owns construction-time conversion best practices and can consume post-launch evidence for revisions.
 - **Don't conflate `copywriting` and `humanize`.** Copywriting writes new copy; humanize fixes AI-sounding existing copy. They run in sequence, not in parallel.
 
 ---

@@ -1,7 +1,7 @@
 {
   "name": "marketing-skills",
-  "description": "Brand, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy — 13 skills + orchestrate-marketing orchestrator.",
-  "version": "5.0.0",
+  "description": "Brand, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy — 13 skills + orchestrate-marketing orchestrator. Landing-page conversion best practices now live in lp-brief; lp-optimization is deprecated for explicit teardown only.",
+  "version": "5.1.0",
   "author": { "name": "hungv47" },
   "homepage": "https://github.com/hungv47/marketing-skills",
   "repository": "https://github.com/hungv47/marketing-skills",
