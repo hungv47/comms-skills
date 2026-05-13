@@ -2,7 +2,7 @@
 
 Reference brief for a Vietnamese solo founder shipping B2B SaaS short-form. Founder-mode, market=VN, hero=TikTok + variant=Reels.
 
-This is a **worked example** — the actual hero brief artifact lives at `.agents/mkt/short-form-brief/standup-bot/brief.md`. Below is a condensed reference for agents and humans studying the pattern.
+This is a **worked example** — the actual hero brief artifact lives at `skills-resources/marketing/short-form-brief/standup-bot/brief.md`. Below is a condensed reference for agents and humans studying the pattern.
 
 ---
 
@@ -17,7 +17,7 @@ This is a **worked example** — the actual hero brief artifact lives at `.agent
 
 ---
 
-## Research signals (from `.agents/mkt/short-form-research.md`)
+## Research signals (from `skills-resources/marketing/short-form-research.md`)
 
 - TikTok VN dev-tools niche: credential-flash hook archetype dominates (8/12 sample)
 - TikTok 70% completion threshold per Creator Portal

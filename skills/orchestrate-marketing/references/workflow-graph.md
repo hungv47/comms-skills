@@ -10,8 +10,8 @@ Canonical pipeline definition for the marketing-skills stack. `orchestrate-marke
                                                     ┌── copywriting (any surface)
                                                     │
                                                     ├── lp-brief ──→ design-brief (per slot)
-                                                    │       ↑
-                                                    │       └── consumes page state / post-launch evidence when available
+                                                    │
+                                                    ├── eval-loop ──→ lp-eval (post-launch page evidence)
 brand-system ──→ campaign-plan ──→ content layer ───┤
                                                     ├── seo (5 modes)
                                                     │
@@ -34,7 +34,7 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 
 **Content layer (parallel options):** copywriting, lp-brief, seo, short-form-brief, social-copy, ad-copy, cold-outreach. User picks based on the asset they need.
 
-**Landing-page branch:** `lp-brief` owns new LPs, redesigns, and construction-time conversion best practices.
+**Landing-page branch:** `lp-brief` owns new LPs, redesigns, and construction-time conversion best practices. `lp-eval` owns post-launch performance scoring, but only inside an existing `eval-loop` workspace.
 
 **Polish layer (terminal):** `humanize` strips AI patterns from any text. `vn-tone` polishes already-translated Vietnamese into native register. Both run AFTER content production.
 
@@ -54,33 +54,42 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 ### campaign-plan
 
 - **Job:** integrated marketing plan — channel strategy, positioning, calendar, budget, GTM timeline.
-- **Produces:** `.agents/mkt/campaign-plan.md`
-- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `.agents/prioritize.md` (optional), `.agents/mkt/content-research.md` (optional)
+- **Produces:** `skills-resources/marketing/campaign-plan.md`
+- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `skills-resources/meta/sketches/prioritize-*.md` (optional), `skills-resources/marketing/content-research.md` (optional)
 - **When to recommend:** brand done; user wants campaign-planning intent.
 - **Cost:** $1–3 · 6 agents · deep budget · ~10 min
 
 ### copywriting
 
 - **Job:** write or evaluate persuasive copy — headlines, hooks, CTAs, taglines, section copy. Produces ranked alternatives with rubric scoring.
-- **Produces:** `.agents/mkt/content/[slug].copy.md`
-- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `.agents/mkt/campaign-plan.md` (optional), `.agents/mkt/content-research.md` (optional)
+- **Produces:** `skills-resources/marketing/content/[slug].copy.md`
+- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `skills-resources/marketing/campaign-plan.md` (optional), `skills-resources/marketing/content-research.md` (optional)
 - **When to recommend:** copy-production intent. Works without campaign-plan but sharper with it.
 - **Cost:** $1–3 · 9 agents · deep budget · ~10 min
 
 ### lp-brief
 
 - **Job:** campaign-grade landing page brief — hypothesis, surface rhythm, section spec, asset slots, copy candidates, hand-off prompts, conversion-principles gate.
-- **Produces:** `.agents/mkt/lp-brief/[slug]/brief.md`, `.agents/mkt/lp-brief/[slug]/asset-slots/*.prompt.md`
-- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `brand/BRAND.md`, `brand/DESIGN.md`, `.agents/mkt/campaign-plan.md`, page state / post-launch evidence (optional)
+- **Produces:** `skills-resources/marketing/lp-brief/[slug]/brief.md`, `skills-resources/marketing/lp-brief/[slug]/asset-slots/*.prompt.md`
+- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `brand/BRAND.md`, `brand/DESIGN.md`, `skills-resources/marketing/campaign-plan.md`, page state / post-launch evidence (optional)
 - **When to recommend:** lp-page intent + brand done.
 - **Cost:** $2–4 · 9 agents · deep budget · ~12 min
 - **Hard-gated:** without brand artifacts, recommends brand-system first.
 
+### lp-eval
+
+- **Job:** post-launch landing-page evaluation from real metric evidence — conversion analytics, experiment results, recordings/heatmaps, form-funnel data, or operator-supplied metric notes.
+- **Produces:** `skills-resources/marketing/loops/[slug]/evals/[date]-cycle-N.md`, appends `skills-resources/marketing/loops/[slug]/results.tsv`, may promote high-confidence lessons to `skills-resources/marketing/loops/[slug]/learnings.md`
+- **Consumes:** `skills-resources/marketing/loops/[slug]/program.md`, `context.md`, prior `results.tsv`, loop `strategy/` + `execution/`, page URL/route, metric source/window/value
+- **When to recommend:** lp-eval intent + existing eval loop. If no loop exists, recommend `eval-loop` first.
+- **Cost:** $0.75–1.50 · 4 agents · standard budget · ~6 min
+- **Hard-gated:** no existing loop, no primary metric value/source/window, or generic heuristic audit request without measurement evidence.
+
 ### design-brief
 
 - **Job:** per-asset graphic design brief — IG carousel/post/story, LinkedIn doc/single, FB ad, YouTube thumbnail, X card, banner/display, OOH, OG card.
-- **Produces:** `.agents/mkt/design-briefs/[slug].md`
-- **Consumes:** `brand/BRAND.md`, `brand/DESIGN.md`, `brand/ASSETS.md`, `.agents/mkt/lp-brief/[slug]/asset-slots/*.md`, `.agents/mkt/content/[slug].copy.md`
+- **Produces:** `skills-resources/marketing/design-briefs/[slug].md`
+- **Consumes:** `brand/BRAND.md`, `brand/DESIGN.md`, `brand/ASSETS.md`, `skills-resources/marketing/lp-brief/[slug]/asset-slots/*.md`, `skills-resources/marketing/content/[slug].copy.md`
 - **When to recommend:** specific asset slot or graphic asset request. Often invoked after lp-brief on an asset slot.
 - **Cost:** $1–2 · 7 agents · standard budget · ~6 min
 - **Hard-gated:** without brand, recommends brand-system first.
@@ -88,24 +97,24 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 ### seo
 
 - **Job:** search visibility — 5 modes (audit / ai / programmatic / competitor / aso).
-- **Produces:** `.agents/mkt/seo-[mode].md`
-- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `.agents/mkt/campaign-plan.md` (optional)
+- **Produces:** `skills-resources/marketing/seo-[mode].md`
+- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `skills-resources/marketing/campaign-plan.md` (optional)
 - **When to recommend:** search-visibility intent. Ask user which mode.
 - **Cost:** $2–5 · 11 agents · deep budget · ~15 min
 
 ### short-form-brief
 
 - **Job:** production-ready video brief — hook, shot list, on-screen text, audio plan, caption, CTA, aspect, length. Live-action OR motion-graphic. Hero + max 2 platform variants per call.
-- **Produces:** `.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md`, `[slug]/variants/[platform].md`
-- **Consumes:** `.agents/skill-artifacts/research/short-form-research.md` (from research-skills), `research/icp-research.md`, `brand/BRAND.md`
+- **Produces:** `skills-resources/marketing/short-form-brief/[slug]/brief.md`, `[slug]/variants/[platform].md`
+- **Consumes:** `skills-resources/research/short-form-research.md` (from research-skills), `research/icp-research.md`, `brand/BRAND.md`
 - **When to recommend:** short-form-video intent. Hard-gated on `short-form-research.md`.
 - **Cost:** $1–3 · 9 agents · deep budget · ~10 min
 
 ### social-copy
 
 - **Job:** platform-native social post copy — A/B hook variants, body, CTA, format spec for tiktok / reels / shorts / x / linkedin. Single-platform per invocation. Char-limit + CTA-truncation enforced; 5-dim critic rubric.
-- **Produces:** `.agents/skill-artifacts/mkt/copy/[platform]-[date]-[slug].md`
-- **Consumes:** `.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md` OR inline topic; `brand/BRAND.md`; `marketing-skills/skills/short-form-brief/references/platform-intelligence/[platform].md`
+- **Produces:** `skills-resources/marketing/copy/[platform]-[date]-[slug].md`
+- **Consumes:** `skills-resources/marketing/short-form-brief/[slug]/brief.md` OR inline topic; `brand/BRAND.md`; `marketing-skills/skills/short-form-brief/references/platform-intelligence/[platform].md`
 - **When to recommend:** social-post intent (user has a topic / brief and wants ready-to-publish copy for a specific platform). Distinct from `copywriting` (horizontal — any surface, no per-platform format enforcement) and `short-form-brief` (per-asset video brief, not the post copy itself).
 - **Cost:** $0.50–1.50 · 3 agents · standard budget · ~5 min
 - **Polish chain:** `polish_chain=humanize|vn-tone|none` (default `none`).
@@ -113,15 +122,15 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 ### ad-copy
 
 - **Job:** Meta paid-ad copy (retargeting + cold-traffic) — hero + 2 variants per audience-temperature with audience-temp framing, hard char-cap enforcement, policy/claim substantiation, 6-dim rubric scoring, automatic humanize terminal pass per variant.
-- **Produces:** `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md`, `[slug].rationale.md`, `[slug].critic-score.md`
-- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `brand/BRAND.md`; per-surface practitioner refs at `marketing-skills/skills/ad-copy/references/ad-intelligence/{meta-retargeting,meta-cold-traffic,creative-cadence}.md`
+- **Produces:** `skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].md`, `[slug].rationale.md`, `[slug].critic-score.md`
+- **Consumes:** `research/product-context.md`, `research/icp-research.md`, `skills-resources/marketing/campaign-plan.md`, `brand/BRAND.md`; per-surface practitioner refs at `marketing-skills/skills/ad-copy/references/ad-intelligence/{meta-retargeting,meta-cold-traffic,creative-cadence}.md`
 - **When to recommend:** paid-ads intent (Meta retargeting OR cold-traffic). Single audience-temperature per invocation — run twice for campaigns spanning both. Google RSA / LinkedIn / TikTok Ads NOT in v1 (refs not pre-staged).
 - **Cost:** $1–2 · 5 agents · deep budget · ~10 min
 
 ### cold-outreach
 
 - **Job:** cold email / LinkedIn DM / X DM / iMessage / SMS / proposal composition with signal-based personalization, 5-dimension rubric scoring, automatic humanize terminal pass.
-- **Produces:** `.agents/mkt/cold-outreach/[slug].md`, `[slug].rationale.md`, `[slug].critic-score.md`
+- **Produces:** `skills-resources/marketing/cold-outreach/[slug].md`, `[slug].rationale.md`, `[slug].critic-score.md`
 - **Consumes:** `research/product-context.md`, `research/icp-research.md`
 - **When to recommend:** outbound intent. Hard requires icp-research.md.
 - **Cost:** $0.50–1.50 · 8 agents · deep budget · ~8 min
@@ -129,16 +138,16 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 ### humanize
 
 - **Job:** strip AI patterns, inject brand voice, compress (15%+ word reduction with zero idea loss).
-- **Produces:** `.agents/mkt/content/[slug].humanized.md`
-- **Consumes:** `research/product-context.md`, `.agents/mkt/content/[slug].md` (input text)
+- **Produces:** `skills-resources/marketing/content/[slug].humanized.md`
+- **Consumes:** `research/product-context.md`, `skills-resources/marketing/content/[slug].md` (input text)
 - **When to recommend:** text-polish intent OR after copywriting on user-facing copy.
 - **Cost:** $0.15–0.40 · 6 agents · standard budget · ~3 min
 
 ### vn-tone
 
 - **Job:** polish already-translated Vietnamese into native register (báo chí, semi-casual, bro, pop-marketing). Post-translation only — does NOT translate.
-- **Produces:** `.agents/mkt/content/[slug].vn-tone.md`
-- **Consumes:** `research/product-context.md`, `.agents/mkt/content/[slug].humanized.md` OR `[slug].md`
+- **Produces:** `skills-resources/marketing/content/[slug].vn-tone.md`
+- **Consumes:** `research/product-context.md`, `skills-resources/marketing/content/[slug].humanized.md` OR `[slug].md`
 - **When to recommend:** vn-polish intent (text is already in VN, sounds translationese).
 - **Cost:** $0.08–0.20 · 3 agents · standard budget · ~2 min
 
@@ -158,13 +167,14 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
    b. campaign-planning    → campaign-plan (gate: brand)
    c. copy-production      → copywriting   (soft-gate: brand + campaign)
    d. lp-page              → lp-brief      (gate: brand)
-   e. search-visibility    → seo (ask mode)
-   f. short-form-video     → short-form-brief (gate: short-form-research)
-   g. social-post          → social-copy (soft-gate: short-form-brief OR brand; ask which platform)
-   h. paid-ads             → ad-copy (gate: icp; ask audience-temp — retargeting OR cold)
-   i. outbound             → cold-outreach (gate: icp)
-   j. text-polish          → humanize
-   k. vn-polish            → vn-tone
+   e. lp-eval              → lp-eval if loop exists; otherwise eval-loop first
+   f. search-visibility    → seo (ask mode)
+   g. short-form-video     → short-form-brief (gate: short-form-research)
+   h. social-post          → social-copy (soft-gate: short-form-brief OR brand; ask which platform)
+   i. paid-ads             → ad-copy (gate: icp; ask audience-temp — retargeting OR cold)
+   j. outbound             → cold-outreach (gate: icp)
+   k. text-polish          → humanize
+   l. vn-polish            → vn-tone
 
 4. Polish chain hint:
    - If output of recommended skill is user-facing copy in EN → mention humanize as terminal step.
@@ -197,7 +207,7 @@ After any content-producing skill, the natural terminal pass is:
 
 ## Re-Entry Behavior
 
-`/orchestrate-marketing` is idempotent. When the breadcrumb shows "user confirmed: campaign-plan" and `.agents/mkt/campaign-plan.md` now exists, advance to the next step (typically copywriting or lp-brief based on current intent).
+`/orchestrate-marketing` is idempotent. When the breadcrumb shows "user confirmed: campaign-plan" and `skills-resources/marketing/campaign-plan.md` now exists, advance to the next step (typically copywriting or lp-brief based on current intent).
 
 If recommended skill never produced its artifact, surface that.
 

@@ -249,7 +249,7 @@ Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`
 
 **Read order:**
 1. Pipeline: `research/product-context.md`, `research/icp-research.md`. Existing brand assets directory if present.
-2. Experience: `.agents/experience/{product,audience,brand,business}.md`.
+2. Experience: `skills-resources/experience/{product,audience,brand,business}.md`.
 
 If pipeline artifact `date` fields are >30 days old, warn and recommend re-running `icp-research`.
 
@@ -337,7 +337,7 @@ After Pre-Dispatch resolves:
 1. **Read** the agent instruction file — include FULL content in the Agent prompt
 2. **Append** context (product, audience, competitive landscape, existing assets) after instructions
 3. **Resolve file paths to absolute** — rooted at this skill's directory
-4. **Pass upstream artifacts by content** — orchestrator reads `.agents/` files FIRST, includes excerpts in context. Sub-agents do NOT read artifact files directly.
+4. **Pass upstream artifacts by content** — orchestrator reads `skills-resources/` files FIRST, includes excerpts in context. Sub-agents do NOT read artifact files directly.
 5. If **feedback** exists (from critic FAIL), append with header "## Critic Feedback — Address Every Point"
 
 ### Conventions

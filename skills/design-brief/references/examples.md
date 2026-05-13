@@ -86,7 +86,7 @@ wide shot of an empty corporate conference room at dusk, abandoned ergonomic mes
 
 ### Output
 
-`.agents/mkt/design/standups-killed-og/`
+`skills-resources/marketing/design/standups-killed-og/`
 - `brief.md` (concept A)
 - `prompt.md` (MJ + 2 variants + post-processing)
 - `critic.md`
@@ -119,7 +119,7 @@ Orchestrator detects render path matches ASSETS.md row `brand/og/blog/standups-k
 
 User picks **A**. (B = also good; C = re-route to P.)
 
-**Copy-anchor:** 8 slides of copy from `mkt/content/pricing-tiers.md` (content-create produced earlier).
+**Copy-anchor:** 8 slides of copy from `skills-resources/marketing/content/pricing-tiers.md` (content-create produced earlier).
 
 ### Layer 1.5: Brief Synth
 
@@ -151,7 +151,7 @@ Layer 2PE re-dispatched with feedback. Re-critic. PASS. Approved.
 
 ### Output
 
-`.agents/mkt/design/pricing-tiers-carousel-ig/`
+`skills-resources/marketing/design/pricing-tiers-carousel-ig/`
 - `brief.md`
 - `render.pen`
 - `critic.md`
@@ -193,7 +193,7 @@ Brief with sections: Header, 12-icon grid, per-icon spec annotations, anatomy ca
 - hex-only
 - no margins (gap on parent, padding on children)
 
-Saved to `.agents/mkt/design/icon-style-artboard/render.html`. **NOT** roundtripped into `brand/`.
+Saved to `skills-resources/marketing/design/icon-style-artboard/render.html`. **NOT** roundtripped into `brand/`.
 
 ### Layer 3: Critic → PASS.
 
@@ -252,7 +252,7 @@ Produces `figma-spec.md` with:
 
 ### Output
 
-`.agents/mkt/design/hero-billboard/`
+`skills-resources/marketing/design/hero-billboard/`
 - `brief.md`
 - `figma-spec.md`
 - `critic.md`

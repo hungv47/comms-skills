@@ -171,7 +171,7 @@ Written when `target_handoff` lists the corresponding target:
 Written by downstream skills (per asset slot, not by handoff-agent):
 - `asset-slots/{slot-id}.prompt.md` — per-asset generative prompts written by `design-brief` (today) or other media-briefing agents (motion-brief, 3d-brief, video-brief — added as the stack grows)
 
-All companions live alongside `brief.md` at `.agents/mkt/lp-brief/[slug]/`.
+All companions live alongside `brief.md` at `skills-resources/marketing/lp-brief/[slug]/`.
 
 ### Examples
 

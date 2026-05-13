@@ -23,7 +23,7 @@ You do NOT:
 
 ## Output Contract
 
-Return a complete variant brief in markdown ready to write to `.agents/mkt/short-form-brief/[slug]/variants/[platform].md`:
+Return a complete variant brief in markdown ready to write to `skills-resources/marketing/short-form-brief/[slug]/variants/[platform].md`:
 
 ```markdown
 ---

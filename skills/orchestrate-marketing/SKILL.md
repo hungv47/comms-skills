@@ -1,6 +1,6 @@
 ---
 name: orchestrate-marketing
-description: "Stack orchestrator for marketing-skills. Reads what's already done in `brand/`, `research/`, and `.agents/skill-artifacts/mkt/`, parses your intent, and proposes the next 1–3 skills in the marketing pipeline (brand-system → campaign-plan → copywriting / lp-brief / seo / cold-outreach / short-form-brief → humanize / vn-tone). Use when you don't know which marketing skill to invoke, or want a guided run from brand foundation through content production. Not for executing the work itself — it routes to the skill that does. Not for cross-stack workflows (use orchestrate-meta or invoke skills directly). Renamed from `start-marketing` in v4.0.0."
+description: "Stack orchestrator for marketing-skills. Reads what's already done in `brand/`, `research/`, `skills-resources/marketing/`, and `skills-resources/marketing/loops/`, parses your intent, and proposes the next 1–3 skills in the marketing pipeline (brand-system → campaign-plan → copywriting / lp-brief / lp-eval / seo / cold-outreach / short-form-brief → humanize / vn-tone). Use when you don't know which marketing skill to invoke, or want a guided run from brand foundation through content production and measurable evaluation. Not for executing the work itself — it routes to the skill that does. Not for cross-stack workflows (use orchestrate-meta or invoke skills directly). Renamed from `start-marketing` in v4.0.0."
 argument-hint: "[free-form ask, or empty to be guided]"
 allowed-tools: Read Grep Glob Bash
 user-invocable: true
@@ -43,7 +43,7 @@ routing:
   position: orchestrator
   lifecycle: pipeline
   produces:
-    - .agents/experience/marketing-workflow.md
+    - skills-resources/experience/marketing-workflow.md
   side-effects:
     - manifest-sync
   consumes:
@@ -52,13 +52,15 @@ routing:
     - brand/BRAND.md
     - brand/DESIGN.md
     - brand/ASSETS.md
-    - .agents/skill-artifacts/mkt/campaign-plan.md
-    - .agents/skill-artifacts/mkt/content/*.md
-    - .agents/skill-artifacts/mkt/lp-brief/**/brief.md
-    - .agents/skill-artifacts/mkt/seo-*.md
-    - .agents/skill-artifacts/mkt/cold-outreach/*.md
-    - .agents/skill-artifacts/mkt/short-form-brief/**/brief.md
-    - .agents/experience/*.md
+    - skills-resources/marketing/campaign-plan.md
+    - skills-resources/marketing/content/*.md
+    - skills-resources/marketing/lp-brief/**/brief.md
+    - skills-resources/marketing/loops/*/evals/*.md
+    - skills-resources/marketing/loops/*/results.tsv
+    - skills-resources/marketing/seo-*.md
+    - skills-resources/marketing/cold-outreach/*.md
+    - skills-resources/marketing/short-form-brief/**/brief.md
+    - skills-resources/experience/*.md
   requires: []
   defers-to:
     - skill: brand-system
@@ -68,7 +70,11 @@ routing:
     - skill: copywriting
       when: "need specific copy — headline, hook, CTA, section"
     - skill: lp-brief
-      when: "building, redesigning, or evaluating a landing page against construction-time conversion best practices"
+      when: "building or redesigning a landing page against construction-time conversion best practices"
+    - skill: lp-eval
+      when: "evaluating launched landing-page performance from analytics, experiments, recordings, or metric notes inside an eval loop"
+    - skill: eval-loop
+      when: "landing-page performance evaluation is requested but no measurable loop workspace exists"
     - skill: seo
       when: "search visibility — keyword research, AI search, programmatic, technical"
     - skill: short-form-brief
@@ -88,7 +94,7 @@ routing:
 
 *Meta — Stack orchestrator. The entry point for the marketing-skills stack when you don't know what to invoke.*
 
-**Core Job:** read what's been done in `brand/` and `.agents/skill-artifacts/mkt/`, infer where you are in the marketing pipeline, propose the next skill.
+**Core Job:** read what's been done in `brand/`, `skills-resources/marketing/`, and `skills-resources/marketing/loops/`, infer where you are in the marketing pipeline, propose the next skill.
 
 **Core Question:** "Given the brand foundation, the campaign state, and what you just asked, which content skill produces the highest-leverage next artifact?"
 
@@ -115,7 +121,7 @@ This skill does NOT execute marketing work. It is a router and progress-tracker.
 
 **Tier note (`metadata.budget: fast`):** This is a pure router — no sub-agent dispatch, no critic gate. The body below runs in-line: read state, parse intent, propose next skill, await user confirmation. No `agents/` directory, no L1/L2 layers, no rewrite cycles. The premium-orchestration substrate (multi-agent + critic) lives in the skills this router proposes; running it here would be theater.
 
-1. **State detection** — silently read `research/`, `brand/`, `.agents/skill-artifacts/mkt/`, `.agents/experience/*.md`.
+1. **State detection** — silently read `research/`, `brand/`, `skills-resources/marketing/`, `skills-resources/experience/*.md`.
 2. **Intention analysis** — parse the user's free-form ask. If empty, ask one bundled scoping question.
 3. **Routing decision** — propose the next 1–3 skills with rationale + cost + duration + what each produces.
 4. **User confirmation** — user picks one. Skill prints the hand-off `/skill-name` command and exits. Never auto-invokes.
@@ -128,7 +134,10 @@ This skill does NOT execute marketing work. It is a router and progress-tracker.
 
 ```
 Artifacts by domain:
-! `[ -d .agents/skill-artifacts ] && find .agents/skill-artifacts -mindepth 2 -name "*.md" -type f 2>/dev/null | awk -F/ '{print $3}' | sort | uniq -c | sort -rn | grep . || echo "  (no .agents/skill-artifacts/ yet)"`
+! `[ -d skills-resources ] && find skills-resources -mindepth 2 -name "*.md" -type f 2>/dev/null | awk -F/ '{print $3}' | sort | uniq -c | sort -rn | grep . || echo "  (no skills-resources/ yet)"`
+
+Eval loops:
+! `find skills-resources/marketing/loops -maxdepth 2 -type f 2>/dev/null | sed 's#^#  #' | head -30 | grep . || echo "  (no skills-resources/marketing/loops/ yet)"`
 
 Top-level canonical folders present:
 ! `found=0; for d in research brand architecture; do [ -d "$d" ] && { echo "  $d/ ✓"; found=1; }; done; [ $found -eq 0 ] && echo "  (none yet)" || true`
@@ -139,9 +148,9 @@ Last 5 commits in this repo:
 
 The `! \`...\`` lines run at slash-command invocation time and substitute the command output — so the orchestrator starts from concrete state instead of speculating about what's on disk.
 
-Read `.agents/manifest.json` first — it is the canonical state index for all artifact metadata (status, staleness, producer, summary). Filesystem scans are a fallback only.
+Read `skills-resources/manifest.json` first — it is the canonical state index for all artifact metadata (status, staleness, producer, summary). Filesystem scans are a fallback only.
 
-If `.agents/manifest.json` is missing or its `updated_at` appears stale, refresh it:
+If `skills-resources/manifest.json` is missing or its `updated_at` appears stale, refresh it:
 ```bash
 bun ${SKILLS_ROOT:-.claude/skills}/meta-skills/scripts/manifest-sync.ts
 ```
@@ -162,7 +171,7 @@ Staleness is derived per-artifact via the manifest's `stale_after_days` (default
 
 See [`../../../meta-skills/references/manifest-spec.md`](../../../meta-skills/references/manifest-spec.md) for the full contract.
 
-**Path reference / filesystem fallback** — used only when `.agents/manifest.json` doesn't exist (fresh project) or sync hasn't been run.
+**Path reference / filesystem fallback** — used only when `skills-resources/manifest.json` doesn't exist (fresh project) or sync hasn't been run.
 
 | Path | What it tells you |
 |---|---|
@@ -171,15 +180,18 @@ See [`../../../meta-skills/references/manifest-spec.md`](../../../meta-skills/re
 | `brand/BRAND.md` | Brand narrative + voice + positioning defined. |
 | `brand/DESIGN.md` | Visual system + design tokens defined. |
 | `brand/ASSETS.md` | Per-platform asset inventory tracked. |
-| `.agents/skill-artifacts/mkt/campaign-plan.md` | Integrated campaign plan exists. |
-| `.agents/skill-artifacts/mkt/content/*.copy.md` | Specific copy artifacts produced. |
-| `.agents/skill-artifacts/mkt/lp-brief/**/brief.md` | LP brief exists. |
-| `.agents/skill-artifacts/mkt/seo-*.md` | SEO mode artifact (audit / ai / programmatic / competitor / aso). |
-| `.agents/skill-artifacts/mkt/cold-outreach/*.md` | Outbound touch composed. |
-| `.agents/skill-artifacts/mkt/short-form-brief/**/brief.md` | Video brief exists. |
-| `.agents/skill-artifacts/mkt/short-form-research.md` | Short-form best-practice catalog (from research-skills). |
-| `.agents/experience/marketing-workflow.md` | Prior breadcrumb. |
-| `.agents/experience/brand.md`, `audience.md`, `content.md` | Persisted cold-start answers. |
+| `skills-resources/marketing/campaign-plan.md` | Integrated campaign plan exists. |
+| `skills-resources/marketing/content/*.copy.md` | Specific copy artifacts produced. |
+| `skills-resources/marketing/lp-brief/**/brief.md` | LP brief exists. |
+| `skills-resources/marketing/loops/*/program.md` | Measurable loop exists. |
+| `skills-resources/marketing/loops/*/evals/*.md` | Loop-local evaluation artifacts exist. |
+| `skills-resources/marketing/loops/*/results.tsv` | Keep/discard/watch/blocked result ledger exists. |
+| `skills-resources/marketing/seo-*.md` | SEO mode artifact (audit / ai / programmatic / competitor / aso). |
+| `skills-resources/marketing/cold-outreach/*.md` | Outbound touch composed. |
+| `skills-resources/marketing/short-form-brief/**/brief.md` | Video brief exists. |
+| `skills-resources/marketing/short-form-research.md` | Short-form best-practice catalog (from research-skills). |
+| `skills-resources/experience/marketing-workflow.md` | Prior breadcrumb. |
+| `skills-resources/experience/brand.md`, `audience.md`, `content.md` | Persisted cold-start answers. |
 
 Build a state map:
 
@@ -190,6 +202,7 @@ brand-design:      done | partial | missing
 campaign-plan:     done | partial | missing
 content-produced:  [list of slugs that exist]
 lp-brief:          [list of LP brief slugs]
+eval-loops:        [list of loop slugs + latest result if any]
 seo:               [list of modes run]
 cold-outreach:     [list of touches]
 short-form:        [list of brief slugs]
@@ -206,7 +219,8 @@ Match the user's argument against intent buckets:
 | "set up brand", "brand identity", "voice", "logo system", "design tokens", "BRAND.md" | brand-foundation | brand-system |
 | "campaign", "marketing plan", "channel strategy", "content calendar", "GTM" | campaign-planning | campaign-plan |
 | "write copy", "headline", "tagline", "CTA", "hook", "section copy" | copy-production | copywriting |
-| "landing page", "audit my landing page", "why isn't this LP converting", "LP review", "redesign my LP", "new landing page", "LP brief", "page architecture" | lp-page | lp-brief |
+| "landing page", "redesign my LP", "new landing page", "LP brief", "page architecture", "hero section", "section spec" | lp-page | lp-brief |
+| "landing page analytics", "LP results", "post-launch CRO", "conversion rate changed", "should we keep this page change", "experiment results", "GA4 says", "heatmap / recordings" | lp-eval | lp-eval |
 | "SEO", "keywords", "AI search", "programmatic SEO", "ASO", "search rank" | search-visibility | seo |
 | "TikTok", "Reels", "Shorts", "short-form video", "video hook" | short-form-video | short-form-brief |
 | "Meta ads", "Facebook ads", "Instagram ads", "retargeting ads", "primary text", "ad headline", "paid social", "ad creative copy" | paid-ads | ad-copy |
@@ -221,7 +235,7 @@ Match the user's argument against intent buckets:
 > 1. Set up brand foundation (voice, design system)
 > 2. Plan a campaign (channels, calendar, GTM)
 > 3. Produce specific content (copy, LP, ad, video, email)
-> 4. Audit existing content (LP review, voice check)
+> 4. Evaluate existing content (LP analytics, voice check)
 > 5. Polish existing text (humanize, VN tone)"
 
 Wait for answer.
@@ -239,17 +253,18 @@ Apply rules in order — first match wins.
 **Pipeline routing:**
 3. **brand done + intent: campaign-planning** → propose `campaign-plan`.
 4. **brand done + intent: copy-production** → propose `copywriting`. If campaign-plan missing, note: "copywriting works without it but is sharper with campaign positioning context."
-5. **brand done + intent: lp-page** → propose `lp-brief`. Rationale: it owns both landing-page construction and best-practice conversion evaluation. If the user supplied post-launch analytics/recordings/experiment notes, note that `lp-brief` will use them as evidence for the next rev; otherwise it will label the hypothesis assumption-backed.
-6. **Intent: search-visibility** → propose `seo`. Ask user which mode (audit / ai / programmatic / competitor / aso).
-7. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `.agents/skill-artifacts/mkt/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
-8. **Intent: paid-ads** → propose `ad-copy`. Hard requires `research/icp-research.md`. Ask which audience-temperature (retargeting / cold) — single-temp per invocation; run twice for campaigns spanning both. Meta-only at v1.
-9. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
-10. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
-11. **Intent: vn-polish** → propose `vn-tone`. Note: post-translation only, runs on already-translated VN text.
+5. **brand done + intent: lp-page** → propose `lp-brief`. Rationale: it owns landing-page construction and redesign briefs, with conversion principles applied before launch.
+6. **Intent: lp-eval** → if a matching `skills-resources/marketing/loops/[slug]/` exists, propose `lp-eval`; otherwise propose `eval-loop` first and explain that `lp-eval` writes into an existing loop. Rationale: post-launch page evidence belongs in the loop ledger, not a one-off audit.
+7. **Intent: search-visibility** → propose `seo`. Ask user which mode (audit / ai / programmatic / competitor / aso).
+8. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `skills-resources/marketing/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
+9. **Intent: paid-ads** → propose `ad-copy`. Hard requires `research/icp-research.md`. Ask which audience-temperature (retargeting / cold) — single-temp per invocation; run twice for campaigns spanning both. Meta-only at v1.
+10. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
+11. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
+12. **Intent: vn-polish** → propose `vn-tone`. Note: post-translation only, runs on already-translated VN text.
 
 **Ambiguity rule:** if user's intent matches 2+ buckets ("I need content for my new product"), propose 2 options with rationale. Don't pick for them.
 
-**Polish chain:** if user is producing copy and a `.agents/experience/content.md` says brand_mode=founder OR market includes Vietnamese, mention humanize/vn-tone as the terminal step after copywriting.
+**Polish chain:** if user is producing copy and a `skills-resources/experience/content.md` says brand_mode=founder OR market includes Vietnamese, mention humanize/vn-tone as the terminal step after copywriting.
 
 ---
 
@@ -279,7 +294,7 @@ Why: brand foundation + ICP are in place. campaign-plan consumes both
 and produces the channel strategy + content calendar that downstream
 skills (copywriting, seo, short-form-brief, cold-outreach) hang off.
 
-Cost: ~$1–3 · Duration: ~10 min · Produces: .agents/skill-artifacts/mkt/campaign-plan.md
+Cost: ~$1–3 · Duration: ~10 min · Produces: skills-resources/marketing/campaign-plan.md
 
 Run it?  →  /campaign-plan
 ```
@@ -290,7 +305,7 @@ If multiple options apply, show 2–3.
 
 ## Step 5: Persist + Hand Off
 
-Append to `.agents/experience/marketing-workflow.md`:
+Append to `skills-resources/experience/marketing-workflow.md`:
 
 ```markdown
 ## Session 2026-05-06
@@ -317,13 +332,13 @@ For canonical pipeline, decision rules, per-skill catalog, and polish-chain logi
 
 ## Anti-Patterns
 
-- **Don't ignore the manifest** — always read `.agents/manifest.json` first; per-path filesystem scans are a fallback, not the default.
+- **Don't ignore the manifest** — always read `skills-resources/manifest.json` first; per-path filesystem scans are a fallback, not the default.
 - **Don't bypass the icp foundation gate.** Marketing without ICP context produces generic output.
 - **Don't auto-invoke** the recommended skill. Always print `/skill-name` and let the user type it.
 - **Don't recommend more than 3 skills** in one proposal.
 - **Don't lecture.** Show only what's relevant to where the user is.
 - **Don't recommend skills outside this stack.** If intent is research or product, point at `/orchestrate-research` or `/orchestrate-product`.
-- **Don't route landing-page work to deprecated heuristic audit.** `lp-brief` owns construction-time conversion best practices and can consume post-launch evidence for revisions.
+- **Don't route landing-page work to deprecated heuristic audit.** `lp-brief` owns construction-time conversion best practices. `lp-eval` owns post-launch metric evidence inside an eval loop.
 - **Don't conflate `copywriting` and `humanize`.** Copywriting writes new copy; humanize fixes AI-sounding existing copy. They run in sequence, not in parallel.
 
 ---
@@ -331,7 +346,7 @@ For canonical pipeline, decision rules, per-skill catalog, and polish-chain logi
 ## Output
 
 - **Inline only** — prints to conversation, no saved artifact.
-- **Side effect:** appends one entry to `.agents/experience/marketing-workflow.md`.
+- **Side effect:** appends one entry to `skills-resources/experience/marketing-workflow.md`.
 
 ## Status
 

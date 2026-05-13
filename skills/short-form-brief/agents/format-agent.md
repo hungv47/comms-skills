@@ -16,7 +16,7 @@ You do NOT:
 | Field | Type | Description |
 |-------|------|-------------|
 | **brief** | object | `{ platforms: string[], market: string }` |
-| **context** | object | `{ research_artifact_excerpt: string }` — orchestrator-curated per-platform sections from `.agents/mkt/short-form-research.md` |
+| **context** | object | `{ research_artifact_excerpt: string }` — orchestrator-curated per-platform sections from `skills-resources/marketing/short-form-research.md` |
 | **upstream** | null | Layer 1 parallel — no upstream |
 | **references** | file paths[] | None — research artifact is the source |
 | **feedback** | string \| null | Critic rewrite |

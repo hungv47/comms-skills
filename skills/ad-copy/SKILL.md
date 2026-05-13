@@ -1,6 +1,6 @@
 ---
 name: ad-copy
-description: "Writes and evaluates Meta paid-ad copy — retargeting (warm audiences) and cold-traffic (subscription-app primary; cross-vertical with caveats). Audience-temperature-aware framing (warm-objection map vs cold-objection map), hard char-cap enforcement, policy/claim compliance, and 6-dimension rubric scoring. Produces `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md` (+ `.rationale.md` + `.critic-score.md`). One artifact per audience-temp — run twice for campaigns spanning both. Meta-only at v1 (Google RSA / LinkedIn / TikTok Ads reserved for future expansion). Not for landing-page headlines (use copywriting). Not for cold-outreach DMs (use cold-outreach). AI-sounding cleanup: humanize runs as terminal pass."
+description: "Writes and evaluates Meta paid-ad copy — retargeting (warm audiences) and cold-traffic (subscription-app primary; cross-vertical with caveats). Audience-temperature-aware framing (warm-objection map vs cold-objection map), hard char-cap enforcement, policy/claim compliance, and 6-dimension rubric scoring. Produces `skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].md` (+ `.rationale.md` + `.critic-score.md`). One artifact per audience-temp — run twice for campaigns spanning both. Meta-only at v1 (Google RSA / LinkedIn / TikTok Ads reserved for future expansion). Not for landing-page headlines (use copywriting). Not for cold-outreach DMs (use cold-outreach). AI-sounding cleanup: humanize runs as terminal pass."
 argument-hint: "[audience-temp + offer + creative-format, e.g. 'cold-traffic / 14-day trial / dedicated']"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -50,13 +50,13 @@ routing:
   position: horizontal
   lifecycle: pipeline
   produces:
-    - skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md
-    - skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].rationale.md
-    - skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].critic-score.md
+    - skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].md
+    - skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].rationale.md
+    - skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].critic-score.md
   consumes:
     - product-context.md
     - icp-research.md
-    - skill-artifacts/mkt/campaign-plan.md
+    - skills-resources/marketing/campaign-plan.md
     - brand/BRAND.md
   requires: []
   defers-to:
@@ -130,7 +130,7 @@ The orchestrator separates strategy from craft: strategist picks angle + audienc
 
 ## Output
 
-Writes to `.agents/skill-artifacts/mkt/ad-copy/`:
+Writes to `skills-resources/marketing/ad-copy/`:
 
 | File | Content |
 |------|---------|
@@ -252,7 +252,7 @@ Single route — no reply mode (paid ads don't have an inbound channel). Optiona
 4b. Format-checker REVISION_REQUIRED on policy/substantiation → re-dispatch composer with the named violation; do not consume a critic cycle.
 5. TERMINAL: invoke `humanize` per variant with `content-type: "short-outbound"` (Light strip on AI telltales only, Full sender voice, 0-10% compression — ad copy is already tight; further compression kills specificity)
 6. POST-HUMANIZE REGRESSION: re-run critic's Specificity dim only per variant. Drops ≥2 OR any named entity/number absent post-humanize → revert to critic-approved variant.
-7. Write artifacts to `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md` (+ .rationale.md + .critic-score.md)
+7. Write artifacts to `skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].md` (+ .rationale.md + .critic-score.md)
 8. Deliver hero + 2 variants + rationale inline; show scorecard only if user asks or any dim scored 6-7 OR if creative_format=repurposed-ugc (variant-level ceiling warning prominent in artifact)
 ```
 
@@ -275,8 +275,8 @@ Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`
 **Needed dimensions:** audience-temp (retargeting / cold), offer (destination + value prop), creative-format (dedicated / repurposed-ugc), conversion-event (trial-start / purchase / lead / install), production-model (in-house / affiliate-creator / external-freelance), available-proof (list of named candidates), LP-description (optional but recommended).
 
 **Read order:**
-1. Pipeline: `research/product-context.md`, `research/icp-research.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `brand/BRAND.md`. Read if present, do not block on missing.
-2. Experience: `.agents/experience/{audience,product,business,brand}.md`.
+1. Pipeline: `research/product-context.md`, `research/icp-research.md`, `skills-resources/marketing/campaign-plan.md`, `brand/BRAND.md`. Read if present, do not block on missing.
+2. Experience: `skills-resources/experience/{audience,product,business,brand}.md`.
 
 If `icp-research.md` / `product-context.md` >30 days old, warn and recommend re-running `icp-research` (soft gate — proceed with "stale ICP" header note in rationale).
 
@@ -356,7 +356,7 @@ Use the **Agent tool** (general-purpose or Explore) with a prompt built as:
 1. **Read** the agent instruction file (e.g., `agents/strategist.md`) — include FULL content in the Agent prompt
 2. **Append** pre-writing context + any prior layer's output
 3. **Resolve paths to absolute** — rooted at this skill's directory. Example: `references/ad-intelligence/meta-retargeting.md` → `<skill-root>/references/ad-intelligence/meta-retargeting.md` (`<skill-root>` = install path, typically `marketing-skills/skills/ad-copy/`).
-4. **Pass upstream artifacts by content, not path** — orchestrator reads `research/*.md`, `brand/*.md`, and `.agents/skill-artifacts/mkt/*.md` FIRST, includes excerpts (VoC quotes, voice adjectives, brand banned-words) in pre-writing. Sub-agents do NOT read artifact files directly.
+4. **Pass upstream artifacts by content, not path** — orchestrator reads `research/*.md`, `brand/*.md`, and `skills-resources/marketing/*.md` FIRST, includes excerpts (VoC quotes, voice adjectives, brand banned-words) in pre-writing. Sub-agents do NOT read artifact files directly.
 5. If **feedback** exists (critic FAIL or format-checker REVISION_REQUIRED), append at end with header "## Resolver Feedback — Address Every Point"
 
 ### Single-agent fallback

@@ -1,6 +1,6 @@
 ---
 name: vn-tone
-description: "Polishes already-translated Vietnamese text so it reads natively in a target register (báo chí, semi-casual, bro, or pop-marketing). Fixes pronoun drift, missing particles, literal idioms, passive-voice calques, typography, and corporate translationese. Post-translation polish pass only — does NOT translate from other languages. For tone work on English/other languages, see humanize. Produces `.agents/skill-artifacts/mkt/content/[slug].vn-tone.md`."
+description: "Polishes already-translated Vietnamese text so it reads natively in a target register (báo chí, semi-casual, bro, or pop-marketing). Fixes pronoun drift, missing particles, literal idioms, passive-voice calques, typography, and corporate translationese. Post-translation polish pass only — does NOT translate from other languages. For tone work on English/other languages, see humanize. Produces `skills-resources/marketing/content/[slug].vn-tone.md`."
 argument-hint: "[vietnamese text or file path] [--register bao-chi|semi-casual|bro|pop-marketing]"
 allowed-tools: Read Grep Glob Bash WebFetch
 license: MIT
@@ -38,10 +38,10 @@ routing:
   position: horizontal
   lifecycle: pipeline
   produces:
-    - skill-artifacts/mkt/content/[slug].vn-tone.md
+    - skills-resources/marketing/content/[slug].vn-tone.md
   consumes:
-    - skill-artifacts/mkt/content/[slug].humanized.md
-    - skill-artifacts/mkt/content/[slug].md
+    - skills-resources/marketing/content/[slug].humanized.md
+    - skills-resources/marketing/content/[slug].md
   requires: []
   defers-to:
     - skill: humanize
@@ -87,7 +87,7 @@ Machine-translated and non-native Vietnamese fails in four predictable ways: wro
 
 ## Output
 
-- `.agents/skill-artifacts/mkt/content/[slug].vn-tone.md` — polished text with change log and status
+- `skills-resources/marketing/content/[slug].vn-tone.md` — polished text with change log and status
 
 ## Quality Gate
 
@@ -173,8 +173,8 @@ Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`
 **Needed dimensions:** target register (báo chí / semi-casual / bro / pop-marketing), dialect (north / south / neutral), subvariant (only if bro: bro-otofun / bro-voz).
 
 **Read order:**
-1. Pipeline: `research/product-context.md` for brand voice + dialect/glossary preferences. Existing `.agents/skill-artifacts/mkt/content/[slug].md` if polishing a prior artifact.
-2. Experience: `.agents/experience/brand.md` for register-mapping notes.
+1. Pipeline: `research/product-context.md` for brand voice + dialect/glossary preferences. Existing `skills-resources/marketing/content/[slug].md` if polishing a prior artifact.
+2. Experience: `skills-resources/experience/brand.md` for register-mapping notes.
 3. Conversation: explicit `--register` arg from user always wins.
 
 ### Register Resolution (used in both warm and cold flows)

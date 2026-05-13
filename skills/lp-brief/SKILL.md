@@ -1,6 +1,6 @@
 ---
 name: lp-brief
-description: "Generates a campaign-grade brief for a high-converting landing page or redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts, and built-in conversion-principles gate. Produces `.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md` ready to hand to Claude Design, a designer in Figma, or `design-brief` for per-asset spec. Not for post-launch CRO analysis from analytics/experiments (future CRO skill). Not for non-conversion pages like blogs or docs hubs (those use different rubrics). Not for spec'ing a single visual asset in isolation (use design-brief)."
+description: "Generates a campaign-grade brief for a high-converting landing page or redesign — hypothesis, surface rhythm, section-by-section spec, asset slots, copy candidates, hand-off prompts, and built-in conversion-principles gate. Produces `skills-resources/marketing/lp-brief/[slug]/brief.md` ready to hand to Claude Design, a designer in Figma, or `design-brief` for per-asset spec. Not for post-launch CRO analysis from analytics/experiments (use lp-eval inside an eval-loop). Not for non-conversion pages like blogs or docs hubs (those use different rubrics). Not for spec'ing a single visual asset in isolation (use design-brief)."
 argument-hint: "[page route or campaign name, e.g. '/pricing' or 'q3-launch-lp']"
 allowed-tools: Read Edit Write Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -36,6 +36,9 @@ promptSignals:
     - "single asset"
     - "audit"
     - "cro audit"
+    - "analytics"
+    - "experiment results"
+    - "conversion rate"
   minScore: 6
 routing:
   intent-tags:
@@ -46,13 +49,13 @@ routing:
   position: pipeline
   lifecycle: pipeline
   produces:
-    - skill-artifacts/mkt/lp-brief/[slug]/brief.md
+    - skills-resources/marketing/lp-brief/[slug]/brief.md
   consumes:
     - brand/BRAND.md
     - brand/DESIGN.md
     - research/icp-research.md
     - research/product-context.md
-    - skill-artifacts/mkt/campaign-plan.md
+    - skills-resources/marketing/campaign-plan.md
   requires:
     - brand/BRAND.md
     - brand/DESIGN.md
@@ -100,23 +103,23 @@ Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity
 | Post-launch evidence (analytics, heatmaps, experiment notes), if available | optional | Stronger evidence for redesign hypotheses; absent evidence is labeled as assumption |
 | `research/icp-research.md` | optional | Objections + VoC for copy candidates |
 | `research/product-context.md` | optional | Product accuracy in features/proof |
-| `.agents/skill-artifacts/mkt/campaign-plan.md` | optional | Traffic source, awareness stage, role in funnel |
-| `.agents/skill-artifacts/meta/records/targets-*.md` | optional | Conversion target informs CTA aggressiveness |
+| `skills-resources/marketing/campaign-plan.md` | optional | Traffic source, awareness stage, role in funnel |
+| `skills-resources/meta/records/targets-*.md` | optional | Conversion target informs CTA aggressiveness |
 
 ## Output
 
-`.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md` — single main artifact, structured per the template below.
+`skills-resources/marketing/lp-brief/[slug]/brief.md` — single main artifact, structured per the template below.
 
 Always written alongside `brief.md`:
-- `.agents/skill-artifacts/mkt/lp-brief/[slug]/handoff-implementation.md` — paste-ready prompt for any coding agent (Claude Code / Cursor / Codex / Opus / Gemini / GPT). Stack auto-detected from repo (frameworks → that stack; no framework → pure HTML/CSS/Vanilla JS, single index.html). Motion stack from `brand/DESIGN.md` (silent → GSAP+ScrollTrigger+Lenis). Includes verbatim Asset Placeholder Rule so coding agents never invent stock-photo URLs.
+- `skills-resources/marketing/lp-brief/[slug]/handoff-implementation.md` — paste-ready prompt for any coding agent (Claude Code / Cursor / Codex / Opus / Gemini / GPT). Stack auto-detected from repo (frameworks → that stack; no framework → pure HTML/CSS/Vanilla JS, single index.html). Motion stack from `brand/DESIGN.md` (silent → GSAP+ScrollTrigger+Lenis). Includes verbatim Asset Placeholder Rule so coding agents never invent stock-photo URLs.
 
 Optional companions if `target_handoff` lists them:
-- `.agents/skill-artifacts/mkt/lp-brief/[slug]/handoff-claude-design.md` — verbatim prompt block for claude.ai/design
-- `.agents/skill-artifacts/mkt/lp-brief/[slug]/handoff-figma.md` — design spec for designer in Figma
-- `.agents/skill-artifacts/mkt/lp-brief/[slug]/handoff-designer.md` — narrative brief for human designer
+- `skills-resources/marketing/lp-brief/[slug]/handoff-claude-design.md` — verbatim prompt block for claude.ai/design
+- `skills-resources/marketing/lp-brief/[slug]/handoff-figma.md` — design spec for designer in Figma
+- `skills-resources/marketing/lp-brief/[slug]/handoff-designer.md` — narrative brief for human designer
 
 Per-slot artifacts (written by downstream media-briefing skills, not by lp-brief itself):
-- `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/{slot-id}.prompt.md` — per-asset generation prompt (written by `design-brief` today; future media-briefing skills like motion-brief / 3d-brief / video-brief as they ship). Slots with `route: pending-media-skill` have no prompt file yet — the implementation prompt renders them as solid-color placeholders until a media-briefing skill catches up.
+- `skills-resources/marketing/lp-brief/[slug]/asset-slots/{slot-id}.prompt.md` — per-asset generation prompt (written by `design-brief` today; future media-briefing skills like motion-brief / 3d-brief / video-brief as they ship). Slots with `route: pending-media-skill` have no prompt file yet — the implementation prompt renders them as solid-color placeholders until a media-briefing skill catches up.
 
 ## Quality Gate
 
@@ -135,7 +138,7 @@ Previous: `campaign-plan` (optional — campaign context), `brand-system` (requi
 
 ### Skill Deference
 
-- **Need post-launch CRO from real evidence?** → Future CRO/analytics skill. This skill can read analytics notes when provided, but does not pretend best-practice review is optimization.
+- **Need post-launch CRO from real evidence?** → `lp-eval` inside an existing `eval-loop`. This skill can read prior evals when producing the next brief, but does not pretend best-practice review is optimization.
 - **Single visual asset spec, not whole page?** → `design-brief`.
 - **No brand?** → `brand-system` first.
 - **Need only headline variations?** → `copywriting`.
@@ -169,7 +172,7 @@ Step 0 → L1 (evidence-anchor ∥ brand-anchor) → L1.5 (hypothesis) → ★ G
        → L2 (architecture) → ★ Gate 2
        → L3 (section-spec) → L3.5 (asset-slot) → L4 (handoff)
        → L5 (conversion-critic ∥ brand-voice-critic) → critic merge → ★ Gate 3
-       → write brief.md + handoff/* + asset-slots/* to .agents/skill-artifacts/mkt/lp-brief/[slug]/
+       → write brief.md + handoff/* + asset-slots/* to skills-resources/marketing/lp-brief/[slug]/
 ```
 
 Per-layer details, contracts, and references are in the layer sections below.
@@ -183,12 +186,12 @@ Same dispatch as Route A, but Layer 1 evidence-anchor reads current page state a
 ### Route C: Re-run with `--rev=N`
 
 ```
-1. Read prior brief at .agents/skill-artifacts/mkt/lp-brief/[slug]/v[N-1]/brief.md
+1. Read prior brief at skills-resources/marketing/lp-brief/[slug]/v[N-1]/brief.md
 2. Read fresh inputs (page-state/evidence notes, new ICP)
 3. Run Layer 1 — diff prior brief against fresh inputs
 4. Hypothesis-agent receives "what's new since rev N-1" context
 5. Continue Route A/B from Layer 1.5
-6. Save new brief at .agents/skill-artifacts/mkt/lp-brief/[slug]/v[N]/brief.md, preserve prior versions
+6. Save new brief at skills-resources/marketing/lp-brief/[slug]/v[N]/brief.md, preserve prior versions
 ```
 
 ---
@@ -212,8 +215,8 @@ If hard gates pass, proceed to Pre-Dispatch flows.
 - Route (A or B) — already resolved by hard gates above
 
 ### Read order
-1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (both confirmed by hard gate). `research/icp-research.md`, `research/product-context.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `.agents/skill-artifacts/meta/records/targets-*.md` (all optional, read when present).
-2. Experience: `.agents/experience/goals.md` for prior hypothesis/goal context. `.agents/experience/audience.md` for ICP fallback if no `icp-research.md`.
+1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (both confirmed by hard gate). `research/icp-research.md`, `research/product-context.md`, `skills-resources/marketing/campaign-plan.md`, `skills-resources/meta/records/targets-*.md` (all optional, read when present).
+2. Experience: `skills-resources/experience/goals.md` for prior hypothesis/goal context. `skills-resources/experience/audience.md` for ICP fallback if no `icp-research.md`.
 
 ### Warm Start (page identity supplied + goal/hypothesis derivable)
 
@@ -462,13 +465,13 @@ DONE_WITH_CONCERNS is the floor. No silent FAIL outputs — every critic concern
 ```
 
 User responses:
-- "Approve" → write brief to `.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md` (with version subfolder if rev), status DONE
+- "Approve" → write brief to `skills-resources/marketing/lp-brief/[slug]/brief.md` (with version subfolder if rev), status DONE
 - "Revise X" → re-dispatch named layer with feedback (1 cycle)
-- "Reject" → save as `.agents/skill-artifacts/mkt/lp-brief/[slug]/rejected.md`, exit BLOCKED
+- "Reject" → save as `skills-resources/marketing/lp-brief/[slug]/rejected.md`, exit BLOCKED
 
 ---
 
-## Artifact Template — `.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md`
+## Artifact Template — `skills-resources/marketing/lp-brief/[slug]/brief.md`
 
 ```markdown
 ---
@@ -609,7 +612,7 @@ N. **CTA Block** — [purpose]
 | Logo grid | Social proof | 6 cells × 60px | SVG | `growth/[slug]/logos.svg` | "delete cell if not real" | — |
 | Founder portrait | Story | 600×600 | WebP | `growth/[slug]/founder.webp` | spot illustration | [link if generative] |
 
-**Generation prompts** for asset slots that use generative AI live at `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-name].prompt.md`. Each is written by `design-brief` against the slot's spec — the prompt is the actionable handoff to an image-generation tool.
+**Generation prompts** for asset slots that use generative AI live at `skills-resources/marketing/lp-brief/[slug]/asset-slots/[slot-name].prompt.md`. Each is written by `design-brief` against the slot's spec — the prompt is the actionable handoff to an image-generation tool.
 
 ## What NOT to Do
 
@@ -656,7 +659,7 @@ N. **CTA Block** — [purpose]
 2. `copywriting` — polish 3 headline candidates against 4-U + voice
 3. [implementation step — Claude Design / Figma / designer]
 4. `humanize` — final pass on any AI-generated body copy
-5. [post-launch] collect analytics/recordings/experiment notes → feed future CRO analysis or next `lp-brief --rev=N`
+5. [post-launch] collect analytics/recordings/experiment notes → run `lp-eval` inside the page's eval loop, then feed the resulting eval into next `lp-brief --rev=N`
 
 Page-scoped only. No project-level default is created.
 
@@ -673,7 +676,7 @@ Page-scoped only. No project-level default is created.
 [2–4 lines: the brief's load-bearing arguments — why this hero/this architecture/this CTA hierarchy lands the hypothesis.]
 ```
 
-> Re-run with `--rev=N`: write to `.agents/skill-artifacts/mkt/lp-brief/[slug]/v[N]/brief.md`, preserve prior versions.
+> Re-run with `--rev=N`: write to `skills-resources/marketing/lp-brief/[slug]/v[N]/brief.md`, preserve prior versions.
 
 ---
 

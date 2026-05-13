@@ -28,7 +28,7 @@ status: seedbank  # pre-staged for ad-copy skill build (skill scaffold pending)
 
 # Creative Cadence — Volume, Speed, Allocation
 
-Per-surface reference for **paid-ad creative cadence** — testing rhythm, kill speed, budget split, and the dedicated-creative vs repurposed-content distinction. Will be consumed by the future `ad-copy` skill (not yet scaffolded — see `.agents/skill-artifacts/meta/roadmap.md` REB-3). Until then: practitioner-grade thresholds and rhythms drawn from 3 sources of varying confidence (call out each).
+Per-surface reference for **paid-ad creative cadence** — testing rhythm, kill speed, budget split, and the dedicated-creative vs repurposed-content distinction. Will be consumed by the future `ad-copy` skill (not yet scaffolded — see `skills-resources/meta/roadmap.md` REB-3). Until then: practitioner-grade thresholds and rhythms drawn from 3 sources of varying confidence (call out each).
 
 > Scope: paid social creative pipeline (Meta primary; thresholds plausibly transfer to Google/TikTok/X but not separately verified). Not audience structure (see `meta-retargeting.md`, `meta-cold-traffic.md`). Not creative concept-development (that's the future `ad-copy` skill's main job — this doc is the rhythm/volume/allocation discipline that wraps it).
 

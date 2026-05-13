@@ -1,6 +1,6 @@
 ---
 name: copywriting
-description: "Writes and evaluates persuasive copy — headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring, annotations, and ranked alternatives. Produces inline annotations or `.agents/skill-artifacts/mkt/content/[slug].copy.md`. Not for editing AI-sounding text (use humanize). For brand voice guidelines, see brand-system. For landing-page architecture, see lp-brief."
+description: "Writes and evaluates persuasive copy — headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring, annotations, and ranked alternatives. Produces inline annotations or `skills-resources/marketing/content/[slug].copy.md`. Not for editing AI-sounding text (use humanize). For brand voice guidelines, see brand-system. For landing-page architecture, see lp-brief."
 argument-hint: "[copy task or text to evaluate]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -46,11 +46,11 @@ routing:
   position: horizontal
   lifecycle: pipeline
   produces:
-    - skill-artifacts/mkt/content/[slug].copy.md
+    - skills-resources/marketing/content/[slug].copy.md
   consumes:
     - product-context.md
     - icp-research.md
-    - skill-artifacts/mkt/campaign-plan.md
+    - skills-resources/marketing/campaign-plan.md
   requires: []
   defers-to:
     - skill: humanize
@@ -78,7 +78,7 @@ Copy frameworks (PAS, 3-Question Test, CTA formula) are proven tools — not man
 
 ## Output
 - Inline annotations + alternatives on key lines (when called by another skill)
-- `.agents/skill-artifacts/mkt/content/[slug].copy.md` (for standalone full-page copy tasks)
+- `skills-resources/marketing/content/[slug].copy.md` (for standalone full-page copy tasks)
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
@@ -179,8 +179,8 @@ Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`
 **Needed dimensions:** surface (page / email / social / headline / CTA / etc.), audience, the one shift (what should reader believe after?), unique proof (what can you say nobody else can?), traffic source (if applicable).
 
 **Read order:**
-1. Pipeline: `research/icp-research.md` for VoC + pain language. `research/product-context.md` for product details and voice adjectives. `.agents/skill-artifacts/mkt/campaign-plan.md` for angle + awareness stage.
-2. Experience: `.agents/experience/{audience,product,goals}.md`.
+1. Pipeline: `research/icp-research.md` for VoC + pain language. `research/product-context.md` for product details and voice adjectives. `skills-resources/marketing/campaign-plan.md` for angle + awareness stage.
+2. Experience: `skills-resources/experience/{audience,product,goals}.md`.
 
 If `research/icp-research.md` or `product-context.md` `date` fields >30 days old, warn and recommend re-running `icp-research`. Soft gate — proceed if user confirms, note "stale ICP" in artifact header.
 

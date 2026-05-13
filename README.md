@@ -4,7 +4,7 @@
 
 > **v4.0.0 BREAKING:** `start-marketing` renamed to `orchestrate-marketing`. Update any `/start-marketing` invocations in your workflows to `/orchestrate-marketing`.
 
-Brand identity, persuasive copy, campaign planning, landing-page architecture, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 12 skills (incl. `/orchestrate-marketing` orchestrator).
+Brand identity, persuasive copy, campaign planning, landing-page architecture, post-launch landing-page evaluation, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 13 skills (plus `/orchestrate-marketing` orchestrator).
 
 **New here?** Run `/orchestrate-marketing` — it reads brand/research state, parses your ask, and proposes the next skill to invoke with rationale + cost + duration.
 
@@ -51,7 +51,7 @@ research-skills/skills/icp-research        → research/product-context.md, rese
                                           ↓
 brand-system                         → brand/BRAND.md, brand/DESIGN.md, brand/ASSETS.md
                                           ↓
-campaign-plan                             → .agents/mkt/campaign-plan.md
+campaign-plan                             → skills-resources/marketing/campaign-plan.md
                                           ↓
                 ┌─────────────┬───────────┼───────────┬─────────────┐
                 ↓             ↓           ↓           ↓             ↓
@@ -60,6 +60,8 @@ campaign-plan                             → .agents/mkt/campaign-plan.md
                 ↓                                                              (per platform)
            design-brief
            (per slot)
+
+Post-launch measurable pages: eval-loop → lp-eval → results.tsv / learnings.md
 
 Horizontal: copywriting, humanize, vn-tone — invoked at any stage.
 ```
@@ -92,7 +94,7 @@ Creates integrated marketing plans — channel strategy, positioning, content ca
 
 **Not for:** setting numeric targets (use `funnel-planner`)
 
-**Produces:** `.agents/mkt/campaign-plan.md`
+**Produces:** `skills-resources/marketing/campaign-plan.md`
 
 ---
 
@@ -107,7 +109,7 @@ Headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring
 
 **Not for:** AI pattern removal (use `humanize`)
 
-**Produces:** `.agents/mkt/content/[slug].copy.md`
+**Produces:** `skills-resources/marketing/content/[slug].copy.md`
 
 ---
 
@@ -121,9 +123,24 @@ Generates a campaign-grade brief for a landing page or redesign — hypothesis, 
 - You're revising an existing page and want the next rev anchored in page state, ICP, and any post-launch evidence
 - You want copy candidates and design-tool handoff prompts in one artifact
 
-**Not for:** post-launch CRO analysis from analytics/experiments, or single-asset creative (use `design-brief`)
+**Not for:** post-launch CRO analysis from analytics/experiments (use `lp-eval` inside an eval loop), or single-asset creative (use `design-brief`)
 
-**Produces:** `.agents/mkt/lp-brief/[slug]/brief.md` + per-target handoff prompts + per-slot prompts
+**Produces:** `skills-resources/marketing/lp-brief/[slug]/brief.md` + per-target handoff prompts + per-slot prompts
+
+---
+
+### `lp-eval` — evaluate a launched landing page
+
+Scores landing-page performance from real evidence inside an existing eval loop — analytics, experiment results, form funnels, recordings/heatmaps, or operator-supplied metric notes.
+
+**Use when:**
+- A page has shipped and you need a keep/discard/watch/blocked decision for the current cycle
+- You have a measurement window, source, primary metric value, and baseline or prior result
+- You want landing-page evidence to update `results.tsv` and durable loop learnings
+
+**Not for:** new page briefs or redesign specs (use `lp-brief`), generic heuristic audits without metric evidence, or creating the loop workspace (use `eval-loop`)
+
+**Produces:** `skills-resources/marketing/loops/[slug]/evals/[date]-cycle-N.md` + appends `skills-resources/marketing/loops/[slug]/results.tsv`
 
 ---
 
@@ -140,7 +157,7 @@ Produces graphic-design briefs for individual visuals — IG carousel/post/story
 
 **Status note:** Re-scoped from a previous render-focused skill. Per-platform module specs (IG/LinkedIn/FB/YT/X/OOH/banner) currently ship as a skeleton — practitioner-grade specs need a follow-up build pass.
 
-**Produces:** `.agents/mkt/design-briefs/[slug].md`
+**Produces:** `skills-resources/marketing/design-briefs/[slug].md`
 
 ---
 
@@ -156,7 +173,7 @@ Technical audit, keyword research, AI/AEO optimization, programmatic SEO, compet
 
 **Not for:** landing-page construction/conversion brief work (use `lp-brief`) or writing copy (use `copywriting`)
 
-**Produces:** `.agents/mkt/seo-[mode].md`
+**Produces:** `skills-resources/marketing/seo-[mode].md`
 
 ---
 
@@ -171,7 +188,7 @@ Strips AI patterns, injects brand voice, and compresses existing text. Targets 1
 
 **Not for:** writing new copy from scratch (use `copywriting`)
 
-**Produces:** `.agents/mkt/content/[slug].humanized.md`
+**Produces:** `skills-resources/marketing/content/[slug].humanized.md`
 
 ---
 
@@ -189,7 +206,7 @@ Uses a live-scraped corpus from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun
 
 **Not for:** translating from English to Vietnamese (use your preferred MT first, then this), writing new Vietnamese from scratch (use `copywriting`), or stripping AI patterns in English (use `humanize` first, then translate, then `vn-tone`).
 
-**Produces:** `.agents/mkt/content/[slug].vn-tone.md`
+**Produces:** `skills-resources/marketing/content/[slug].vn-tone.md`
 
 ---
 
@@ -204,7 +221,7 @@ Writes hero + 2 variants of Meta paid-ad copy (Facebook + Instagram), audience-t
 
 **Not for:** Google RSA / LinkedIn / TikTok Ads (refs not pre-staged — would force fabrication), audience setup or budget pacing (Ads Manager workflow), landing page copy (use `copywriting` or `lp-brief`), cold-outreach DMs (use `cold-outreach`), creative asset production (this skill produces copy spec only).
 
-**Produces:** `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
+**Produces:** `skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
 
 ---
 
@@ -219,7 +236,7 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 
 **Not for:** sourcing or list-building (start at "here's who I'm reaching"), campaign orchestration across many prospects (compose touches individually with prior-touches context), fundraise/hiring outreach (different norms), or lifecycle/nurture emails (those are warm, consent-based, different craft).
 
-**Produces:** `.agents/mkt/cold-outreach/[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
+**Produces:** `skills-resources/marketing/cold-outreach/[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
 
 ---
 
@@ -227,7 +244,8 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 
 - `brand-system`, `campaign-plan`, `copywriting`, `lp-brief`, `seo`, `cold-outreach`, `ad-copy`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
 - `cold-outreach` and `ad-copy` additionally read `research/icp-research.md` for target persona pain language
-- `campaign-plan` and `lp-brief` can read `.agents/prioritize.md` and `.agents/targets.md` from research-skills
+- `campaign-plan` and `lp-brief` can read `skills-resources/meta/sketches/prioritize-*.md` and `skills-resources/meta/records/targets-*.md` from research-skills
+- `lp-eval` requires loop scaffolding from `meta-skills` `/eval-loop` and writes into `skills-resources/marketing/loops/[slug]/`
 
 ## Releases
 

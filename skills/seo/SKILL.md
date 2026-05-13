@@ -1,6 +1,6 @@
 ---
 name: seo
-description: "Audits and plans search visibility — keyword research, on-page optimization, technical SEO, link building strategy, and AI search optimization. Produces `.agents/skill-artifacts/mkt/seo-[mode].md`. Not for landing-page construction/conversion brief work (use lp-brief) or writing copy (use copywriting)."
+description: "Audits and plans search visibility — keyword research, on-page optimization, technical SEO, link building strategy, and AI search optimization. Produces `skills-resources/marketing/seo-[mode].md`. Not for landing-page construction/conversion brief work (use lp-brief) or writing copy (use copywriting)."
 argument-hint: "[url or mode]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -48,12 +48,12 @@ routing:
   position: horizontal
   lifecycle: pipeline
   produces:
-    - skill-artifacts/mkt/seo-[mode].md
+    - skills-resources/marketing/seo-[mode].md
     # mode = audit | ai | programmatic | competitor | aso
   consumes:
     - product-context.md
     - icp-research.md
-    - skill-artifacts/mkt/campaign-plan.md
+    - skills-resources/marketing/campaign-plan.md
   requires: []
   defers-to:
     - skill: copywriting
@@ -114,12 +114,12 @@ Before delivering, all must hold:
 ## Inputs Required
 
 - ICP research from `research/icp-research.md` (audience questions, pain points, search behavior)
-- IMC plan from `.agents/skill-artifacts/mkt/campaign-plan.md` (content pillars and angles)
+- IMC plan from `skills-resources/marketing/campaign-plan.md` (content pillars and angles)
 - OR: User describes their SEO situation / site to audit
 
 ## Output
 
-- `.agents/skill-artifacts/mkt/seo-[mode].md` (mode = audit | ai | programmatic | competitor | aso)
+- `skills-resources/marketing/seo-[mode].md` (mode = audit | ai | programmatic | competitor | aso)
 
 ---
 
@@ -130,8 +130,8 @@ Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`
 **Needed dimensions:** mode (audit / ai / programmatic / competitor / aso), site or property (domain or app store listing), audience, geographic + language scope.
 
 **Read order:**
-1. Pipeline: `research/icp-research.md` for audience + search behavior. `.agents/skill-artifacts/mkt/campaign-plan.md` for pillars/angles. `research/product-context.md` for category context.
-2. Experience: `.agents/experience/{audience,product,business}.md`.
+1. Pipeline: `research/icp-research.md` for audience + search behavior. `skills-resources/marketing/campaign-plan.md` for pillars/angles. `research/product-context.md` for category context.
+2. Experience: `skills-resources/experience/{audience,product,business}.md`.
 
 **Warm Start** (mode + site supplied, audience known):
 
@@ -508,7 +508,7 @@ Strategic Investments:
 
 **Step 5: critic-agent evaluates** → PASS (every finding has specific fix, no vague language, priorities are ranked)
 
-**Step 6: Deliver** `.agents/skill-artifacts/mkt/seo-audit.md`
+**Step 6: Deliver** `skills-resources/marketing/seo-audit.md`
 
 ---
 

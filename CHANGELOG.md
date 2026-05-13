@@ -6,6 +6,44 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [7.0.0] - 2026-05-13
+
+BREAKING: every artifact path migrates from `.agents/skill-artifacts/mkt/` to `skills-resources/marketing/`. Loop workspaces move to `skills-resources/marketing/loops/[slug]/`.
+
+### Changed (BREAKING)
+- `.agents/skill-artifacts/mkt/` → `skills-resources/marketing/` (folder renamed from `mkt` to `marketing`).
+- All SKILL.md `produces:` / `consumes:` paths updated: copywriting → `skills-resources/marketing/content/`, lp-brief → `skills-resources/marketing/lp-brief/[slug]/`, seo → `skills-resources/marketing/seo-[mode].md`, cold-outreach → `skills-resources/marketing/cold-outreach/`, ad-copy → `skills-resources/marketing/ad-copy/`, design-brief → `skills-resources/marketing/design-briefs/`, short-form-brief → `skills-resources/marketing/short-form-brief/`, campaign-plan → `skills-resources/marketing/campaign-plan.md`.
+- `lp-eval` loop path moves from `skills-resources/loops/[slug]/` to `skills-resources/marketing/loops/[slug]/` (`evals/[date]-cycle-N.md`, `results.tsv`, `learnings.md`).
+- `eval-loop` cross-references updated to point at domain-scoped loop paths.
+- `orchestrate-marketing` inline pre-dispatch bash scans `skills-resources/marketing/loops/` instead of the unscoped `skills-resources/loops/`.
+- README, CLAUDE.md, workflow-graph.md, and shared/marketing-foundations.md rewritten for the new paths.
+
+### Migration
+Move any existing `mkt/` artifacts under `skills-resources/marketing/`. Move existing `loops/[slug]/` workspaces under `skills-resources/marketing/loops/[slug]/`. Then run `bun meta-skills/scripts/manifest-sync.ts` to regenerate the index.
+
+---
+
+## [6.1.0] - 2026-05-13
+
+Landing-page post-launch evaluation returns as a loop-native evaluator instead of a standalone heuristic teardown.
+
+### Added
+- `skills/lp-eval/` — new post-launch landing-page evaluator for measurable eval loops. Requires an existing `skills-resources/loops/[slug]/` workspace from `/eval-loop`, consumes metric evidence for a measurement window, writes `evals/YYYY-MM-DD-cycle-N.md`, appends `results.tsv`, and promotes learnings only when evidence quality clears the critic.
+- Four-agent `lp-eval` dispatch: metric-ingest, diagnosis, recommendation, critic. The critic enforces no fabricated analytics, one primary metric, attribution confidence, valid keep/discard/watch/blocked rows, and evaluator-vs-builder boundaries.
+
+### Changed
+- `orchestrate-marketing` routing now separates landing-page construction (`lp-brief`) from post-launch evidence scoring (`lp-eval`). Analytics/CRO/result language routes to `lp-eval`; new/redesign/page-brief language stays on `lp-brief`.
+- `lp-brief` prompt signals now suppress analytics / experiment / conversion-rate language so post-launch evidence routes to `lp-eval`.
+- `social-copy` prompt signals now catch "social media copy" phrasing.
+- Stack metadata and docs updated from 12 to 13 marketing skills, plus the orchestrator.
+
+### Files changed
+- `.claude-plugin/plugin.json`
+- `skills/lp-eval/**`
+- `skills/orchestrate-marketing/SKILL.md`
+- `skills/orchestrate-marketing/references/workflow-graph.md`
+- `README.md`, `CLAUDE.md`
+
 ## [6.0.0] - 2026-05-12
 
 BREAKING: `lp-optimization` removed from the stack. Deprecated in 5.1.0 once `lp-brief` absorbed the conversion principles; this release deletes the skill rather than leaving it shipping unused.
