@@ -17,7 +17,7 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
                                                     │
                                                     ├── short-form-brief ──→ social-copy (per platform)
                                                     │       ↑
-                                                    │       └── consumes short-form-research.md (research-skills)
+                                                    │       └── consumes skills-resources/research/short-form-research/[slug].md (research-skills)
                                                     │
                                                     ├── ad-copy (per audience-temp — Meta only at v1)
                                                     │
@@ -106,8 +106,8 @@ brand-system ──→ campaign-plan ──→ content layer ───┤
 
 - **Job:** production-ready video brief — hook, shot list, on-screen text, audio plan, caption, CTA, aspect, length. Live-action OR motion-graphic. Hero + max 2 platform variants per call.
 - **Produces:** `skills-resources/marketing/short-form-brief/[slug]/brief.md`, `[slug]/variants/[platform].md`
-- **Consumes:** `skills-resources/research/short-form-research.md` (from research-skills), `research/icp-research.md`, `brand/BRAND.md`
-- **When to recommend:** short-form-video intent. Hard-gated on `short-form-research.md`.
+- **Consumes:** matching `skills-resources/research/short-form-research/[slug].md` (from research-skills), `research/icp-research.md`, `brand/BRAND.md`
+- **When to recommend:** short-form-video intent. Hard-gated on a matching short-form-research catalog.
 - **Cost:** $1–3 · 9 agents · deep budget · ~10 min
 
 ### social-copy

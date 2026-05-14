@@ -17,7 +17,7 @@ This is a **worked example** — the actual hero brief artifact lives at `skills
 
 ---
 
-## Research signals (from `skills-resources/marketing/short-form-research.md`)
+## Research signals (from `skills-resources/research/short-form-research/[slug].md`)
 
 - TikTok VN dev-tools niche: credential-flash hook archetype dominates (8/12 sample)
 - TikTok 70% completion threshold per Creator Portal

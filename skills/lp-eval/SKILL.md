@@ -67,6 +67,7 @@ routing:
     - skills-resources/marketing/loops/[slug]/execution/*.md
     - brand/BRAND.md
     - research/icp-research.md
+    - research/product-context.md
   requires:
     - skills-resources/marketing/loops/[slug]/program.md
     - skills-resources/marketing/loops/[slug]/context.md

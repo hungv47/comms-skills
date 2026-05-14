@@ -1,6 +1,6 @@
 ---
 name: short-form-brief
-description: "Produces production-ready briefs for short-form video — hook, shot list, on-screen text, audio plan, caption, CTA, aspect, length — covering live-action and motion-graphic production modes. Native cross-platform tailoring (1 hero + max 2 variants per invocation). Reads short-form-research.md catalog. Not for static visual (use design-brief), long-form video (parked), or paid ad creative (parked). For brand voice, see brand-system; for audience, see icp-research."
+description: "Produces production-ready briefs for short-form video — hook, shot list, on-screen text, audio plan, caption, CTA, aspect, length — covering live-action and motion-graphic production modes. Native cross-platform tailoring (1 hero + max 2 variants per invocation). Reads the matching `skills-resources/research/short-form-research/[slug].md` catalog. Not for static visual (use design-brief), long-form video (parked), or paid ad creative (parked). For brand voice, see brand-system; for audience, see icp-research."
 argument-hint: "[angle or topic] [--platforms tiktok,reels,...] [--brand-mode founder|company]"
 allowed-tools: Read Edit Write Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -44,7 +44,7 @@ routing:
     - skills-resources/marketing/short-form-brief/[slug]/brief.md
     - skills-resources/marketing/short-form-brief/[slug]/variants/[platform].md
   consumes:
-    - skills-resources/research/short-form-research.md
+    - skills-resources/research/short-form-research/[slug].md
     - research/icp-research.md
     - research/product-context.md
     - brand/BRAND.md
@@ -161,7 +161,7 @@ Run the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-pr
 **Needed dimensions:** angle, platforms (1-3), brand_mode (founder | company), production_mode (auto | live-action | motion-graphic | mixed), market, optional campaign tie-in.
 
 **Read order:**
-1. `skills-resources/research/short-form-research.md` — **primary dependency.**
+1. Latest matching `skills-resources/research/short-form-research/[slug].md` from `skills-resources/manifest.json` (or `Glob` fallback) — **primary dependency.**
    - Missing → "No short-form-research artifact for this market. Run `short-form-research` first, or proceed with platform references only (briefs will lack current trend signals). [Run upstream / Proceed without]"
    - Trend signals stale (>30d) → "Trend signals are X days old. Re-run research, or proceed with stale trends? Briefs may bet on decayed patterns."
    - Mechanics stale (>180d) → strongly recommend re-run; user can override with concerns flag.
@@ -174,7 +174,7 @@ Run the canonical Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-pr
 
 ```
 Found context for short-form-brief:
-- research artifact: skills-resources/research/short-form-research.md (trends 8d ago, mechanics 22d ago — fresh)
+- research artifact: skills-resources/research/short-form-research/[slug].md (trends 8d ago, mechanics 22d ago — fresh)
 - brand_mode: founder (from BRAND.md archetype)
 - market: VN (from research artifact)
 - production_mode default: live-action (founder)
@@ -323,7 +323,7 @@ production_mode: live-action | motion-graphic | mixed
 market: [region]
 hero_platform: tiktok | reels | shorts | x | linkedin
 variants: [list]
-research_artifact: skills-resources/research/short-form-research.md
+research_artifact: skills-resources/research/short-form-research/[slug].md
 research_trend_signals_date: [YYYY-MM-DD]
 research_mechanics_date: [YYYY-MM-DD]
 campaign_tie_in: [slug or null]

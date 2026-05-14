@@ -6,6 +6,16 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [7.0.1] - 2026-05-14
+
+Fresh-eyes patch for the 7.0.0 artifact-tree migration.
+
+### Fixed
+- `short-form-brief`, `orchestrate-marketing`, workflow docs, and examples now consume the canonical research catalog path `skills-resources/research/short-form-research/[slug].md` instead of stale flat or marketing-local paths.
+- `lp-eval` frontmatter now declares `research/product-context.md` as a consumed dependency, matching its read order.
+
+---
+
 ## [7.0.0] - 2026-05-13
 
 BREAKING: every artifact path migrates from `.agents/skill-artifacts/mkt/` to `skills-resources/marketing/`. Loop workspaces move to `skills-resources/marketing/loops/[slug]/`.

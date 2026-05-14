@@ -189,7 +189,7 @@ See [`../../../meta-skills/references/manifest-spec.md`](../../../meta-skills/re
 | `skills-resources/marketing/seo-*.md` | SEO mode artifact (audit / ai / programmatic / competitor / aso). |
 | `skills-resources/marketing/cold-outreach/*.md` | Outbound touch composed. |
 | `skills-resources/marketing/short-form-brief/**/brief.md` | Video brief exists. |
-| `skills-resources/marketing/short-form-research.md` | Short-form best-practice catalog (from research-skills). |
+| `skills-resources/research/short-form-research/*.md` | Short-form best-practice catalogs (from research-skills). |
 | `skills-resources/experience/marketing-workflow.md` | Prior breadcrumb. |
 | `skills-resources/experience/brand.md`, `audience.md`, `content.md` | Persisted cold-start answers. |
 
@@ -256,7 +256,7 @@ Apply rules in order — first match wins.
 5. **brand done + intent: lp-page** → propose `lp-brief`. Rationale: it owns landing-page construction and redesign briefs, with conversion principles applied before launch.
 6. **Intent: lp-eval** → if a matching `skills-resources/marketing/loops/[slug]/` exists, propose `lp-eval`; otherwise propose `eval-loop` first and explain that `lp-eval` writes into an existing loop. Rationale: post-launch page evidence belongs in the loop ledger, not a one-off audit.
 7. **Intent: search-visibility** → propose `seo`. Ask user which mode (audit / ai / programmatic / competitor / aso).
-8. **Intent: short-form-video** → propose `short-form-brief`. Note: requires `skills-resources/marketing/short-form-research.md` (from research-skills); if missing, recommend `short-form-research` first.
+8. **Intent: short-form-video** → propose `short-form-brief`. Note: requires a matching `skills-resources/research/short-form-research/[slug].md` catalog (from research-skills); if missing, recommend `short-form-research` first.
 9. **Intent: paid-ads** → propose `ad-copy`. Hard requires `research/icp-research.md`. Ask which audience-temperature (retargeting / cold) — single-temp per invocation; run twice for campaigns spanning both. Meta-only at v1.
 10. **Intent: outbound** → propose `cold-outreach`. Hard requires `research/icp-research.md`.
 11. **Intent: text-polish** → propose `humanize`. Trivial — no gate.
