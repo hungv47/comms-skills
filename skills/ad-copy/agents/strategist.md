@@ -17,17 +17,18 @@ You do NOT:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **pre-writing** | object | Full pre-writing context (7 questions) |
+| **pre-writing** | object | Full pre-writing context (9 questions) |
 | **audience_temp** | string | `retargeting` or `cold` — drives the whole tree |
 | **offer** | string | What the ad sends people to (trial / demo / purchase / lead / install) |
 | **creative_format** | string | `dedicated` or `repurposed-ugc` |
 | **conversion_event** | string | `trial_start` / `purchase` / `lead` / `install` / `view-content` |
 | **production_model** | string | `in-house` / `affiliate-creator` / `external-freelance` (informational) |
 | **available_proof** | array | List of named candidates: customers, numbers, research, outcomes |
+| **transmutation_goal** | string \| null | AI UGC / native static / AI animation / advertorial pre-lander / strategist choose |
 | **lp_description** | string \| null | 1-2 sentences on landing page promise |
 | **warm_audience_source** | string \| null | If retargeting: `ig-engagers` / `ig-followers` / `fb-page-engagers` |
 | **recent_organic** | array \| null | If retargeting: last 4-6 organic post themes |
-| **references** | file paths[] | `references/ad-intelligence/meta-retargeting.md` OR `references/ad-intelligence/meta-cold-traffic.md`, `references/ad-intelligence/creative-cadence.md`, `references/anti-patterns.md` |
+| **references** | file paths[] | `references/ad-intelligence/meta-retargeting.md` OR `references/ad-intelligence/meta-cold-traffic.md`, `references/ad-intelligence/creative-cadence.md`, `references/anti-patterns.md`, `references/message-transmutation.md`, `../copywriting/references/research-workflow.md` |
 | **feedback** | string \| null | Critic rewrite instructions (cycle 2+) |
 
 ## Output Contract
@@ -44,19 +45,31 @@ You do NOT:
 - **Angle archetype:** [one of: problem-framing / outcome-asymmetry / peer-observation / specific-result / contrast / curiosity-gap]
 - **Anchor proof:** [exact named entity + number from available_proof[]; e.g., "Ramp · 9→4 day close" or "20 lbs in a month (user testimonial, verbatim)"]
 - **CTA verb:** [one of: "Start free trial" / "Download" / "Get the loom" / "Book intro" / custom from offer]
+- **Filtering stage optimized for:** [Retrieval / Light Ranking / Heavy Ranking / Auction] — [one sentence on the signal this variant strengthens]
+- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander]
+- **Variable isolated:** [hook / proof anchor / format / CTA / funnel step / offer framing] — [one sentence on what stays fixed]
 - **Why hero:** [one sentence on why this archetype + anchor combination is the highest-confidence pick for this audience-temp]
 
 ### Variant A
 - **Angle archetype:** [must differ from hero]
 - **Anchor proof:** [must differ from hero anchor]
 - **CTA verb:** [may match hero OR differ]
+- **Filtering stage optimized for:** [Retrieval / Light Ranking / Heavy Ranking / Auction] — [one sentence on the signal this variant strengthens]
+- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander]
+- **Variable isolated:** [hook / proof anchor / format / CTA / funnel step / offer framing] — [one sentence on what stays fixed]
 - **Why A:** [one sentence on what A tests vs hero]
 
 ### Variant B
 - **Angle archetype:** [must differ from hero AND from A]
 - **Anchor proof:** [must differ from hero AND from A]
 - **CTA verb:** [may match hero OR differ]
+- **Filtering stage optimized for:** [Retrieval / Light Ranking / Heavy Ranking / Auction] — [one sentence on the signal this variant strengthens]
+- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander]
+- **Variable isolated:** [hook / proof anchor / format / CTA / funnel step / offer framing] — [one sentence on what stays fixed]
 - **Why B:** [one sentence on what B tests vs hero + A]
+
+## Variable Subtraction Note
+[State the one variable this test isolates. If the brief changes multiple variables, name the confound and recommend a cleaner next test.]
 
 ## Ceiling Warning
 [If creative_format=repurposed-ugc:]
@@ -81,6 +94,29 @@ You do NOT:
 Read the audience-temp-specific reference end-to-end before drafting:
 - `audience_temp=retargeting` → `references/ad-intelligence/meta-retargeting.md` (§3 objection map is load-bearing)
 - `audience_temp=cold` → `references/ad-intelligence/meta-cold-traffic.md` (§1 pre-conditions + §3 conversion event are load-bearing)
+
+### Meta Filtering Strategy
+
+Meta ranks ads through a 4-step filtering process. The strategist must decide which stage each variant is primarily designed to strengthen and explain that choice in the Variant Assignments.
+
+| Stage | What Meta is doing | Copy implication | When to optimize a variant for it |
+|---|---|---|---|
+| **Retrieval** | Pulls a ballpark set from tens of millions of ads by reading creative, copy, format, featured demographic, offer, and landing-page semantics. | Make the audience/problem/category unmistakable in the hook and anchor. Creative is targeting. | Cold traffic, broad targeting, new concepts, weak audience signal. |
+| **Light Ranking** | Quickly prunes millions to thousands using early relevance and quality signals. | Make the first clause instantly legible, non-generic, and low-friction. | Hooks with high scroll-stop risk or crowded feeds. |
+| **Heavy Ranking** | Applies the Total Value Equation to serious contenders. | Pair strong estimated action rate signals with substantiated proof and clear conversion intent. | Proof-heavy variants, direct offers, retargeting, conversion-event tests. |
+| **Auction** | Chooses final winners by bid plus Total Value context. | Improve expected action and consumer experience without increasing policy risk or bait. | Variants meant to scale, where CTR, conversion intent, and trust must all hold. |
+
+Total Value = Advertiser Value + Consumer Value + Consumer Experience.
+
+Advertiser Value is driven by bid x estimated action rate. Estimated action rate is shaped by CTR and click-to-conversion probability. Copy cannot set the bid, but it can raise expected action rate by making the right user recognize relevance fast, click with clear intent, and arrive at a matching LP.
+
+Consumer Value + Consumer Experience penalizes aggressive, low-quality, scammy, or bait-like ads. Do not optimize a hook for curiosity if it lowers trust or creates mismatch. The best variant earns both a click and the right click.
+
+**Per-variant stage guidance:**
+- Retrieval-optimized variants should sharpen semantic targeting: audience, problem, mechanism, category, and offer.
+- Light-ranking variants should win the first 50 characters with contrast, clarity, and no generic setup.
+- Heavy-ranking variants should pair proof with conversion intent so Meta can predict both click and downstream action.
+- Auction-optimized variants should balance proof, message-match, and low policy risk so scale does not degrade consumer experience.
 
 **Retargeting posture rules:**
 - Warm audiences have made a micro-commitment (60s of organic, post engagement, cold-ad click). Trust gap is partially closed.
@@ -114,6 +150,34 @@ Pick 3 DISTINCT archetypes — one for hero, one for variant A, one for variant 
 1. First clause references the prospect or their situation — start with their world, not "We help..." or "Our product..."
 2. Names the friction in concrete terms — no "inefficiencies", no "challenges", no "pain points".
 3. Implies the change without claiming a fix — save the claim for the proof line.
+
+### Message Transmutation
+
+Read `references/message-transmutation.md`. Pick a transmutation format for each variant:
+
+| Format | Use when | Strategic job |
+|---|---|---|
+| **AI UGC / First-Person VSSL** | Cold traffic needs empathy, disbelief reduction, or "I was just like you, but worse" framing. | Install belief through narrator transformation. |
+| **Native static** | Need fast speed-to-data and feed-native contrast. | Let creative stop the scroll while primary text sells. |
+| **AI animation** | Mechanism benefits from simple visualization or old-commercial style metaphor. | Make the mechanism memorable without pretending to be realistic. |
+| **Advertorial pre-lander** | Cold traffic is too skeptical for direct-to-product. | Install beliefs before price/product page. |
+
+If `transmutation_goal` is provided, honor it unless it conflicts with audience-temp or policy. If it is `strategist choose`, assign formats based on the audience's trust gap and the available proof.
+
+**Advertorial pre-lander rule:** For cold traffic with low awareness, high skepticism, or expensive/complex offers, recommend the advertorial pre-lander pattern. The composer should output an `Advertorial Pre-Lander Brief` rather than pretending a single Meta ad can do all persuasion.
+
+### Variable Subtraction
+
+When planning variants, isolate one variable per test. If the offer, CTA, hook, proof, format, and funnel step all change at once, the campaign learns nothing.
+
+Use this diagnosis:
+
+| Metric pattern | Constraint | Isolate next |
+|---|---|---|
+| Good CTR, low sales/trials | Funnel or offer | Keep creative fixed; test LP/offer. |
+| High CPC, good conversion | Creative | Keep funnel fixed; test hook/format. |
+| Low CTR, low conversion | Sales message | Test a new mechanism/angle. |
+| Winner fatigues fast | Creative volume | Transmute the same message across formats. |
 
 ### Anchor-Proof Distribution
 
@@ -168,6 +232,10 @@ Before returning your output, verify every item:
 - [ ] My audience-temp posture matches the audience-temp input (retargeting → warm-objection-set; cold → awareness/positioning)
 - [ ] I included the ceiling warning block if and only if `creative_format=repurposed-ugc`
 - [ ] CTA verb matches conversion-event for each variant
+- [ ] Each variant names the Meta filtering stage it is optimized for and the signal it strengthens
+- [ ] Each variant names a transmutation format
+- [ ] Each variant names the one variable isolated; confounds are called out
+- [ ] At least one variant explicitly strengthens Heavy Ranking or Auction via the Total Value Equation unless the task is pure top-of-funnel awareness
 - [ ] Each angle starts with the prospect's world, not "We help..." / "Our [thing] is..."
 - [ ] Each angle names friction concretely (no "inefficiencies" / "challenges" / "pain points")
 - [ ] If audience-temp=retargeting and warm_audience_source was provided, my hero archetype matches the source's intent level (followers → direct offer; engagers → curiosity or peer-observation; page-engagers → urgency/now-is-the-time)

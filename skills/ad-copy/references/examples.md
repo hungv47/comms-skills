@@ -3,7 +3,7 @@ type: examples
 schema_version: 1
 last_verified: 2026-05-11
 verifier: hungv47
-note: 4 worked examples calibrating the 6-dim rubric. Synthetic illustrative drafts — not real campaigns. Strong examples should pass the gate cleanly (aggregate ≥ 50, all per-dim ≥ 7); weak examples should fail cleanly (aggregate < 35, multiple per-dim ≤ 4). The discriminant gap (≥15 points) is the calibration signal.
+note: 4 worked examples calibrating the 7-dim rubric. Synthetic illustrative drafts — not real campaigns. Strong examples should pass the gate cleanly (aggregate ≥ 59, all per-dim ≥ 7); weak examples should fail cleanly (aggregate < 42, multiple per-dim ≤ 4). The discriminant gap (≥15 points) is the calibration signal.
 ---
 
 # Ad-Copy Worked Examples (Calibration)
@@ -44,6 +44,7 @@ Each example shows: input context → hero + 2 variants → per-variant scorecar
 - Hero archetype: **specific-result** — anchor on Ramp's 9→4
 - A archetype: **outcome-asymmetry** — anchor on Linear's 38%→6% miss rate
 - B archetype: **peer-observation** — anchor on Vercel testimonial
+- Transmutation format: **native static** for all 3 variants; variable isolated = anchor proof
 
 ### Drafts (composer → format-checker → voice-auditor passed)
 
@@ -70,13 +71,13 @@ Each example shows: input context → hero + 2 variants → per-variant scorecar
 
 ### Critic Scorecard
 
-| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Total |
-|---------|------|------|--------|---------|--------|------|-------|
-| Hero | 9 | 9 | 10 | 9 | 9 | 9 | **55** |
-| A | 8 | 9 | 10 | 9 | 9 | 9 | **54** |
-| B | 9 | 9 | 10 | 9 | 9 | 9 | **55** |
+| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Trans | Total |
+|---------|------|------|--------|---------|--------|------|-------|-------|
+| Hero | 9 | 9 | 10 | 9 | 9 | 9 | 9 | **64** |
+| A | 8 | 9 | 10 | 9 | 9 | 9 | 9 | **63** |
+| B | 9 | 9 | 10 | 9 | 9 | 9 | 9 | **64** |
 
-**Aggregate: 54.7/60.** All per-dim ≥ 6. **Verdict: PASS.**
+**Aggregate: 63.7/70.** All per-dim ≥ 6. **Verdict: PASS.**
 
 **Driver notes:**
 - Hook 9: every variant opens with the prospect's world ("You watched...", "Linear missed...", "Vercel's head of sales:") and lands an anchor in first 50 chars
@@ -85,6 +86,7 @@ Each example shows: input context → hero + 2 variants → per-variant scorecar
 - Pattern-interruption 9: 3 distinct archetypes (specific-result / outcome-asymmetry / peer-observation); 3 distinct anchors (Ramp / Linear / Vercel); 3 distinct openings
 - Policy 9: every claim mapped to source; testimonial hedge applied; no banned phrases
 - Specificity 9: every variant carries 3+ verifiable specifics (named customer + named number + named outcome)
+- Transmutation 9: native-static format fits retargeting feed context; only anchor proof changes across variants
 
 ---
 
@@ -119,13 +121,13 @@ Same as Example 1, but the drafter ignored audience-temp framing and produced co
 
 ### Critic Scorecard
 
-| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Total |
-|---------|------|------|--------|---------|--------|------|-------|
-| Hero | 3 | 6 | 4 | 4 | 4 | 1 | **22** |
-| A | 2 | 6 | 4 | 4 | 4 | 1 | **21** |
-| B | 2 | 7 | 4 | 4 | 4 | 1 | **22** |
+| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Trans | Total |
+|---------|------|------|--------|---------|--------|------|-------|-------|
+| Hero | 3 | 6 | 4 | 4 | 4 | 1 | 3 | **25** |
+| A | 2 | 6 | 4 | 4 | 4 | 1 | 3 | **24** |
+| B | 2 | 7 | 4 | 4 | 4 | 1 | 3 | **25** |
 
-**Aggregate: 21.7/60.** Specificity Floor failed on every variant (0 verifiable specifics — all generic flavor: "leading", "innovative", "best-in-class", "transformative", "next-level", "game-changing", "industry-leading", "trusted by leading"). **Verdict: FAIL (auto-fail on Specificity per variant).**
+**Aggregate: 24.7/70.** Specificity Floor failed on every variant (0 verifiable specifics — all generic flavor: "leading", "innovative", "best-in-class", "transformative", "next-level", "game-changing", "industry-leading", "trusted by leading"). Transmutation fit also fails because no format or isolated variable is named. **Verdict: FAIL (auto-fail on Specificity per variant).**
 
 **Driver notes:**
 - Hook 2-3: rhetorical question opener ("Are you tired of...", "Tired of...") = AI-tell auto-fail; "Discover how..." = generic
@@ -134,6 +136,7 @@ Same as Example 1, but the drafter ignored audience-temp framing and produced co
 - Pattern 4: 3 archetypes are all generic-flavor variants of the same "we are leading SaaS" pitch
 - Policy 4: "Trusted by leading brands" with no named brands = false-specificity; "transformative", "industry-leading" are vendor-speak banned phrases (voice-auditor should have caught these but they bled through to demonstrate calibration)
 - Specificity 1: zero named entities, zero named numbers, zero named research — pure generic claim soup
+- Transmutation 3: format is not applied; all three variants change wording without naming a testable message/format variable
 
 **What composer rewrite should fix (FAIL cycle 1 feedback):**
 1. Remove rhetorical-question and "Discover how..." openers; lead with named anchor (Ramp / Linear / Vercel)
@@ -167,6 +170,7 @@ Same as Example 1, but the drafter ignored audience-temp framing and produced co
 - Hero archetype: **outcome-asymmetry** — Jake testimonial (with hedge)
 - A archetype: **specific-result** — 5,000-user cohort average
 - B archetype: **contrast** — photo-recognition vs manual entry (against-the-consensus framing: "AI accuracy is for real for this category")
+- Transmutation formats: Hero = **AI UGC / First-Person VSSL concept** using provided Jake testimonial; A = **native static**; B = **AI animation / mechanism visualization**; variable isolated = format while offer and CTA stay fixed
 
 ### Drafts (passed format-checker + voice-auditor)
 
@@ -193,13 +197,13 @@ Same as Example 1, but the drafter ignored audience-temp framing and produced co
 
 ### Critic Scorecard
 
-| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Total |
-|---------|------|------|--------|---------|--------|------|-------|
-| Hero | 9 | 9 | 10 | 9 | 9 | 9 | **55** |
-| A | 9 | 9 | 10 | 9 | 9 | 9 | **55** |
-| B | 8 | 9 | 9 | 9 | 9 | 9 | **53** |
+| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Trans | Total |
+|---------|------|------|--------|---------|--------|------|-------|-------|
+| Hero | 9 | 9 | 10 | 9 | 9 | 9 | 9 | **64** |
+| A | 9 | 9 | 10 | 9 | 9 | 9 | 9 | **64** |
+| B | 8 | 9 | 9 | 9 | 9 | 9 | 8 | **61** |
 
-**Aggregate: 54.3/60.** All per-dim ≥ 6. **Verdict: PASS.**
+**Aggregate: 63.0/70.** All per-dim ≥ 6. **Verdict: PASS.**
 
 **Driver notes:**
 - Hook 8-9: every variant opens with a specific named anchor (Jake / 5,000-user cohort / 92% accuracy + in-house test)
@@ -208,6 +212,7 @@ Same as Example 1, but the drafter ignored audience-temp framing and produced co
 - Pattern 9: 3 distinct archetypes (testimonial-with-hedge / cohort-average / accuracy-contrast); 3 distinct anchors (Jake / 5,000-user cohort / 92% accuracy)
 - Policy 9: testimonial hedge applied ("verified user"); cohort hedge applied ("averaged"); methodology disclosed on accuracy claim ("in-house test, n=200 meals"); no banned wording
 - Specificity 9: every variant carries 2-3 verifiable specifics (named customer / named cohort / named methodology)
+- Transmutation 8-9: VSSL uses a provided testimonial rather than fake narrator claims; native static and animation notes match the assigned messages; B's animation note needs slightly more visual detail
 
 ---
 
@@ -242,15 +247,15 @@ Same as Example 3, but `creative_format=repurposed-ugc` and target daily spend =
 
 ### Critic Scorecard (format-checker BOUNCED first; below is post-format-checker fix attempt that still failed critic)
 
-| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Total |
-|---------|------|------|--------|---------|--------|------|-------|
-| Hero | 2 | 5 | 2 | 3 | 0* | 1 | **13** |
-| A | 2 | 6 | 2 | 3 | 1 | 1 | **15** |
-| B | 2 | 7 | 2 | 3 | 0* | 1 | **15** |
+| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Trans | Total |
+|---------|------|------|--------|---------|--------|------|-------|-------|
+| Hero | 2 | 5 | 2 | 3 | 0* | 1 | 1 | **14** |
+| A | 2 | 6 | 2 | 3 | 1 | 1 | 2 | **16** |
+| B | 2 | 7 | 2 | 3 | 0* | 1 | 1 | **16** |
 
 \* Policy auto-fail (banned wording: "guaranteed", "risk-free", "doctors hate this", ALL-CAPS headline)
 
-**Aggregate: 14.3/60.** Multiple per-dim auto-fails. **Verdict: FAIL (multiple critical issues).**
+**Aggregate: 15.3/70.** Multiple per-dim auto-fails. **Verdict: FAIL (multiple critical issues).**
 
 **Driver notes:**
 - Hook 2: rhetorical question openers ("Tired of dieting?"), generic claim openers ("Lose weight fast!"), "Doctors hate this trick" click-bait
@@ -258,6 +263,7 @@ Same as Example 3, but `creative_format=repurposed-ugc` and target daily spend =
 - CTA-LP 2: "Sign Up" doesn't match LP "Start Free Trial" (CTA verb mismatch + offer noun mismatch)
 - Pattern 3: 3 archetypes are all variations of "lose weight fast generic claim"; no distinct anchors
 - Policy 0-1: **Auto-fail.** "Guaranteed" (banned health claim), "risk-free" (banned finance claim), "Doctors hate this" (click bait), ALL-CAPS headline (Meta auto-reject), "industry-leading" / "innovative" / "trusted by thousands" (false-specificity vendor-speak). Plus the conversion_event was set to `purchase` on a 7-day trial — soft-warn auto-applied; and the repurposed-UGC ceiling warning is missing from the artifact (-2 on Policy).
+- Transmutation 1-2: no legitimate narrator or marked VSSL concept; multiple variables changed at once; claims imply unsupported outcomes.
 - Specificity 1: zero verifiable specifics — Jake and the 5,000-user cohort and the accuracy test were all available but composer ignored them
 
 **What composer rewrite should fix (FAIL cycle 1 feedback):**

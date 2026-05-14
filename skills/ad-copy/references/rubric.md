@@ -5,14 +5,14 @@ last_verified: 2026-05-11
 verifier: hungv47
 ---
 
-# Ad-Copy Rubric (v0.1)
+# Ad-Copy Rubric (v0.2)
 
-6-dimension rubric for Meta paid-ad copy. Used by `agents/critic.md` to score hero + Variant A + Variant B independently, then aggregate.
+7-dimension rubric for Meta paid-ad copy. Used by `agents/critic.md` to score hero + Variant A + Variant B independently, then aggregate.
 
-**Pass gate:** aggregate average ≥ 42/60 across the 3 variants AND every per-variant per-dim score ≥ 6.
+**Pass gate:** aggregate average ≥ 49/70 across the 3 variants AND every per-variant per-dim score ≥ 6.
 
-Any single per-variant per-dim score < 6 = FAIL even if aggregate ≥ 42.
-Total 42-47 with all per-dim floors met = PASS as `DONE_WITH_CONCERNS`.
+Any single per-variant per-dim score < 6 = FAIL even if aggregate ≥ 49.
+Total 49-55 with all per-dim floors met = PASS as `DONE_WITH_CONCERNS`.
 
 ---
 
@@ -126,21 +126,40 @@ Pure generic flavor ("great work in SaaS", "leading B2B brands", "proven results
 
 ---
 
+## 7. Transmutation fit (0-10)
+
+Does each variant follow the assigned message-transmutation format without creating policy, proof, or learning-design problems?
+
+| Band | Description |
+|------|-------------|
+| 9-10 | Format is clear and useful. AI UGC/VSSL has a legitimate narrator or is clearly marked as a concept. Advertorial variants include a pre-lander brief. Native static/animation notes match the message. One test variable is isolated. |
+| 7-8 | Format mostly fits, but the execution note is thin or the isolated variable could be clearer. |
+| 5-6 | Format is named but weakly applied. The variant is shippable with concerns, but it does not fully exploit the assigned format. |
+| 3-4 | Format conflicts with audience temperature, proof, or offer. Advertorial is needed but missing. VSSL implies a fake personal claim. |
+| 0-2 | Fabricated narrator/customer story, unsupported health/finance claim, or multiple variables changed so no test can be interpreted. |
+
+**Auto-fail conditions:**
+- AI UGC/VSSL uses first-person customer/founder claims not provided in the brief.
+- Advertorial pre-lander format is assigned but no `Advertorial Pre-Lander Brief` exists.
+- Variant changes hook, proof, CTA, offer, and funnel step simultaneously without naming the confound.
+
+---
+
 ## Aggregate Calculation
 
 ```
-hero_total       = sum(6 dim scores)
-variant_a_total  = sum(6 dim scores)
-variant_b_total  = sum(6 dim scores)
+hero_total       = sum(7 dim scores)
+variant_a_total  = sum(7 dim scores)
+variant_b_total  = sum(7 dim scores)
 
 aggregate = avg(hero_total, variant_a_total, variant_b_total)
 ```
 
 **Verdict:**
-- aggregate ≥ 42 AND every per-variant per-dim ≥ 6 → **PASS**
-- aggregate ≥ 42 AND any per-variant per-dim < 6 → **FAIL** (per-dim floor unmet)
-- aggregate < 42 → **FAIL** (aggregate threshold unmet)
-- 42 ≤ aggregate < 48 AND every per-dim ≥ 6 → PASS as **DONE_WITH_CONCERNS**
+- aggregate ≥ 49 AND every per-variant per-dim ≥ 6 → **PASS**
+- aggregate ≥ 49 AND any per-variant per-dim < 6 → **FAIL** (per-dim floor unmet)
+- aggregate < 49 → **FAIL** (aggregate threshold unmet)
+- 49 ≤ aggregate < 56 AND every per-dim ≥ 6 → PASS as **DONE_WITH_CONCERNS**
 
 **Cycle 3 auto-surface:** if cycle == 3 and verdict would still be FAIL, return PASS_WITH_CONCERNS with current scorecards and the auto-surface banner.
 
@@ -152,9 +171,10 @@ See `references/examples.md` for 4 full worked examples (strong-retargeting / we
 
 ---
 
-**Rubric version:** v0.1 (initial; revise after first 5 real-world ad-copy invocations).
+**Rubric version:** v0.2 (adds Transmutation fit; revise after first 5 real-world ad-copy invocations using message-transmutation formats).
 
 **Mandatory revision triggers:**
-1. Aggregate ≥ 42 passes consistently while real-world ad performance underperforms benchmarks → re-examine which dim's threshold is too lenient.
+1. Aggregate ≥ 49 passes consistently while real-world ad performance underperforms benchmarks → re-examine which dim's threshold is too lenient.
 2. Multiple cycle-3 auto-surfaces in close succession → re-examine whether the per-dim floor at 6 is too aggressive for the rubric's current bands.
 3. Meta policy change (e.g., tightens substantiation rules on health claims) → update Policy dim auto-fails.
+4. Format-level learnings are inconclusive across cycles → revise Transmutation fit and Variable Subtraction guidance.

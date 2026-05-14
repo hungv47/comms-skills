@@ -107,7 +107,7 @@ Horizontal — called by `campaign-plan`, `lp-brief`. Can run standalone.
 | Hook Agent | 1 (parallel) | `agents/hook-agent.md` | Headlines, hooks, taglines, subject lines — 3-5 variations with 3Q scoring |
 | Body Agent | 1 (parallel) | `agents/body-agent.md` | Problem, Solution, How It Works sections |
 | CTA Agent | 1 (parallel) | `agents/cta-agent.md` | CTA variations per placement with risk reversal |
-| Social Proof Agent | 1 (parallel) | `agents/social-proof-agent.md` | Testimonials, stats, logos, credibility signals |
+| Social Proof Agent | 1 (parallel) | `agents/social-proof-agent.md` | Testimonials, stats, logos, credibility signals, Discovery Story |
 | Variant Agent | 1.5 (post-merge) | `agents/variant-agent.md` | A/B alternatives for key sections |
 | Voice Agent | 2 (sequential) | `agents/voice-agent.md` | Clarity + brand voice consistency, AI slop removal |
 | Psychology Agent | 2 (sequential) | `agents/psychology-agent.md` | So What, Prove It, Specificity, Emotion passes |
@@ -176,11 +176,12 @@ Classify the task, then follow the matching route.
 
 Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
 
-**Needed dimensions:** surface (page / email / social / headline / CTA / etc.), audience, the one shift (what should reader believe after?), unique proof (what can you say nobody else can?), traffic source (if applicable).
+**Needed dimensions:** surface (page / email / social / headline / CTA / etc.), audience, the one shift (what should reader believe after?), unique proof (what can you say nobody else can?), Unique Mechanism (the proprietary "how" that makes the offer different and better), traffic source (if applicable).
 
 **Read order:**
-1. Pipeline: `research/icp-research.md` for VoC + pain language. `research/product-context.md` for product details and voice adjectives. `skills-resources/marketing/campaign-plan.md` for angle + awareness stage.
-2. Experience: `skills-resources/experience/{audience,product,goals}.md`.
+1. Method: `references/research-workflow.md` for the Research Doc -> Avatar & Offer Brief -> Belief Engineering -> Unique Mechanism SOP. Use it to identify missing upstream context before dispatch.
+2. Pipeline: `research/icp-research.md` for VoC + pain language. `research/product-context.md` for product details and voice adjectives. `skills-resources/marketing/campaign-plan.md` for angle + awareness stage.
+3. Experience: `skills-resources/experience/{audience,product,goals}.md`.
 
 If `research/icp-research.md` or `product-context.md` `date` fields >30 days old, warn and recommend re-running `icp-research`. Soft gate — proceed if user confirms, note "stale ICP" in artifact header.
 
@@ -193,9 +194,11 @@ Found:
 - audience → "[VoC summary from icp-research.md]"
 - product/voice → "[adjectives from product-context.md]"
 - campaign angle → "[from campaign-plan.md if present]"
+- Unique Mechanism → "[proprietary mechanism from product-context.md or campaign-plan.md if present]"
 
 Need before dispatching: surface (page/email/headline/CTA/etc.) + the
-one shift this copy should produce.
+one shift this copy should produce + confirmation that the Unique Mechanism
+above is the mechanism to anchor the argument on.
 ```
 
 **Cold Start** (no upstream artifacts):
@@ -212,10 +215,14 @@ specific shift in mind. Generic prompts produce generic copy. Before I dispatch:
    that they don't believe now? One sentence.
 4. **Unique proof** — what can you say that nobody else can? Specific
    client + number, named feature with results, or domain credentials.
-5. **Traffic source** (only if Q1 is page or email) — ad / search / email /
+5. **Unique Mechanism** — what proprietary "how" makes the offer different
+   and better than the old way or commodity alternative? Name it in one
+   sentence. If none exists yet, say "unknown" and the copy must surface that
+   as a concern.
+6. **Traffic source** (only if Q1 is page or email) — ad / search / email /
    social / direct? Determines what the reader already knows and expects.
 
-Answer 1-5 (or 1-4 if no traffic source) in one response. I'll dispatch.
+Answer 1-6 (or 1-5 if no traffic source) in one response. I'll dispatch.
 ```
 
 **Write-back:**
@@ -225,7 +232,8 @@ Answer 1-5 (or 1-4 if no traffic source) in one response. I'll dispatch.
 | 2. Audience | `audience.md` | `Audience — primary persona` (only if novel; pre-existing icp-research takes precedence) |
 | 3. The one shift | `goals.md` | `Goals — copy shift: [surface]` |
 | 4. Unique proof | `product.md` | `Product — proof points` |
-| 1, 5. Surface + traffic source | (routing only) |
+| 5. Unique Mechanism | `product.md` | `Product — unique mechanism` |
+| 1, 6. Surface + traffic source | (routing only) |
 
 ---
 
@@ -258,10 +266,10 @@ Spawn the following agents **IN PARALLEL** (multiple Agent tool calls in a singl
 
 | Agent | Instruction File | Pass These Inputs | Reference Files to Resolve |
 |-------|-----------------|-------------------|---------------------------|
-| Hook Agent | `agents/hook-agent.md` | brief + pre-writing | `references/headline-formulas.md`, `references/emotional-triggers.md` (TOF/lead-magnet hooks), `references/belief-disruption.md` (problem-unaware audience), `references/lead-magnet-stack.md` (lead-magnet posts) |
-| Body Agent | `agents/body-agent.md` | brief + pre-writing | `references/page-sections.md` |
+| Hook Agent | `agents/hook-agent.md` | brief + pre-writing | `references/headline-formulas.md`, `references/research-workflow.md`, `references/emotional-triggers.md` (TOF/lead-magnet hooks), `references/belief-disruption.md` (problem-unaware audience), `references/lead-magnet-stack.md` (lead-magnet posts) |
+| Body Agent | `agents/body-agent.md` | brief + pre-writing | `references/page-sections.md`, `references/research-workflow.md` |
 | CTA Agent | `agents/cta-agent.md` | brief + pre-writing | `references/lead-magnet-stack.md` (lead-magnet CTAs only) |
-| Social Proof Agent | `agents/social-proof-agent.md` | brief + pre-writing + available proof points | `references/page-sections.md`, `references/lead-magnet-stack.md` (FOMO layer 1-2 social-proof patterns) |
+| Social Proof Agent | `agents/social-proof-agent.md` | brief + pre-writing + available proof points | `references/page-sections.md`, `references/discovery-story.md`, `references/lead-magnet-stack.md` (FOMO layer 1-2 social-proof patterns) |
 
 **For single key line tasks (Route A):** Dispatch only the relevant agent, not all four.
 
@@ -272,6 +280,9 @@ Spawn the following agents **IN PARALLEL** (multiple Agent tool calls in a singl
 After all Layer 1 agents return, assemble their outputs into the page structure.
 
 ### Section Order (full-page copy)
+
+**Awareness-building narrative** (Body Agent chose Problem -> Solution -> How It Works):
+
 1. **Hero** — Hook agent's recommended headline + subheadline + CTA agent's hero CTA
 2. **Social Proof Bar** — Social proof agent's bar element
 3. **Problem** — Body agent's Problem section
@@ -281,8 +292,20 @@ After all Layer 1 agents return, assemble their outputs into the page structure.
 7. **Key Stats** — Social proof agent's stats (if applicable)
 8. **Final CTA** — CTA agent's final CTA + risk reversal
 
+**Direct-response narrative** (Body Agent chose 6 Necessary Beliefs):
+
+1. **Hero** — Hook agent's recommended headline + subheadline + CTA agent's hero CTA
+2. **Social Proof Bar** — Social proof agent's bar element
+3. **Necessary Beliefs** — Body agent's belief sequence, preserving the Problem / Mechanism / Superiority / Proof / Fit / Opportunity order
+4. **Mechanism Close** — Body agent's Unique Mechanism close
+5. **Testimonials** — Social proof agent's testimonials
+6. **Key Stats** — Social proof agent's stats (if applicable)
+7. **Final CTA** — CTA agent's final CTA + risk reversal
+
 ### Assembly Rules
 The merge is deterministic assembly, not creative synthesis. Slot each agent's output into the template by ownership:
+
+**Awareness-building narrative:**
 
 | Section | Owner Agent | Content Source |
 |---------|-----------|---------------|
@@ -296,6 +319,21 @@ The merge is deterministic assembly, not creative synthesis. Slot each agent's o
 | Mid-Page CTA | CTA Agent | Mid-page CTA from cta-agent output |
 | Key Stats | Social Proof Agent | Stats from social-proof-agent output |
 | Final CTA + Risk Reversal | CTA Agent | Final CTA + risk reversal from cta-agent output |
+
+**Direct-response narrative:**
+
+| Section | Owner Agent | Content Source |
+|---------|-----------|---------------|
+| Headline + Subheadline | Hook Agent | Recommended hook + subheadline from hook-agent output |
+| Hero CTA | CTA Agent | Hero CTA from cta-agent output |
+| Social Proof Bar | Social Proof Agent | Bar element from social-proof-agent output |
+| Necessary Beliefs | Body Agent | Necessary Beliefs section from body-agent output |
+| Mechanism Close | Body Agent | Mechanism Close from body-agent output |
+| Testimonials | Social Proof Agent | Testimonials from social-proof-agent output |
+| Key Stats | Social Proof Agent | Stats from social-proof-agent output |
+| Final CTA + Risk Reversal | CTA Agent | Final CTA + risk reversal from cta-agent output |
+
+If the Body Agent chose Direct-Response 6 Necessary Beliefs, do not force its output back into Problem / Solution / How It Works slots. Preserve the belief sequence as the persuasive body architecture.
 
 ### Conflict Resolution
 - Each agent owns specific sections (table above). If two agents mention the same fact (e.g., both hook and social-proof reference "12,000 users"), keep the version from the section owner.
@@ -369,7 +407,8 @@ status: done | done_with_concerns | blocked | needs_context
 1. **Talking to:** [audience + current belief]
 2. **Shift to:** [desired belief after reading]
 3. **Only we can say:** [unique proof/angle]
-4. **Traffic context:** [what they already know]
+4. **Unique Mechanism:** [proprietary how that makes the offer different and better]
+5. **Traffic context:** [what they already know]
 
 ## Key Lines
 
@@ -455,6 +494,8 @@ Receives zero-risk output. Scores all key lines. All average ≥3.5. Annotated a
 - [references/emotional-triggers.md](references/emotional-triggers.md) — 6-lever framework for engagement-driven copy (psychology-agent, hook-agent, critic-agent for trigger density)
 - [references/belief-disruption.md](references/belief-disruption.md) — TOF ragebait 5-step structure for problem-unaware audiences (psychology-agent, hook-agent)
 - [references/lead-magnet-stack.md](references/lead-magnet-stack.md) — 5-element lead-magnet post + 4-layer FOMO sequence (hook-agent, social-proof-agent, cta-agent)
+- [references/research-workflow.md](references/research-workflow.md) — 4-phase argument research SOP: Research Doc, Avatar & Offer Brief, Belief Engineering, Unique Mechanism
+- [references/discovery-story.md](references/discovery-story.md) — Discovery Story social-proof arc for mechanism-led trust building
 
 ### Page-Specific Guidance
 

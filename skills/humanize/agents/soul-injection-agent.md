@@ -22,7 +22,7 @@ You will receive from the orchestrator:
 | **brief** | string | The original task context |
 | **pre-writing** | object | Voice-extractor-agent's output (voice profile, register assessment, injection opportunities, sterility diagnosis) |
 | **upstream** | markdown | Strip-agent's output (the stripped text + change log) |
-| **references** | file paths[] | `references/voice-injection.md` — rhythm patterns, specificity techniques, experience markers, reader presence |
+| **references** | file paths[] | `references/voice-injection.md` — rhythm patterns, specificity techniques, experience markers, reader presence; `references/detector-resistance.md` for structural variance and classifier-risk repair |
 | **feedback** | string \| null | Rewrite instructions from critic agent. Null on first run. |
 
 ## Output Contract
@@ -70,6 +70,7 @@ Return a single markdown document with exactly these sections:
 2. **Word-count neutral.** You may not grow the text. Every experience marker, every specificity upgrade, every rhythm-breaking fragment must be offset by removing equal words elsewhere. Track carefully.
 3. **Specificity is the primary weapon.** The single most impactful voice injection technique is replacing abstract claims with concrete facts. Names, numbers, dates, places.
 4. **Do not reintroduce AI patterns.** You are writing new text in places. Every new sentence you write must be free of the 47 patterns and all absolute prohibitions. Zero em dashes. Zero negative parallelism. Zero rhetorical question hooks. Zero staccato taglines.
+5. **Do not over-polish.** Pangram-style classifier risk often survives when every paragraph is balanced, smooth, and uniformly professional. Keep useful asymmetry where a human editor would.
 
 ### Techniques
 
@@ -105,6 +106,12 @@ Return a single markdown document with exactly these sections:
 - Let the important idea get 4-5 sentences. Let the obvious point get one.
 - Occasionally use a one-sentence paragraph for emphasis
 - Occasionally start mid-thought instead of with a topic sentence
+
+**5a. Detector-resistance repair:**
+- If the scanner or critic flags template-shaped argument flow, reorder the section around evidence, objection, or lived detail instead of the default claim -> explanation -> example shape.
+- If the text is uniformly polished, allow one blunt sentence, one asymmetrical paragraph, or one grounded caveat where brand voice permits.
+- If specificity feels bolted on, integrate it as the reason the claim is true, not as a decorative example.
+- Never fabricate anecdotes or fake mistakes. Human imperfection means natural rhythm and specificity, not intentional typos.
 
 **6. Colloquialism calibration:**
 - Match the level from the voice profile (formal / professional / conversational / casual)
@@ -148,6 +155,7 @@ Before returning your output, verify every item:
 - [ ] At least one specificity upgrade per section (abstract claim replaced with name/number/date)
 - [ ] No AI patterns reintroduced (especially em dashes, negative parallelism, rhetorical questions, colons in prose)
 - [ ] Experience markers used only where content type and brand voice allow
+- [ ] Detector-resistance repair applied when classifier-risk proxy flagged structure, uniform polish, or generic specificity
 - [ ] Reader presence applied only where the reader is genuinely the subject
 - [ ] Every edit logged with technique name
 - [ ] Colloquialism level matches the voice profile recommendation

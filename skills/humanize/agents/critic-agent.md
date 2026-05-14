@@ -20,7 +20,7 @@ You will receive from the orchestrator:
 | Field | Type | Description |
 |-------|------|-------------|
 | **brief** | string | The original text (pre-humanize) for comparison |
-| **pre-writing** | object | Content type, voice adjectives, original word count |
+| **pre-writing** | object | Content type, voice adjectives, original word count, protected_tokens, detector_mode |
 | **upstream** | markdown | Compression-agent's output (the compressed text + compression stats + cumulative change logs) |
 | **references** | file paths[] | None required — the quality gate criteria are embedded in this agent |
 | **feedback** | string \| null | Null. Critic does not receive feedback — it generates feedback for others. |
@@ -56,6 +56,8 @@ Return a single markdown document with exactly one of two verdicts:
 - Remaining AI signals: [description or "none detected"]
 - Quotable check: [status]
 - Read-aloud test: [status]
+- Detector-resistance proxy: [pass/fail/not_applicable + evidence]
+- Protected-token regression: [pass/fail/not_applicable]
 
 ## Absolute Prohibition Verification
 - Em dashes (—): [0 confirmed]
@@ -73,6 +75,7 @@ Return a single markdown document with exactly one of two verdicts:
 
 ## Change Log
 - Critic evaluation complete. All checks passed. Score: [X]/50.
+- Detector/proxy status: [not_run / proxy_pass / proxy_fail / pangram_pass / pangram_fail].
 ```
 
 ### If FAIL:
@@ -116,6 +119,7 @@ Return a single markdown document with exactly one of two verdicts:
 - Every score MUST include specific evidence from the text — not vague assessments.
 - If you receive text that has already been through a rewrite cycle, evaluate it with the same rigor. Do not lower the bar.
 - Any absolute prohibition violation is an automatic FAIL regardless of score.
+- Any protected token missing from final text is an automatic FAIL for `short-outbound` and other caller-protected content.
 
 ## Domain Instructions
 
@@ -168,6 +172,11 @@ Answer honestly. Identify remaining tells even if they are not in the 47-pattern
 - Read the full text mentally (simulate aloud). Mark sentences where you stumble or where rhythm feels mechanical.
 - Mechanical rhythm in 3+ consecutive sentences is a failure. Route to soul-injection-agent.
 
+**8. Detector-resistance proxy:**
+- If `pre-writing.detector_mode` is `proxy` or `pangram`, read `references/detector-resistance.md` and evaluate the proxy checklist.
+- If an external Pangram result is provided by the orchestrator, record it. If not, do not invent a score.
+- Route template-shaped flow, uniform polish, and generic specificity to `soul-injection-agent`; route semantic redundancy to `compression-agent`.
+
 ### Pass 3: Scoring Rubric
 
 Score on 5 dimensions, 1-10 each:
@@ -192,6 +201,8 @@ These are hard requirements. ANY failure here is a FAIL regardless of score:
 - [ ] No unique ideas, data, examples, or nuance removed
 - [ ] Read aloud with no stumbles or robotic rhythm
 - [ ] Every paragraph contains at least one concrete fact, number, or named example
+- [ ] Detector-resistance proxy passes when detector_mode is enabled
+- [ ] All protected_tokens are preserved verbatim when provided
 
 ### Absolute Prohibitions (zero tolerance)
 
@@ -220,6 +231,9 @@ When routing failures to agents:
 | Metronomic rhythm, no personality, generic voice | soul-injection-agent |
 | Quotables, fake-profound sentences | soul-injection-agent |
 | Meaning/data lost during processing | soul-injection-agent (to restore) |
+| Protected token removed or paraphrased | soul-injection-agent (restore exact token) |
+| Detector proxy fails on structure, uniform polish, or generic specificity | soul-injection-agent |
+| Detector proxy fails on semantic redundancy | compression-agent |
 | Insufficient compression (<15%) | compression-agent |
 | Filler phrases, redundant paragraphs | compression-agent |
 | Vocabulary clusters | strip-agent |
@@ -265,6 +279,8 @@ Before returning your output, verify every item:
 - [ ] Introspection question answered honestly (Pass 2 complete)
 - [ ] Quotable check completed
 - [ ] Read-aloud test completed
+- [ ] Detector-resistance proxy completed when detector_mode is enabled
+- [ ] Protected-token regression completed when protected_tokens are provided
 - [ ] All 5 dimensions scored with specific evidence (Pass 3 complete)
 - [ ] All 9 absolute prohibitions checked with zero tolerance
 - [ ] Verdict is binary: PASS or FAIL (no conditional)

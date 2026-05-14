@@ -65,10 +65,13 @@ routing:
 2. **ZERO em dashes in final output.** Absolute prohibition. No exceptions, no edge cases. Every em dash becomes a comma, period, or parentheses.
 3. **Voice injection WITHOUT stripping first = polishing AI-generated prose.** Strip always comes first. The soul-injection agent receives clean text, not AI-patterned text.
 4. **Content type matters.** Documentation gets a lighter touch than marketing copy. Check the Content Type Calibration table before dispatching.
+5. **Detector resistance is structural, not lexical.** Pangram-style classifiers can catch synonym-swapped prose. For high-stakes public content, use the detector-resistance pass after the normal critic.
 
 ## Philosophy
 
 AI-generated content fails in three ways: it reads like AI wrote it (patterns), it sounds like nobody wrote it (no voice), and it says too much with too little (bloat). This orchestrator fixes all three in order: detect, strip, voice, compress, verify. Each concern gets a specialist agent. The critic ensures nothing ships below the bar.
+
+Classifier-era detectors add a fourth failure mode: the text can look clean but still preserve the semantic and structural fingerprint of LLM output. Humanize therefore changes argument shape, rhythm, specificity, and register when the content type warrants it. It does not try to "evade" detectors through tricks; it makes the text genuinely more authored, more specific, and less template-shaped.
 
 ## Inputs Required
 - Any content artifact (from `copywriting` or any other skill) or raw text
@@ -85,6 +88,8 @@ Before delivering, the **critic agent** verifies:
 - [ ] No unique ideas, data, examples, or nuance removed (check against original)
 - [ ] Read aloud with no stumbles, no robotic rhythm
 - [ ] Every paragraph contains at least one concrete fact, number, or named example
+- [ ] Detector-resistance proxy passes for high-stakes public content, or external detector status is recorded (`not_run`, `proxy_pass`, `pangram_pass`, `proxy_fail`, `pangram_fail`)
+- [ ] Protected tokens from upstream skills are preserved verbatim
 
 ### Absolute Prohibitions (zero tolerance, no exceptions)
 These patterns are so strongly associated with AI that a single instance ruins credibility:
@@ -159,6 +164,7 @@ Classify the task, then follow the matching route.
    - critic-agent (receives compression output)
 5. If critic returns FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
 6. Deliver final artifact
+7. For high-stakes public content or prior AI-detection failures: run Detector-Resistance Verification (below)
 ```
 
 ### Route C: Called by Another Skill
@@ -172,6 +178,7 @@ Classify the task, then follow the matching route.
    - Dispatch critic-agent
 3. Otherwise: Follow Route B (full pipeline)
 4. Return humanized output to the calling skill
+5. Run protected-token regression if the caller passed `protected_tokens`
 ```
 
 ---
@@ -192,6 +199,8 @@ This skill's examples are marketing-focused, but it works on any content type. A
 **Key principle:** The further from marketing, the lighter the touch. Documentation that sounds like a blog post is worse than documentation with a few AI tells. Short outbound (cold email, DM, Upwork proposal) is a special case: it's typically 4-6 sentences with a named entity + number doing heavy lifting — compress further and you strip the thing that earns the reply.
 
 **Protected tokens (short-outbound only):** When called by `cold-outreach` or `ad-copy`, the caller passes a `protected_tokens` list of named entities and numbers that must appear verbatim in the final output. Do not paraphrase, round, or remove these.
+
+**Detector-sensitive content:** If content is public, high-stakes, or previously flagged by a detector, set `detector_mode: proxy` unless a real detector integration is available. If `PANGRAM_API_KEY` or an operator-configured detector command exists, set `detector_mode: pangram` and record the actual result. If neither exists, run the proxy checklist in `references/detector-resistance.md` and record `detector_status: proxy_pass` or `proxy_fail`; use `not_run` only when detector mode is explicitly disabled.
 
 ---
 
@@ -260,6 +269,8 @@ After Pre-Dispatch resolves, compile these fields and pass to every agent in the
 - **Original word count** — for compression tracking
 - **Source** — which skill or external source produced the content
 - **User directives** — patterns to keep, intensity preferences
+- **Protected tokens** — named entities, numbers, URLs, proof points that must survive
+- **Detector mode** — `none | proxy | pangram`
 
 ---
 
@@ -294,7 +305,7 @@ Spawn the following agents **IN PARALLEL** (multiple Agent tool calls in a singl
 | Agent | Instruction File | Pass These Inputs | Reference Files to Resolve |
 |-------|-----------------|-------------------|---------------------------|
 | Pattern Scanner | `agents/pattern-scanner-agent.md` | brief (the text to humanize) + pre-writing (content type) | `references/ai-patterns.md` |
-| Voice Extractor | `agents/voice-extractor-agent.md` | brief (the text to assess) + pre-writing (voice adjectives, audience) | `references/voice-injection.md` |
+| Voice Extractor | `agents/voice-extractor-agent.md` | brief (the text to assess) + pre-writing (voice adjectives, audience) | `references/voice-injection.md`, `references/detector-resistance.md` |
 
 After both agents return, **present the diagnosis to the user** before proceeding to Layer 2:
 - Show Hard Tell count vs. Soft Tell count
@@ -332,7 +343,7 @@ Each agent returns the full document with their edits applied + a change log. Th
 The critic agent returns one of two verdicts:
 
 ### PASS
-The text meets all quality standards. Score is 35/50 or above. Zero absolute prohibition violations. Deliver the critic's approved output as the final artifact.
+The text meets all quality standards. Score is 35/50 or above. Zero absolute prohibition violations. If detector mode is enabled, proceed to Detector-Resistance Verification before delivery.
 
 ### FAIL
 The critic returns specific failures with:
@@ -346,6 +357,18 @@ The critic returns specific failures with:
 3. Run the modified output back through the critic
 4. **Maximum 2 rewrite cycles.** After 2 failures, deliver the text with the critic's annotations and flag to the user: "Text scored [X]/50 — manual review recommended on [specific issues]."
 
+### Detector-Resistance Verification
+
+Read `references/detector-resistance.md` before running this step.
+
+Run when `detector_mode != none`:
+
+1. **Protected-token regression:** compare final text against `protected_tokens`. Any missing named entity, number, URL, or proof point is a FAIL; re-dispatch the responsible agent with the missing token list.
+2. **External detector if available:** if the operator configured Pangram or an equivalent detector, run it and record the score/status. If not available, do not invent a score.
+3. **Proxy checklist:** evaluate argument shape, specificity source, register variance, semantic compression, and human imperfection.
+4. **Failure handling:** if external detector or proxy fails, re-dispatch `soul-injection-agent` for structural variance and specificity repair, then `compression-agent`, then `critic-agent`. Max 2 cycles total.
+5. **After 2 failures:** deliver as `DONE_WITH_CONCERNS` with detector/proxy notes and the preserved-token result.
+
 ---
 
 ## Artifact Template
@@ -357,6 +380,8 @@ version: 1
 date: [today's date]
 status: done | done_with_concerns | blocked | needs_context
 compression: [X]%
+detector_status: not_run | proxy_pass | proxy_fail | pangram_pass | pangram_fail
+protected_tokens_preserved: true | false
 ---
 
 # Humanized: [Original Title]
@@ -373,6 +398,8 @@ compression: [X]%
 | Hard Tells remaining | 0 |
 | Soft Tells remaining | [0-2] |
 | Quality score | [X]/50 (Di:[n] R:[n] T:[n] A:[n] De:[n]) |
+| Detector status | [not_run / proxy_pass / proxy_fail / pangram_pass / pangram_fail] |
+| Protected tokens preserved | [yes/no/N/A] |
 
 ## Change Log
 
@@ -511,3 +538,5 @@ Every run ends with explicit status:
 - [references/ai-patterns.md](references/ai-patterns.md) — 47 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists; detection, examples, fixes, severity (pattern-scanner, strip, critic)
 - [references/voice-injection.md](references/voice-injection.md) — Voice adjective framework, rhythm, specificity, personality injection (voice-extractor, soul-injection)
 - [references/conciseness-rules.md](references/conciseness-rules.md) — Compression techniques at sentence, paragraph, and section level (compression-agent)
+- [references/detector-resistance.md](references/detector-resistance.md) — Pangram-aware structural/semantic detector-resistance protocol and proxy checklist
+- [references/regression-suite.md](references/regression-suite.md) — Fixture protocol for protected-token, specificity, compression, and detector/proxy regressions

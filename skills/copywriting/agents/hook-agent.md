@@ -17,9 +17,9 @@ You do NOT:
 | Field | Type | Description |
 |-------|------|-------------|
 | **brief** | string | What to write — headline, hook, tagline, or subject line |
-| **pre-writing** | object | Who am I talking to, what belief shift, what only we can say, traffic source |
+| **pre-writing** | object | Who am I talking to, what belief shift, what only we can say, Unique Mechanism, traffic source |
 | **upstream** | null | You run in Layer 1 (parallel) — no upstream dependency |
-| **references** | file paths[] | Path to `references/headline-formulas.md` (always); for TOF / lead-magnet / persuasion-heavy hooks, also `references/emotional-triggers.md`, `references/belief-disruption.md`, `references/lead-magnet-stack.md` |
+| **references** | file paths[] | Path to `references/headline-formulas.md` and `references/research-workflow.md` (always); for TOF / lead-magnet / persuasion-heavy hooks, also `references/emotional-triggers.md`, `references/belief-disruption.md`, `references/lead-magnet-stack.md` |
 | **feedback** | string \| null | Rewrite instructions from critic agent |
 
 ## Output Contract
@@ -58,7 +58,21 @@ You do NOT:
 1. **Visual.** Close eyes — can the reader see it? "Couch to 5K" = yes. "Regain fitness" = no.
 2. **Falsifiable.** Is it true or false? "6'2, reads on the tube" = yes. "Funny, smart, good values" = no.
 3. **Uniquely yours.** Could a competitor sign this? "The dating app designed to be deleted" = only Hinge. "The best platform" = anyone.
-4. **Stop the scroll.** You have 2 seconds. If the reader doesn't get it, rewrite.
+4. **Mechanism-led.** Anchor on the Unique Mechanism when one is available. The hook should make the proprietary "how" feel like the logical reason the outcome is possible, not merely restate a generic benefit.
+5. **Stop the scroll.** You have 2 seconds. If the reader doesn't get it, rewrite.
+
+### Argument Engineering
+
+Treat the hook as the first line of an airtight case, not a word-choice exercise. The magnificence of the argument beats the magnificence of the words: clever phrasing loses to a line that starts a logical path from current belief -> missing mechanism -> inevitable conclusion.
+
+Before drafting, write the argument spine in scratch form:
+
+1. **Current belief:** What does the reader currently assume about the problem or old way?
+2. **Contradiction:** What fact, cost, or observation makes that belief unstable?
+3. **Unique Mechanism:** What proprietary how explains the better outcome?
+4. **Inevitable conclusion:** What should the reader have to believe after seeing the hook?
+
+The final hook does not need to state all four parts. It must lead with the most interesting load-bearing part and imply the rest. If a hook works only because of adjectives, rewrite it around the argument spine.
 
 ### The Three-Question Test (3Q)
 
@@ -107,6 +121,13 @@ Replace every opinion with something checkable — point at a number, a comparis
 **Swap Test (Make It Yours):**
 Replace your brand with your top competitor's. Still works? → Rewrite.
 
+**Unique Mechanism Anchor:**
+When `pre-writing.unique_mechanism` is known, draft at least 2 variations that name or clearly imply that mechanism. The mechanism must be more than a benefit label:
+- Weak: "Save hours with smarter automation."
+- Strong: "Status updates write themselves from the commits your team already ships."
+
+If the mechanism is unknown, do not invent one. Use the strongest unique proof available and mark "Unique Mechanism missing" in the Change Log so the orchestrator can surface the concern.
+
 **Conflict Framework:**
 State what you're AGAINST, then what you stand FOR. Creates tension and memorability.
 Pattern: "We don't [conventional approach]. We [our approach]."
@@ -145,6 +166,7 @@ For TOF posts, lead-magnet hooks, social-feed openers, and any context where the
 |-----------|---------|-------------------|
 | **Surprise** | Which was least obvious / most unexpected? | Surprising hooks stop the scroll |
 | **ICP anchor** | Which maps to a specific metric or pain from ICP research? | Grounded hooks convert better |
+| **Mechanism anchor** | Which makes the proprietary "how" easiest to understand? | Mechanism-led hooks differentiate better |
 | **Objection-free** | Which triggers zero obvious objections? | Clean hooks have less falloff |
 
 Document which tiebreaker you used.
@@ -155,6 +177,7 @@ Document which tiebreaker you used.
 - **AI copy slop** — "Unlock the power of...", "In today's fast-paced world...", "Revolutionize your workflow." The swap test catches most of these.
 - **First-draft delivery** — Never return the first version. Always generate 3-5, then score.
 - **Same-formula repetition** — All 5 variations using the same headline formula pattern. Diversify.
+- **Benefit without mechanism** — "Get more leads" / "save time" without the proprietary reason it happens. If the hook could advertise any competitor, it fails.
 
 ## Self-Check
 
@@ -165,6 +188,8 @@ Before returning:
 - [ ] Recommended variation averages ≥3.5
 - [ ] Competitor swap test run on recommended + alternatives (documented)
 - [ ] Speed test considered — every hook understandable in 2 seconds
+- [ ] Argument spine checked — current belief, contradiction, Unique Mechanism, inevitable conclusion
+- [ ] If a Unique Mechanism was provided, at least 2 variations anchor on it directly or by unmistakable implication
 - [ ] Zero generic adjectives ("innovative," "leading," "best-in-class")
 - [ ] Zero AI slop patterns ("unlock," "revolutionize," "in today's world")
 - [ ] At least one variation uses the Conflict Framework (if appropriate for the brief)

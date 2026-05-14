@@ -1,6 +1,6 @@
 ---
 name: ad-copy
-description: "Writes and evaluates Meta paid-ad copy — retargeting (warm audiences) and cold-traffic (subscription-app primary; cross-vertical with caveats). Audience-temperature-aware framing (warm-objection map vs cold-objection map), hard char-cap enforcement, policy/claim compliance, and 6-dimension rubric scoring. Produces `skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].md` (+ `.rationale.md` + `.critic-score.md`). One artifact per audience-temp — run twice for campaigns spanning both. Meta-only at v1 (Google RSA / LinkedIn / TikTok Ads reserved for future expansion). Not for landing-page headlines (use copywriting). Not for cold-outreach DMs (use cold-outreach). AI-sounding cleanup: humanize runs as terminal pass."
+description: "Writes and evaluates Meta paid-ad copy — retargeting (warm audiences) and cold-traffic (subscription-app primary; cross-vertical with caveats). Audience-temperature-aware framing (warm-objection map vs cold-objection map), hard char-cap enforcement, policy/claim compliance, and 7-dimension rubric scoring. Produces `skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].md` (+ `.rationale.md` + `.critic-score.md`). One artifact per audience-temp — run twice for campaigns spanning both. Meta-only at v1 (Google RSA / LinkedIn / TikTok Ads reserved for future expansion). Not for landing-page headlines (use copywriting). Not for cold-outreach DMs (use cold-outreach). AI-sounding cleanup: humanize runs as terminal pass."
 argument-hint: "[audience-temp + offer + creative-format, e.g. 'cold-traffic / 14-day trial / dedicated']"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -83,7 +83,7 @@ routing:
 
 Ad copy is not landing-page copy. It runs in 3 seconds of scrolling attention, against an algorithm that ranks creative as the primary targeting lever. Every variant has to earn its impression — warm audiences want fit/credibility/timing, cold audiences want awareness/positioning, and Meta's policy review will auto-reject claims it can't substantiate.
 
-The orchestrator separates strategy from craft: strategist picks angle + audience-temperature framing + creative format (dedicated vs repurposed-UGC, with spend-ceiling warning attached), composer drafts hero + 2 variants applying Meta-specific char caps, format-checker enforces hard caps + policy compliance, voice-auditor strips vendor-speak + AI tells, critic scores a 6-dimension rubric, `humanize` is the terminal pass. Output is ready-to-publish (one hero + two variants for one audience-temperature) plus rationale and scorecard.
+The orchestrator separates strategy from craft: strategist picks angle + audience-temperature framing + creative format (dedicated vs repurposed-UGC, with spend-ceiling warning attached), composer drafts hero + 2 variants applying Meta-specific char caps, format-checker enforces hard caps + policy compliance, voice-auditor strips vendor-speak + AI tells, critic scores a 7-dimension rubric, `humanize` is the terminal pass. Output is ready-to-publish (one hero + two variants for one audience-temperature) plus rationale and scorecard.
 
 ## Scope Boundary
 
@@ -136,7 +136,7 @@ Writes to `skills-resources/marketing/ad-copy/`:
 |------|---------|
 | `[audience-temp]-[date]-[slug].md` | Hero (primary text + headline + description) + Variant A + Variant B, ready-to-publish |
 | `[audience-temp]-[date]-[slug].rationale.md` | Angle, audience-temperature framing, creative format, production model, anchor proof, anti-patterns avoided |
-| `[audience-temp]-[date]-[slug].critic-score.md` | Rubric scorecard across 6 dimensions, per-variant scores, terminal-humanize regression check |
+| `[audience-temp]-[date]-[slug].critic-score.md` | Rubric scorecard across 7 dimensions, per-variant scores, terminal-humanize regression check |
 
 Slug pattern: `retargeting-2026-05-11-trial-app-followers` or `cold-2026-05-11-app-install-dedicated`. The audience-temp prefix makes campaign-spanning runs land in distinct files even on the same day.
 
@@ -156,26 +156,27 @@ audience_temp: retargeting | cold
 creative_format: dedicated | repurposed-ugc
 production_model: in-house | affiliate-creator | external-freelance
 conversion_event: trial_start | purchase | lead | install | view-content
-critic_total: N/60
+critic_total: N/70
 critic_per_variant:
-  hero: N/60
-  variant_a: N/60
-  variant_b: N/60
+  hero: N/70
+  variant_a: N/70
+  variant_b: N/70
 ---
 ```
 
 ## Quality Gate
 
-Before delivering, the **critic agent** verifies (6 dimensions, 0-10 each):
+Before delivering, the **critic agent** verifies (7 dimensions, 0-10 each):
 
 - [ ] **Hook scroll-stop** ≥ 6 — first line of primary text + headline can stop a thumb; pattern-interrupt present; no generic openers ("Looking for a better way?", "Are you tired of...")
 - [ ] **Component-char compliance** ≥ 6 — primary text uses the ~125-char visible-before-truncation window effectively; headline lands in ≤40 chars; description in ≤30 chars; hard caps respected (3,000 char primary text, 40 char headline, 30 char description per Meta spec)
 - [ ] **CTA-LP match** ≥ 6 — ad promise = LP promise (no bait-and-switch); CTA verb matches LP primary action; if LP description not provided, dim downgrades with "scope: ad copy alone" annotation
-- [ ] **Pattern-interruption density** ≥ 6 — hero + 2 variants are genuinely distinct (different angle archetype, different anchor proof OR different audience-objection addressed); surface-level paraphrase of the same angle = FAIL
+- [ ] **Pattern-interruption density** ≥ 6 — hero + 2 variants are genuinely distinct (different angle archetype, different anchor proof OR different audience-objection addressed) and the hero passes the Contrast Ratio sub-check against the vertical's competitor pattern when context exists; surface-level paraphrase of the same angle = FAIL
 - [ ] **Policy + claim compliance** ≥ 6 — no banned claim wording (health/finance/political — see `references/policy-floor.md`); every measured claim has a substantiating source or is hedged ("up to", "in our study", "see disclaimer"); no fabricated stats; no protected-class targeting language
 - [ ] **Specificity** ≥ 6 — Specificity Floor of ≥2 verifiable specifics per variant (named entity OR named number-with-context OR named research); generic flavor ("leading", "trusted", "proven") does not count
+- [ ] **Transmutation fit** ≥ 6 — assigned AI UGC / native static / AI animation / advertorial pre-lander format is followed, proof-safe, and isolates one test variable
 
-**Gate:** Total ≥ 42/60 **AND every dim ≥ 6**. Total 42-47 with all dims ≥ 6 = PASS as `DONE_WITH_CONCERNS`. Any dim < 6 = FAIL regardless of total.
+**Gate:** Total ≥ 49/70 **AND every dim ≥ 6**. Total 49-55 with all dims ≥ 6 = PASS as `DONE_WITH_CONCERNS`. Any dim < 6 = FAIL regardless of total.
 
 Below threshold → full Layer 2 chain (composer → format-checker → voice-auditor → critic) re-runs with feedback (max 2 cycles).
 
@@ -205,9 +206,12 @@ Horizontal — runs standalone or called by `campaign-plan` when paid is part of
 | Composer | 2 (sequential) | `agents/composer.md` | Drafts hero (primary text + headline + description) + Variant A + Variant B, each with a distinct anchor. Applies Meta-specific char-cap discipline (visible-window economy). |
 | Format Checker | 2 (sequential, hard-gate) | `agents/format-checker.md` | Hard-bounces on Meta char-cap violation, policy banned-phrase hit, missing substantiation on measured claims. PASS / REVISION_REQUIRED / FORMAT_FAIL. |
 | Voice Auditor | 2 (sequential) | `agents/voice-auditor.md` | Peer-voice audit — strips vendor-speak, AI tells, em-dashes, generic "leading provider" language. Same auto-fail discipline as cold-outreach voice-auditor, scoped to ad copy. |
-| Critic | 2 (sequential, gate) | `agents/critic.md` | Rubric scoring across 6 dimensions, PASS/FAIL with per-variant scorecards. Reads `references/rubric.md` for bands + `references/policy-floor.md` for banned wording + `references/anti-patterns.md` for structural auto-fails. |
+| Critic | 2 (sequential, gate) | `agents/critic.md` | Rubric scoring across 7 dimensions, PASS/FAIL with per-variant scorecards. Reads `references/rubric.md` for bands + `references/policy-floor.md` for banned wording + `references/anti-patterns.md` for structural auto-fails. |
 
 ### Shared References
+
+**Cross-skill research method:**
+- `../copywriting/references/research-workflow.md` — 4-phase argument research SOP (Research Doc -> Avatar & Offer Brief -> Belief Engineering -> Unique Mechanism). Use when proof, competitor pattern, or mechanism context is thin.
 
 **Ad-intelligence (per-surface practitioner sources):**
 - `references/ad-intelligence/meta-retargeting.md` — warm-audience system (3 custom audiences, warm-vs-cold objection map, budget pacing) [clem-2026, secondary]
@@ -215,11 +219,12 @@ Horizontal — runs standalone or called by `campaign-plan` when paid is part of
 - `references/ad-intelligence/creative-cadence.md` — volume + kill-speed + budget split + dedicated-vs-repurposed creative [simplr-comment, paid-ads-thresholds, cali-apps-creative — confidence mixed; see §8]
 
 **Rubric + craft references:**
-- `references/rubric.md` — 6-dimension rubric with 0-2 / 3-5 / 6-8 / 9-10 bands and per-dim auto-fail conditions
+- `references/rubric.md` — 7-dimension rubric with 0-2 / 3-5 / 6-8 / 9-10 bands and per-dim auto-fail conditions
 - `references/policy-floor.md` — Meta policy banned-claim wording (health, finance, political, protected class) + substantiation hedging patterns
 - `references/anti-patterns.md` — AI tells, ad-specific fabrication tells, ceiling-warning triggers, banned phrase list
 - `references/examples.md` — 4 worked examples (strong-retargeting / weak-retargeting / strong-cold / weak-cold) with critic scorecards
 - `references/format-spec.md` — Meta char caps (hard + soft) per surface, visible-window economics, hashtag/emoji norms
+- `references/message-transmutation.md` — AI UGC/VSSL, native static, AI animation, advertorial pre-lander, and variable-subtraction testing discipline
 
 ---
 
@@ -272,11 +277,12 @@ Single route — no reply mode (paid ads don't have an inbound channel). Optiona
 
 Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
 
-**Needed dimensions:** audience-temp (retargeting / cold), offer (destination + value prop), creative-format (dedicated / repurposed-ugc), conversion-event (trial-start / purchase / lead / install), production-model (in-house / affiliate-creator / external-freelance), available-proof (list of named candidates), LP-description (optional but recommended).
+**Needed dimensions:** audience-temp (retargeting / cold), offer (destination + value prop), creative-format (dedicated / repurposed-ugc), conversion-event (trial-start / purchase / lead / install), production-model (in-house / affiliate-creator / external-freelance), available-proof (list of named candidates), transmutation goal (AI UGC / native static / AI animation / advertorial pre-lander / strategist choose), competitor-pattern (optional but useful: what top competitors lead with), LP-description (optional but recommended).
 
 **Read order:**
-1. Pipeline: `research/product-context.md`, `research/icp-research.md`, `skills-resources/marketing/campaign-plan.md`, `brand/BRAND.md`. Read if present, do not block on missing.
-2. Experience: `skills-resources/experience/{audience,product,business,brand}.md`.
+1. Method: `../copywriting/references/research-workflow.md` for the Research Doc -> Avatar & Offer Brief -> Belief Engineering -> Unique Mechanism SOP. Use it to identify missing proof, competitor-pattern, and mechanism context before dispatch.
+2. Pipeline: `research/product-context.md`, `research/icp-research.md`, `skills-resources/marketing/campaign-plan.md`, `brand/BRAND.md`. Read if present, do not block on missing.
+3. Experience: `skills-resources/experience/{audience,product,business,brand}.md`.
 
 If `icp-research.md` / `product-context.md` >30 days old, warn and recommend re-running `icp-research` (soft gate — proceed with "stale ICP" header note in rationale).
 
@@ -314,14 +320,20 @@ generic prompts produce generic ads that Meta will rank low or auto-reject.
    named research, specific numbers. Composer picks one anchor per variant
    (hero + 2 variants = 3 distinct anchors). No proof = uncheckable claims
    = critic fail.
-7. **LP description (optional but recommended)** — 1-2 sentences on what
+7. **Transmutation goal** — should the winning message become AI UGC/VSSL,
+   native static, AI animation, advertorial pre-lander, or should strategist
+   choose? If unknown, say "strategist choose."
+8. **Competitor pattern (optional but useful)** — what do the top 3
+   competitors usually lead with? Hooks, tone, proof type, offer promise, or
+   visual convention. Composer uses this for Contrast Ratio.
+9. **LP description (optional but recommended)** — 1-2 sentences on what
    the landing page promises. Critic CTA-LP-match dim scores against this.
 
 If audience-temp=retargeting: which warm audience (IG engagers / IG followers /
 FB page engagers)? What were the last 4-6 organic posts the audience saw?
 (offer–content consistency check per meta-retargeting §3).
 
-Answer 1-7 in one response (plus the retargeting follow-ups if applicable).
+Answer 1-9 in one response (plus the retargeting follow-ups if applicable).
 I'll dispatch.
 ```
 
@@ -341,7 +353,7 @@ These dimensions cannot be substituted via fallback — composer fails without t
 |---|---|---|
 | 2. Offer | `product.md` | `Product — current offer` (durable across ad-copy + lp-brief + cold-outreach runs) |
 | 6. Proof points | `product.md` | `Product — proof points` (durable across ad-copy + lp-brief + cold-outreach + copywriting) |
-| 1, 3, 4, 5, 7. Audience-temp + creative-format + conversion-event + production-model + LP-description | (run-specific, lives in the rationale.md artifact) |
+| 1, 3, 4, 5, 7, 8, 9. Audience-temp + creative-format + conversion-event + production-model + transmutation goal + competitor-pattern + LP-description | (run-specific, lives in the rationale.md artifact) |
 
 If `research/icp-research.md` exists, pull VoC pain language. If `research/product-context.md` exists, pull voice adjectives + accuracy constraints. If `brand/BRAND.md` exists, pull voice anchors and banned-language list.
 
@@ -376,12 +388,14 @@ Strategist runs SOLO. There's no parallel signal-analyst-equivalent because the 
 
 | Agent | Instruction File | Pass These Inputs | Reference Files to Resolve |
 |-------|-----------------|-------------------|---------------------------|
-| Strategist | `agents/strategist.md` | pre-writing (all) + audience-temp + offer + creative-format + conversion-event + available-proof + LP-description | `references/ad-intelligence/meta-retargeting.md` (if audience-temp=retargeting) OR `references/ad-intelligence/meta-cold-traffic.md` (if audience-temp=cold), `references/ad-intelligence/creative-cadence.md`, `references/anti-patterns.md` |
+| Strategist | `agents/strategist.md` | pre-writing (all) + audience-temp + offer + creative-format + conversion-event + available-proof + transmutation goal + competitor-pattern + LP-description | `references/ad-intelligence/meta-retargeting.md` (if audience-temp=retargeting) OR `references/ad-intelligence/meta-cold-traffic.md` (if audience-temp=cold), `references/ad-intelligence/creative-cadence.md`, `references/anti-patterns.md`, `references/message-transmutation.md`, `../copywriting/references/research-workflow.md` |
 
 Wait for output. The strategist returns markdown (no machine-parseable keys). Verify by reading the Variant Assignments section:
 - The 3 Variant Assignment blocks (Hero / A / B) name 3 DISTINCT `Angle archetype` values (no surface-level repeats)
 - The 3 `Anchor proof` lines name 3 DISTINCT entities or numbers (no repeats across variants)
 - Each variant carries a `CTA verb` matching the conversion-event default
+- Each variant carries `Filtering stage optimized for` with one of Retrieval / Light Ranking / Heavy Ranking / Auction and a concrete signal explanation
+- Each variant carries `Transmutation format` and `Variable isolated`
 - The `Ceiling Warning` section is present if and only if `creative_format=repurposed-ugc`
 - The `Policy Flags` section pre-warns on health/finance/political offers (composer + format-checker pick this up when reading the strategy brief)
 
@@ -395,7 +409,7 @@ Agents run in order. Each receives the prior agent's output.
 
 | Order | Agent | Instruction File | Input | Reference Files |
 |-------|-------|-----------------|-------|-----------------|
-| 1 | Composer | `agents/composer.md` | Strategy brief | `references/format-spec.md`, `references/ad-intelligence/{audience-temp}.md` |
+| 1 | Composer | `agents/composer.md` | Strategy brief + competitor-pattern excerpts from pre-writing if available | `references/format-spec.md`, `references/message-transmutation.md`, `references/ad-intelligence/meta-retargeting.md` (if audience-temp=retargeting) OR `references/ad-intelligence/meta-cold-traffic.md` (if audience-temp=cold) |
 | 2 | Format Checker | `agents/format-checker.md` | Composer draft + composer's claim list | `references/format-spec.md`, `references/policy-floor.md` |
 | 3 | Voice Auditor | `agents/voice-auditor.md` | Format-checker-passed draft | `references/anti-patterns.md` |
 | 4 | Critic | `agents/critic.md` | Voice-audited draft + `pre_writing` verbatim + strategy brief | `references/rubric.md`, `references/anti-patterns.md`, `references/policy-floor.md` |
@@ -457,6 +471,7 @@ Terminal pass is **automatic**, not opt-in. AI-sounding ad copy is the second-bi
 | "Quick question?" / "Are you tired of..." hooks | Generic; doesn't earn the 3-second window | Critic Hook dim 0-2 band |
 | Multi-CTA in one ad | Splits intent; conversion-event signal degrades | Composer one-CTA-per-variant rule; format-checker flag |
 | Running humanize twice | Strips specificity, drifts toward generic | Terminal pass runs ONCE per variant |
+| Changing every variable at once | No learning; cannot tell if hook, format, proof, CTA, funnel, or offer caused the result | Strategist names one isolated variable per variant using Variable Subtraction |
 
 ---
 
@@ -470,7 +485,7 @@ Terminal pass is **automatic**, not opt-in. AI-sounding ad copy is the second-bi
 
 Every run ends with explicit status:
 - **DONE** — passed critic + format-checker + humanize regression, ready-to-publish
-- **DONE_WITH_CONCERNS** — delivered, flags noted (stale ICP, ceiling warning on repurposed-UGC, missing LP description, policy soft-warn override, total 42-47 with all dims ≥6)
+- **DONE_WITH_CONCERNS** — delivered, flags noted (stale ICP, ceiling warning on repurposed-UGC, missing LP description, policy soft-warn override, total 49-55 with all dims ≥6)
 - **BLOCKED** — missing offer, missing proof + no product-context, or audience-temp missing; state what's needed
 - **NEEDS_CONTEXT** — recommend `icp-research` or provide proof candidates
 
@@ -487,8 +502,10 @@ After receiving the artifact:
 ## References
 
 - `references/ad-intelligence/` — per-surface practitioner sources (retargeting / cold / cadence)
-- `references/rubric.md` — 6-dimension scoring bands and per-dim auto-fail conditions
+- `references/rubric.md` — 7-dimension scoring bands and per-dim auto-fail conditions
 - `references/policy-floor.md` — Meta policy banned-claim wording + substantiation hedging
 - `references/anti-patterns.md` — AI tells, fabrication tells, ceiling triggers
 - `references/format-spec.md` — Meta char caps + visible-window economics
 - `references/examples.md` — 4 worked examples (strong + weak × retargeting + cold) with critic scorecards
+- `../copywriting/references/research-workflow.md` — shared 4-phase argument research SOP for proof, belief, competitor-pattern, and Unique Mechanism context
+- `references/message-transmutation.md` — message transmutation, AI UGC/VSSL, advertorial pre-lander, and Variable Subtraction

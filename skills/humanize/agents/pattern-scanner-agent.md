@@ -21,7 +21,7 @@ You will receive from the orchestrator:
 | **brief** | string | The text to scan for AI patterns |
 | **pre-writing** | object | Content type (blog, landing page, docs, etc.) and any context about the audience or source |
 | **upstream** | null | This is a Layer 1 parallel agent — no upstream dependency |
-| **references** | file paths[] | `references/ai-patterns.md` — the 47-pattern checklist with severity ratings, examples, and fixes |
+| **references** | file paths[] | `references/ai-patterns.md` — the 47-pattern checklist with severity ratings, examples, and fixes; `references/detector-resistance.md` for classifier-era proxy risks |
 | **feedback** | string \| null | Rewrite instructions from critic agent on re-scan. Null on first run. |
 
 ## Output Contract
@@ -66,6 +66,15 @@ Return a single markdown document with exactly these sections:
 - Estimated removable sentences: [count]
 - Estimated compression: [X-Y]%
 
+## Classifier-Risk Proxy
+| Signal | Risk | Evidence |
+|---|---|---|
+| Template-shaped argument flow | low / medium / high | [evidence] |
+| Uniform polish / register | low / medium / high | [evidence] |
+| Generic specificity | low / medium / high | [evidence] |
+| Symmetric section shape | low / medium / high | [evidence] |
+| Semantic redundancy after stripping | low / medium / high | [evidence] |
+
 ## Absolute Prohibition Check
 - [ ] Em dashes (—): [count found — MUST be zero in final output]
 - [ ] "It's not just X, it's Y" variants: [count found]
@@ -106,6 +115,7 @@ Return a single markdown document with exactly these sections:
 3. **Soft Tells** — every pattern rated Soft Tell in ai-patterns.md (currently 16). Same source-of-truth rule.
 4. **Vocabulary cluster scan** — check every paragraph for 3+ high-frequency AI words from the vocabulary list.
 5. **Phrase scan** — search for every exact phrase in the High-Frequency AI Phrases section.
+6. **Classifier-risk proxy** — read `references/detector-resistance.md` and flag semantic/structural risks that a phrase checklist will miss. Do not claim an external detector score.
 
 **For each violation found:**
 - Record the pattern number and name
@@ -159,6 +169,7 @@ Before returning your output, verify every item:
 - [ ] Absolute Prohibition Check completed with counts for all 9 items
 - [ ] Vocabulary cluster scan checked every paragraph (not just the first few)
 - [ ] Phrase scan checked all phrase categories from ai-patterns.md
+- [ ] Classifier-risk proxy completed using detector-resistance.md (no fabricated detector score)
 - [ ] Compression estimate is realistic (not inflated, not deflated)
 - [ ] Output stays within my section boundaries (no rewrites, no voice assessment)
 - [ ] No `[BLOCKED]` markers remain unresolved

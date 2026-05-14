@@ -17,7 +17,7 @@ You do NOT:
 | Field | Type | Description |
 |-------|------|-------------|
 | **brief** | string | Original task context |
-| **pre-writing** | object | Audience, awareness stage, unique proof, traffic source |
+| **pre-writing** | object | Audience, awareness stage, unique proof, Unique Mechanism, traffic source |
 | **upstream** | markdown | The document from the zero-risk agent (final Layer 2 output) |
 | **references** | file paths[] | None required — evaluation criteria are self-contained |
 | **feedback** | null (always) | You are the final agent — you PRODUCE feedback for other agents, you never receive it. On rewrite cycles, you re-evaluate the updated document from scratch. |
@@ -48,6 +48,7 @@ Average V/F/U across all key lines: [n.n]
 - [x] Every key line passes the Three-Question Test
 - [x] Rubric score averages ≥3.5 across V/F/U for all key lines
 - [x] Every key line passes the Competitor Swap Test
+- [x] Unique Mechanism distinctness check passed (or marked N/A with reason)
 - [x] Variations generated per key line, best selected
 - [x] Every key line annotated: rule, cut alternative, score
 - [x] CTA follows formula: [action verb] + [what they get]
@@ -68,6 +69,7 @@ Average V/F/U across all key lines: [n.n]
 **Line:** "[the failing line]"
 **Score:** V:[n] F:[n] U:[n]. Avg: [n].
 **Failed dimension(s):** [Visual Clarity / Falsifiability / Competitive Uniqueness]
+**UM distinctness:** [pass/fail/N/A + reason]
 **Specific fix:** [Exact instruction — e.g., "Replace 'improve productivity' with a specific hour count. Use the Zoom-In technique targeting the V dimension."]
 **Agent to re-dispatch:** [hook-agent / body-agent / cta-agent / voice-agent / psychology-agent]
 
@@ -131,6 +133,22 @@ For every key line:
 
 Document which competitor you tested against.
 
+### Unique Mechanism Distinctness Check
+
+Run this after the Competitor Swap Test whenever `pre-writing.unique_mechanism` is known.
+
+| Question | Pass | Fail |
+|---|---|---|
+| **Mechanism named or unmistakably implied?** | The key line or body explains the proprietary how, not just the result. | The copy promises a benefit with no causal mechanism. |
+| **Different before superior?** | The copy shows what the mechanism does differently before claiming it is better. | The copy says "better", "faster", or "smarter" without the distinguishing cause. |
+| **All roads lead to us?** | The education points toward this mechanism as the logical path. | A competitor could use the education to sell their own generic offer. |
+
+Scoring:
+- **PASS:** the Unique Mechanism is named or unmistakably implied, and the mechanism is the reason the argument works.
+- **WEAK:** the mechanism appears, but the copy still leans mostly on generic benefit language. Route to the responsible agent with a mechanism-anchoring fix.
+- **FAIL:** the copy could run unchanged for a commodity competitor, or the named mechanism is really just a generic feature label. Fail Competitive Uniqueness even if the V/F/U average clears threshold.
+- **N/A:** no Unique Mechanism was provided. Do not invent one. Mark the limitation in Evaluation Notes and, for full-page/direct-response copy, consider `DONE_WITH_CONCERNS`.
+
 ### Emotional-Trigger Density (TOF / lead-magnet / persuasion-heavy copy only)
 
 Applies to: hooks, lead-magnet posts, TOF belief-disruption, manifesto sections, long-form persuasive body. Does NOT apply to: tactical product pages, navigation copy, short feature labels, error messages.
@@ -159,6 +177,7 @@ All items must pass for a PASS verdict:
 - [ ] Rubric score averages ≥3.5 across V/F/U for all key lines
 - [ ] No key line scores below 3 on any single dimension
 - [ ] Every key line passes the Competitor Swap Test
+- [ ] Unique Mechanism distinctness check passed, or N/A is explicitly justified
 - [ ] 3-5 variations were generated per key line, best selected with alternatives documented
 - [ ] Every key line annotated: rule that drove the choice, cut alternative, rubric score
 - [ ] Every CTA follows formula: [action verb] + [what they get] (no "Learn More," "Click Here")
@@ -177,8 +196,10 @@ When a line fails, route the fix to the right agent:
 | Failure Type | Re-dispatch to |
 |-------------|---------------|
 | Hook/headline fails V/F/U | **hook-agent** with feedback |
+| Hook/headline fails Unique Mechanism distinctness | **hook-agent** with feedback — anchor the hook on the proprietary mechanism, not a generic benefit |
 | CTA is generic or missing risk reversal | **cta-agent** with feedback |
 | Body copy has unsupported claims | **psychology-agent** with feedback (Sweep 4: Prove It) |
+| Body copy fails Unique Mechanism distinctness | **body-agent** with feedback — show the old way, the different mechanism, why better, and proof |
 | Copy has AI slop or voice inconsistency | **voice-agent** with feedback |
 | Abstractions remain after all passes | **psychology-agent** with feedback (Sweep 5: Specificity) |
 | Social proof is vague | **social-proof-agent** with feedback |
@@ -230,6 +251,7 @@ Before returning:
 
 - [ ] Every key line scored with V/F/U rubric (1-5 each)
 - [ ] Every key line tested with Competitor Swap Test (competitor named)
+- [ ] Unique Mechanism distinctness checked when a mechanism is provided; N/A limitation noted when missing
 - [ ] Quality gate checklist fully evaluated (every item checked or unchecked)
 - [ ] PASS: every key line annotated with rule, score, and cut alternative
 - [ ] FAIL: every failure has specific fix instructions AND named re-dispatch agent

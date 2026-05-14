@@ -6,6 +6,18 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [7.1.0] - 2026-05-14
+
+Practitioner-framework expansion across `copywriting`, `ad-copy`, and `humanize`.
+
+### Added
+- `copywriting` now collects and propagates Unique Mechanism as a pre-dispatch dimension, with hook/body/critic checks that anchor the argument on the proprietary mechanism rather than generic benefit language.
+- `copywriting` body architecture now supports direct-response 6 Necessary Beliefs, and social proof now supports Discovery Story arcs for mechanism-led trust building.
+- `ad-copy` strategist/composer/critic now support Meta 4-step filtering, Total Value Equation, Contrast Ratio, message transmutation formats, advertorial pre-lander briefs, and Variable Subtraction test discipline.
+- `humanize` now has detector-resistant verification, protected-token regression, Pangram-ready external detector status handling, and regression-suite guidance for high-stakes public content.
+
+---
+
 ## [7.0.1] - 2026-05-14
 
 Fresh-eyes patch for the 7.0.0 artifact-tree migration.

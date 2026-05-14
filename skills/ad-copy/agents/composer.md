@@ -16,13 +16,14 @@ You do NOT:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| **strategy_brief** | markdown | Strategist output (audience-temp framing, per-variant archetypes + anchors + CTA verbs) |
+| **strategy_brief** | markdown | Strategist output (audience-temp framing, per-variant archetypes + anchors + CTA verbs + transmutation formats + isolated variables) |
 | **audience_temp** | string | `retargeting` or `cold` |
 | **creative_format** | string | `dedicated` or `repurposed-ugc` |
 | **available_proof** | array | Full proof candidate list (composer uses the assigned anchor verbatim — does NOT invent additional proofs) |
 | **brand_voice** | object \| null | Voice anchors from `brand/BRAND.md` if present (tone words, banned phrases) |
 | **lp_description** | string \| null | 1-2 sentences on LP promise (composer aligns ad CTA verb + offer phrasing to it) |
-| **references** | file paths[] | `references/format-spec.md`, `references/ad-intelligence/{audience-temp}.md` |
+| **competitor_pattern** | object \| null | If available: top competitor hooks, tone, visual/copy conventions, and repeated claims in the vertical |
+| **references** | file paths[] | `references/format-spec.md`, `references/message-transmutation.md`, `references/ad-intelligence/{audience-temp}.md` |
 | **feedback** | string \| null | Critic or format-checker rewrite instructions |
 
 ## Output Contract
@@ -42,6 +43,8 @@ You do NOT:
 **CTA button:** [exact CTA verb from strategy brief]
 
 **Anchor proof used:** [verbatim from strategy_brief.hero.anchor_proof]
+**Transmutation format:** [verbatim from strategy brief]
+**Variable isolated:** [verbatim from strategy brief]
 
 **Char counts:**
 - Primary text: N chars (visible: first M chars)
@@ -75,6 +78,13 @@ You do NOT:
 | A | [exact claim] | [exact source ID] | yes/no |
 | B | [exact claim] | [exact source ID] | yes/no |
 
+## Advertorial Pre-Lander Brief (if any variant uses advertorial pre-lander)
+- **Old belief to discredit:** [belief]
+- **Beliefs to install before sales page:** [3-6 bullets]
+- **Unique Mechanism reveal:** [mechanism]
+- **Proof required:** [named proof point or missing-proof request]
+- **Advertorial CTA:** [CTA to sales page/PDP]
+
 ## Change Log
 - [Structure used per variant + visible-window economy notes]
 - [Any phrasing pulled from brand voice or LP description]
@@ -98,6 +108,49 @@ You do NOT:
 **Reader's world dominates.** "You/your" should land in the first 50 chars of primary text. If the first sentence opens with "We", "Our", "I", or the product name, rewrite.
 
 **Numbers > adjectives.** "20 lbs in 30 days" beats "transformative results". "Closed 9 deals in 60 days" beats "industry-leading conversion". Every variant should carry at least one concrete number or named entity in the visible window.
+
+### Contrast Principle
+
+Pattern interruption is not generic weirdness. It is contrast against the specific pattern the vertical has trained the prospect to ignore.
+
+Before drafting hooks, identify the competitor pattern from `competitor_pattern`, ICP/category context, or the strategy brief:
+
+1. What do the top 3 competitors usually lead with? (promise, tone, opener, proof type)
+2. What visual/copy convention is common? (polished founder video, stock UGC, discount language, vague "AI-powered" claim)
+3. What would the polar opposite be while still staying clear and credible?
+
+Use the inverse only when it improves clarity. Contrast should create a "wait, what was that?" moment and still make the offer obvious within 1.5 seconds. If competitor context is unavailable, do not invent competitors; state "competitor pattern unavailable" in the Change Log and use cross-variant distinctness as the minimum bar.
+
+Examples:
+
+| Competitor pattern | Contrast move |
+|---|---|
+| Everyone opens with "AI saves time" | Open with the manual task the AI eliminates and the named mechanism that does it. |
+| Everyone uses polished case-study language | Open with a raw user observation or specific before/after metric. |
+| Everyone claims "personalized" | Name the input data or process that makes personalization real. |
+
+### Format-Specific Composition
+
+Read `references/message-transmutation.md` before drafting.
+
+**AI UGC / First-Person VSSL:**
+- Use first-person only when the brief provides a real narrator, customer quote, or approved concept.
+- Use the "I was just like you, but worse" shape without fabricating personal claims.
+- Include a discrediting hook, a "without [hated alternative]" bridge, the Unique Mechanism, proof, and CTA.
+
+**Native static:**
+- Keep primary text as the selling engine.
+- Include a `Visual note` in the Change Log naming the contrast move the creative should use.
+- Headline stays concrete and short.
+
+**AI animation:**
+- Write a simple visual sequence in the Change Log.
+- Make the mechanism visible; avoid realism claims.
+
+**Advertorial pre-lander:**
+- Do not force the ad to close the sale.
+- Draft the ad as a bridge into an editorial page.
+- Include the `Advertorial Pre-Lander Brief` section so the landing-page or copywriting skill can install the beliefs before the sales page/PDP.
 
 ### Audience-Temperature Craft
 
@@ -168,6 +221,7 @@ Before returning, run this test on hero + A + B:
 1. **Archetype distinctness:** are the 3 archetypes structurally different? (problem-framing + outcome-asymmetry + peer-observation = pass; problem-framing × 3 with different words = fail)
 2. **Anchor distinctness:** are the 3 anchors structurally different? (named customer + named research + named industry stat = pass; same customer with 3 different metric phrasings = fail)
 3. **Opening distinctness:** do the first 30 chars of primary text differ structurally? (different opening verb, different opening noun = pass; same opening phrase with one word swapped = fail)
+4. **Competitor-pattern contrast:** does at least the hero break the dominant competitor hook pattern in this vertical? (pass = specific inverse; weak = different wording but same promise/tone; N/A = no competitor pattern available)
 
 If any test fails, you've paraphrased instead of differentiating. Re-draft the failing variant.
 
@@ -182,6 +236,7 @@ If any test fails, you've paraphrased instead of differentiating. Re-draft the f
 - **Bracketed template leak** — "Hi [FirstName]" or "Customer [Name] saw [Result]" still in the draft. Auto-fail.
 - **Variant B is just hero with synonyms** — variant volume discipline collapses; A/B signal collapses; critic Pattern-Interruption dim auto-fails
 - **Anchor proof not from available_proof[]** — fabrication; critic Specificity dim auto-fails
+- **Generic pattern interrupt** — Starting with odd phrasing or a rhetorical question that does not contrast with the vertical's actual competitor pattern. Contrast must be specific, not random.
 
 ## Self-Check
 
@@ -198,6 +253,10 @@ Before returning your output, verify every item:
 - [ ] No all-caps headlines
 - [ ] One CTA per variant (no stacked CTAs)
 - [ ] Variant Distinctness Test passes (3 archetypes, 3 anchors, 3 distinct openings)
+- [ ] Contrast Principle applied: hero breaks the specific competitor hook pattern, or Change Log says competitor pattern was unavailable
+- [ ] Each variant follows its assigned transmutation format
+- [ ] If any variant uses advertorial pre-lander, Advertorial Pre-Lander Brief is included
+- [ ] If AI UGC/VSSL is used, no fake narrator/customer claim is invented
 - [ ] Char counts reported accurately (Primary text visible-window count; headline and description full counts)
 - [ ] Claim List populated for format-checker (every measured claim mapped to a source ID from available_proof[])
 - [ ] Ceiling warning block included if creative_format=repurposed-ugc
