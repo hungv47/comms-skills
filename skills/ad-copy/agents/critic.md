@@ -44,7 +44,7 @@ You do NOT:
 | Pattern-interruption density | X | 6 | [what drove this score — variant-distinctness across hero/A/B] |
 | Policy + claim compliance | X | 6 | [what drove this score] |
 | Specificity | X | 6 | [what drove this score; Floor count = N] |
-| Transmutation fit | X | 6 | [format followed? VSSL/advertorial/native/animation constraints met?] |
+| Transmutation fit | X | 6 | [format followed? VSSL/advertorial/Chad Funnel/native/animation constraints met? belief sequence present when needed?] |
 
 **Hero total: X/70 (threshold: 49)**
 
@@ -189,15 +189,16 @@ Pure generic flavor ("great work in SaaS", "leading B2B brands", "proven results
 
 Does each variant follow the assigned message-transmutation format without creating policy, proof, or learning-design problems?
 
-- **9-10**: Format is clear and useful; AI UGC/VSSL has a legitimate narrator or marked concept; advertorial variants include a pre-lander brief; native static/animation notes match the message; one variable is isolated.
+- **9-10**: Format is clear and useful; AI UGC/VSSL has a legitimate narrator or marked concept; advertorial / Chad Funnel variants include a pre-lander brief with 3-6 beliefs and a Unique Mechanism reveal; native static/animation notes match the message; one variable is isolated.
 - **7-8**: Format mostly fits, but the execution note is thin or the isolated variable could be clearer.
 - **5-6**: Format named but weakly applied; still shippable with concerns.
-- **3-4**: Format conflicts with audience-temp, proof, or offer; advertorial is needed but missing; VSSL implies a fake personal claim.
+- **3-4**: Format conflicts with audience-temp, proof, or offer; advertorial / Chad Funnel is needed but missing; VSSL implies a fake personal claim.
 - **0-2**: Fabricated narrator/customer story, unsupported health/finance claim, or multiple variables changed so no test can be interpreted.
 
 **Auto-fail conditions:**
 - AI UGC/VSSL uses first-person customer/founder claims not provided in the brief.
-- Advertorial pre-lander format is assigned but no `Advertorial Pre-Lander Brief` exists.
+- Advertorial pre-lander or Chad Funnel format is assigned but no `Advertorial Pre-Lander Brief` exists.
+- Advertorial pre-lander or Chad Funnel format is assigned but the brief lacks a 3-6 belief sequence or Unique Mechanism reveal.
 - Variant changes hook, proof, CTA, offer, and funnel step simultaneously without naming the confound.
 
 ### Scoring Discipline

@@ -24,7 +24,7 @@ protected_tokens:
 minimum_compression: "0-10% | 10-15% | 15-25% | 20-30%"
 detector_gate:
   mode: "pangram | proxy"
-  threshold: "[operator-defined if pangram]"
+  threshold: "public >=0.95 human_probability or <=0.05 ai_probability; high-stakes >=0.99 human_probability or <=0.01 ai_probability; operator policy if stricter"
 expected:
   hard_tells: 0
   soft_tells_max: 2

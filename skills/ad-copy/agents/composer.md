@@ -21,6 +21,7 @@ You do NOT:
 | **creative_format** | string | `dedicated` or `repurposed-ugc` |
 | **available_proof** | array | Full proof candidate list (composer uses the assigned anchor verbatim — does NOT invent additional proofs) |
 | **brand_voice** | object \| null | Voice anchors from `brand/BRAND.md` if present (tone words, banned phrases) |
+| **belief_sequence** | array \| string \| null | 3-6 beliefs supplied by the operator or derived by strategist for advertorial / Chad Funnel variants |
 | **lp_description** | string \| null | 1-2 sentences on LP promise (composer aligns ad CTA verb + offer phrasing to it) |
 | **competitor_pattern** | object \| null | If available: top competitor hooks, tone, visual/copy conventions, and repeated claims in the vertical |
 | **references** | file paths[] | `references/format-spec.md`, `references/message-transmutation.md`, `references/ad-intelligence/{audience-temp}.md` |
@@ -44,6 +45,7 @@ You do NOT:
 
 **Anchor proof used:** [verbatim from strategy_brief.hero.anchor_proof]
 **Transmutation format:** [verbatim from strategy brief]
+**Belief job:** [verbatim from strategy brief; required for advertorial / Chad Funnel]
 **Variable isolated:** [verbatim from strategy brief]
 
 **Char counts:**
@@ -78,12 +80,13 @@ You do NOT:
 | A | [exact claim] | [exact source ID] | yes/no |
 | B | [exact claim] | [exact source ID] | yes/no |
 
-## Advertorial Pre-Lander Brief (if any variant uses advertorial pre-lander)
+## Advertorial Pre-Lander Brief (if any variant uses advertorial pre-lander or Chad Funnel)
 - **Old belief to discredit:** [belief]
-- **Beliefs to install before sales page:** [3-6 bullets]
+- **Beliefs to install before sales page:** [3-6 bullets; use supplied belief_sequence when available]
 - **Unique Mechanism reveal:** [mechanism]
 - **Proof required:** [named proof point or missing-proof request]
 - **Advertorial CTA:** [CTA to sales page/PDP]
+- **Chad Funnel handoff:** [native ad -> advertorial -> sales page/PDP -> signup/order page, or "not applicable"]
 
 ## Change Log
 - [Structure used per variant + visible-window economy notes]
@@ -151,6 +154,12 @@ Read `references/message-transmutation.md` before drafting.
 - Do not force the ad to close the sale.
 - Draft the ad as a bridge into an editorial page.
 - Include the `Advertorial Pre-Lander Brief` section so the landing-page or copywriting skill can install the beliefs before the sales page/PDP.
+
+**Chad Funnel:**
+- Treat this as a specific advertorial chain: native Meta ad -> advertorial -> product/PDP or sales page -> signup/order page.
+- The Meta ad's job is curiosity plus one credible belief shift, not full persuasion.
+- The advertorial brief must list the full 3-6 belief sequence and the Unique Mechanism reveal point.
+- Do not invent the product page, checkout, or order-page claims; hand off what those pages must prove.
 
 ### Audience-Temperature Craft
 
@@ -255,7 +264,7 @@ Before returning your output, verify every item:
 - [ ] Variant Distinctness Test passes (3 archetypes, 3 anchors, 3 distinct openings)
 - [ ] Contrast Principle applied: hero breaks the specific competitor hook pattern, or Change Log says competitor pattern was unavailable
 - [ ] Each variant follows its assigned transmutation format
-- [ ] If any variant uses advertorial pre-lander, Advertorial Pre-Lander Brief is included
+- [ ] If any variant uses advertorial pre-lander or Chad Funnel, Advertorial Pre-Lander Brief is included with 3-6 beliefs and a handoff path
 - [ ] If AI UGC/VSSL is used, no fake narrator/customer claim is invented
 - [ ] Char counts reported accurately (Primary text visible-window count; headline and description full counts)
 - [ ] Claim List populated for format-checker (every measured claim mapped to a source ID from available_proof[])

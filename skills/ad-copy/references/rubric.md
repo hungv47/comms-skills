@@ -132,7 +132,7 @@ Does each variant follow the assigned message-transmutation format without creat
 
 | Band | Description |
 |------|-------------|
-| 9-10 | Format is clear and useful. AI UGC/VSSL has a legitimate narrator or is clearly marked as a concept. Advertorial variants include a pre-lander brief. Native static/animation notes match the message. One test variable is isolated. |
+| 9-10 | Format is clear and useful. AI UGC/VSSL has a legitimate narrator or is clearly marked as a concept. Advertorial / Chad Funnel variants include a pre-lander brief with 3-6 beliefs and a Unique Mechanism reveal. Native static/animation notes match the message. One test variable is isolated. |
 | 7-8 | Format mostly fits, but the execution note is thin or the isolated variable could be clearer. |
 | 5-6 | Format is named but weakly applied. The variant is shippable with concerns, but it does not fully exploit the assigned format. |
 | 3-4 | Format conflicts with audience temperature, proof, or offer. Advertorial is needed but missing. VSSL implies a fake personal claim. |
@@ -140,7 +140,8 @@ Does each variant follow the assigned message-transmutation format without creat
 
 **Auto-fail conditions:**
 - AI UGC/VSSL uses first-person customer/founder claims not provided in the brief.
-- Advertorial pre-lander format is assigned but no `Advertorial Pre-Lander Brief` exists.
+- Advertorial pre-lander or Chad Funnel format is assigned but no `Advertorial Pre-Lander Brief` exists.
+- Advertorial pre-lander or Chad Funnel format is assigned but no 3-6 belief sequence or Unique Mechanism reveal is named.
 - Variant changes hook, proof, CTA, offer, and funnel step simultaneously without naming the confound.
 
 ---

@@ -65,7 +65,7 @@ routing:
 2. **ZERO em dashes in final output.** Absolute prohibition. No exceptions, no edge cases. Every em dash becomes a comma, period, or parentheses.
 3. **Voice injection WITHOUT stripping first = polishing AI-generated prose.** Strip always comes first. The soul-injection agent receives clean text, not AI-patterned text.
 4. **Content type matters.** Documentation gets a lighter touch than marketing copy. Check the Content Type Calibration table before dispatching.
-5. **Detector resistance is structural, not lexical.** Pangram-style classifiers can catch synonym-swapped prose. For high-stakes public content, use the detector-resistance pass after the normal critic.
+5. **Detector resistance is structural, not lexical.** Pangram-style classifiers can catch synonym-swapped prose. For high-stakes public content, prior detector failures, or explicit detector-sensitive requests, use the detector-resistance pass after the normal critic and record the threshold used.
 
 ## Philosophy
 
@@ -89,6 +89,7 @@ Before delivering, the **critic agent** verifies:
 - [ ] Read aloud with no stumbles, no robotic rhythm
 - [ ] Every paragraph contains at least one concrete fact, number, or named example
 - [ ] Detector-resistance proxy passes for high-stakes public content, or external detector status is recorded (`not_run`, `proxy_pass`, `pangram_pass`, `proxy_fail`, `pangram_fail`)
+- [ ] If Pangram or another classifier is available and `detector_mode: pangram`, the output meets the configured probability threshold from `references/detector-resistance.md`; otherwise the critic records `pangram_fail`
 - [ ] Protected tokens from upstream skills are preserved verbatim
 
 ### Absolute Prohibitions (zero tolerance, no exceptions)
@@ -200,7 +201,9 @@ This skill's examples are marketing-focused, but it works on any content type. A
 
 **Protected tokens (short-outbound only):** When called by `cold-outreach` or `ad-copy`, the caller passes a `protected_tokens` list of named entities and numbers that must appear verbatim in the final output. Do not paraphrase, round, or remove these.
 
-**Detector-sensitive content:** If content is public, high-stakes, or previously flagged by a detector, set `detector_mode: proxy` unless a real detector integration is available. If `PANGRAM_API_KEY` or an operator-configured detector command exists, set `detector_mode: pangram` and record the actual result. If neither exists, run the proxy checklist in `references/detector-resistance.md` and record `detector_status: proxy_pass` or `proxy_fail`; use `not_run` only when detector mode is explicitly disabled.
+**Detector-sensitive content:** If content is public, high-stakes, or previously flagged by a detector, set `detector_mode: proxy` unless a real detector integration is available. If `PANGRAM_API_KEY` or an operator-configured detector command exists, set `detector_mode: pangram`, apply the threshold table in `references/detector-resistance.md`, and record the actual result plus threshold. If neither exists, run the proxy checklist and record `detector_status: proxy_pass` or `proxy_fail`; use `not_run` only when detector mode is explicitly disabled or the content is low-stakes internal material.
+
+**Default detector thresholds:** Public marketing and thought-leadership content targets `human_probability >= 0.95` or `ai_probability <= 0.05`. Admissions, applications, compliance-sensitive, and reputation-sensitive content targets `human_probability >= 0.99` or `ai_probability <= 0.01` when a real classifier is available. Policy-capped environments use the operator's stricter threshold and must record the claimed false-positive cap; do not claim compliance from a proxy-only check.
 
 ---
 

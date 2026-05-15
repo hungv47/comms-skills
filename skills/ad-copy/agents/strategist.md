@@ -24,7 +24,8 @@ You do NOT:
 | **conversion_event** | string | `trial_start` / `purchase` / `lead` / `install` / `view-content` |
 | **production_model** | string | `in-house` / `affiliate-creator` / `external-freelance` (informational) |
 | **available_proof** | array | List of named candidates: customers, numbers, research, outcomes |
-| **transmutation_goal** | string \| null | AI UGC / native static / AI animation / advertorial pre-lander / strategist choose |
+| **transmutation_goal** | string \| null | AI UGC / native static / AI animation / advertorial pre-lander / Chad Funnel / strategist choose |
+| **belief_sequence** | array \| string \| null | 3-6 beliefs cold traffic must accept before the CTA or pre-lander can sell |
 | **lp_description** | string \| null | 1-2 sentences on landing page promise |
 | **warm_audience_source** | string \| null | If retargeting: `ig-engagers` / `ig-followers` / `fb-page-engagers` |
 | **recent_organic** | array \| null | If retargeting: last 4-6 organic post themes |
@@ -46,7 +47,8 @@ You do NOT:
 - **Anchor proof:** [exact named entity + number from available_proof[]; e.g., "Ramp · 9→4 day close" or "20 lbs in a month (user testimonial, verbatim)"]
 - **CTA verb:** [one of: "Start free trial" / "Download" / "Get the loom" / "Book intro" / custom from offer]
 - **Filtering stage optimized for:** [Retrieval / Light Ranking / Heavy Ranking / Auction] — [one sentence on the signal this variant strengthens]
-- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander]
+- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander / Chad Funnel]
+- **Belief job:** [none / install belief #N / discredit old belief / reveal Unique Mechanism]
 - **Variable isolated:** [hook / proof anchor / format / CTA / funnel step / offer framing] — [one sentence on what stays fixed]
 - **Why hero:** [one sentence on why this archetype + anchor combination is the highest-confidence pick for this audience-temp]
 
@@ -55,7 +57,8 @@ You do NOT:
 - **Anchor proof:** [must differ from hero anchor]
 - **CTA verb:** [may match hero OR differ]
 - **Filtering stage optimized for:** [Retrieval / Light Ranking / Heavy Ranking / Auction] — [one sentence on the signal this variant strengthens]
-- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander]
+- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander / Chad Funnel]
+- **Belief job:** [none / install belief #N / discredit old belief / reveal Unique Mechanism]
 - **Variable isolated:** [hook / proof anchor / format / CTA / funnel step / offer framing] — [one sentence on what stays fixed]
 - **Why A:** [one sentence on what A tests vs hero]
 
@@ -64,7 +67,8 @@ You do NOT:
 - **Anchor proof:** [must differ from hero AND from A]
 - **CTA verb:** [may match hero OR differ]
 - **Filtering stage optimized for:** [Retrieval / Light Ranking / Heavy Ranking / Auction] — [one sentence on the signal this variant strengthens]
-- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander]
+- **Transmutation format:** [AI UGC / native static / AI animation / advertorial pre-lander / Chad Funnel]
+- **Belief job:** [none / install belief #N / discredit old belief / reveal Unique Mechanism]
 - **Variable isolated:** [hook / proof anchor / format / CTA / funnel step / offer framing] — [one sentence on what stays fixed]
 - **Why B:** [one sentence on what B tests vs hero + A]
 
@@ -161,10 +165,26 @@ Read `references/message-transmutation.md`. Pick a transmutation format for each
 | **Native static** | Need fast speed-to-data and feed-native contrast. | Let creative stop the scroll while primary text sells. |
 | **AI animation** | Mechanism benefits from simple visualization or old-commercial style metaphor. | Make the mechanism memorable without pretending to be realistic. |
 | **Advertorial pre-lander** | Cold traffic is too skeptical for direct-to-product. | Install beliefs before price/product page. |
+| **Chad Funnel** | Cold traffic needs native ad -> advertorial -> product/PDP -> checkout/signup sequence. | Move belief installation out of the ad and into an editorial bridge. |
 
 If `transmutation_goal` is provided, honor it unless it conflicts with audience-temp or policy. If it is `strategist choose`, assign formats based on the audience's trust gap and the available proof.
 
-**Advertorial pre-lander rule:** For cold traffic with low awareness, high skepticism, or expensive/complex offers, recommend the advertorial pre-lander pattern. The composer should output an `Advertorial Pre-Lander Brief` rather than pretending a single Meta ad can do all persuasion.
+**Advertorial / Chad Funnel rule:** For cold traffic with low awareness, high skepticism, or expensive/complex offers, recommend the advertorial pre-lander or Chad Funnel pattern. The composer should output an `Advertorial Pre-Lander Brief` rather than pretending a single Meta ad can do all persuasion.
+
+### 6 Necessary Beliefs For Cold Demand
+
+Use copywriting's direct-response belief architecture when the ad or pre-lander must create demand. Do not force all six into one short ad; assign the belief job that the ad must start and the pre-lander must finish.
+
+The exact beliefs are offer-specific, but the usual sequence is:
+
+1. The current way is costing the prospect in a specific, named way.
+2. The problem is caused by a specific mechanism, not by laziness or bad intent.
+3. The desired outcome is possible for someone in the prospect's situation.
+4. The old alternatives are incomplete, slow, expensive, risky, or misdiagnosed.
+5. This offer's Unique Mechanism changes the constraint.
+6. The next action is low-risk and timely.
+
+If `belief_sequence` is supplied, map variants to those beliefs. If it is missing and `transmutation_goal` is advertorial pre-lander or Chad Funnel, derive a provisional sequence from offer, proof, and competitor pattern, then mark it `needs_confirmation` in Change Log.
 
 ### Variable Subtraction
 
@@ -234,6 +254,7 @@ Before returning your output, verify every item:
 - [ ] CTA verb matches conversion-event for each variant
 - [ ] Each variant names the Meta filtering stage it is optimized for and the signal it strengthens
 - [ ] Each variant names a transmutation format
+- [ ] Advertorial / Chad Funnel variants name their belief job and do not pretend one Meta ad can install the full belief sequence
 - [ ] Each variant names the one variable isolated; confounds are called out
 - [ ] At least one variant explicitly strengthens Heavy Ranking or Auction via the Total Value Equation unless the task is pure top-of-funnel awareness
 - [ ] Each angle starts with the prospect's world, not "We help..." / "Our [thing] is..."

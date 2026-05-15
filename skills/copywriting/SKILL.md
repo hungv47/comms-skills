@@ -70,7 +70,7 @@ routing:
 
 ## Philosophy
 
-Copy frameworks (PAS, 3-Question Test, CTA formula) are proven tools — not mandatory templates. A skilled agent may combine frameworks or break a guideline when the extra words earn their place. The test is: does this stop the scroll and move the reader? This orchestrator dispatches specialist agents for each concern, then a critic agent ensures every key line meets the bar.
+Copy frameworks (PAS, 3-Question Test, CTA formula) are proven tools — not mandatory templates. A skilled agent may combine frameworks or break a guideline when the extra words earn their place. Construction starts with **Argument Engineering**: define the belief sequence, proof burden, Unique Mechanism, and competitor contrast before choosing words. The test is: does this stop the scroll and move the reader? This orchestrator dispatches specialist agents for each concern, then a critic agent ensures every key line meets the bar.
 
 ## Inputs Required
 - Brief: what to write (headline, hook, CTA, tagline, subject line, or full-page copy)
@@ -83,6 +83,7 @@ Copy frameworks (PAS, 3-Question Test, CTA formula) are proven tools — not man
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
 - [ ] Every key line passes the Three-Question Test: visual? falsifiable? uniquely ours?
+- [ ] Hook and body choices form an airtight argument: the reader can see the old belief, new belief, proof, Unique Mechanism, and next action without a logical gap
 - [ ] Rubric score averages ≥3.5 across V/F/U for all key lines
 - [ ] Every key line passes the Competitor Swap Test (swap in competitor name — if it still works, rewrite)
 - [ ] 3-5 variations generated per key line, best selected with top 2-3 presented as alternatives
@@ -104,8 +105,8 @@ Horizontal — called by `campaign-plan`, `lp-brief`. Can run standalone.
 
 | Agent | Layer | File | Focus |
 |-------|-------|------|-------|
-| Hook Agent | 1 (parallel) | `agents/hook-agent.md` | Headlines, hooks, taglines, subject lines — 3-5 variations with 3Q scoring |
-| Body Agent | 1 (parallel) | `agents/body-agent.md` | Problem, Solution, How It Works sections |
+| Hook Agent | 1 (parallel) | `agents/hook-agent.md` | Headlines, hooks, taglines, subject lines — Argument Engineering lead plus 3-5 variations with 3Q scoring |
+| Body Agent | 1 (parallel) | `agents/body-agent.md` | Problem/Solution/How It Works or 6 Necessary Beliefs architecture |
 | CTA Agent | 1 (parallel) | `agents/cta-agent.md` | CTA variations per placement with risk reversal |
 | Social Proof Agent | 1 (parallel) | `agents/social-proof-agent.md` | Testimonials, stats, logos, credibility signals, Discovery Story |
 | Variant Agent | 1.5 (post-merge) | `agents/variant-agent.md` | A/B alternatives for key sections |
@@ -176,7 +177,7 @@ Classify the task, then follow the matching route.
 
 Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
 
-**Needed dimensions:** surface (page / email / social / headline / CTA / etc.), audience, the one shift (what should reader believe after?), unique proof (what can you say nobody else can?), Unique Mechanism (the proprietary "how" that makes the offer different and better), traffic source (if applicable).
+**Needed dimensions:** surface (page / email / social / headline / CTA / etc.), audience, the one shift (what should reader believe after?), unique proof (what can you say nobody else can?), Unique Mechanism (the proprietary "how" that makes the offer different and better), belief sequence (what the reader must accept before the CTA feels obvious), traffic source (if applicable).
 
 **Read order:**
 1. Method: `references/research-workflow.md` for the Research Doc -> Avatar & Offer Brief -> Belief Engineering -> Unique Mechanism SOP. Use it to identify missing upstream context before dispatch.
@@ -198,7 +199,9 @@ Found:
 
 Need before dispatching: surface (page/email/headline/CTA/etc.) + the
 one shift this copy should produce + confirmation that the Unique Mechanism
-above is the mechanism to anchor the argument on.
+above is the mechanism to anchor the argument on. If the surface is a
+direct-response page or persuasion-heavy email, also confirm the belief
+sequence or let Body Agent derive it from the research workflow.
 ```
 
 **Cold Start** (no upstream artifacts):
@@ -219,10 +222,12 @@ specific shift in mind. Generic prompts produce generic copy. Before I dispatch:
    and better than the old way or commodity alternative? Name it in one
    sentence. If none exists yet, say "unknown" and the copy must surface that
    as a concern.
-6. **Traffic source** (only if Q1 is page or email) — ad / search / email /
+6. **Belief sequence** — what 3-6 beliefs must the reader accept before the
+   CTA feels like the logical next step? If unknown, say "derive from brief."
+7. **Traffic source** (only if Q1 is page or email) — ad / search / email /
    social / direct? Determines what the reader already knows and expects.
 
-Answer 1-6 (or 1-5 if no traffic source) in one response. I'll dispatch.
+Answer 1-7 (or 1-6 if no traffic source) in one response. I'll dispatch.
 ```
 
 **Write-back:**
@@ -233,7 +238,8 @@ Answer 1-6 (or 1-5 if no traffic source) in one response. I'll dispatch.
 | 3. The one shift | `goals.md` | `Goals — copy shift: [surface]` |
 | 4. Unique proof | `product.md` | `Product — proof points` |
 | 5. Unique Mechanism | `product.md` | `Product — unique mechanism` |
-| 1, 6. Surface + traffic source | (routing only) |
+| 6. Belief sequence | `goals.md` | `Goals — copy belief sequence: [surface]` |
+| 1, 7. Surface + traffic source | (routing only) |
 
 ---
 

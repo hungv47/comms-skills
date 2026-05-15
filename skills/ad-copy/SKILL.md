@@ -83,6 +83,8 @@ routing:
 
 Ad copy is not landing-page copy. It runs in 3 seconds of scrolling attention, against an algorithm that ranks creative as the primary targeting lever. Every variant has to earn its impression — warm audiences want fit/credibility/timing, cold audiences want awareness/positioning, and Meta's policy review will auto-reject claims it can't substantiate.
 
+Construction starts before drafting. Strategist maps each variant to Meta's 4-step filtering process (Retrieval -> Light Ranking -> Heavy Ranking -> Auction), composer applies the Contrast Principle against the vertical's dominant hook pattern, and cold-traffic / advertorial variants borrow copywriting's 6 Necessary Beliefs so the ad or pre-lander installs the beliefs needed before the offer appears.
+
 The orchestrator separates strategy from craft: strategist picks angle + audience-temperature framing + creative format (dedicated vs repurposed-UGC, with spend-ceiling warning attached), composer drafts hero + 2 variants applying Meta-specific char caps, format-checker enforces hard caps + policy compliance, voice-auditor strips vendor-speak + AI tells, critic scores a 7-dimension rubric, `humanize` is the terminal pass. Output is ready-to-publish (one hero + two variants for one audience-temperature) plus rationale and scorecard.
 
 ## Scope Boundary
@@ -174,7 +176,7 @@ Before delivering, the **critic agent** verifies (7 dimensions, 0-10 each):
 - [ ] **Pattern-interruption density** ≥ 6 — hero + 2 variants are genuinely distinct (different angle archetype, different anchor proof OR different audience-objection addressed) and the hero passes the Contrast Ratio sub-check against the vertical's competitor pattern when context exists; surface-level paraphrase of the same angle = FAIL
 - [ ] **Policy + claim compliance** ≥ 6 — no banned claim wording (health/finance/political — see `references/policy-floor.md`); every measured claim has a substantiating source or is hedged ("up to", "in our study", "see disclaimer"); no fabricated stats; no protected-class targeting language
 - [ ] **Specificity** ≥ 6 — Specificity Floor of ≥2 verifiable specifics per variant (named entity OR named number-with-context OR named research); generic flavor ("leading", "trusted", "proven") does not count
-- [ ] **Transmutation fit** ≥ 6 — assigned AI UGC / native static / AI animation / advertorial pre-lander format is followed, proof-safe, and isolates one test variable
+- [ ] **Transmutation fit** ≥ 6 — assigned AI UGC / native static / AI animation / advertorial pre-lander / Chad Funnel format is followed, proof-safe, uses 6 Necessary Beliefs when the format must install demand, and isolates one test variable
 
 **Gate:** Total ≥ 49/70 **AND every dim ≥ 6**. Total 49-55 with all dims ≥ 6 = PASS as `DONE_WITH_CONCERNS`. Any dim < 6 = FAIL regardless of total.
 
@@ -277,7 +279,7 @@ Single route — no reply mode (paid ads don't have an inbound channel). Optiona
 
 Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`).
 
-**Needed dimensions:** audience-temp (retargeting / cold), offer (destination + value prop), creative-format (dedicated / repurposed-ugc), conversion-event (trial-start / purchase / lead / install), production-model (in-house / affiliate-creator / external-freelance), available-proof (list of named candidates), transmutation goal (AI UGC / native static / AI animation / advertorial pre-lander / strategist choose), competitor-pattern (optional but useful: what top competitors lead with), LP-description (optional but recommended).
+**Needed dimensions:** audience-temp (retargeting / cold), offer (destination + value prop), creative-format (dedicated / repurposed-ugc), conversion-event (trial-start / purchase / lead / install), production-model (in-house / affiliate-creator / external-freelance), available-proof (list of named candidates), transmutation goal (AI UGC / native static / AI animation / advertorial pre-lander / Chad Funnel / strategist choose), competitor-pattern (optional but useful: what top competitors lead with), belief sequence (optional; required for advertorial / Chad Funnel), LP-description (optional but recommended).
 
 **Read order:**
 1. Method: `../copywriting/references/research-workflow.md` for the Research Doc -> Avatar & Offer Brief -> Belief Engineering -> Unique Mechanism SOP. Use it to identify missing proof, competitor-pattern, and mechanism context before dispatch.
@@ -321,19 +323,22 @@ generic prompts produce generic ads that Meta will rank low or auto-reject.
    (hero + 2 variants = 3 distinct anchors). No proof = uncheckable claims
    = critic fail.
 7. **Transmutation goal** — should the winning message become AI UGC/VSSL,
-   native static, AI animation, advertorial pre-lander, or should strategist
-   choose? If unknown, say "strategist choose."
+   native static, AI animation, advertorial pre-lander, Chad Funnel, or should
+   strategist choose? If unknown, say "strategist choose."
 8. **Competitor pattern (optional but useful)** — what do the top 3
    competitors usually lead with? Hooks, tone, proof type, offer promise, or
    visual convention. Composer uses this for Contrast Ratio.
-9. **LP description (optional but recommended)** — 1-2 sentences on what
+9. **Belief sequence (optional; required for advertorial / Chad Funnel)** —
+   what 3-6 beliefs must cold traffic accept before the price/product page?
+   If unknown, say "derive from proof and offer."
+10. **LP description (optional but recommended)** — 1-2 sentences on what
    the landing page promises. Critic CTA-LP-match dim scores against this.
 
 If audience-temp=retargeting: which warm audience (IG engagers / IG followers /
 FB page engagers)? What were the last 4-6 organic posts the audience saw?
 (offer–content consistency check per meta-retargeting §3).
 
-Answer 1-9 in one response (plus the retargeting follow-ups if applicable).
+Answer 1-10 in one response (plus the retargeting follow-ups if applicable).
 I'll dispatch.
 ```
 
@@ -353,7 +358,7 @@ These dimensions cannot be substituted via fallback — composer fails without t
 |---|---|---|
 | 2. Offer | `product.md` | `Product — current offer` (durable across ad-copy + lp-brief + cold-outreach runs) |
 | 6. Proof points | `product.md` | `Product — proof points` (durable across ad-copy + lp-brief + cold-outreach + copywriting) |
-| 1, 3, 4, 5, 7, 8, 9. Audience-temp + creative-format + conversion-event + production-model + transmutation goal + competitor-pattern + LP-description | (run-specific, lives in the rationale.md artifact) |
+| 1, 3, 4, 5, 7, 8, 9, 10. Audience-temp + creative-format + conversion-event + production-model + transmutation goal + competitor-pattern + belief sequence + LP-description | (run-specific, lives in the rationale.md artifact) |
 
 If `research/icp-research.md` exists, pull VoC pain language. If `research/product-context.md` exists, pull voice adjectives + accuracy constraints. If `brand/BRAND.md` exists, pull voice anchors and banned-language list.
 

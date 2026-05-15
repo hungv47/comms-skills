@@ -57,6 +57,7 @@ Return a single markdown document with exactly one of two verdicts:
 - Quotable check: [status]
 - Read-aloud test: [status]
 - Detector-resistance proxy: [pass/fail/not_applicable + evidence]
+- External detector threshold: [not_run / threshold_met / threshold_failed / not_applicable + score if supplied]
 - Protected-token regression: [pass/fail/not_applicable]
 
 ## Absolute Prohibition Verification
@@ -175,6 +176,8 @@ Answer honestly. Identify remaining tells even if they are not in the 47-pattern
 **8. Detector-resistance proxy:**
 - If `pre-writing.detector_mode` is `proxy` or `pangram`, read `references/detector-resistance.md` and evaluate the proxy checklist.
 - If an external Pangram result is provided by the orchestrator, record it. If not, do not invent a score.
+- Apply the detector threshold from `references/detector-resistance.md` when an external result includes probabilities. Public content defaults to `human_probability >= 0.95` or `ai_probability <= 0.05`; admissions/applications/compliance-sensitive content defaults to `human_probability >= 0.99` or `ai_probability <= 0.01`; operator policy overrides win when stricter.
+- If `pre-writing.detector_mode` is `pangram`, the content is high-stakes, and the external result fails the configured threshold, return FAIL regardless of the 5-dimension score. Route structure, generic specificity, and uniform polish to `soul-injection-agent`; route semantic redundancy to `compression-agent`.
 - Route template-shaped flow, uniform polish, and generic specificity to `soul-injection-agent`; route semantic redundancy to `compression-agent`.
 
 ### Pass 3: Scoring Rubric
@@ -202,6 +205,7 @@ These are hard requirements. ANY failure here is a FAIL regardless of score:
 - [ ] Read aloud with no stumbles or robotic rhythm
 - [ ] Every paragraph contains at least one concrete fact, number, or named example
 - [ ] Detector-resistance proxy passes when detector_mode is enabled
+- [ ] External classifier threshold passes when detector_mode is pangram and a detector result is supplied
 - [ ] All protected_tokens are preserved verbatim when provided
 
 ### Absolute Prohibitions (zero tolerance)

@@ -6,6 +6,17 @@ This file tracks stack-level releases. SKILL.md files describe current behavior;
 
 ---
 
+## [7.1.1] - 2026-05-15
+
+Follow-up implementation for practitioner-framework and detector-resistance gaps.
+
+### Changed
+- `humanize` now documents detector threshold policy for Pangram-style classifiers, including stricter high-stakes gates and critic FAIL handling when an external detector result misses the configured threshold.
+- `copywriting` surfaces Argument Engineering at the orchestrator level and collects belief sequence as a pre-dispatch dimension for direct-response copy.
+- `ad-copy` now carries 6 Necessary Beliefs, Chad Funnel, and Contrast Principle requirements through the orchestrator, strategist, composer, and critic surfaces.
+
+---
+
 ## [7.1.0] - 2026-05-14
 
 Practitioner-framework expansion across `copywriting`, `ad-copy`, and `humanize`.

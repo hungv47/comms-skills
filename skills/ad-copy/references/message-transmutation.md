@@ -78,6 +78,32 @@ Ad-copy output should not write the full advertorial unless asked. It should inc
 - proof required,
 - CTA from advertorial to sales page.
 
+### Chad Funnel Variant
+
+Use the Chad Funnel variant when the offer needs a native-ad-to-editorial bridge before the product page can convert.
+
+Flow:
+
+1. **Native Meta ad:** creates curiosity and starts one belief shift.
+2. **Advertorial:** discredits the old belief, installs the remaining beliefs, introduces the Unique Mechanism, and substantiates the proof.
+3. **Product page / PDP / sales page:** shows the offer, details, pricing, and risk reversal.
+4. **Order or signup page:** completes purchase, trial start, lead capture, or install.
+
+The ad-copy skill should not write the whole funnel unless explicitly asked. It should produce the ad plus an `Advertorial Pre-Lander Brief` that names the belief sequence and handoff requirements for the downstream page.
+
+### 6 Necessary Beliefs Bridge
+
+For advertorial and Chad Funnel variants, identify 3-6 beliefs that must be installed before the prospect sees the price or product page:
+
+1. The problem is real and costly in the prospect's current context.
+2. The common explanation is incomplete or wrong.
+3. The desired outcome is possible for someone like them.
+4. The old alternatives fail for a specific reason.
+5. The offer's Unique Mechanism changes the constraint.
+6. The next step is timely and low-risk.
+
+Short Meta ad copy should usually install only one belief and point to the advertorial. If it tries to install all six, it will either exceed the visible window or become generic.
+
 ## Variable Subtraction
 
 When results are ambiguous, change one variable at a time:
