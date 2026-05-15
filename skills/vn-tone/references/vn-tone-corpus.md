@@ -344,11 +344,11 @@ For national brand copy, default to **neutral** — avoid strongly regional mark
 
 | Particle | Register | Function |
 |---|---|---|
-| `ạ` | Bro-deferential, very-polite | Marks speaker as junior to addressee. Used in questions/statements to elders. |
+| `ạ` | internal | Marks speaker as junior to addressee. Used in questions/statements to elders. |
 | `nhé` | Semi-casual, pop | Soft suggestion/reminder. Northern default. |
 | `nha` | Semi-casual, pop | Same as `nhé` but warmer, Southern, now national-pop default. |
 | `nhỉ` | Semi-casual, bro | Solicits agreement — "right?" "eh?" |
-| `đấy` / `đó` | Semi-casual | Mild emphasis — "it is so" |
+| `đấy` / `đó` | internal | Mild emphasis — "it is so" |
 | `luôn` | All casual | Urgency/immediacy — "straight away" |
 | `à` | All casual | Surprise/realization |
 | `ơi` | All casual | Vocative call-out |
@@ -361,13 +361,13 @@ For national brand copy, default to **neutral** — avoid strongly regional mark
 | Pair | Register | Vibe |
 |---|---|---|
 | (none) ↔ (none) | Báo chí | Institutional, distant |
-| `chúng tôi` ↔ (none) | Báo chí editorial / formal brand | Corporate-official |
-| `mình` ↔ `bạn` | Semi-casual | Warm blogger |
+| `chúng tôi` ↔ (none) | Báo chí editorial / formal brand | internal |
+| `mình` ↔ `bạn` | internal | Warm blogger |
 | `mình` ↔ `anh em` | Semi-casual tech | Community insider |
 | `tôi` ↔ (self) | Essayist | Reflective monologue |
-| `em` ↔ `cụ/mợ/bác` | Bro (Otofun) | Humble-deferential-bro |
+| `em` ↔ `cụ/mợ/bác` | Bro (Otofun) | internal |
 | `mình` / `tôi` ↔ `ae/thím/bác` | Bro (Voz) | Peer-irreverent (`tôi` in reflective/sardonic Voz posts) |
-| `chúng mình` ↔ `bạn` | Pop/brand marketing | Friendly-brand |
+| `chúng mình` ↔ `bạn` | Pop/brand marketing | internal |
 | `chúng tôi` ↔ `quý khách` | Corporate formal | Stiff — avoid unless required |
 
 **Mixing pairs across registers is the #1 translation artifact.** A post that opens with `chúng tôi` and then switches to `mình` mid-paragraph reads like machine translation spliced with blog voice. Pick a pair and hold it through the whole piece.
@@ -378,13 +378,13 @@ For national brand copy, default to **neutral** — avoid strongly regional mark
 
 ```
 Is the content an official announcement, news, or institutional doc?
-  → Register 1 (báo chí). No self, no reader, no particles.
+ → Register 1 (báo chí). No self, no reader, no particles.
 Is it a product blog, tutorial, or long-form essay for engaged users?
-  → Register 2 (semi-casual). mình + bạn or mình + anh em. Light particles.
+ → Register 2 (semi-casual). mình + bạn or mình + anh em. Light particles.
 Is it for a specific in-group community that self-identifies (vozers, otofuners, gamers)?
-  → Register 3 (bro). Match the community's specific pronoun pair. Heavy particles.
+ → Register 3 (bro). Match the community's specific pronoun pair. Heavy particles.
 Is it consumer marketing, pop entertainment, or mass-social content for <35yo?
-  → Register 4 (pop/brand). chúng mình + bạn. Emotive, emoji-OK, scare-quoted viral terms.
+ → Register 4 (pop/brand). chúng mình + bạn. Emotive, emoji-OK, scare-quoted viral terms.
 ```
 
 When ambiguous between 1 and 2, default to 1 (safer). When ambiguous between 2 and 4, match the brand voice. When ambiguous between 3 and anything else — stay out of 3 unless the writer is genuinely in the in-group. Register 3 from an outsider reads as cringe cosplay.

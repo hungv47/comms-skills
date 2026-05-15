@@ -36,7 +36,7 @@ Score each dimension 0-10:
 
 ## Hard Fails
 
-- No existing `skills-resources/marketing/loops/[slug]/program.md`.
+- No existing `skills-resources/loops/[slug]/program.md`.
 - No current primary metric value, source, or measurement window.
 - Claimed improvement without baseline or prior-cycle comparison.
 - Generic heuristic audit presented as evidence.

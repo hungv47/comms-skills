@@ -1,6 +1,6 @@
 ---
 name: design-brief
-description: "Produces graphic-design briefs for individual visual assets — social posts (IG carousel/post/story, LinkedIn doc/single, FB ad), thumbnails (YouTube, X card), banners/display ads, OOH/billboard, OG/share cards, hero illustrations. Pulls brand-system tokens, generates concept directions, and writes a per-asset brief with platform-aware specs (aspect ratio, safe zones, type scale, contrast, file format, anti-patterns) plus an image-gen prompt or designer-handoff spec. Produces `skills-resources/marketing/design-briefs/[slug].md`. Does NOT render the asset — rendering happens downstream via image-gen tool, vector tool, or human designer. Not for brand identity definition (use brand-system) or whole-page redesigns (use lp-brief). Not for writing the copy that goes IN the asset (use copywriting)."
+description: "Produces graphic-design briefs for individual visual assets — social posts (IG carousel/post/story, LinkedIn doc/single, FB ad), thumbnails (YouTube, X card), banners/display ads, OOH/billboard, OG/share cards, hero illustrations. Pulls brand-system tokens, generates concept directions, and writes a per-asset brief with platform-aware specs (aspect ratio, safe zones, type scale, contrast, file format, anti-patterns) plus an image-gen prompt or designer-handoff spec. Produces `.agents/skill-artifacts/mkt/design-briefs/[slug].md`. Does NOT render the asset — rendering happens downstream via image-gen tool, vector tool, or human designer. Not for brand identity definition (use brand-system) or whole-page redesigns (use lp-brief). Not for writing the copy that goes IN the asset (use copywriting)."
 argument-hint: "[asset description, e.g. 'instagram carousel about pricing tiers']"
 allowed-tools: Read Edit Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -64,12 +64,12 @@ routing:
   position: pipeline
   lifecycle: pipeline
   produces:
-    - skills-resources/marketing/design-briefs/[slug].md
+    - .agents/skill-artifacts/mkt/design-briefs/[slug].md
   consumes:
     - brand/BRAND.md
     - brand/DESIGN.md
     - brand/ASSETS.md
-    - skills-resources/marketing/lp-brief/[slug]/asset-slots/*.md
+    - .agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/*.md
   requires:
     - brand/BRAND.md
     - brand/DESIGN.md
@@ -115,13 +115,13 @@ Brand fidelity > aesthetic novelty. Platform fitness > generic polish. A boring 
 ## Inputs Optional
 
 - **`brand/ASSETS.md`** — pre-fills format/dimensions if asset matches a row; ticks box on completion
-- **`skills-resources/marketing/lp-brief/[slug]/asset-slots/[slot-id].md`** — slot spec when brief is for a landing-page asset
-- **`skills-resources/marketing/content/[slug].copy.md`** — copy used IN the asset (headline, body, CTA)
-- **`skills-resources/marketing/campaign-plan.md`** — campaign context, channel placement, awareness stage
+- **`.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-id].md`** — slot spec when brief is for a landing-page asset
+- **`.agents/skill-artifacts/mkt/content/[slug].copy.md`** — copy used IN the asset (headline, body, CTA)
+- **`.agents/skill-artifacts/mkt/campaign-plan.md`** — campaign context, channel placement, awareness stage
 
 ## Output
 
-`skills-resources/marketing/design-briefs/[slug].md` containing:
+`.agents/skill-artifacts/mkt/design-briefs/[slug].md` containing:
 - Approved concept (visual direction, references)
 - Brand anchors (palette/typography/sacred elements from DESIGN.md)
 - Platform spec (aspect ratio, safe zones, type scale, contrast, format, size cap)
@@ -211,7 +211,7 @@ Override auto-detection with `--route=image-gen|vector-tool|designer-handoff|tem
 
 ## Pre-Dispatch
 
-This skill is **hard-gated** on brand artifacts. Cold-start questioning happens after the gate. Full Pre-Dispatch protocol pattern: `meta-skills/references/pre-dispatch-protocol.md`.
+This skill is **hard-gated** on brand artifacts. Cold-start questioning happens after the gate. Full Pre-Dispatch protocol pattern: `references/_shared/pre-dispatch-protocol.md`.
 
 ### Hard gate (before any questioning)
 
@@ -227,17 +227,17 @@ If `brand/ASSETS.md` exists, scan for a row matching the requested asset. If fou
 - Constraints (dimensions, deadline, must-include elements)
 
 ### Read order (post-gate)
-1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (confirmed by hard gate). `brand/ASSETS.md` for dimension pre-fill. `skills-resources/marketing/lp-brief/[slug]/asset-slots/[slot-id].md` if invoked from lp-brief. `skills-resources/marketing/content/[slug].copy.md` if copy supplied separately. `skills-resources/marketing/campaign-plan.md` for campaign context. `research/icp-research.md` for audience visual preferences.
-2. Experience: `skills-resources/experience/{brand,goals}.md`.
+1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (confirmed by hard gate). `brand/ASSETS.md` for dimension pre-fill. `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` if invoked from lp-brief. `.agents/skill-artifacts/mkt/content/[slug].copy.md` if copy supplied separately. `.agents/skill-artifacts/mkt/campaign-plan.md` for campaign context. `research/icp-research.md` for audience visual preferences.
+2. Experience: `.agents/experience/{brand,goals}.md`.
 
 ### Optional Artifacts (read if present)
 
 | Artifact | Source | Benefit |
 |----------|--------|---------|
 | `brand/ASSETS.md` | brand-system Route B | Auto-fill dimensions, tick checkbox on completion |
-| `skills-resources/marketing/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Slot spec when brief is for an LP asset |
-| `skills-resources/marketing/content/[slug].copy.md` | copywriting | Copy to use in the asset |
-| `skills-resources/marketing/campaign-plan.md` | campaign-plan | Campaign context, awareness stage |
+| `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Slot spec when brief is for an LP asset |
+| `.agents/skill-artifacts/mkt/content/[slug].copy.md` | copywriting | Copy to use in the asset |
+| `.agents/skill-artifacts/mkt/campaign-plan.md` | campaign-plan | Campaign context, awareness stage |
 | `research/icp-research.md` | icp-research | Audience visual preferences |
 
 **Warm Start** (invoked from lp-brief or campaign-plan with asset spec):
@@ -267,7 +267,7 @@ Design / Pencil MCP / Figma / human designer) execute. Before I dispatch:
    (multi-format social packs from one brief). Auto-detected from asset
    type by default — override here.
 3. **Copy/headline** — what text appears IN the asset? Headline, body,
-   CTA, brand mark text. Reference `skills-resources/marketing/content/[slug].copy.md`
+   CTA, brand mark text. Reference `.agents/skill-artifacts/mkt/content/[slug].copy.md`
    if supplied separately.
 4. **Constraints** — dimensions (if non-standard), deadline, must-include
    elements (logo placement, brand mark, legal disclaimer, etc.).
@@ -350,7 +350,7 @@ User responses:
 - **"Revise X"** → re-dispatch concept-agent with feedback, regenerate, re-present.
 - **"None of these"** → ask one clarifying question, regenerate.
 - **"Switch route to X"** → re-dispatch brief-synth with the new route. If concept-agent's tool-feasibility for that concept was RETHINK on the new route, re-run concept-agent first.
-- **"Stop"** → save as `skills-resources/marketing/design-briefs/[slug]-candidates.md`, exit BLOCKED.
+- **"Stop"** → save as `.agents/skill-artifacts/mkt/design-briefs/[slug]-candidates.md`, exit BLOCKED.
 
 ---
 
@@ -402,15 +402,15 @@ Format:
 
 User responses:
 - **"Approve"** →
-  1. Write `skills-resources/marketing/design-briefs/[slug].md`.
+  1. Write `.agents/skill-artifacts/mkt/design-briefs/[slug].md`.
   2. **ASSETS.md auto-tick:** if the brief's asset path is a literal string match for a `brand/ASSETS.md` row's path field (never auto-tick on slug or asset-type heuristic), flip `[ ]` → `[x]` and append a date stamp. No match → skip; design-brief doesn't own ASSETS.md row creation (that's brand-system).
   3. Status DONE.
 - **"Revise X"** → re-dispatch brief-synth or Layer 2 agent with feedback (1 cycle), re-present.
-- **"Reject"** → save as `skills-resources/marketing/design-briefs/[slug]-rejected.md` with a `Rejection Notes` block, exit BLOCKED.
+- **"Reject"** → save as `.agents/skill-artifacts/mkt/design-briefs/[slug]-rejected.md` with a `Rejection Notes` block, exit BLOCKED.
 
 ---
 
-## Artifact Template — `skills-resources/marketing/design-briefs/[slug].md`
+## Artifact Template — `.agents/skill-artifacts/mkt/design-briefs/[slug].md`
 
 ```markdown
 ---

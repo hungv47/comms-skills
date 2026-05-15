@@ -165,12 +165,12 @@ Maintain a single source of truth that all comparison pages read from:
 | Capterra | X.X/5 | [N] reviews |
 
 ## Known Weaknesses (from reviews)
-1. [Weakness] — Source: [G2 review / Reddit thread]
-2. [Weakness] — Source: [source]
+1. [Weakness] — Pattern basis: internal research synthesis.
+2. [Weakness] — Pattern basis: internal research synthesis.
 
 ## Known Strengths
-1. [Strength] — Source: [source]
-2. [Strength] — Source: [source]
+1. [Strength] — Pattern basis: internal research synthesis.
+2. [Strength] — Pattern basis: internal research synthesis.
 ```
 
 **Update triggers:**

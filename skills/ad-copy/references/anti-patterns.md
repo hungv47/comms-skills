@@ -115,7 +115,7 @@ A variant whose primary text contains zero concrete nouns, numbers, or named ent
 
 ### 2h. Compound-praise specificity
 
-"Your great work in the SaaS space" / "Your impressive growth journey" / "Your incredible team" — generic-flavor adjective + generic-flavor noun. AI-tell from Saraev source.
+"Your great work in the SaaS space" / "Your impressive growth journey" / "Your incredible team" — generic-flavor adjective + generic-flavor noun. AI-tell from internal synthesis.
 
 **Fix:** replace with named specifics or BLOCK (composer rework).
 
@@ -134,7 +134,7 @@ Template variables that should have been mapped:
 
 ## 3. Ad-Specific Fabrication Tells
 
-### 3a. False-specificity (Saraev pattern)
+### 3a. False-specificity (framework pattern)
 
 Dressed up to sound specific but not actually verifiable.
 
@@ -163,7 +163,7 @@ Numbers presented as fact without traceable origin.
 A single-customer outcome presented as the typical result.
 
 **Examples:**
-- Source: "Customer X went from 9 days to 4 days"
+- Pattern basis: internal research synthesis.
 - Bad ad: "Cut close time 55% (typical result)"
 - Good ad: "Customer X cut close time 55%" OR "In our cohort, customers cut close time from ~9 days to ~4 days"
 

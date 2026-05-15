@@ -30,8 +30,8 @@ Voice is defined by 3-5 adjectives from product context. Each adjective has conc
 | **Warm** | Medium (10-18 words) | Inclusive pronouns, conversational | "You" and "we," rhetorical questions, asides |
 | **Technical** | Varies by concept | Domain-specific, precise | Jargon when accurate, inline definitions for lay readers |
 | **Playful** | Short-medium, varied | Unexpected word pairings | Analogies, pop culture, deliberate rule-breaking |
-| **Authoritative** | Medium-long (12-20 words) | Definitive verbs (is, does, requires) | Data citations, named sources, declarative statements |
-| **Honest** | Short-medium | Plain language, no euphemisms | Admitting limitations, "we don't know yet" |
+| **Authoritative** | Medium-long (12-20 words) | Definitive verbs (is, does, requires) | Data reference, named sources, declarative statements |
+| **Honest** | internal | Plain language, no euphemisms | Admitting limitations, "we don't know yet" |
 | **Provocative** | Short, punchy | Contrarian framing | Bold claims (backed by evidence), challenging assumptions |
 | **Empathetic** | Medium, natural rhythm | Feeling words, acknowledgment | Naming the reader's frustration before solving it |
 

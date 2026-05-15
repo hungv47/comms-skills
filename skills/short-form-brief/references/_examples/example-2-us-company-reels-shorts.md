@@ -2,7 +2,7 @@
 
 Reference brief for a US faceless consumer e-commerce brand. Company-mode, market=EN, hero=Reels + variant=Shorts.
 
-This is a **worked example**. Actual hero brief artifact: `skills-resources/marketing/short-form-brief/morning-light-hydrator/brief.md`.
+This is a **worked example**. Actual hero brief artifact: `.agents/skill-artifacts/mkt/short-form-brief/morning-light-hydrator/brief.md`.
 
 ---
 
@@ -20,7 +20,7 @@ This is a **worked example**. Actual hero brief artifact: `skills-resources/mark
 ## Research signals
 
 - Reels US e-com niche: pre-reveal tease + before/after dominate (combined 9/14 sample)
-- Reels: Originality Score (Mosseri Jan 2025) — original kinetic-type favored over reused audio
+- Reels: Originality Score (platform leadership's Jan 2025) — original kinetic-type favored over reused audio
 - Shorts: loop rate weighted; 3-second drop-off less severe than Reels (sample n=10, OK)
 - Trending audio on Reels for skincare niche: original beat-bed common in top performers
 - Sample-size flag: Reels OK (n=11), Shorts OK (n=10)
@@ -49,8 +49,8 @@ This is a **worked example**. Actual hero brief artifact: `skills-resources/mark
 | 3 | 0:09–0:18 | Science build | Vector illustration of stratum corneum, layered animation | "Trans-epidermal water loss happens here ↑" | Steady bed |
 | 4 | 0:18–0:24 | Product reveal | Bottle rotates in 3D, ingredients animate in around it | "Niacinamide 5% + Ceramide NP" | Soft chime per ingredient |
 | 5 | 0:24–0:30 | Before/after | Side-by-side moisture readings (kinetic chart) | "+40% hydration after 30 min" | Music holds |
-| 6 | 0:30–0:34 | Outro CTA | Bottle on backdrop, brand color sweep | "Linked below ↓" | Tail-out |
-| 7 | 0:34–0:38 | End-card | Logo + URL fade-up | "morninglight.co" | Music tail |
+| 6 | 0:30–0:34 | Outro CTA | Bottle on backdrop, brand color sweep | "Linked below ↓" | internal |
+| 7 | 0:34–0:38 | internal | Logo + URL fade-up | "morninglight.co" | Music tail |
 
 ### Production Notes (motion-graphic)
 - **Style:** Vector flat + kinetic type, 3D product render

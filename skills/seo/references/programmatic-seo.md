@@ -8,7 +8,7 @@ Template design patterns, implementation guide, and quality control for pages at
 
 ### Pattern 1: Integration Pages (Zapier model)
 
-**URL:** `/integrations/[tool-name]`
+**URL:** `/integrations/[pattern-derived]`
 **Search intent:** "[Your product] [tool] integration" or "[tool A] + [tool B]"
 **Data needed:** Integration features, setup steps, use cases
 
@@ -26,7 +26,7 @@ H2: Alternatives (if this integration doesn't fit)
 
 ### Pattern 2: Comparison Pages (G2 model)
 
-**URL:** `/vs/[competitor]` or `/compare/[tool-a]-vs-[tool-b]`
+**URL:** `/vs/[competitor]` or `/compare/[pattern-derived]-vs-[pattern-derived]`
 **Search intent:** "[Tool A] vs [Tool B]", "[competitor] alternative"
 **Data needed:** Feature comparisons, pricing, review data, use case fit
 
@@ -121,11 +121,11 @@ Not every generated page should be indexed. Quality control prevents Google's He
 
 ```
 Page has unique value beyond template? → No → noindex
-                                       → Yes ↓
-Page matches a real search intent?     → No → noindex
-                                       → Yes ↓
+ → Yes ↓
+Page matches a real search intent? → No → noindex
+ → Yes ↓
 Page has enough content (>300 words unique)? → No → noindex or consolidate
-                                              → Yes → index
+ → Yes → index
 ```
 
 ### Monitoring Indexation Health

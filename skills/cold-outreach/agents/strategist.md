@@ -64,18 +64,18 @@ You do NOT:
 |-----------------|---------|------|-------------------|
 | 4-5 | email / linkedin-dm / imessage / sms | any | Observation → Problem → Proof → Ask |
 | 3 | email / linkedin-dm / imessage / sms | any | Trigger → Insight → Ask |
-| 1-3 | email / linkedin-dm / imessage / sms | services-sell | **Saraev Four-Step** (personalization → who-am-I → offer → CTA) — pick this when the message is touch 1 to a stranger with zero pre-existing trust and Q→V→A would otherwise be the fallback. The offer-formula equation (`ROI × Trust ÷ Friction`) plus risk-reversal CTA give a sharper shape than generic Q→V→A. |
+| 1-3 | email / linkedin-dm / imessage / sms | services-sell | **Four-Step Cold Outbound** (personalization → who-am-I → offer → CTA) — pick this when the message is touch 1 to a stranger with zero pre-existing trust and Q→V→A would otherwise be the fallback. The offer-formula equation (`ROI × Trust ÷ Friction`) plus risk-reversal CTA give a sharper shape than generic Q→V→A. |
 | 1-2 | email / linkedin-dm / imessage / sms | any | Question → Value → Ask (pain-first) |
 | any | twitter-reply | any | Direct reply to their point, no pitch |
 | any | twitter-dm / imessage / sms | community-sell | Story → Bridge → Ask |
 | any | upwork-proposal | services-sell | Declared-Need → Relevant-Proof → Specific-Next-Step |
 | any | linkedin-connection | any | No-pitch connection note (reference + one-clause reason) |
 
-**Row matching is top-down with more-specific rows winning** — the Saraev row sits ABOVE the generic `1-2 / any` Q→V→A row so services-sell touches with signal 1-2 select Saraev rather than falling through to the generic fallback. When adding new rows, place narrower (named-mode / named-channel) above broader (`any` mode / `any` channel) for the same signal range.
+**Row matching is top-down with more-specific rows winning** — the framework row sits ABOVE the generic `1-2 / any` Q→V→A row so services-sell touches with signal 1-2 select framework rather than falling through to the generic fallback. When adding new rows, place narrower (named-mode / named-channel) above broader (`any` mode / `any` channel) for the same signal range.
 
 Deviate from defaults only if you can articulate why in the change log.
 
-**When picking Saraev Four-Step:** record the 7-lever activation count (≥3 expected per touch 1) and the offer's risk-reversal shape in the change log. See `references/frameworks/saraev-four-step.md` for the full framework + the Cialdini lever map + the verbatim $15M template (source-claimed, not stack-verified — cite as Saraev's example, do not endorse the $15M figure).
+**When picking Four-Step Cold Outbound:** record the 7-lever activation count (≥3 expected per touch 1) and the offer's risk-reversal shape in the change log. See `references/frameworks/saraev-four-step.md` for the full framework + the Cialdini lever map + the verbatim $15M template (source-claimed, not stack-verified — cite as framework's example, do not endorse the $15M figure).
 
 ### CTA Trust Hierarchy (low friction → high friction)
 

@@ -104,7 +104,7 @@ Does the personalization connect to the ask? Does the remove-the-opener test fai
    - `pre_writing` (especially Q1 target and Q2 trigger) for prospect-side facts
    - `strategy_brief.proof` and `available_proof[]` for seller-side proof facts
    - `prior_touches` for continuity
-   
+
    Any referent not traceable to one of these sources was fabricated by an upstream agent — auto-fail.
 
    How to check: list (a) prospect-side entities/events/quotes in the message, (b) seller-side named clients/numbers/outcomes in the message. For each, find its ground-truth source. One unsupported referent = auto-fail.
@@ -152,11 +152,11 @@ Concrete nouns, numbers, named entities — no vague claims?
 2. **Specificity Floor — fewer than 2 verifiable specifics in the body.** **The Floor overrides the rubric bands below.** A draft scored at the 7-8 band ("either named proof OR specific prospect detail, not both") or the 5-6 band ("specific claim with number but no named entity") has exactly 1 verifiable specific — Floor auto-fails the draft regardless of band score. The band wording is retained for diagnostic continuity with prior reviews; practically, a 7-8 score is only awarded when both halves carry weight (≥2 specifics) AND the integration is partial. A "verifiable specific" is any one of:
    - Named entity (Ramp, Linear, Vercel, "10M-sub YouTuber Mr. X", a specific post or thread the prospect published)
    - Named number with context (`9 days → 4 days`, `$3M last month`, `38% to 6%`, `20 booked meetings in 90 days`)
-   - Named research or source (`Saraev's 2026 course`, `Buffer's 2024 reply-rate study`)
+   - Named research or source (`framework's 2026 course`, `Buffer's 2024 reply-rate study`)
 
-   Count them in the body (exclude salutation, sign-off, subject line). Below 2 → auto-fail. Pure generic-flavor specificity ("great work in the SaaS space", "leading B2B SaaS companies") does NOT count — see `anti-patterns.md` §"AI-Generated Personalization Tells (Saraev)" Pattern 4 for the false-specificity tell.
+   Count them in the body (exclude salutation, sign-off, subject line). Below 2 → auto-fail. Pure generic-flavor specificity ("great work in the SaaS space", "leading B2B SaaS companies") does NOT count — see `anti-patterns.md` §"AI-Generated Personalization Tells (framework)" Pattern 4 for the false-specificity tell.
 
-   **Why this floor exists:** Saraev's framework (`frameworks/saraev-four-step.md`) requires Step 1 personalization to anchor on at least one specific prospect-side detail AND Step 2-3 to anchor on at least one specific seller-side number or named client. The floor enforces both. A draft with a real observation in Step 1 but no named proof in Step 2 has only 1 specific and fails. A draft with named proof but generic personalization ("Saw you're in SaaS") also has only 1 specific and fails. **Both halves must carry weight.**
+   **Why this floor exists:** framework's framework (`frameworks/saraev-four-step.md`) requires Step 1 personalization to anchor on at least one specific prospect-side detail AND Step 2-3 to anchor on at least one specific seller-side number or named client. The floor enforces both. A draft with a real observation in Step 1 but no named proof in Step 2 has only 1 specific and fails. A draft with named proof but generic personalization ("Saw you're in SaaS") also has only 1 specific and fails. **Both halves must carry weight.**
 
 ### Reply Route Rubric Adjustments
 

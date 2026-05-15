@@ -1,6 +1,6 @@
 ---
 name: campaign-plan
-description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `skills-resources/marketing/campaign-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing-page architecture, see lp-brief."
+description: "Creates integrated marketing plans — channel strategy, positioning, content calendar, budget allocation, and go-to-market timelines. Produces `.agents/skill-artifacts/mkt/campaign-plan.md`. Not for setting numeric targets (use funnel-planner). For SEO strategy, see seo. For landing-page architecture, see lp-brief."
 argument-hint: "[product or campaign to plan]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -46,11 +46,11 @@ routing:
   position: pipeline
   lifecycle: pipeline
   produces:
-    - skills-resources/marketing/campaign-plan.md
+    - .agents/skill-artifacts/mkt/campaign-plan.md
   consumes:
     - product-context.md
     - icp-research.md
-    - skills-resources/meta/sketches/prioritize-*.md
+    - .agents/skill-artifacts/meta/sketches/prioritize-*.md
   requires: []
   defers-to: []
   parallel-with:
@@ -82,7 +82,7 @@ Frameworks (ORB, 3D Angles, Pillar Types) are proven defaults — not mandatory 
 - ICP research from `research/icp-research.md` + `research/product-context.md` (or user-provided)
 
 ## Output
-- `skills-resources/marketing/campaign-plan.md`
+- `.agents/skill-artifacts/mkt/campaign-plan.md`
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
@@ -158,7 +158,7 @@ Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search st
 **When:** `lp-brief`, `cold-outreach`, or another downstream skill needs plan context.
 
 ```
-1. Read existing skills-resources/marketing/campaign-plan.md if available
+1. Read existing .agents/skill-artifacts/mkt/campaign-plan.md if available
 2. If not available, run Route B
 3. Return plan to calling skill
 ```
@@ -167,7 +167,7 @@ Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search st
 
 ## Pre-Dispatch
 
-Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Start** (most context resolvable, summarize and dispatch) or **Cold Start** (bundle 5-question prompt). Full pattern + anti-patterns: `meta-skills/references/pre-dispatch-protocol.md`.
+Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Start** (most context resolvable, summarize and dispatch) or **Cold Start** (bundle 5-question prompt). Full pattern + anti-patterns: `references/_shared/pre-dispatch-protocol.md`.
 
 ### Needed dimensions
 - Product (what it does, who pays)
@@ -178,8 +178,8 @@ Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Star
 - Constraints (team size, budget tier, channels off-limits)
 
 ### Read order
-1. Pipeline: `research/product-context.md` → product. `research/icp-research.md` → audience, habitats, VoC. `skills-resources/meta/sketches/prioritize-*.md` → strategic initiatives (optional, alignment only).
-2. Experience: `skills-resources/experience/{product,audience,business,goals}.md` for any dimension not covered by pipeline artifacts.
+1. Pipeline: `research/product-context.md` → product. `research/icp-research.md` → audience, habitats, VoC. `.agents/skill-artifacts/meta/sketches/prioritize-*.md` → strategic initiatives (optional, alignment only).
+2. Experience: `.agents/experience/{product,audience,business,goals}.md` for any dimension not covered by pipeline artifacts.
 
 If pipeline artifact `date` fields are >30 days, warn and recommend re-running upstream — audience and pains evolve.
 
@@ -211,7 +211,7 @@ answers now.)
 
 1. **Product** in one sentence — what does it do, who pays for it?
 2. **Audience** — primary buyer (role + company size + top 1-2 pain points)
-3. **Campaign goal** — acquire leads / drive trial signups / launch a feature / 
+3. **Campaign goal** — acquire leads / drive trial signups / launch a feature /
    warm cold leads / awareness?
 4. **Growth motion** — does the product sell itself with free trial or signup
    (PLG), require sales conversations or paid performance (SLG), or both
@@ -262,7 +262,7 @@ After Pre-Dispatch resolves:
 1. **Read** the agent instruction file — include its FULL content in the Agent prompt
 2. **Append** the context and upstream output after the instructions
 3. **Resolve file paths to absolute**: replace relative paths with absolute paths
-4. **Pass upstream artifacts by content**: orchestrator reads `skills-resources/` files, includes relevant excerpts
+4. **Pass upstream artifacts by content**: orchestrator reads `.agents/skill-artifacts/` files, includes relevant excerpts
 5. If **feedback** exists, append with "## Critic Feedback — Address Every Point"
 
 ### Single-agent fallback

@@ -246,8 +246,8 @@ who've taken back their time."
 | Feature | Benefit | Emotional Outcome |
 |---------|---------|-------------------|
 | 24/7 support | Get help anytime | Peace of mind |
-| Cloud-based | Access anywhere | Freedom and flexibility |
-| AI-powered | Works automatically | More free time |
+| internal | Access anywhere | Freedom and flexibility |
+| internal | Works automatically | More free time |
 
 ### Writing Patterns
 

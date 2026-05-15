@@ -13,18 +13,18 @@ Implement in this order based on typical impact:
 #### FAQPage
 ```json
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What is [topic]?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "[40-60 word answer]"
-      }
-    }
-  ]
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+ {
+ "@type": "Question",
+ "name": "What is [topic]?",
+ "acceptedAnswer": {
+ "@type": "Answer",
+ "text": "[40-60 word answer]"
+ }
+ }
+ ]
 }
 ```
 **Use on:** FAQ pages, knowledge base articles, any page with Q&A content.
@@ -33,20 +33,20 @@ Implement in this order based on typical impact:
 #### Article / BlogPosting
 ```json
 {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "[Title]",
-  "author": {
-    "@type": "Person",
-    "name": "[Author Name]",
-    "url": "[Author profile URL]"
-  },
-  "datePublished": "[ISO date]",
-  "dateModified": "[ISO date]",
-  "publisher": {
-    "@type": "Organization",
-    "name": "[Company]"
-  }
+ "@context": "https://schema.org",
+ "@type": "Article",
+ "headline": "[Title]",
+ "author": {
+ "@type": "Person",
+ "name": "[Author Name]",
+ "url": "[Author profile URL]"
+ },
+ "datePublished": "[ISO date]",
+ "dateModified": "[ISO date]",
+ "publisher": {
+ "@type": "Organization",
+ "name": "[Company]"
+ }
 }
 ```
 **Use on:** Blog posts, guides, reports.
@@ -55,16 +55,16 @@ Implement in this order based on typical impact:
 #### HowTo
 ```json
 {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  "name": "How to [outcome]",
-  "step": [
-    {
-      "@type": "HowToStep",
-      "name": "[Step title]",
-      "text": "[Step description]"
-    }
-  ]
+ "@context": "https://schema.org",
+ "@type": "HowTo",
+ "name": "How to [outcome]",
+ "step": [
+ {
+ "@type": "HowToStep",
+ "name": "[Step title]",
+ "text": "[Step description]"
+ }
+ ]
 }
 ```
 **Use on:** Tutorial content, setup guides, process documentation.
@@ -74,20 +74,20 @@ Implement in this order based on typical impact:
 #### Product
 ```json
 {
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "[Product Name]",
-  "description": "[Description]",
-  "offers": {
-    "@type": "Offer",
-    "price": "[X]",
-    "priceCurrency": "USD"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "[X.X]",
-    "reviewCount": "[N]"
-  }
+ "@context": "https://schema.org",
+ "@type": "Product",
+ "name": "[Product Name]",
+ "description": "[Description]",
+ "offers": {
+ "@type": "Offer",
+ "price": "[X]",
+ "priceCurrency": "USD"
+ },
+ "aggregateRating": {
+ "@type": "AggregateRating",
+ "ratingValue": "[X.X]",
+ "reviewCount": "[N]"
+ }
 }
 ```
 **Use on:** Product pages, pricing pages.
@@ -95,22 +95,22 @@ Implement in this order based on typical impact:
 #### BreadcrumbList
 ```json
 {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://example.com"
-    },
-    {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "[Section]",
-      "item": "https://example.com/section"
-    }
-  ]
+ "@context": "https://schema.org",
+ "@type": "BreadcrumbList",
+ "itemListElement": [
+ {
+ "@type": "ListItem",
+ "position": 1,
+ "name": "Home",
+ "item": "https://example.com"
+ },
+ {
+ "@type": "ListItem",
+ "position": 2,
+ "name": "[Section]",
+ "item": "https://example.com/section"
+ }
+ ]
 }
 ```
 **Use on:** Every page with breadcrumb navigation.
@@ -120,16 +120,16 @@ Implement in this order based on typical impact:
 #### Organization
 ```json
 {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "[Company]",
-  "url": "[URL]",
-  "logo": "[Logo URL]",
-  "sameAs": [
-    "[Twitter URL]",
-    "[LinkedIn URL]",
-    "[GitHub URL]"
-  ]
+ "@context": "https://schema.org",
+ "@type": "Organization",
+ "name": "[Company]",
+ "url": "[URL]",
+ "logo": "[Logo URL]",
+ "sameAs": [
+ "[Twitter URL]",
+ "[LinkedIn URL]",
+ "[GitHub URL]"
+ ]
 }
 ```
 **Use on:** Homepage, about page. Helps AI models build entity associations.
@@ -137,16 +137,16 @@ Implement in this order based on typical impact:
 #### SoftwareApplication
 ```json
 {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "[App Name]",
-  "applicationCategory": "[Category]",
-  "operatingSystem": "[OS]",
-  "offers": {
-    "@type": "Offer",
-    "price": "[X]",
-    "priceCurrency": "USD"
-  }
+ "@context": "https://schema.org",
+ "@type": "SoftwareApplication",
+ "name": "[App Name]",
+ "applicationCategory": "[Category]",
+ "operatingSystem": "[OS]",
+ "offers": {
+ "@type": "Offer",
+ "price": "[X]",
+ "priceCurrency": "USD"
+ }
 }
 ```
 **Use on:** Software product pages, app store landing pages.
@@ -159,28 +159,28 @@ Implement in this order based on typical impact:
 
 ---
 
-## Combining Schema with @graph
+## Combining Schema with practitioner source
 
-When a page needs multiple schema types (common), use `@graph`:
+When a page needs multiple schema types (common), use `practitioner source`:
 
 ```json
 {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Article",
-      "headline": "...",
-      "author": { "@type": "Person", "name": "..." }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "itemListElement": [...]
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [...]
-    }
-  ]
+ "@context": "https://schema.org",
+ "practitioner source": [
+ {
+ "@type": "Article",
+ "headline": "...",
+ "author": { "@type": "Person", "name": "..." }
+ },
+ {
+ "@type": "BreadcrumbList",
+ "itemListElement": [...]
+ },
+ {
+ "@type": "FAQPage",
+ "mainEntity": [...]
+ }
+ ]
 }
 ```
 

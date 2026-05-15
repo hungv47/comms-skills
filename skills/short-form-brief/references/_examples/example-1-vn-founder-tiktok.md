@@ -2,7 +2,7 @@
 
 Reference brief for a Vietnamese solo founder shipping B2B SaaS short-form. Founder-mode, market=VN, hero=TikTok + variant=Reels.
 
-This is a **worked example** — the actual hero brief artifact lives at `skills-resources/marketing/short-form-brief/standup-bot/brief.md`. Below is a condensed reference for agents and humans studying the pattern.
+This is a **worked example** — the actual hero brief artifact lives at `.agents/skill-artifacts/mkt/short-form-brief/standup-bot/brief.md`. Below is a condensed reference for agents and humans studying the pattern.
 
 ---
 
@@ -17,7 +17,7 @@ This is a **worked example** — the actual hero brief artifact lives at `skills
 
 ---
 
-## Research signals (from `skills-resources/research/short-form-research/[slug].md`)
+## Research signals (from `.agents/skill-artifacts/research/short-form-research/[slug].md`)
 
 - TikTok VN dev-tools niche: credential-flash hook archetype dominates (8/12 sample)
 - TikTok 70% completion threshold per Creator Portal
@@ -45,7 +45,7 @@ This is a **worked example** — the actual hero brief artifact lives at `skills
 |---|---|---|---|---|---|
 | 1 | 0:00–0:03 | Hook (MCU) | Speaker turns to camera | "POV: Standup xoá" | Music drop |
 | 2 | 0:03–0:06 | MCU + cut | Cut to dashboard at 0:05 | "Bot viết standup" | Music swell |
-| 3 | 0:06–0:09 | B-roll burst | 3 cuts: keyboard, Slack, bot reply | "3 ngày triển khai" | Beat-matched |
+| 3 | 0:06–0:09 | B-roll burst | 3 cuts: keyboard, Slack, bot reply | "3 ngày triển khai" | internal |
 | 4 | 0:09–0:15 | MCU | Founder explains; data overlay 0:12 | "Output: +40% trong 3 tuần" | Music holds |
 | 5 | 0:15–0:20 | ECU calendar | Recovered hours visualization | "5h/tuần lấy lại" | Soft drop |
 | 6 | 0:20–0:23 | MCU | Founder direct, pointing | "Save cho team mình" | CTA chime |
@@ -75,7 +75,7 @@ Hashtags: #devtools #remotework #productivity (3 niche)
 | Element | Hero TikTok | Variant Reels | Why |
 |---|---|---|---|
 | Hook archetype | Credential flash | Pre-reveal tease | Reels research showed tease/curiosity-build outperforms in this niche (Originality Score favors original visual treatment over copy of TikTok hook) |
-| Audio | Trending track + VO | Original VO + ambient bed only | Mosseri Originality Score Jan 2025 — original audio favored on Reels |
+| Audio | Trending track + VO | Original VO + ambient bed only | platform leadership's Originality Score Jan 2025 — original audio favored on Reels |
 | Caption | 220 chars, hook+CTA | 380 chars, hook+story+comment-prompt | Reels caption gets first 125 chars visible — paragraph break supported |
 | CTA placement | Overlay 0:20-0:23 | End-card 0:28-0:32 | Reels research: end-card dominates over overlay |
 | Length | 26s | 32s | Reels sweet spot 30-90s; allowed slightly longer for hold-rate insurance |

@@ -44,8 +44,8 @@ For a fintech app targeting young professionals:
 Every piece of brand writing sits on four independent spectra:
 
 ```
-Formal     ←————————→ Casual
-Serious    ←————————→ Funny
+Formal ←————————→ Casual
+Serious ←————————→ Funny
 Respectful ←————————→ Irreverent
 Enthusiastic ←———————→ Matter-of-fact
 ```
@@ -57,12 +57,12 @@ Plot your brand's **default position** on each spectrum, then document how tone 
 | Context | Formal/Casual | Serious/Funny | Respectful/Irreverent | Enthusiastic/Matter-of-fact |
 |---------|:---:|:---:|:---:|:---:|
 | Homepage/marketing | Casual | Neutral | Respectful | Enthusiastic |
-| Product UI | Casual | Neutral | Respectful | Matter-of-fact |
+| Product UI | Casual | Neutral | Respectful | internal |
 | Onboarding | Casual | Light humor | Respectful | Enthusiastic |
-| Error messages | Casual | Serious | Respectful | Matter-of-fact |
-| Help documentation | Neutral | Serious | Respectful | Matter-of-fact |
+| Error messages | Casual | Serious | Respectful | internal |
+| Help documentation | Neutral | Serious | Respectful | internal |
 | Social media | Casual | Funny | Slightly irreverent | Enthusiastic |
-| Legal/compliance | Formal | Serious | Respectful | Matter-of-fact |
+| Legal/compliance | Formal | Serious | Respectful | internal |
 | Success/celebration | Casual | Light humor | Respectful | Enthusiastic |
 | Customer support | Casual | Serious | Respectful | Neutral |
 
@@ -112,7 +112,7 @@ Show the same message across different tones:
 
 Provide side-by-side comparisons for common scenarios:
 
-| Scenario | On-Brand | Off-Brand |
+| Scenario | internal | internal |
 |----------|----------|-----------|
 | **Welcome message** | "Welcome. Let's get you set up — it takes about 2 minutes." | "Welcome to [Product]!!! We're SO excited you're here! 🎉" |
 | **Error message** | "Something went wrong loading your data. Try refreshing, or contact us if it keeps happening." | "Error 500: Internal Server Error. Contact system administrator." |
@@ -128,21 +128,21 @@ The hierarchy of what the brand says, organized from most compressed to most exp
 ### Hierarchy Structure
 
 ```
-                    ┌─────────┐
-                    │ Tagline │  ← 2-7 words, maximum compression
-                    └────┬────┘
-                 ┌───────┴────────┐
-                 │ Elevator Pitch │  ← 25 words / 20 seconds
-                 └───────┬────────┘
-            ┌────────────┴──────────────┐
-            │    Value Proposition      │  ← 1-2 sentences
-            └────────────┬──────────────┘
-       ┌─────────────────┴────────────────────┐
-       │    Messaging Pillars (3-5)           │  ← Core themes + proof points
-       └─────────────────┬────────────────────┘
-  ┌──────────────────────┴───────────────────────────┐
-  │    Boilerplate Descriptions (multiple lengths)   │  ← Full narrative
-  └──────────────────────────────────────────────────┘
+ ┌─────────┐
+ │ Tagline │ ← 2-7 words, maximum compression
+ └────┬────┘
+ ┌───────┴────────┐
+ │ Elevator Pitch │ ← 25 words / 20 seconds
+ └───────┬────────┘
+ ┌────────────┴──────────────┐
+ │ Value Proposition │ ← 1-2 sentences
+ └────────────┬──────────────┘
+ ┌─────────────────┴────────────────────┐
+ │ Messaging Pillars (3-5) │ ← Core themes + proof points
+ └─────────────────┬────────────────────┘
+ ┌──────────────────────┴───────────────────────────┐
+ │ Boilerplate Descriptions (multiple lengths) │ ← Full narrative
+ └──────────────────────────────────────────────────┘
 ```
 
 ### Component Specifications

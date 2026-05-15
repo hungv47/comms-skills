@@ -31,15 +31,15 @@ CLEAR SPACE RULE
 Unit: [defined relative unit, e.g., "height of the 'h' in the wordmark"]
 Minimum: [multiplier, e.g., "1.5x the unit on all four sides"]
 
-     ┌──────────────────────────────────┐
-     │           1.5x clear             │
-     │    ┌──────────────────────┐      │
-     │    │                      │      │
-     │ 1.5x    LOGO HERE     1.5x     │
-     │    │                      │      │
-     │    └──────────────────────┘      │
-     │           1.5x clear             │
-     └──────────────────────────────────┘
+ ┌──────────────────────────────────┐
+ │ 1.5x clear │
+ │ ┌──────────────────────┐ │
+ │ │ │ │
+ │ 1.5x LOGO HERE 1.5x │
+ │ │ │ │
+ │ └──────────────────────┘ │
+ │ 1.5x clear │
+ └──────────────────────────────────┘
 ```
 
 ### Minimum Size
@@ -165,15 +165,15 @@ Describe the overall feeling. Examples: authentic, warm, aspirational, candid, e
 ICON GRID
 ---------
 ┌────────────────────────┐
-│ ┌──────────────────┐   │
-│ │                  │   │  ← 2px padding
-│ │   LIVE AREA      │   │
-│ │   20x20px        │   │
-│ │                  │   │
-│ └──────────────────┘   │
-│                    2px →│
+│ ┌──────────────────┐ │
+│ │ │ │ ← 2px padding
+│ │ LIVE AREA │ │
+│ │ 20x20px │ │
+│ │ │ │
+│ └──────────────────┘ │
+│ 2px →│
 └────────────────────────┘
-        24x24px total
+ 24x24px total
 ```
 
 - Consistent stroke weight across the entire icon set
@@ -212,12 +212,12 @@ Not every brand uses illustration. Only define if it's a genuine part of the ide
 BRAND PATTERNS
 --------------
 Pattern 1: [Description — geometric grid, organic shapes, brand icon repeat, etc.]
-  Usage: [backgrounds, section dividers, packaging]
-  Scale: [how the pattern scales across different formats]
-  Opacity: [full, reduced, subtle]
+ Usage: [backgrounds, section dividers, packaging]
+ Scale: [how the pattern scales across different formats]
+ Opacity: [full, reduced, subtle]
 
 Pattern 2: [Description]
-  Usage: [contexts]
+ Usage: [contexts]
 ```
 
 ### Shapes & Devices
@@ -240,9 +240,9 @@ Usage rules:
 GRADIENT SPECIFICATIONS
 -----------------------
 Gradient 1: [name]
-  Colors: [start] → [end]
-  Direction: [angle or radial]
-  Usage: [where and when]
+ Colors: [start] → [end]
+ Direction: [angle or radial]
+ Usage: [where and when]
 
 RULES:
 - [When gradients are appropriate]

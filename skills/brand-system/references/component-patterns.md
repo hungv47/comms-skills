@@ -99,12 +99,12 @@ Quick reference: which semantic tokens each component type uses.
 ```
 INPUT STATE MAP
 ---------------
-Default:   border-input bg-background text-foreground
-Focus:     ring-2 ring-ring ring-offset-2 ring-offset-background
-Hover:     border with slightly increased contrast
-Disabled:  bg-muted text-muted-foreground opacity-50 cursor-not-allowed
-Error:     border-destructive text-destructive (for message)
-Success:   border-green-500 (optional checkmark)
+Default: border-input bg-background text-foreground
+Focus: ring-2 ring-ring ring-offset-2 ring-offset-background
+Hover: border with slightly increased contrast
+Disabled: bg-muted text-muted-foreground opacity-50 cursor-not-allowed
+Error: border-destructive text-destructive (for message)
+Success: border-green-500 (optional checkmark)
 ```
 
 ### Inline Validation

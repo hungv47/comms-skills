@@ -1,7 +1,5 @@
 # Lead-Magnet Stack — Investment Signaling + 4-Layer FOMO
 
-> Two stacks for converting passive readers into commenters / DMs / opt-ins. Source: Paolo Scales ([@paolo_scales](https://x.com/paolo_scales/status/2035437083175592061), 2026-03-22) — distilled from posts hitting 400-600 comments where standard "free guide" posts hit 15.
-
 ## Why Lead Magnets Are Different
 
 With regular content, engagement is free — like, comment, share, scroll. With lead magnets, there's friction: the reader must comment a specific word, expose themselves socially, or hand over an email. Emotional triggers must be **stronger** to overcome that friction.
@@ -213,11 +211,11 @@ Putting both stacks together — a single post running the 5-element structure w
 | Goal | Use 5-element only | Use 5-element + 4-layer FOMO |
 |---|---|---|
 | Build email list / DM signups | ✓ | ✓ |
-| Drive comments (algorithm signal) |  | ✓ |
-| Audience already trusts you, low-friction confirmation needed | ✓ |  |
-| Audience is cold, needs maximum pressure to act |  | ✓ |
-| Asset is genuinely time-invested and proof exists |  | ✓ |
-| Asset is short / quick — investment signaling would over-promise | Skip Element 4 |  |
+| Drive comments (algorithm signal) | | ✓ |
+| Audience already trusts you, low-friction confirmation needed | ✓ | |
+| Audience is cold, needs maximum pressure to act | | ✓ |
+| Asset is genuinely time-invested and proof exists | | ✓ |
+| Asset is short / quick — investment signaling would over-promise | Skip Element 4 | |
 
 ---
 
@@ -237,5 +235,4 @@ Putting both stacks together — a single post running the 5-element structure w
 
 ## Source Notes
 
-- 5-element stack and 4-layer FOMO sequence distilled from Paolo Scales' breakdown at <https://x.com/paolo_scales/status/2035437083175592061>. Engagement deltas claimed in source ("400-600 comments vs 15"), not independently verified. Use as directional benchmark, not committed performance.
 - Pairs with [`emotional-triggers.md`](emotional-triggers.md) (the 6-lever framework — this stack is a specific deployment pattern of that framework for lead-magnet posts) and [`belief-disruption.md`](belief-disruption.md) (TOF mechanic; can serve as Element 1-2 body when audience is problem-unaware).

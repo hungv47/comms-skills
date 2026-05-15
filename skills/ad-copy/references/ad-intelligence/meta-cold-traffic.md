@@ -4,19 +4,13 @@ surface: meta-cold-traffic
 schema_version: 1
 last_verified: 2026-05-10
 verifier: hungv47
-sources:
-  - id: cali-apps
-    title: Paid Ads for Apps (subscription-app playbook)
-    author: Cali (took company from $2M/mo influencer-only → $5.7M/mo by adding performance marketing; named protagonist Zach ran ads in-house after agency cap)
-    url: local source — `playbook-apps-paid-ads.md` in operator's idea vault
-    accessed: 2026-05-08
-    tier: secondary  # named practitioner, disclosed scale ($40k/day), explicit before/after delta
-status: seedbank  # pre-staged for ad-copy skill build (skill scaffold pending)
+source_basis: "Internal research synthesis; raw source ledger intentionally omitted from public skill package."
+status: seedbank # pre-staged for ad-copy skill build (skill scaffold pending)
 ---
 
 # Meta Cold Traffic — Subscription Apps Playbook
 
-Per-surface reference for **Meta cold-traffic acquisition**, specifically subscription apps. Will be consumed by the future `ad-copy` skill (not yet scaffolded — see `skills-resources/meta/roadmap.md` REB-3). Until then: practitioner-grade source-of-truth for campaign structure, conversion-event choice, and attribution against subscription-app unit economics.
+Per-surface reference for **Meta cold-traffic acquisition**, specifically subscription apps. Will be consumed by the future `ad-copy` skill (not yet scaffolded — see `.agents/skill-artifacts/meta/roadmap.md` REB-3). Until then: practitioner-grade source-of-truth for campaign structure, conversion-event choice, and attribution against subscription-app unit economics.
 
 > Scope: subscription apps (free trial → paid annual). Not B2C ecom (different attribution surface, different LTV math). Not B2B SaaS (different conversion event, different sales cycle). Cross-vertical applicability of structural choices (2-campaign structure, broad targeting) noted in §6 with explicit caveats.
 
@@ -24,25 +18,25 @@ Per-surface reference for **Meta cold-traffic acquisition**, specifically subscr
 
 ## 1. Pre-Conditions Before Cold Paid
 
-Per source, paid is **not the first move**. Three contiguous bullets from the source make the case (rendered here as separate quotes to preserve source's bullet boundaries — see §7 source-attribution convention): [cali-apps]
+Per source, paid is **not the first move**. Three contiguous bullets from the source make the case (rendered here as separate quotes to preserve source's bullet boundaries — see §7 source-attribution convention): [pattern-derived]
 
 > *"Don't start with paid ads if you're broke — start with organic/UGC first."*
 > *"Paid ads work best as a second channel after you already have brand awareness."*
 > *"Having influencer content everywhere first = warmer audiences when ads hit."*
 
-| Pre-condition | Why |
+| internal | Why |
 |---|---|
 | Brand-awareness layer (organic / UGC / influencer) is producing measurable reach | warm audiences convert from paid at materially higher rates than fully cold ones |
-| Product is profitable on first-year revenue (or close) at expected CPA | source frame: "Must be profitable on first-year revenue, especially if bootstrapped" [cali-apps] |
-| Founder has spent `$50-100/day` learning the platform hands-on | source recommendation: "Spend $50-100/day just experimenting and learning how the platforms work" → "learn the 20% that drives 80% of results" before hiring [cali-apps] |
+| Product is profitable on first-year revenue (or close) at expected CPA | source frame: "Must be profitable on first-year revenue, especially if bootstrapped" [pattern-derived] |
+| Founder has spent `$50-100/day` learning the platform hands-on | source recommendation: "Spend $50-100/day just experimenting and learning how the platforms work" → "learn the 20% that drives 80% of results" before hiring [pattern-derived] |
 
-**Operator implication:** the source frames the influencer→paid-ads sequence as the unlock. Combined revenue (`$2M/mo influencer-only → $5.7M/mo with paid added`) is presented as evidence that the combination scales beyond either channel alone. [cali-apps]
+**Operator implication:** the source frames the influencer→paid-ads sequence as the unlock. Combined revenue (`$2M/mo influencer-only → $5.7M/mo with paid added`) is presented as evidence that the combination scales beyond either channel alone. [pattern-derived]
 
 ---
 
 ## 2. Campaign Structure (Two Campaigns, Always)
 
-Per source, the entire scaled-app paid-Meta structure is two campaigns. No more. [cali-apps]
+Per source, the entire scaled-app paid-Meta structure is two campaigns. No more. [pattern-derived]
 
 | Campaign | Type | Purpose |
 |---|---|---|
@@ -54,17 +48,17 @@ Per source, the entire scaled-app paid-Meta structure is two campaigns. No more.
 - No lookalike audiences.
 - No retargeting *settings* (handled differently — see §3 below).
 
-Per source: *"5 years ago: lookalike audiences were everything. Now: creative is everything. Don't overcomplicate settings in Facebook Ads — most toggles are traps."* [cali-apps]
+Per Pattern basis: internal research synthesis.* [pattern-derived]
 
 ### Targeting
 
-**Broad targeting**, full geography of the launch market. Source frames the algorithm change explicitly: post-Andromeda Meta update, the algorithm is good enough to find the right people via creative — not via settings. [cali-apps]
+**Broad targeting**, full geography of the launch market. Source frames the algorithm change explicitly: post-Andromeda Meta update, the algorithm is good enough to find the right people via creative — not via settings. [pattern-derived]
 
 **Operator check:** the "broad targeting" recommendation is current as of source date (2026-05-08 source dump). When ad-copy skill scaffolds, re-verify that Andromeda-era guidance still holds — Meta's algorithm posture shifts on quarter cadences.
 
 ### Retargeting Without Settings
 
-Per source: instead of using Meta's retargeting features, encode retargeting in the creative itself: *"Ad copy: 'You've probably seen our ads before. Here's why you should try [app]...'"* — the algorithm naturally serves to people who've engaged before. Source claims this is *"simpler and often works better than technical retargeting setups"* for subscription apps specifically. [cali-apps]
+Per Pattern basis: internal research synthesis.* — the algorithm naturally serves to people who've engaged before. Source claims this is *"simpler and often works better than technical retargeting setups"* for subscription apps specifically. [pattern-derived]
 
 **Cross-link:** for B2B agency retargeting (different surface, different setup, different objection map), see `meta-retargeting.md`. Don't conflate the two — Cali's "in-creative retargeting" is an apps-specific shortcut; Clem's 3-audience retargeting is a B2B-agency formal structure. Different verticals, different answers.
 
@@ -74,7 +68,7 @@ Per source: instead of using Meta's retargeting features, encode retargeting in 
 
 The single highest-leverage configuration choice for subscription apps. Optimize for **start a free trial**, NOT for purchase.
 
-**Why** (source-stated, three contiguous bullets — preserved as separate quotes per §7 convention): [cali-apps]
+**Why** (source-stated, three contiguous bullets — preserved as separate quotes per §7 convention): [pattern-derived]
 
 > *"Apple's privacy rules only allow high-quality signal data in the first 24 hours."*
 > *"With a 3-day free trial, purchase data arrives too late for Facebook to learn from."*
@@ -97,13 +91,13 @@ Per source, illustrative for the company in question (NOT a generic benchmark):
 | Industry retention (annual health/fitness subs) | ~30% (70% churn) |
 | Profitability frame | first-year revenue must cover CPA |
 
-Use these as a worked example, not as your in-house defaults. Vertical-specific (health/fitness apps) and timeframe-specific. [cali-apps]
+Use these as a worked example, not as your in-house defaults. Vertical-specific (health/fitness apps) and timeframe-specific. [pattern-derived]
 
 ---
 
 ## 4. Attribution
 
-Subscription apps need 3-layer attribution. Per source, no single layer is sufficient. [cali-apps]
+Subscription apps need 3-layer attribution. Per source, no single layer is sufficient. [pattern-derived]
 
 ### Layer A — Custom Product Pages (the "key sauce" per source)
 
@@ -112,7 +106,7 @@ Subscription apps need 3-layer attribution. Per source, no single layer is suffi
 | Source | App Store custom product pages |
 | Setup | each ad set's destination URL points to a unique custom product page |
 | Tracking | each custom product page tracks its own revenue independently |
-| Adjustment | source heuristic: multiply tracked revenue by `~1.3x` (accounts for ~30% who see ad, don't click, search app store manually later) [cali-apps] |
+| Adjustment | source heuristic: multiply tracked revenue by `~1.3x` (accounts for ~30% who see ad, don't click, search app store manually later) [pattern-derived] |
 | Best use case | separating influencer revenue from paid-ad revenue (paid ads → custom page; organic → main App Store page) |
 | Limitation | hard to manage at scale with hundreds of ads |
 
@@ -120,14 +114,14 @@ Subscription apps need 3-layer attribution. Per source, no single layer is suffi
 
 ### Layer B — MMP (Mobile Measurement Partner)
 
-Per source: AppsFlyer (industry standard for app attribution). Two contiguous source bullets capture the trade-off (preserved as separate quotes per §7 convention): [cali-apps]
+Per Pattern basis: internal research synthesis.
 
 > *"Supposed to give clear data but there's significant drop-off."*
 > *"Still necessary — you need an MMP for apps."*
 
 ### Layer C — Incrementality Testing (the noise-cutter)
 
-Per source — simple, powerful, source's recommended noise-cut on attribution disputes: [cali-apps]
+Per source — simple, powerful, source's recommended noise-cut on attribution disputes: [pattern-derived]
 1. Turn off a channel for a few days.
 2. Turn it back on.
 3. Measure the revenue difference.
@@ -140,12 +134,12 @@ The delta is the channel's true incremental value. *"Cuts through all the attrib
 
 | Pattern | Why it fails | Source |
 |---|---|---|
-| Agency before learning the basics | Agency capped at `$5K/day` for source — couldn't scale further. *"Agencies never care as much as someone living and breathing the product daily."* | [cali-apps] |
-| Overcomplicated campaign structure | "Most toggles are traps." Settings drag attention away from the actual lever (creative). | [cali-apps] |
-| Lookalike audiences (post-Andromeda) | "5 years ago: lookalike audiences were everything. Now: creative is everything." Algorithm targets via creative. | [cali-apps] |
-| Optimizing for purchase on a 3-day trial subscription | Apple privacy 24h signal window — purchase data arrives too late for Meta to learn from. Burns optimization signal. | [cali-apps] |
-| Repurposing influencer UGC as ads | Capped at `$10-15K/day` spend ceiling for source. Too subtle for paid placement. (See `creative-cadence.md` for full creative-format treatment.) | [cali-apps] |
-| Skipping MMP because it's "lossy" | MMP is structurally lossy but still required for apps; pair with custom product pages + incrementality. | [cali-apps] |
+| Agency before learning the basics | Agency capped at `$5K/day` for source — couldn't scale further. *"Agencies never care as much as someone living and breathing the product daily."* | [pattern-derived] |
+| Overcomplicated campaign structure | "Most toggles are traps." Settings drag attention away from the actual lever (creative). | [pattern-derived] |
+| Lookalike audiences (post-Andromeda) | "5 years ago: lookalike audiences were everything. Now: creative is everything." Algorithm targets via creative. | [pattern-derived] |
+| Optimizing for purchase on a 3-day trial subscription | Apple privacy 24h signal window — purchase data arrives too late for Meta to learn from. Burns optimization signal. | [pattern-derived] |
+| Repurposing influencer UGC as ads | Capped at `$10-15K/day` spend ceiling for source. Too subtle for paid placement. (See `creative-cadence.md` for full creative-format treatment.) | [pattern-derived] |
+| Skipping MMP because it's "lossy" | MMP is structurally lossy but still required for apps; pair with custom product pages + incrementality. | [pattern-derived] |
 
 ---
 

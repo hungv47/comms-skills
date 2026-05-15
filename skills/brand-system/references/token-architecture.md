@@ -13,22 +13,22 @@ Raw design values without usage context. The palette.
 ```
 PRIMITIVE EXAMPLES
 ------------------
-color.blue.50:     oklch(0.970 0.014 254)   / #eff6ff
-color.blue.100:    oklch(0.932 0.032 255)   / #dbeafe
-color.blue.200:    oklch(0.882 0.059 254)   / #bfdbfe
-color.blue.300:    oklch(0.809 0.105 251)   / #93c5fd
-color.blue.400:    oklch(0.707 0.165 254)   / #60a5fa
-color.blue.500:    oklch(0.623 0.214 259)   / #3b82f6
-color.blue.600:    oklch(0.546 0.245 262)   / #2563eb
-color.blue.700:    oklch(0.488 0.243 264)   / #1d4ed8
-color.blue.800:    oklch(0.424 0.199 265)   / #1e40af
-color.blue.900:    oklch(0.379 0.146 265)   / #1e3a8a
-color.blue.950:    oklch(0.282 0.091 267)   / #172554
+color.blue.50: oklch(0.970 0.014 254) / #eff6ff
+color.blue.100: oklch(0.932 0.032 255) / #dbeafe
+color.blue.200: oklch(0.882 0.059 254) / #bfdbfe
+color.blue.300: oklch(0.809 0.105 251) / #93c5fd
+color.blue.400: oklch(0.707 0.165 254) / #60a5fa
+color.blue.500: oklch(0.623 0.214 259) / #3b82f6
+color.blue.600: oklch(0.546 0.245 262) / #2563eb
+color.blue.700: oklch(0.488 0.243 264) / #1d4ed8
+color.blue.800: oklch(0.424 0.199 265) / #1e40af
+color.blue.900: oklch(0.379 0.146 265) / #1e3a8a
+color.blue.950: oklch(0.282 0.091 267) / #172554
 
-spacing.1:         4px / 0.25rem
-spacing.2:         8px / 0.5rem
-font.size.base:    16px / 1rem
-radius.md:         0.375rem / 6px
+spacing.1: 4px / 0.25rem
+spacing.2: 8px / 0.5rem
+font.size.base: 16px / 1rem
+radius.md: 0.375rem / 6px
 ```
 
 ### Layer 2: Semantic Tokens (What It Means)
@@ -42,9 +42,9 @@ Every semantic token is a **background/foreground pair**:
 ```
 SEMANTIC TOKEN USAGE
 --------------------
-CORRECT:   bg-primary text-primary-foreground
-WRONG:     bg-primary text-primary
-WRONG:     bg-primary text-white (hardcoded)
+CORRECT: bg-primary text-primary-foreground
+WRONG: bg-primary text-primary
+WRONG: bg-primary text-white (hardcoded)
 ```
 
 ### Layer 3: Component Tokens (Where It Goes)
@@ -54,7 +54,7 @@ Map semantic tokens to specific components. Optional for simple systems, valuabl
 ```
 COMPONENT TOKEN CHAIN
 ---------------------
-button.primary.background  →  var(--primary)  →  blue.600  →  oklch(0.546 0.245 262)
+button.primary.background → var(--primary) → blue.600 → oklch(0.546 0.245 262)
 ```
 
 ## Complete Semantic Token Map
@@ -143,17 +143,17 @@ No undertone. Clean, stark, digital-native.
 
 ```
 LIGHT:
-  50:  oklch(0.985 0 0)       / #fafafa
-  100: oklch(0.970 0 0)       / #f5f5f5
-  200: oklch(0.922 0 0)       / #e5e5e5
-  300: oklch(0.870 0 0)       / #d4d4d4
-  400: oklch(0.708 0 0)       / #a3a3a3
-  500: oklch(0.556 0 0)       / #737373
-  600: oklch(0.439 0 0)       / #525252
-  700: oklch(0.371 0 0)       / #404040
-  800: oklch(0.269 0 0)       / #262626
-  900: oklch(0.205 0 0)       / #171717
-  950: oklch(0.145 0 0)       / #0a0a0a
+ 50: oklch(0.985 0 0) / #fafafa
+ 100: oklch(0.970 0 0) / #f5f5f5
+ 200: oklch(0.922 0 0) / #e5e5e5
+ 300: oklch(0.870 0 0) / #d4d4d4
+ 400: oklch(0.708 0 0) / #a3a3a3
+ 500: oklch(0.556 0 0) / #737373
+ 600: oklch(0.439 0 0) / #525252
+ 700: oklch(0.371 0 0) / #404040
+ 800: oklch(0.269 0 0) / #262626
+ 900: oklch(0.205 0 0) / #171717
+ 950: oklch(0.145 0 0) / #0a0a0a
 ```
 
 ### Stone (Warm Gray)
@@ -162,17 +162,17 @@ Warm undertone. Grounded, earthy, natural, inviting.
 
 ```
 LIGHT:
-  50:  oklch(0.985 0.002 75)  / #fafaf9
-  100: oklch(0.970 0.001 75)  / #f5f5f4
-  200: oklch(0.923 0.003 48)  / #e7e5e4
-  300: oklch(0.869 0.005 56)  / #d6d3d1
-  400: oklch(0.709 0.01 56)   / #a8a29e
-  500: oklch(0.553 0.013 58)  / #78716c
-  600: oklch(0.444 0.011 73)  / #57534e
-  700: oklch(0.374 0.01 67)   / #44403c
-  800: oklch(0.268 0.007 34)  / #292524
-  900: oklch(0.216 0.006 56)  / #1c1917
-  950: oklch(0.147 0.004 49)  / #0c0a09
+ 50: oklch(0.985 0.002 75) / #fafaf9
+ 100: oklch(0.970 0.001 75) / #f5f5f4
+ 200: oklch(0.923 0.003 48) / #e7e5e4
+ 300: oklch(0.869 0.005 56) / #d6d3d1
+ 400: oklch(0.709 0.01 56) / #a8a29e
+ 500: oklch(0.553 0.013 58) / #78716c
+ 600: oklch(0.444 0.011 73) / #57534e
+ 700: oklch(0.374 0.01 67) / #44403c
+ 800: oklch(0.268 0.007 34) / #292524
+ 900: oklch(0.216 0.006 56) / #1c1917
+ 950: oklch(0.147 0.004 49) / #0c0a09
 ```
 
 ### Zinc (Cool Gray)
@@ -181,17 +181,17 @@ Cool undertone. Industrial, precise, technical.
 
 ```
 LIGHT:
-  50:  oklch(0.985 0 0)       / #fafafa
-  100: oklch(0.967 0.001 286) / #f4f4f5
-  200: oklch(0.920 0.004 286) / #e4e4e7
-  300: oklch(0.871 0.006 286) / #d4d4d8
-  400: oklch(0.705 0.015 286) / #a1a1aa
-  500: oklch(0.552 0.016 286) / #71717a
-  600: oklch(0.442 0.017 286) / #52525b
-  700: oklch(0.374 0.014 286) / #3f3f46
-  800: oklch(0.274 0.006 286) / #27272a
-  900: oklch(0.210 0.006 286) / #18181b
-  950: oklch(0.141 0.005 286) / #09090b
+ 50: oklch(0.985 0 0) / #fafafa
+ 100: oklch(0.967 0.001 286) / #f4f4f5
+ 200: oklch(0.920 0.004 286) / #e4e4e7
+ 300: oklch(0.871 0.006 286) / #d4d4d8
+ 400: oklch(0.705 0.015 286) / #a1a1aa
+ 500: oklch(0.552 0.016 286) / #71717a
+ 600: oklch(0.442 0.017 286) / #52525b
+ 700: oklch(0.374 0.014 286) / #3f3f46
+ 800: oklch(0.274 0.006 286) / #27272a
+ 900: oklch(0.210 0.006 286) / #18181b
+ 950: oklch(0.141 0.005 286) / #09090b
 ```
 
 ### Gray (Blue-Gray)
@@ -200,17 +200,17 @@ Subtle blue undertone. Corporate, reliable, familiar.
 
 ```
 LIGHT:
-  50:  oklch(0.986 0.002 247) / #f9fafb
-  100: oklch(0.968 0.003 264) / #f3f4f6
-  200: oklch(0.928 0.006 264) / #e5e7eb
-  300: oklch(0.872 0.01 258)  / #d1d5db
-  400: oklch(0.707 0.022 261) / #9ca3af
-  500: oklch(0.551 0.027 264) / #6b7280
-  600: oklch(0.446 0.03 256)  / #4b5563
-  700: oklch(0.373 0.034 259) / #374151
-  800: oklch(0.278 0.033 256) / #1f2937
-  900: oklch(0.21 0.034 264)  / #111827
-  950: oklch(0.13 0.028 261)  / #030712
+ 50: oklch(0.986 0.002 247) / #f9fafb
+ 100: oklch(0.968 0.003 264) / #f3f4f6
+ 200: oklch(0.928 0.006 264) / #e5e7eb
+ 300: oklch(0.872 0.01 258) / #d1d5db
+ 400: oklch(0.707 0.022 261) / #9ca3af
+ 500: oklch(0.551 0.027 264) / #6b7280
+ 600: oklch(0.446 0.03 256) / #4b5563
+ 700: oklch(0.373 0.034 259) / #374151
+ 800: oklch(0.278 0.033 256) / #1f2937
+ 900: oklch(0.21 0.034 264) / #111827
+ 950: oklch(0.13 0.028 261) / #030712
 ```
 
 ### Slate (Blue-Tinted)
@@ -219,17 +219,17 @@ Strongest blue undertone. Professional, established, calm.
 
 ```
 LIGHT:
-  50:  oklch(0.984 0.003 247) / #f8fafc
-  100: oklch(0.968 0.007 247) / #f1f5f9
-  200: oklch(0.929 0.013 255) / #e2e8f0
-  300: oklch(0.869 0.022 252) / #cbd5e1
-  400: oklch(0.704 0.04 256)  / #94a3b8
-  500: oklch(0.554 0.046 257) / #64748b
-  600: oklch(0.446 0.043 257) / #475569
-  700: oklch(0.372 0.044 257) / #334155
-  800: oklch(0.279 0.041 260) / #1e293b
-  900: oklch(0.208 0.042 265) / #0f172a
-  950: oklch(0.129 0.042 264) / #020617
+ 50: oklch(0.984 0.003 247) / #f8fafc
+ 100: oklch(0.968 0.007 247) / #f1f5f9
+ 200: oklch(0.929 0.013 255) / #e2e8f0
+ 300: oklch(0.869 0.022 252) / #cbd5e1
+ 400: oklch(0.704 0.04 256) / #94a3b8
+ 500: oklch(0.554 0.046 257) / #64748b
+ 600: oklch(0.446 0.043 257) / #475569
+ 700: oklch(0.372 0.044 257) / #334155
+ 800: oklch(0.279 0.041 260) / #1e293b
+ 900: oklch(0.208 0.042 265) / #0f172a
+ 950: oklch(0.129 0.042 264) / #020617
 ```
 
 ## Choosing a Neutral Base

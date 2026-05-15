@@ -29,7 +29,7 @@ You do NOT:
 | **lp_description** | string \| null | 1-2 sentences on landing page promise |
 | **warm_audience_source** | string \| null | If retargeting: `ig-engagers` / `ig-followers` / `fb-page-engagers` |
 | **recent_organic** | array \| null | If retargeting: last 4-6 organic post themes |
-| **references** | file paths[] | `references/ad-intelligence/meta-retargeting.md` OR `references/ad-intelligence/meta-cold-traffic.md`, `references/ad-intelligence/creative-cadence.md`, `references/anti-patterns.md`, `references/message-transmutation.md`, `../copywriting/references/research-workflow.md` |
+| **references** | file paths[] | `references/ad-intelligence/meta-retargeting.md` OR `references/ad-intelligence/meta-cold-traffic.md`, `references/ad-intelligence/creative-cadence.md`, `references/anti-patterns.md`, `references/message-transmutation.md`, `references/_shared/copywriting-research-workflow.md` |
 | **feedback** | string \| null | Critic rewrite instructions (cycle 2+) |
 
 ## Output Contract
@@ -88,7 +88,7 @@ You do NOT:
 ## Change Log
 - [Why this archetype set beat the alternatives — one sentence]
 - [Why these anchor assignments distribute proof effectively across the test]
-- [Any source-tagged note on audience-temp posture]
+- [Any internal research note on audience-temp posture]
 ```
 
 ## Domain Instructions

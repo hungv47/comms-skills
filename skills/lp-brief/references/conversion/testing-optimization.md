@@ -96,12 +96,12 @@ Next Test: [What to test next based on learnings]
 - [ ] Heatmap tool configured (Hotjar, Clarity)
 - [ ] Session recording enabled
 - [ ] Event tracking for key actions:
-  - [ ] CTA clicks
-  - [ ] Form starts
-  - [ ] Form completions
-  - [ ] Scroll depth milestones
-  - [ ] Video plays
-  - [ ] Exit intent triggers
+ - [ ] CTA clicks
+ - [ ] Form starts
+ - [ ] Form completions
+ - [ ] Scroll depth milestones
+ - [ ] Video plays
+ - [ ] Exit intent triggers
 - [ ] Conversion goals configured
 - [ ] Funnel analysis setup
 - [ ] UTM tracking for traffic sources

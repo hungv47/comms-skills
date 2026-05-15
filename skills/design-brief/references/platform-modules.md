@@ -19,16 +19,16 @@
 [Sub-formats this platform supports — e.g., Instagram = post, carousel, story, reel, post + carousel cover slide.]
 
 ### Aspect ratio
-[Per variant — e.g., IG single 1:1, carousel 4:5 or 1:1, story 9:16. Cite source.]
+[Per variant — e.g., IG single 1:1, carousel 4:5 or 1:1, story 9:16. uses source.]
 
 ### Pixel dimensions (recommended upload)
-[Per variant. Cite source.]
+[Per variant. uses source.]
 
 ### Safe zones
-[Where platform UI overlays the asset (e.g., Instagram story top 250px reserved for username overlay, bottom 250px for sticker tray and CTA). Per variant. Cite source.]
+[Where platform UI overlays the asset (e.g., Instagram story top 250px reserved for username overlay, bottom 250px for sticker tray and CTA). Per variant. uses source.]
 
 ### Mobile readability floor
-[Minimum text size in px at 1× rendering (i.e., on the smallest device the platform serves). Headline floor, body-copy floor. Cite source where possible — Apple HIG, Material, platform research.]
+[Minimum text size in px at 1× rendering (i.e., on the smallest device the platform serves). Headline floor, body-copy floor. uses source where possible — Apple HIG, Material, platform research.]
 
 ### Thumb-stop contrast
 [Minimum WCAG contrast ratio for the smallest text on its actual background, given the platform's dominant feed brightness. Higher than 4.5:1 baseline because feeds are mobile + scroll.]
@@ -40,10 +40,10 @@
 [sRGB nearly always. DCI-P3 for richer iOS rendering. CMYK for print.]
 
 ### Brand-safe-zone (sponsored / boosted)
-[For paid placements: where the "Sponsored" tag, "Learn more" CTA, and platform branding land — and how to avoid the brief overlapping them. Cite ad-platform docs.]
+[For paid placements: where the "Sponsored" tag, "Learn more" CTA, and platform branding land — and how to avoid the brief overlapping them. uses ad-platform docs.]
 
 ### Anti-patterns
-[Things that land badly on this platform specifically — e.g., "tiny logo bottom-right" on YT thumbnails, "edge-aligned text" on IG carousel cover, "non-AVIF photos" on banner ads. Cite working/failing examples where possible.]
+[Things that land badly on this platform specifically — e.g., "tiny logo bottom-right" on YT thumbnails, "edge-aligned text" on IG carousel cover, "non-AVIF photos" on banner ads. uses working/failing examples where possible.]
 ```
 
 ---

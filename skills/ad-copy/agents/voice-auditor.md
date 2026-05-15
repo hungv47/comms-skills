@@ -71,7 +71,7 @@ These are inherited from cold-outreach's voice-auditor + critic auto-fail list, 
 8. **Generic self-claim language.** "Leading provider of...", "Trusted by businesses worldwide", "Award-winning [thing]". Replace with the substantiated anchor proof (composer assigned one; if anchor was already used and this is filler, BLOCKED — composer needs to remove the filler).
 9. **Metronomic rhythm.** 4+ consecutive sentences within 2 words of each other in length, in any variant's primary text (5+ sentences). Flag as advisory unless the variant is also fact-free (compound = BLOCKED).
 10. **"I", "We", or product name in first 30 chars of primary text.** Reader's world must dominate. Re-front with "you/your" or a prospect-side noun. Fix-in-place unless the whole variant is sender-first (BLOCKED).
-11. **Compound-praise specificity.** "Your great work in the SaaS space" / "Your impressive growth journey" / "Your incredible team" — generic-flavor adjective + generic noun. AI-tell from Saraev source (see `references/anti-patterns.md`). Replace with named specifics or BLOCKED.
+11. **Compound-praise specificity.** "Your great work in the SaaS space" / "Your impressive growth journey" / "Your incredible team" — generic-flavor adjective + generic noun. AI-tell from internal synthesis (see `references/anti-patterns.md`). Replace with named specifics or BLOCKED.
 12. **Bracketed-variable leak.** "Hi [FirstName]" or "[Customer X] saw [Result]" still in the draft. This should have been caught earlier; if it slipped through, BLOCKED — composer needs to map every variable.
 
 ### Audience-Temperature Register Calibration

@@ -80,7 +80,7 @@ Catalog of common failure modes for visual creative. Used by concept-agent (avoi
 
 **Why it fails:** Tokens are the brand. Approximation drifts the system over time across many assets.
 
-**Fix:** Cite tokens by name. Use the exact hex. If a font isn't available, halt and flag — don't substitute.
+**Fix:** uses tokens by name. Use the exact hex. If a font isn't available, halt and flag — don't substitute.
 
 ### B2. Sacred element creep
 

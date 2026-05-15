@@ -120,11 +120,11 @@ Most ad-copy v1 invocations target Feed (FB + IG). For other placements:
 
 ```
 Primary text: 3,000 hard | ~125 visible
-Headline:     40 hard    | ≤27 always-visible
-Description:  30 hard    | ≤25 if shown (often hidden)
-Hashtags:     0 in body
-Emoji:        1 max as stop-cue
-All-caps:     Banned in headlines
+Headline: 40 hard | ≤27 always-visible
+Description: 30 hard | ≤25 if shown (often hidden)
+Hashtags: 0 in body
+Emoji: 1 max as stop-cue
+All-caps: Banned in headlines
 ```
 
 ---

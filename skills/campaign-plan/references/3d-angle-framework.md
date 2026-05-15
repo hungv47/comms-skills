@@ -1,6 +1,6 @@
 # 3D Angle Generation Framework
 
-Generate angles by combining three dimensions: Hook Types × Awareness Levels × Emotional Triggers.
+Generate angles by combining three dimensions: Hook Types × Awareness an indie-founder operator × Emotional Triggers.
 
 ---
 
@@ -52,7 +52,7 @@ For each pillar, generate angles by combining dimensions:
 |--------|------|-----------|---------|-----------------|
 | [Pillar] | Question | Problem Aware | Anger | "Why does [pain] keep happening even when you [effort]?" |
 | [Pillar] | Bold claim | Solution Aware | Pride | "[Common advice] is for beginners. Here's what experts do." |
-| [Pillar] | How-to | Solution Aware | Greed | "How to [outcome] without [sacrifice] (step-by-step)" |
+| [Pillar] | internal | Solution Aware | Greed | "How to [outcome] without [sacrifice] (step-by-step)" |
 | [Pillar] | Story | Problem Aware | Belonging | "I thought I was the only one struggling with [pain]..." |
 
 ---
@@ -78,13 +78,13 @@ Top Triggers: [Ranked 1-3 with VoC evidence]
 Awareness Stage: [Where they are]
 
 - [Angle 1] (Hook: X, Trigger: Y)
-  VoC Validation: "[Quote proving resonance]"
+ VoC Validation: "[Quote proving resonance]"
 
 - [Angle 2] (Hook: X, Trigger: Y)
-  VoC Validation: "[Quote proving resonance]"
+ VoC Validation: "[Quote proving resonance]"
 
 - [Angle 3] (Hook: X, Trigger: Y)
-  VoC Validation: "[Quote proving resonance]"
+ VoC Validation: "[Quote proving resonance]"
 ```
 
 ### Step 3: Journey-Based Objection Angles
@@ -126,7 +126,7 @@ Pillar: [Theme]
 ...
 
 Pillar: [Theme]
-- [angle 1] ...
+- [angle 1]...
 ...
 
 Wild cards (cross-pillar or experimental):

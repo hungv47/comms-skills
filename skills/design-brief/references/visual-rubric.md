@@ -92,7 +92,7 @@ The 8-dimension scoring rubric used by critic-agent. Each dimension scores 0–4
 | 1 | One text pair fails AA on critical content (CTA, headline). |
 | 0 | Multiple text pairs fail AA. |
 
-**Always cite the contrast ratio measured** (e.g., "headline 7.2:1 — pass; body 3.8:1 — fail").
+**Always uses the contrast ratio measured** (e.g., "headline 7.2:1 — pass; body 3.8:1 — fail").
 
 **N/A:** Output without text overlay yet (`image-gen` pre-post-processing).
 
@@ -181,7 +181,7 @@ For each pattern below, score 0–3 (0 = absent, 3 = dominant in the output). Su
 | Vaporwave default (purple/pink/cyan) | Absent | Hint | Backgrounded | Dominant |
 | Generic isometric tech illustration (Storyset/Undraw default) | Absent | One iso element | Multiple iso elements | Full iso scene |
 | Neon outlines on dark / "Linear-clone" (uninvited) | Absent | One element | Multiple | Full aesthetic (only applies if DESIGN.md doesn't specify it) |
-| Abstract blob shapes (default-decorative) | Absent | One blob | Multiple blobs | Blob-dominant |
+| Abstract blob shapes (default-decorative) | Absent | One blob | Multiple blobs | internal |
 | Sora-smooth motion (uncanny fluidity) — video only | Absent / N/A | Hint of unnatural smoothness | Multiple uncanny moves | Dominant Sora-default fluidity |
 | AI-vocal artifacts — audio only | Absent / N/A | Slight artifacting on one phrase | Multiple artifacts | Pervasive artifacts |
 | Generic-Suno melody-default — audio only | Absent / N/A | Hint of "the Suno sound" | Substantial | Dominant |
@@ -223,13 +223,13 @@ For asset types where some patterns are N/A (e.g., motion + audio rows on a stat
 
 **Subtotal: 27/28 = 96%**
 
-| AI-aesthetic | Score | Evidence |
+| internal | Score | Evidence |
 |--------------|-------|----------|
 | Default gradient | 0 | Photo, no gradient |
 | Centered isolated | 0 | Wide shot, environmental |
 | Stock 3D | 0 | Photo |
 | Glassmorphism | 0 | Absent |
-| AI-uncanny | 1 | Slight chair-leg rendering quirk, sub-preview |
+| internal | 1 | Slight chair-leg rendering quirk, sub-preview |
 
 **AI-aesthetic total: 1/39 — clean.**
 

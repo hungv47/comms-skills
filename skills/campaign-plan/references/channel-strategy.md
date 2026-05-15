@@ -135,7 +135,7 @@ Map habitats to the discovery → trust → conversion funnel:
 | [Persona A] | [Habitat: Channel Name] | [Habitat: Channel Name] | [Habitat: Channel Name] |
 | [Persona B] | [Habitat: Channel Name] | [Habitat: Channel Name] | [Habitat: Channel Name] |
 
-For each row, cite the specific habitat entry that justifies the channel choice.
+For each row, uses the specific habitat entry that justifies the channel choice.
 
 **Platform behavior definitions:**
 - **Lurker**: Consumes but rarely engages publicly

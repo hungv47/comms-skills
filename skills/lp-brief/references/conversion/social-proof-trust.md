@@ -7,28 +7,28 @@
 ### Hierarchy (Most to Least Powerful)
 
 1. **Individual testimonials with specific results**
-   - "Increased revenue by 47% in 30 days"
-   - Real names, photos, titles
+ - "Increased revenue by 47% in 30 days"
+ - Real names, photos, titles
 
 2. **Case studies with before/after**
-   - Detailed transformation stories
-   - Measurable outcomes
+ - Detailed transformation stories
+ - Measurable outcomes
 
 3. **Number of customers served**
-   - "Join 50,000+ customers"
-   - Active user counts
+ - "Join 50,000+ customers"
+ - Active user counts
 
 4. **Media mentions/press**
-   - "As seen in Forbes, TechCrunch..."
-   - Only recognizable brands
+ - "As seen in Forbes, TechCrunch..."
+ - Only recognizable brands
 
 5. **Expert endorsements**
-   - Industry thought leaders
-   - Relevant credentials
+ - Industry thought leaders
+ - Relevant credentials
 
 6. **Customer logos**
-   - B2B social proof
-   - Well-known brands only
+ - B2B social proof
+ - Well-known brands only
 
 ### Placement Strategy
 

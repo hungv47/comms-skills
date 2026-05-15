@@ -92,7 +92,7 @@ Cross-variant test — scored once per variant but reflects the trio's collectiv
 |------|-------------|
 | 9-10 | Every measured claim mapped to a source in `available_proof[]`. Claim wording precisely matches what source supports. Aggregate or testimonial claims carry appropriate hedges ("in our cohort, customers reported..."). No banned-phrase hits. |
 | 7-8 | Substantiation clean. Minor over-claim that hedging language softens adequately. |
-| 5-6 | One claim slightly broader than source supports (source: "50 customers"; ad: "hundreds"). Hedge needed but missing. |
+| 5-6 | One claim slightly broader than source supports (Pattern basis: internal research synthesis.
 | 3-4 | One claim unsupported by `available_proof[]` (no source ID maps). OR one banned phrase requires removal. |
 | 0-2 | Fabricated metric (no source ID). Banned-phrase hit ("guaranteed", "FDA-approved" without approval). Engagement-bait CTA. |
 
@@ -120,7 +120,7 @@ Cross-variant test — scored once per variant but reflects the trio's collectiv
 **A "verifiable specific" is:**
 - Named entity (a specific customer, a specific product, a specific named cohort — e.g., "Ramp", "Cali Apps cohort")
 - Named number with context (`9 days → 4 days`, `20 lbs in 30 days`, `$50/month`, `$2,000 → $500 CPA`)
-- Named research or source (`Clem 2026 retargeting thread`, `Cali Apps subscription playbook`, `Saraev's $15M template`)
+- Named research or source (`Clem 2026 retargeting thread`, `Cali Apps subscription playbook`, `framework's $15M template`)
 
 Pure generic flavor ("great work in SaaS", "leading B2B brands", "proven results", "industry-leading", "best-in-class") does NOT count.
 
@@ -149,9 +149,9 @@ Does each variant follow the assigned message-transmutation format without creat
 ## Aggregate Calculation
 
 ```
-hero_total       = sum(7 dim scores)
-variant_a_total  = sum(7 dim scores)
-variant_b_total  = sum(7 dim scores)
+hero_total = sum(7 dim scores)
+variant_a_total = sum(7 dim scores)
+variant_b_total = sum(7 dim scores)
 
 aggregate = avg(hero_total, variant_a_total, variant_b_total)
 ```

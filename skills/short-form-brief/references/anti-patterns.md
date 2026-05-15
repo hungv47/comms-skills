@@ -73,7 +73,7 @@ Either name a track (with ID) OR specify VO direction (pacing/tone/mic).
 85%+ of viewers watch without sound. Burned-in captions are mandatory across all 5 platforms. Auto-FAIL if missing.
 
 ### Reels with TikTok watermark
-Mosseri Originality Score (Jan 2025) detects and downranks. Auto-FAIL.
+platform leadership's Originality Score (Jan 2025) detects and downranks. Auto-FAIL.
 
 ### Reels using trending audio without Originality consideration
 Either pair trending audio with strong original visual treatment OR use original audio. Naked trending-audio reuse = Originality penalty.

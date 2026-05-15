@@ -1,6 +1,6 @@
 ---
 name: social-copy
-description: "Generates platform-native social copy (hooks, body, CTA, format spec) for tiktok, reels, shorts, x, linkedin. Enforces char/word limits, CTA placement vs algorithm truncation point, and hook archetype compliance. Produces skills-resources/marketing/copy/[platform]-[date]-[slug].md. Not for ad-copy (paid-platform bidding/compliance), email-copy (subject lines, deliverability), or long-form articles (LinkedIn articles, Substack). For landing page copy use copywriting. For video brief + storyboard use short-form-brief."
+description: "Generates platform-native social copy (hooks, body, CTA, format spec) for tiktok, reels, shorts, x, linkedin. Enforces char/word limits, CTA placement vs algorithm truncation point, and hook archetype compliance. Produces .agents/skill-artifacts/mkt/copy/[platform]-[date]-[slug].md. Not for ad-copy (paid-platform bidding/compliance), email-copy (subject lines, deliverability), or long-form articles (LinkedIn articles, Substack). For landing page copy use copywriting. For video brief + storyboard use short-form-brief."
 argument-hint: "<topic-or-brief-path> <platform> [--variants N] [--polish-chain humanize|vn-tone|none] [--goal awareness|engagement|click|save|share]"
 allowed-tools: Read Write Bash Grep Glob
 license: MIT
@@ -54,10 +54,10 @@ routing:
   position: horizontal
   lifecycle: pipeline
   produces:
-    - skills-resources/marketing/copy/[platform]-[date]-[slug].md
+    - .agents/skill-artifacts/mkt/copy/[platform]-[date]-[slug].md
   consumes:
-    - skills-resources/marketing/short-form-brief/[slug]/brief.md
-    - skills-resources/marketing/campaign-plan.md
+    - .agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md
+    - .agents/skill-artifacts/mkt/campaign-plan.md
     - brand/BRAND.md
     - brand/DESIGN.md
   requires:
@@ -102,9 +102,9 @@ Social copy generator for 5 platforms: **tiktok, reels, shorts, x, linkedin**. C
 
 | Field | Required | Source | Notes |
 |---|---|---|---|
-| `brief_artifact_path` | ONE OF (brief or topic) | `skills-resources/marketing/short-form-brief/...` OR `skills-resources/marketing/campaign-plan.md` | Hook angle + audience already locked when brief exists |
+| `brief_artifact_path` | ONE OF (brief or topic) | `.agents/skill-artifacts/mkt/short-form-brief/...` OR `.agents/skill-artifacts/mkt/campaign-plan.md` | Hook angle + audience already locked when brief exists |
 | `topic` | ONE OF (brief or topic) | inline | Fallback when no brief exists. Pre-Dispatch round asks hook-angle + audience |
-| `platform` | required | inline arg | `tiktok | reels | shorts | x | linkedin`. Maps to `marketing-skills/skills/short-form-brief/references/platform-intelligence/[platform].md` |
+| `platform` | required | inline arg | `tiktok | reels | shorts | x | linkedin`. Maps to `references/_shared/platform-intelligence/[platform].md` |
 | `brand_system` | required if exists | `brand/BRAND.md` + `brand/DESIGN.md` | Voice, archetype, lexicon, banned words |
 | `brand_mode` | required | inline | `founder` (single-author voice) or `company` (multi-author brand voice) |
 | `goal` | optional | inline | `awareness | engagement | click | save | share`. Determines CTA type. Default `engagement` |
@@ -115,7 +115,7 @@ Social copy generator for 5 platforms: **tiktok, reels, shorts, x, linkedin**. C
 
 ## Pre-Dispatch
 
-Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). Read `skills-resources/experience/audience.md`, `skills-resources/experience/brand.md`, and `skills-resources/experience/product.md` BEFORE asking.
+Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`). Read `.agents/experience/audience.md`, `.agents/experience/brand.md`, and `.agents/experience/product.md` BEFORE asking.
 
 **Needed dimensions:** platform, brand_mode, audience (who this is for + one pain), the one shift (what should reader do/believe after), topic or brief path.
 
@@ -127,7 +127,7 @@ Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`
 4. **Audience** — who is this for? (role + one pain, or "use icp-research.md") → `audience.md` if novel
 5. **Goal** — awareness / engagement / click / save / share? (default: engagement) → `goals.md`
 
-**Write-back:** answers persist to the mapped `skills-resources/experience/{domain}.md` files per protocol.
+**Write-back:** answers persist to the mapped `.agents/experience/{domain}.md` files per protocol.
 
 **Warm Start:** if `short-form-brief` artifact exists for this topic, extract platform, audience, hook angle, and goal from it — skip all five questions.
 
@@ -202,7 +202,7 @@ If multi-agent dispatch is unavailable, execute each agent's instructions sequen
 
 ## Output Artifact
 
-**Path:** `skills-resources/marketing/copy/[platform]-[YYYY-MM-DD]-[slug].md`
+**Path:** `.agents/skill-artifacts/mkt/copy/[platform]-[YYYY-MM-DD]-[slug].md`
 
 **Frontmatter schema (verbatim from spec — match exactly):**
 

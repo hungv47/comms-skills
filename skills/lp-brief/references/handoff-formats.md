@@ -28,86 +28,86 @@
 
 ```
 [1. Role prime + production target — 3–5 lines]
-   "Act as an elite Creative Front-End Developer. Build [page route] for
-    [audience]. [Quality target — e.g., Awwwards-grade]. [Stack constraint —
-    single HTML file OR Next.js app router OR detected framework]. Execute
-    the technical blueprint below with zero omissions."
+ "Act as an elite Creative Front-End Developer. Build [page route] for
+ [audience]. [Quality target — e.g., Awwwards-grade]. [Stack constraint —
+ single HTML file OR Next.js app router OR detected framework]. Execute
+ the technical blueprint below with zero omissions."
 
 [2. Hypothesis — 1 line, falsifiable claim from approved hypothesis]
 
 [3. CORE SETUP & GLOBALS]
-   Libraries (CDN URLs): motion stack with version-pinned URLs
-     - GSAP Core v3.12: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js
-     - GSAP ScrollTrigger v3.12: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js
-     - Studio Freight Lenis v1.1: https://unpkg.com/lenis@1.1.13/dist/lenis.min.js
-       (sync Lenis RAF with GSAP ticker)
-   Fonts: from DESIGN.md type tokens, with import method (Google Fonts <link>,
-     @font-face, or next/font)
-   Theme tokens (from DESIGN.md palette):
-     - BG: [hex from primary background token]
-     - Text: [hex from primary text token]
-     - Accent: [hex from accent token]
-     - Muted: [hex from muted/neutral token]
-     - Dark/light pairs if DESIGN.md declares dual theme
-   Global treatments (ONLY if brand_digest explicitly declares them):
-     - Noise overlay (SVG feTurbulence) — opacity, blend-mode
-     - Custom cursor — dimensions, hover behavior, "VIEW" text on interactive
-     - Preloader — counter style (0–100), exit animation
-     - Navigation — fixed top, mix-blend-mode, contents (left/right text)
-   ⚠ Sacred-creep guard: do NOT add global treatments brand_digest doesn't
-     require. "Polish" additions are sacred drift.
+ Libraries (CDN URLs): motion stack with version-pinned URLs
+ - GSAP Core v3.12: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js
+ - GSAP ScrollTrigger v3.12: https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js
+ - Studio Freight Lenis v1.1: https://unpkg.com/lenis@1.1.13/dist/lenis.min.js
+ (sync Lenis RAF with GSAP ticker)
+ Fonts: from DESIGN.md type tokens, with import method (Google Fonts <link>,
+ @font-face, or next/font)
+ Theme tokens (from DESIGN.md palette):
+ - BG: [hex from primary background token]
+ - Text: [hex from primary text token]
+ - Accent: [hex from accent token]
+ - Muted: [hex from muted/neutral token]
+ - Dark/light pairs if DESIGN.md declares dual theme
+ Global treatments (ONLY if brand_digest explicitly declares them):
+ - Noise overlay (SVG feTurbulence) — opacity, blend-mode
+ - Custom cursor — dimensions, hover behavior, "VIEW" text on interactive
+ - Preloader — counter style (0–100), exit animation
+ - Navigation — fixed top, mix-blend-mode, contents (left/right text)
+ ⚠ Sacred-creep guard: do NOT add global treatments brand_digest doesn't
+ require. "Polish" additions are sacred drift.
 
 [4. ASSET PLACEHOLDER RULE — verbatim block, always present. See subsection
-    "Asset Placeholder Rule" below.]
+ "Asset Placeholder Rule" below.]
 
 [5. SECTION BLUEPRINT — for each section in approved architecture:]
-   Section N: [Name]
-   Layout: [exact dims in vw/vh/px, positioning idiom — e.g., "Left-aligned
-     massive text (clamp(8vw, 12rem, 240px)), right-aligned image (40vw ×
-     75vh)"]
-   Copy (verbatim — recommended candidates from section-spec):
-     Headline: "[copy]"
-     Subhead: "[copy]"
-     CTA: "[copy]"
-   Asset: slot id `[slot-id]` — file path `[from asset-slot inventory]`.
-     If file missing, render placeholder per Section 4 rule. NEVER inline an
-     external URL.
-   Motion mechanic: [explicit GSAP/Lenis/CSS recipe — e.g., "Pin section.
-     Scrub container width 25vw → 100vw, height 60vh → 100vh, border-radius
-     300px → 0px tied to scroll progress. Fade in overlay text on
-     completion."]
-   (BUG FIX) [optional callout where naive implementations fail — e.g., "Use
-     overflow:hidden parent + absolute child positioned at width:100vw
-     height:100vh. Do NOT use clip-path — breaks Safari subpixel rendering
-     and stutters on M1."]
-   Conversion gates: [from section-spec conversion-checklist — e.g., "4-U ≥
-     3/4, primary CTA visible at viewport entry, trust signal within scroll
-     distance"]
+ Section N: [Name]
+ Layout: [exact dims in vw/vh/px, positioning idiom — e.g., "Left-aligned
+ massive text (clamp(8vw, 12rem, 240px)), right-aligned image (40vw ×
+ 75vh)"]
+ Copy (verbatim — recommended candidates from section-spec):
+ Headline: "[copy]"
+ Subhead: "[copy]"
+ CTA: "[copy]"
+ Asset: slot id `[pattern-derived]` — file path `[from asset-slot inventory]`.
+ If file missing, render placeholder per Section 4 rule. NEVER inline an
+ external URL.
+ Motion mechanic: [explicit GSAP/Lenis/CSS recipe — e.g., "Pin section.
+ Scrub container width 25vw → 100vw, height 60vh → 100vh, border-radius
+ 300px → 0px tied to scroll progress. Fade in overlay text on
+ completion."]
+ (BUG FIX) [optional callout where naive implementations fail — e.g., "Use
+ overflow:hidden parent + absolute child positioned at width:100vw
+ height:100vh. Do NOT use clip-path — breaks Safari subpixel rendering
+ and stutters on M1."]
+ Conversion gates: [from section-spec conversion-checklist — e.g., "4-U ≥
+ 3/4, primary CTA visible at viewport entry, trust signal within scroll
+ distance"]
 
 [6. DO NOT — verbatim, hard rails]
-   Sacred elements (verbatim from brand_digest):
-     - [sacred 1]
-     - [sacred 2]
-   Forbidden vocabulary: [comma-separated from brand voice rules]
-   Generic CTAs banned: "Submit", "Click Here", "Learn More" — use first-
-     person action verbs from section-spec
-   Asset URL invention: do NOT invent or substitute asset URLs from Unsplash,
-     stock photo sites, or any external source. Use declared file paths only;
-     render placeholders per Section 4 rule for missing files.
-   Page-specific failures: [from brief's "What NOT to Do" section]
+ Sacred elements (pattern-derived):
+ - [sacred 1]
+ - [sacred 2]
+ Forbidden vocabulary: [comma-separated from brand voice rules]
+ Generic CTAs banned: "Submit", "Click Here", "Learn More" — use first-
+ person action verbs from section-spec
+ Asset URL invention: do NOT invent or substitute asset URLs from Unsplash,
+ stock photo sites, or any external source. Use declared file paths only;
+ render placeholders per Section 4 rule for missing files.
+ Page-specific failures: [from brief's "What NOT to Do" section]
 
 [7. OUTPUT]
-   Deliverable: [single index.html OR Next.js page route at app/[slug]/page.tsx
-     OR component tree per detected framework]
-   Inline vs external: [framework-appropriate — vanilla: "All CSS in <style>,
-     all JS in <script>"; React: "Components per section under
-     components/[slug]/"]
-   Responsive breakpoints: 390 / 768 / 1024 / 1440 (mobile-first)
+ Deliverable: [single index.html OR Next.js page route at app/[slug]/page.tsx
+ OR component tree per detected framework]
+ Inline vs external: [framework-appropriate — vanilla: "All CSS in <style>,
+ all JS in <script>"; React: "Components per section under
+ components/[slug]/"]
+ Responsive breakpoints: 390 / 768 / 1024 / 1440 (mobile-first)
 
 [8. CLOSING — verbatim]
-   "Write production-ready, flawless code. Do not truncate. Do not use
-    placeholder copy or invented imagery (asset placeholders only follow the
-    Section 4 rule)."
+ "Write production-ready, flawless code. Do not truncate. Do not use
+ placeholder copy or invented imagery (asset placeholders only follow the
+ Section 4 rule)."
 ```
 
 **Asset Placeholder Rule (paste verbatim into every implementation prompt):**
@@ -127,7 +127,7 @@ If the file at the declared path does not yet exist, render the slot as a
 solid-color placeholder block:
 - Background: brand primary color at 12% opacity
 - Inside: monospace text overlay showing "{slot-id} — {WxH} — pending
-  {generation-route}"
+ {generation-route}"
 - Border: 1px dashed brand-accent
 - Centered both axes; preserve the declared slot dimensions
 
@@ -148,7 +148,7 @@ not real" for logo grids — never use placeholders for proof assets).
 - Hypothesis (1-line bet, full 3Q stays in brief.md)
 - Architecture rationale (list sections, skip why-each)
 - Audit findings (1–2 lines on what's being closed)
-- 4-U / PAS scoring detail (cite as "per CP-XX in brief.md")
+- 4-U / PAS scoring detail (uses as "per CP-XX in brief.md")
 
 **Common failures:**
 - **Inventing Unsplash URLs** because slot paths "look like placeholders" → explicit ban + Section 4 fallback recipe needed verbatim
@@ -190,37 +190,37 @@ Theme tokens (from brand/DESIGN.md):
 Global treatments: NONE (brand_digest does not declare noise/cursor/preloader).
 
 2. ASSET PLACEHOLDERS
-[verbatim block from rule above]
+[pattern-derived]
 
 3. SECTION BLUEPRINT
 
 Section 1: Hero
 Layout: Centered headline (clamp(48px, 6vw, 96px)), subhead 20px Inter below,
-  primary CTA button below subhead. 100vh, low scroll velocity.
+ primary CTA button below subhead. 100vh, low scroll velocity.
 Headline (verbatim): "See the price your team actually pays — in 8 seconds"
 Subhead (verbatim): "Quotes by team size. No 'contact sales' detours."
 Primary CTA (verbatim): "Get my team's price"
 Asset: slot `hero-image` — `growth/pricing/hero.webp`. Calibrated still-life
-  of pricing receipt, brand primary as subtle accent. If file missing,
-  render placeholder per Section 2 rule.
+ of pricing receipt, brand primary as subtle accent. If file missing,
+ render placeholder per Section 2 rule.
 Motion: Fade-up entrance (stagger 0.1s, ease-out, 240ms) for headline →
-  subhead → CTA. Static after entrance.
+ subhead → CTA. Static after entrance.
 Conversion gates: 4-U 4/4, primary CTA in viewport at load, 6-logo customer
-  grid below CTA in scroll distance.
+ grid below CTA in scroll distance.
 
 Section 2: Segmented Social Proof
 [continues per architecture...]
 
-[... all sections ...]
+[... all sections...]
 
 DO NOT
 - Use glass, frost, or transparent overlay surfaces (anti-glass sacred —
-  brand/DESIGN.md)
+ brand/DESIGN.md)
 - Modify or paraphrase the tagline
 - Use these words anywhere: leverage, unlock, seamlessly, robust, cutting-edge
 - Use generic CTAs: "Submit", "Click Here", "Learn More"
 - Invent or substitute asset URLs (use declared paths; render placeholders
-  per Section 2 rule for missing files)
+ per Section 2 rule for missing files)
 - Add a 3rd primary CTA (one primary, one secondary, zero tertiary)
 
 OUTPUT
@@ -246,16 +246,16 @@ Section 2 rule).
 ```
 [1. Page identity + hypothesis — 3–5 lines]
 
-[2. Brand block — palette tokens, type tokens, surface, motion tokens. Verbatim from brand_digest.]
+[2. Brand block — palette tokens, type tokens, surface, motion tokens. pattern-derived.]
 
 [3. Architecture summary — section list with one-line purpose each. Reference brief.md for full ASCII.]
 
 [4. Per-section blocks — for each section:
-   - Section name + purpose
-   - Recommended copy (headline / subhead / CTA) — verbatim
-   - Asset reference with file path
-   - Layout notes (column structure, type tokens used)
-   - Trust signal positioning
+ - Section name + purpose
+ - Recommended copy (headline / subhead / CTA) — verbatim
+ - Asset reference with file path
+ - Layout notes (column structure, type tokens used)
+ - Trust signal positioning
 ]
 
 [5. DO NOT block — sacred elements + voice forbidden vocabulary. Verbatim.]
@@ -307,7 +307,7 @@ Asset: growth/pricing/hero.webp — calibrated still-life of pricing receipt
 Layout: Headline 64px Geist Sans, subhead 20px Inter, CTA primary button (#004700 bg)
 Trust signal in viewport: 6-logo customer grid below CTA
 
-[... per section ...]
+[... per section...]
 
 DO NOT
 - Use glass, frost, or transparent overlay surfaces (anti-glass sacred)
@@ -324,14 +324,14 @@ Single desktop + mobile layout per section. Use the design system tokens above.
 
 ## Pencil MCP (`pencil`)
 
-**Tool:** Pencil MCP (`mcp__pencil__*` tools — works on .pen files, encrypted)
+**Tool:** Pencil MCP (`mcp__pencil__*` tools — works on.pen files, encrypted)
 
 **Format:** High-level brief, ~60–100 lines. Pencil generates the `batch_design` operations itself.
 
 **Structure:**
 
 ```
-[1. Document goal — what kind of .pen file (LP / single section / asset)]
+[1. Document goal — what kind of.pen file (LP / single section / asset)]
 
 [2. Section list with layout intent per section]
 
@@ -351,7 +351,7 @@ Single desktop + mobile layout per section. Use the design system tokens above.
 
 **Compress:**
 - Architecture rationale (Pencil doesn't need the why)
-- Per-CP citation rationale
+- Per-CP reference rationale
 - 4-U scoring detail
 
 **Common failures:**
@@ -379,13 +379,13 @@ Single desktop + mobile layout per section. Use the design system tokens above.
 [4. Component library references — button variants, card variants, input variants. Reference Auto Layout settings.]
 
 [5. Per-frame blocks (one per section):
-   - Frame name + purpose
-   - Layout grid (cols, gutter, padding)
-   - Typography tokens used
-   - Color tokens used
-   - Component instances + variants
-   - Copy verbatim
-   - Asset placement (file path or instance reference)
+ - Frame name + purpose
+ - Layout grid (cols, gutter, padding)
+ - Typography tokens used
+ - Color tokens used
+ - Component instances + variants
+ - Copy verbatim
+ - Asset placement (file path or instance reference)
 ]
 
 [6. Variants — desktop / tablet / mobile differences per frame]
@@ -443,7 +443,7 @@ Single desktop + mobile layout per section. Use the design system tokens above.
 
 **Compress:**
 - 3Q rubric detail (designer cares about the bet, not the framework)
-- CP rationale (cite IDs only — they can read brief.md if curious)
+- CP rationale (uses IDs only — they can read brief.md if curious)
 
 **Common failures:**
 - Burying sacred elements at end → designer misses them
@@ -464,7 +464,7 @@ The **Implementation Prompt** is always emitted — every brief writes `handoff-
 - Human designer working in Figma → add `figma` + `designer` (Figma for spec, designer for narrative)
 - Solo founder, no designer, pure code-first → implementation prompt only (no extras)
 
-**Companion files** at `skills-resources/marketing/lp-brief/[slug]/`:
+**Companion files** at `.agents/skill-artifacts/mkt/lp-brief/[slug]/`:
 - `brief.md` — main artifact (always)
 - `handoff-implementation.md` — coding-agent prompt block (always)
 - `handoff-claude-design.md` — Claude Design block (if `claude-design` in target_handoff)

@@ -44,7 +44,7 @@ Optimization for app stores (App Store, Google Play) and listing platforms (G2, 
 |---------|------|--------|
 | Icon | Color, style, elements | High (first thing users see) |
 | Screenshots | Order, captions, style | High (persuasion sequence) |
-| Preview video | With vs without, different hooks | Medium-High |
+| Preview video | With vs without, different hooks | internal |
 | Description | First 3 lines (above fold) | Medium |
 | Ratings prompt timing | After achievement vs after time | Medium (review volume) |
 
@@ -117,7 +117,7 @@ Optimization for app stores (App Store, Google Play) and listing platforms (G2, 
 - **Positive:** Thank specifically, highlight the feature they mentioned
 - **Negative:** Acknowledge → explain (not excuse) → resolution → invite back
 - **Response template for negative:**
-  > "Thank you for the feedback, [Name]. We hear you on [specific issue]. [What we're doing about it / explanation]. If you'd like to discuss further, please reach out to [support email]. We'd love the chance to make this right."
+ > "Thank you for the feedback, [Name]. We hear you on [specific issue]. [What we're doing about it / explanation]. If you'd like to discuss further, please reach out to [support email]. We'd love the chance to make this right."
 
 ---
 

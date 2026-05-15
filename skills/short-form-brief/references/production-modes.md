@@ -8,8 +8,8 @@ Live-action vs. motion-graphic templates. Production-mode-agent picks the resolv
 
 | Brand mode | Production mode default |
 |---|---|
-| founder | live-action |
-| company | motion-graphic |
+| founder | internal |
+| company | internal |
 
 Override only with explicit angle reason (e.g., founder-mode demoing a screen-only product → motion-graphic).
 

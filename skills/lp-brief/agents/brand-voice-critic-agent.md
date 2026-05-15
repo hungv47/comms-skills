@@ -19,7 +19,7 @@ You do NOT:
 | **assembled_brief** | markdown | Full brief: hypothesis + architecture + section spec + asset slots + handoff + implementation prompt companion (`handoff-implementation.md`) |
 | **brand_digest** | markdown | From brand-anchor-agent — palette, type, surface, sacred elements, voice rules (forbidden + preferred vocab), motion |
 | **page_tier** | string | `primary` or `secondary` |
-| **references** | file paths[] | `references/failure-modes.md`, `marketing-skills/skills/brand-system/references/*` (if needed for sacred-element semantics) |
+| **references** | file paths[] | `references/failure-modes.md`, `references/_shared/brand-system/*` (if needed for sacred-element semantics) |
 | **cycle** | int | 1 or 2 |
 
 ## Output Contract

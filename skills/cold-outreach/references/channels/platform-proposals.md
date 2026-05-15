@@ -62,7 +62,7 @@ Avoid:
 
 ## Services-Sell Mode (primary use case)
 
-### The Saraev playbook (AI consulting)
+### The framework playbook (AI consulting)
 
 Key insight: platforms are **the top of the buying ladder**. Prospects have money, know they have a problem, and have declared they want it fixed. Your only job is to stand out in the proposal stack.
 

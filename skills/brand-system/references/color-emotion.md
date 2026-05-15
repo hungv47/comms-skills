@@ -102,28 +102,28 @@ Use layered surfaces to create depth without relying on shadows:
 SURFACE HIERARCHY (using Zinc base as example)
 ----------------------------------------------
 Layer 0 — Page background:
-  oklch(0.141 0.005 286) / #09090b
+ oklch(0.141 0.005 286) / #09090b
 
 Layer 1 — Card / primary surface:
-  oklch(0.210 0.006 286) / #18181b
+ oklch(0.210 0.006 286) / #18181b
 
 Layer 2 — Raised / nested surface:
-  oklch(0.274 0.006 286) / #27272a
+ oklch(0.274 0.006 286) / #27272a
 
 Layer 3 — Popover / overlay:
-  oklch(0.274 0.006 286) / #27272a (with shadow or border differentiation)
+ oklch(0.274 0.006 286) / #27272a (with shadow or border differentiation)
 
 Border:
-  oklch(0.374 0.014 286) / #3f3f46
+ oklch(0.374 0.014 286) / #3f3f46
 
 Text primary:
-  oklch(0.985 0 0)       / #fafafa
+ oklch(0.985 0 0) / #fafafa
 
 Text secondary:
-  oklch(0.705 0.015 286) / #a1a1aa
+ oklch(0.705 0.015 286) / #a1a1aa
 
 Text muted:
-  oklch(0.552 0.016 286) / #71717a
+ oklch(0.552 0.016 286) / #71717a
 ```
 
 ### Dark Mode Mapping Pattern
@@ -131,13 +131,13 @@ Text muted:
 ```
 LIGHT → DARK TRANSFORMATION
 ----------------------------
-background:     neutral.50  → neutral.950
-foreground:     neutral.950 → neutral.50
-card:           white       → neutral.900
-primary:        brand.600   → brand.500 (lighter for visibility)
-muted:          neutral.100 → neutral.800
-muted-fg:       neutral.500 → neutral.400
-border:         neutral.200 → neutral.800
+background: neutral.50 → neutral.950
+foreground: neutral.950 → neutral.50
+card: white → neutral.900
+primary: brand.600 → brand.500 (lighter for visibility)
+muted: neutral.100 → neutral.800
+muted-fg: neutral.500 → neutral.400
+border: neutral.200 → neutral.800
 ```
 
 ## Chart / Data Visualization Colors

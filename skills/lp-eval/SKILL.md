@@ -1,6 +1,6 @@
 ---
 name: lp-eval
-description: "Evaluates a launched landing page from real performance evidence inside an existing eval loop. Use for post-launch CRO cycles with analytics, experiment results, recordings, form-funnel data, or qualified manual metric notes. Produces `skills-resources/marketing/loops/[slug]/evals/[date]-cycle-N.md` and appends `results.tsv`. Requires an existing `/eval-loop` workspace; does not scaffold loops, redesign pages, or perform generic best-practice audits without measurement evidence."
+description: "Evaluates a launched landing page from real performance evidence inside an existing eval loop. Use for post-launch CRO cycles with analytics, experiment results, recordings, form-funnel data, or qualified manual metric notes. Produces `skills-resources/loops/[slug]/evals/[date]-cycle-N.md` and appends `results.tsv`. Requires an existing `/eval-loop` workspace; does not scaffold loops, redesign pages, or perform generic best-practice audits without measurement evidence."
 argument-hint: "[loop slug or path] [page URL/route] [metric window]"
 allowed-tools: Read Write Edit Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -56,21 +56,21 @@ routing:
   position: evaluation
   lifecycle: evaluation
   produces:
-    - skills-resources/marketing/loops/[slug]/evals/[date]-cycle-N.md
-    - skills-resources/marketing/loops/[slug]/results.tsv
-    - skills-resources/marketing/loops/[slug]/learnings.md
+    - skills-resources/loops/[slug]/evals/[date]-cycle-N.md
+    - skills-resources/loops/[slug]/results.tsv
+    - skills-resources/loops/[slug]/learnings.md
   consumes:
-    - skills-resources/marketing/loops/[slug]/program.md
-    - skills-resources/marketing/loops/[slug]/context.md
-    - skills-resources/marketing/loops/[slug]/results.tsv
-    - skills-resources/marketing/loops/[slug]/strategy/*.md
-    - skills-resources/marketing/loops/[slug]/execution/*.md
+    - skills-resources/loops/[slug]/program.md
+    - skills-resources/loops/[slug]/context.md
+    - skills-resources/loops/[slug]/results.tsv
+    - skills-resources/loops/[slug]/strategy/*.md
+    - skills-resources/loops/[slug]/execution/*.md
     - brand/BRAND.md
     - research/icp-research.md
     - research/product-context.md
   requires:
-    - skills-resources/marketing/loops/[slug]/program.md
-    - skills-resources/marketing/loops/[slug]/context.md
+    - skills-resources/loops/[slug]/program.md
+    - skills-resources/loops/[slug]/context.md
     - measurement evidence for the current cycle
   defers-to:
     - skill: eval-loop
@@ -92,7 +92,7 @@ routing:
 
 ## Critical Gates
 
-1. **Existing eval loop required.** If `skills-resources/marketing/loops/[slug]/program.md` and `context.md` do not exist, return `NEEDS_CONTEXT` and recommend `/eval-loop`. This skill does not create loops.
+1. **Existing eval loop required.** If `skills-resources/loops/[slug]/program.md` and `context.md` do not exist, return `NEEDS_CONTEXT` and recommend `/eval-loop`. This skill does not create loops.
 2. **Measurement evidence required.** Do not run as a generic heuristic audit. Require at least one metric source, measurement window, and current value for the loop's primary metric.
 3. **One primary metric decides the ledger row.** Secondary metrics and qualitative evidence explain diagnosis; they do not override the loop's primary metric unless `program.md` defines an explicit guardrail failure.
 4. **No fabricated analytics.** Unknown values stay unknown. Manual notes are allowed only when labeled as operator-supplied and tied to a date/window/source.
@@ -109,7 +109,7 @@ routing:
 
 | Input | Required? | What it provides |
 |---|---:|---|
-| Loop slug or path | **required** | Locates `skills-resources/marketing/loops/[slug]/` |
+| Loop slug or path | **required** | Locates `skills-resources/loops/[slug]/` |
 | Page URL or route | **required** | Evaluated surface |
 | Measurement window | **required** | Date range for the current cycle |
 | Primary metric value + source | **required** | Ledger decision metric |
@@ -125,13 +125,13 @@ routing:
 Primary artifact:
 
 ```text
-skills-resources/marketing/loops/[slug]/evals/YYYY-MM-DD-cycle-N.md
+skills-resources/loops/[slug]/evals/YYYY-MM-DD-cycle-N.md
 ```
 
 Side effects:
 
-- Append one row to `skills-resources/marketing/loops/[slug]/results.tsv` with `meta-skills/scripts/append-loop-result.ts`.
-- Update `skills-resources/marketing/loops/[slug]/learnings.md` only for high-confidence `keep` or `discard` lessons that are reusable beyond this exact page state.
+- Append one row to `skills-resources/loops/[slug]/results.tsv` with `scripts/append-loop-result.ts`.
+- Update `skills-resources/loops/[slug]/learnings.md` only for high-confidence `keep` or `discard` lessons that are reusable beyond this exact page state.
 - Run `manifest-sync` after writing.
 
 ## Agent Manifest
@@ -145,20 +145,20 @@ Side effects:
 
 ## Pre-Dispatch
 
-Read `../../../meta-skills/references/eval-loop-spec.md` before writing artifacts when available. In an installed skill checkout, use `${SKILLS_ROOT}/meta-skills/references/eval-loop-spec.md` as the equivalent path.
+Read `references/_shared/eval-loop-spec.md` before writing artifacts when available. In an installed skill checkout, use `references/_shared/eval-loop-spec.md` as the equivalent path.
 
 ### Read Order
 
-1. `skills-resources/marketing/loops/[slug]/program.md`
-2. `skills-resources/marketing/loops/[slug]/context.md`
-3. `skills-resources/marketing/loops/[slug]/results.tsv`
-4. Latest files in `skills-resources/marketing/loops/[slug]/strategy/`, `execution/`, and `evals/`
+1. `skills-resources/loops/[slug]/program.md`
+2. `skills-resources/loops/[slug]/context.md`
+3. `skills-resources/loops/[slug]/results.tsv`
+4. Latest files in `skills-resources/loops/[slug]/strategy/`, `execution/`, and `evals/`
 5. Relevant canonical artifacts: `brand/BRAND.md`, `research/product-context.md`, `research/icp-research.md`, campaign plan if present
 
-If `skills-resources/manifest.json` is stale or missing, run:
+If `.agents/manifest.json` is stale or missing, run:
 
 ```bash
-bun ${SKILLS_ROOT:-.claude/skills}/meta-skills/scripts/manifest-sync.ts
+bun scripts/manifest-sync.ts
 ```
 
 ### Warm Start
@@ -167,7 +167,7 @@ When the loop exists and metric evidence is present:
 
 ```text
 Found:
-- loop: skills-resources/marketing/loops/[slug]/
+- loop: skills-resources/loops/[slug]/
 - primary metric: [from program.md]
 - baseline/prior result: [from context.md or results.tsv]
 - latest strategy/execution artifact: [path]
@@ -212,7 +212,7 @@ purpose: "Post-launch evidence snapshot for a landing-page eval loop"
 lifecycle: evaluation
 use_when: "Deciding whether to keep, discard, watch, or block the current landing-page cycle"
 do_not_use_when: "Designing the next page revision without reading the latest loop context and results"
-upstream: "skills-resources/marketing/loops/[slug]/program.md, context.md, strategy/, execution/, metric source"
+upstream: "skills-resources/loops/[slug]/program.md, context.md, strategy/, execution/, metric source"
 downstream: "results.tsv, learnings.md, lp-brief next-cycle brief"
 ---
 
@@ -282,7 +282,7 @@ Rules:
 - Use the validated helper:
 
 ```bash
-bun ${SKILLS_ROOT:-.claude/skills}/meta-skills/scripts/append-loop-result.ts "<loop slug>" \
+bun scripts/append-loop-result.ts "<loop slug>" \
   --artifact evals/YYYY-MM-DD-cycle-N.md \
   --metric "<primary metric>" \
   --value "<current value>" \

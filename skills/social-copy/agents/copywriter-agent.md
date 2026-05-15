@@ -19,7 +19,7 @@ You will receive from the orchestrator:
 |-------|------|-------------|
 | **brief** | string | Path to short-form-brief or campaign-plan artifact OR inline topic description |
 | **pre-writing** | object | Context from Pre-Dispatch: platform, brand_mode, audience (role + pain), goal, the-one-shift |
-| **platform_intel** | markdown excerpt | Relevant sections of `platform-intelligence/[platform].md` — Hook Taxonomy (§1), Format Constraints (§2), Algorithm Signals (§3) — provided verbatim by orchestrator |
+| **platform_intel** | markdown excerpt | Relevant sections of `references/_shared/platform-intelligence/[platform].md` — Hook Taxonomy (§1), Format Constraints (§2), Algorithm Signals (§3) — provided verbatim by orchestrator |
 | **brand_voice** | markdown excerpt | Relevant excerpts from `brand/BRAND.md`: voice adjectives, lexicon, banned words, archetype. Null if brand_mode=founder |
 | **variant_count** | integer | 1, 2, or 3. Default 2 |
 | **goal** | string | `awareness | engagement | click | save | share`. Default `engagement` |

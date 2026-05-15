@@ -16,15 +16,15 @@ Before starting artboard generation:
 ```
 ARTBOARD DESIGN BRIEF
 =====================
-Background:     [artboard background — typically near-white from neutral scale]
-Foreground:     [primary text color — from semantic --foreground]
-Accent:         [header accent color — from brand primary or accent]
-Muted:          [secondary text — from semantic --muted-foreground]
-Border:         [divider color — from semantic --border]
-Display Font:   [confirmed available font] at [weights]
-Body Font:      [confirmed available font] at [weights]
-Page Title:     36px display font, -0.02em tracking
-Section Label:  12px uppercase, 0.08em tracking
+Background: [artboard background — typically near-white from neutral scale]
+Foreground: [primary text color — from semantic --foreground]
+Accent: [header accent color — from brand primary or accent]
+Muted: [secondary text — from semantic --muted-foreground]
+Border: [divider color — from semantic --border]
+Display Font: [confirmed available font] at [weights]
+Body Font: [confirmed available font] at [weights]
+Page Title: 36px display font, -0.02em tracking
+Section Label: 12px uppercase, 0.08em tracking
 ```
 
 ## Artboard Specifications
@@ -97,11 +97,11 @@ Follow this sequence for each artboard:
 2. **`write_html`** — page header (brand name, page title, divider) — one call
 3. **`write_html`** — each content group — one call per group (avoid batching)
 4. **`get_screenshot`** — every 2-3 groups, review against checkpoint checklist:
-   - Spacing: even gaps, clear visual rhythm
-   - Typography: readable sizes, strong hierarchy
-   - Contrast: text legible against backgrounds
-   - Alignment: elements in consistent vertical/horizontal lanes
-   - Clipping: no content cut off at edges
+ - Spacing: even gaps, clear visual rhythm
+ - Typography: readable sizes, strong hierarchy
+ - Contrast: text legible against backgrounds
+ - Alignment: elements in consistent vertical/horizontal lanes
+ - Clipping: no content cut off at edges
 5. **`update_styles`** — targeted fixes for any issues found in review
 6. Repeat steps 3-5 until the artboard is complete
 

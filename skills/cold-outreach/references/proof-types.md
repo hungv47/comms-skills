@@ -148,7 +148,7 @@ The Tier-3 proof wins. The prospect identifies with "Series-A founder, zero prio
 - **Listing 5 logos in touch 1.** Reads as "look how legit we are" — vendor behavior. One logo, one number.
 - **Unverifiable numbers.** "Our customers have saved $50M combined." Where's the breakdown? Reader discounts it.
 - **Stacking proof + more proof.** "We helped Ramp, Mercury, and Linear. Our customers include 500+ companies. We're the leading platform for..."
-- **Irrelevant tier-1.** "Worked with Coca-Cola" to a Series-A founder. Size mismatch kills relevance.
+- **Irrelevant tier-1.** "Worked with an enterprise brand" to a Series-A founder. Size mismatch kills relevance.
 - **Testimonials that say nothing.** "Great team, great service" — cut.
 - **Humblebragging.** "We were lucky to work with [name]." The luck framing undercuts the proof.
 - **Over-qualified numbers.** "Cut close time by approximately 52-58%." Pick one. "Cut close time from 9 days to 4" beats "by approximately 55%."

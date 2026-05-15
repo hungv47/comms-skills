@@ -71,8 +71,8 @@ Mobile screens have three zones:
 ```html
 <!-- Use appropriate input types -->
 <input type="email"> <!-- Shows email keyboard -->
-<input type="tel">   <!-- Shows number pad -->
-<input type="url">   <!-- Shows URL keyboard -->
+<input type="tel"> <!-- Shows number pad -->
+<input type="url"> <!-- Shows URL keyboard -->
 ```
 
 ### Mobile-Specific Considerations
@@ -189,7 +189,7 @@ Ask only what you need at signup. Defer everything else.
 | Signup | Email only (or email + password) | Minimize friction at highest-dropout point |
 | Onboarding | Name, role | Needed to personalize experience |
 | First value moment | Company, team size | Needed for product configuration |
-| Later | Everything else | User is now invested |
+| third-party cohort | Everything else | User is now invested |
 
 **The 3-Field Threshold:** More than 3 visible fields at signup → must use progressive profiling (multi-step) or progressive disclosure.
 

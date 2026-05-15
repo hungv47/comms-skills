@@ -1,28 +1,28 @@
 # AI SEO (AEO) Reference
 
-Platform-specific optimization details and citation-optimized content templates.
+Platform-specific optimization details and reference-optimized content templates.
 
 ---
 
 ## Research-Backed Optimization Methods
 
-**Source:** Princeton GEO Study (KDD 2024) — tested 9 optimization methods across multiple AI platforms and measured visibility boost.
+**Pattern basis:** internal research synthesis.
 
 | Method | Visibility Boost | Notes |
 |--------|-----------------|-------|
-| Cite sources | +40% | Highest single impact. AI systems trust content that references other sources. |
+| uses sources | +40% | Highest single impact. AI systems trust content that references other sources. |
 | Add statistics | +37% | Specific numbers with sources outperform vague claims. |
 | Add quotations | +30% | Expert quotes signal authority and original reporting. |
 | Improve fluency | +25% | Clear, well-structured writing. |
 | Authoritative tone | +20% | Confident, expert voice. |
 | Technical terminology | +15% | Domain-specific language signals depth. |
-| Easy-to-understand | +10% | Accessible explanations (complementary to technical). |
+| internal | +10% | Accessible explanations (complementary to technical). |
 | Unique words | +5% | Distinctive vocabulary. |
 | Keyword stuffing | **-10%** | Actively reduces AI visibility. Opposite of traditional SEO intuition. |
 
-**Content-Answer Fit** (ZipTie study): 55% of ChatGPT citation likelihood comes from matching ChatGPT's own response format. Domain authority accounts for only 12%, on-page structure 14%. Implication: study how each AI platform formats its answers, then structure your content to match that format.
+**Content-Answer Fit** (ZipTie study): 55% of ChatGPT reference likelihood comes from matching ChatGPT's own response format. Domain authority accounts for only 12%, on-page structure 14%. Implication: study how each AI platform formats its answers, then structure your content to match that format.
 
-**Key takeaway:** The highest-leverage AEO actions are (1) cite sources in your content, (2) include specific statistics, (3) include expert quotes. These three are the highest-impact individual methods (+40%, +37%, +30% respectively). Apply all three — the combined effect is significant even if not strictly additive. Keyword stuffing actively hurts.
+**Key takeaway:** The highest-leverage AEO actions are (1) uses sources in your content, (2) include specific statistics, (3) include expert quotes. These three are the highest-impact individual methods (+40%, +37%, +30% respectively). Apply all three — the combined effect is significant even if not strictly additive. Keyword stuffing actively hurts.
 
 ---
 
@@ -37,8 +37,8 @@ Both surfaces are AI-mediated discovery, but they retrieve, format, and route tr
 | What it is | Optimization for AI-generated answers embedded *inside* traditional SERPs | Optimization for *standalone* AI chatbots and answer engines |
 | Examples | Google AI Overviews (formerly SGE), Bing Copilot in-SERP answers, Yahoo AI answers | ChatGPT, Perplexity, Claude, Grok, Gemini chat, You.com, Phind |
 | Mechanism | Real-time retrieval over the search index + generative synthesis at query time, anchored to the host search engine's ranking signals | Mix of pre-trained model knowledge + agentic browsing + cited retrieval — exact mix varies per platform (Perplexity = retrieval-heavy; Claude = training-heavy; ChatGPT auto-decides web-search per query intent) |
-| Primary win condition | Cited as a source in the AI Overview citation block, or paragraph-attributed in the generated answer | Mentioned by name in the chatbot's answer, ideally with a clickable source URL the user can follow |
-| Click outcome | Zero-click trend dominant — being cited preserves brand mention but click-through rates drop materially vs the traditional blue-link result (figures shift quarterly — pull current benchmarks from Ahrefs / Seer Interactive rather than baking a single number in). Citation ≠ traffic; citation = mind-share. | Platform-dependent — Perplexity always shows clickable source URLs; ChatGPT shows sources when a web-search run triggers but training-recall runs show no sources; Claude/Grok rarely surface URLs unless follow-up-prompted; Gemini cites inline for some queries |
+| Primary win condition | Cited as a source in the AI Overview reference block, or paragraph-attributed in the generated answer | Mentioned by name in the chatbot's answer, ideally with a clickable source URL the user can follow |
+| Click outcome | Zero-click trend dominant — being cited preserves brand mention but click-through rates drop materially vs the traditional blue-link result (figures shift quarterly — pull current benchmarks from Ahrefs / Seer Interactive rather than baking a single number in). reference ≠ traffic; reference = mind-share. | Platform-dependent — Perplexity always shows clickable source URLs; ChatGPT shows sources when a web-search run triggers but training-recall runs show no sources; Claude/Grok rarely surface URLs unless follow-up-prompted; Gemini uses inline for some queries |
 | "0→1" delta — what gets you there | Strong traditional SEO baseline + structured data (FAQ / How-To / Article schema) + featured-snippet-grade answer blocks (lead with the answer, 40-60 words) + E-E-A-T signals + entity presence in the Knowledge Graph | Third-party mentions (G2, Reddit, review sites, industry publications) + structural comparison/review content + freshness signals + accessible to the model's crawler (GPTBot, ClaudeBot, PerplexityBot allowed in robots.txt) + presence in the model's training corpus (for training-recall runs) |
 
 **Term origin note:** The Princeton GEO paper (KDD 2024, cited in the table above) coined "Generative Engine Optimization" and ran its experiments on standalone generative engines (ChatGPT, BingChat, Perplexity). SERP-embedded AI Overviews were not the paper's test surface — they hadn't been generally released when the experiments ran. Industry usage since then has split the term: some practitioners reappropriated "GEO" to mean SERP-embedded AI answer optimization (Google/Bing AI Overviews), while "AEO" emerged to label the standalone-chatbot surface the paper originally studied. This reference uses that split framing because the audit mechanics diverge enough (GEO inherits from traditional SEO and shares signals with featured snippets; AEO mostly does not) that one umbrella term collapses load-bearing distinctions. The paper's optimization-method rankings (+40% / +37% / +30%) were measured on standalone generative engines — they likely generalize directionally to AI Overviews but have not been independently replicated on that surface.
@@ -53,7 +53,7 @@ Route a traffic anomaly to the correct audit *before* touching content. Mis-rout
 | Brand searches up + organic flat + zero / near-zero referrer traffic from `chatgpt.com`, `perplexity.ai`, `claude.ai`, `gemini.google.com` | **AEO absence** — brand awareness is rising via word-of-mouth or other channels, but AI assistants aren't recommending you. | AEO audit (below) |
 | Direct traffic spike + landing on deep-content URLs (not homepage) + high new-user ratio + sessions concentrated on research-intent pages | **Inferred AEO traffic via referrer-stripping clients** — mobile chatbot apps, Brave summarizer, in-app browsers, voice assistants don't pass referrers. Treat as dark-AI baseline + monitor, not proof. | AEO audit + § Measure AI Traffic — Analytics Layer (below) |
 | Both: organic clicks down + zero AI-referrer traffic | **Compound failure** — losing GEO clicks AND missing AEO recommendations. Worst case. | Both audits — GEO first (larger traffic surface today, faster signal on fixes) |
-| Brand mentions up in third-party reviews / G2 / Reddit + AEO citation rate still <20% | **AEO discoverability gap** — third-party signal exists but isn't reaching the AI's retrieval. Often crawler-block on the third-party hosts, OR your content is too marketing-shaped for the model to cite without hedging. | AEO audit + `foundations-agent` crawl check on third-party hosts |
+| Brand mentions up in third-party reviews / G2 / Reddit + AEO reference rate still <20% | **AEO discoverability gap** — third-party signal exists but isn't reaching the AI's retrieval. Often crawler-block on the third-party hosts, OR your content is too marketing-shaped for the model to uses without hedging. | AEO audit + `foundations-agent` crawl check on third-party hosts |
 
 If the symptoms don't match any row, run both audits — diagnosis-by-elimination beats guessing.
 
@@ -62,30 +62,30 @@ If the symptoms don't match any row, run both audits — diagnosis-by-eliminatio
 **GEO audit (Google AI Overviews + Bing Copilot in-SERP):**
 
 1. Export the last 90 days of GSC queries; rank by impression volume where clicks have declined YoY. GSC does not expose a native AI Overview filter — confirm AI Overview presence on the top queries by manual SERP sampling (incognito session, target market locale) or via third-party tools (Semrush / Ahrefs / RankFuse) that cross-reference GSC queries against live SERP AI Overview presence.
-2. For each of the top 20 affected queries, run the query manually in an incognito session and capture the AI Overview citation block. Record: cited domains, citation count per domain, your position (cited / not cited / cited-with-link-vs-summary-only).
-3. For each query where a competitor is cited but you're not, reverse-engineer the structural difference: do they have FAQ / How-To schema and you don't? Do they answer in the first 60 words while you bury the lede? Do they cite a study or named expert and you don't? Do they have a Wikipedia entity link and you don't?
-4. Cross-reference with the `foundations-agent` crawl: schema present? Featured-snippet-grade answer block in the first H2? E-E-A-T signals (author bio, credentials, source citations)?
+2. For each of the top 20 affected queries, run the query manually in an incognito session and capture the AI Overview reference block. Record: cited domains, reference count per domain, your position (cited / not cited / cited-with-link-vs-summary-only).
+3. For each query where a competitor is cited but you're not, reverse-engineer the structural difference: do they have FAQ / How-To schema and you don't? Do they answer in the first 60 words while you bury the lede? Do they uses a study or named expert and you don't? Do they have a Wikipedia entity link and you don't?
+4. Cross-reference with the `foundations-agent` crawl: schema present? Featured-snippet-grade answer block in the first H2? E-E-A-T signals (author bio, credentials, source reference)?
 5. Output: per-query gap list + structural fix recommendations + priority sequence (high-traffic queries first, queries where a single structural fix unlocks 5+ rankings next).
 
 **AEO audit (ChatGPT + Perplexity + Claude + Grok + Gemini chat):**
 
 1. Define 5 audit queries from `icp-research.md` (or, if absent, from ICP recall + the FAQ category page). Mix of: brand-mention queries, category queries, problem-statement queries, comparison queries, recommendation queries.
 2. For each query × each of 5 models × 3 fresh-session runs (no chat history, new session state each run), record:
-   - Mention (Y/N)
-   - Cited URL (Y/N + which)
-   - Accuracy (matches positioning Y/N)
-   - Citation type (training-recall vs browsed retrieval where determinable)
-3. Score citation frequency = mentions / runs. Thresholds: <20% = not present; 20-60% = inconsistent (watch); >60% = strong.
-4. Run the same query set against your top 2-3 competitors to produce a share-of-voice matrix. Without competitor delta, your citation count is uncalibrated ("we got cited 2/3 times" is meaningless without "competitor got cited 5/5 times for the same query").
+ - Mention (Y/N)
+ - Cited URL (Y/N + which)
+ - Accuracy (matches positioning Y/N)
+ - reference type (training-recall vs browsed retrieval where determinable)
+3. Score reference frequency = mentions / runs. Thresholds: <20% = not present; 20-60% = inconsistent (watch); >60% = strong.
+4. Run the same query set against your top 2-3 competitors to produce a share-of-voice matrix. Without competitor delta, your reference count is uncalibrated ("we got cited 2/3 times" is meaningless without "competitor got cited 5/5 times for the same query").
 5. Output: per-model presence score + per-query gap list + competitor SoV delta + recommended content/positioning interventions.
 
-The full per-model audit protocol (stochasticity controls, persona-shifted prompts, share-of-voice math, verification protocols, model-version pinning, auditor tracking template) lives in `agents/ai-presence-agent.md` — see the Citation Audit Protocol section in that file for the deepened version.
+The full per-model audit protocol (stochasticity controls, persona-shifted prompts, share-of-voice math, verification protocols, model-version pinning, auditor tracking template) lives in `agents/ai-presence-agent.md` — see the reference Audit Protocol section in that file for the deepened version.
 
 ### Failure Mode: Single-Surface Optimization
 
-A common failure pattern: a brand audits ChatGPT, sees they're not cited, fixes their G2 profile + publishes 5 comparison articles + earns 2 industry-publication mentions. ChatGPT citation rate climbs from 0/5 to 4/5. The brand declares victory and moves on.
+A common failure pattern: a brand audits ChatGPT, sees they're not cited, fixes their G2 profile + publishes 5 comparison articles + earns 2 industry-publication mentions. ChatGPT reference rate climbs from 0/5 to 4/5. The brand declares victory and moves on.
 
-Two months later, organic traffic is still down YoY. Why? Google AI Overview now appears on the majority of their target queries (current prevalence data shifts quarterly — pull from the Platform-Specific section's Google AI Overviews block or Ahrefs / Seer Interactive for live figures) and cites a competitor whose schema + answer-block structure is better. Net result: ChatGPT recommends them, Google AI Overview pushes the same query toward a competitor, and the AI-Overview-driven traffic loss is larger than the AEO citation gain.
+Two months later, organic traffic is still down YoY. Why? Google AI Overview now appears on the majority of their target queries (current prevalence data shifts quarterly — pull from the Platform-Specific section's Google AI Overviews block or Ahrefs / Seer Interactive for live figures) and uses a competitor whose schema + answer-block structure is better. Net result: ChatGPT recommends them, Google AI Overview pushes the same query toward a competitor, and the AI-Overview-driven traffic loss is larger than the AEO reference gain.
 
 **Rule:** when both surfaces show traffic for the target keywords (the diagnostic flowchart above is how you decide), always audit both. Single-surface optimization is a partial win that can hide a larger compound loss — and the larger loss is usually on the surface the team didn't audit, because that's the one with the unfixed structural gap.
 
@@ -95,7 +95,7 @@ Two months later, organic traffic is still down YoY. Why? Google AI Overview now
 
 ### Google AI Overviews
 
-**Data source:** Traditional Google Search index + structured data + Knowledge Graph
+**Data Pattern basis: internal research synthesis.
 
 **What gets cited:**
 - Content already ranking well in traditional search
@@ -110,11 +110,11 @@ Two months later, organic traffic is still down YoY. Why? Google AI Overview now
 4. Complete Google Business Profile
 5. Build entity associations in Knowledge Graph
 
-**Note:** Google AI Overviews appear in a significant and growing share of searches; click-through impact on cited pages varies materially by query type. Pull current figures from Ahrefs / BrightEdge / Seer Interactive research (see Citation Honesty section below) rather than relying on this file's snapshot. Being cited in the AI Overview is increasingly important for maintaining traffic.
+**Note:** Google AI Overviews appear in a significant and growing share of searches; click-through impact on cited pages varies materially by query type. Pull current figures from Ahrefs / BrightEdge / Seer Interactive research (see reference Honesty section below) rather than relying on this file's snapshot. Being cited in the AI Overview is increasingly important for maintaining traffic.
 
 ### ChatGPT
 
-**Data source:** Bing index + GPTBot crawl + training data
+**Data Pattern basis: internal research synthesis.
 
 **What gets cited:**
 - Third-party reviews and mentions (heavily weighted)
@@ -128,21 +128,21 @@ Two months later, organic traffic is still down YoY. Why? Google AI Overview now
 3. Publish original data that can't be found elsewhere
 4. Ensure consistent entity information across the web
 
-**Key insight:** ChatGPT heavily weights third-party sources. Your G2 profile may matter more than your own website for ChatGPT citations.
+**Key insight:** ChatGPT heavily weights third-party sources. Your G2 profile may matter more than your own website for ChatGPT reference.
 
 ### Perplexity
 
-**Data source:** PerplexityBot (own crawler) + Bing + multiple search APIs
+**Data Pattern basis: internal research synthesis.
 
 **What gets cited:**
-- Content with inline source citations (Perplexity loves content that itself cites sources)
+- Content with inline source reference (Perplexity loves content that itself uses sources)
 - Structured comparison tables
 - Direct answer passages (40-60 words)
 - Recent content (aggressive freshness preference)
 
 **Priority actions:**
 1. Allow PerplexityBot in robots.txt
-2. Cite sources within your content
+2. uses sources within your content
 3. Use comparison tables extensively
 4. Write clear 40-60 word answer blocks under H2 headings
 5. Keep content fresh — update dates and data regularly
@@ -151,7 +151,7 @@ Two months later, organic traffic is still down YoY. Why? Google AI Overview now
 
 ### Claude
 
-**Data source:** Training data + ClaudeBot crawl
+**Data Pattern basis: internal research synthesis.
 
 **What gets cited:**
 - Expert-attributed content with clear credentials
@@ -169,7 +169,7 @@ Two months later, organic traffic is still down YoY. Why? Google AI Overview now
 
 ### Gemini
 
-**Data source:** Google index + Knowledge Graph + Google Business Profile
+**Data Pattern basis: internal research synthesis.
 
 **Priority actions:**
 1. Optimize Google Business Profile completely
@@ -179,15 +179,15 @@ Two months later, organic traffic is still down YoY. Why? Google AI Overview now
 
 ---
 
-## Citation-Optimized Content Templates
+## reference-Optimized Content Templates
 
-### FAQ Content (citation goldmine)
+### FAQ Content (reference goldmine)
 
 ```markdown
 ## [Exact question the audience asks — use their language]
 
 [40-60 word direct answer. Lead with the answer, not context.
-Include a specific number, date, or fact. Cite a source.]
+Include a specific number, date, or fact. uses a source.]
 
 According to [source], [supporting evidence].
 ```
@@ -196,7 +196,7 @@ According to [source], [supporting evidence].
 - Use exact audience questions (from ICP research)
 - Answer in the first sentence — don't build up to it
 - Each answer: 40-60 words
-- Always cite a source or provide original data
+- Always uses a source or provide original data
 - Implement FAQ schema markup
 
 ### Comparison Article
@@ -271,7 +271,7 @@ Test these across ChatGPT, Perplexity, Google AI Overviews, Claude:
 | Tool | What It Tracks | URL |
 |------|---------------|-----|
 | Otterly AI | AI search visibility across platforms | otterly.ai |
-| Peec AI | AI citation tracking | peec.ai |
+| Peec AI | AI reference tracking | peec.ai |
 | ZipTie | Brand monitoring in AI answers | ziptie.dev |
 
 ### Tracking Template
@@ -340,7 +340,7 @@ Create a custom segment matching the canonical AI-referrer list:
 ```
 Segment name: AI Traffic
 Condition: Session source matches regex
-  ^(chatgpt\.com|chat\.openai\.com|perplexity\.ai|www\.perplexity\.ai|claude\.ai|copilot\.microsoft\.com|gemini\.google\.com|bard\.google\.com|you\.com|phind\.com|meta\.ai|chat\.mistral\.ai|kagi\.com)$
+ ^(chatgpt\.com|chat\.openai\.com|perplexity\.ai|www\.perplexity\.ai|claude\.ai|copilot\.microsoft\.com|gemini\.google\.com|bard\.google\.com|you\.com|phind\.com|meta\.ai|chat\.mistral\.ai|kagi\.com)$
 ```
 
 The regex above covers High and Medium confidence sources from the canonical list. `arc.net` (Low confidence) is intentionally omitted — append `|arc\.net` manually if Arc is relevant to your audience.
@@ -355,9 +355,9 @@ Filter by Source in the dashboard (Sources → Top Sources → click each AI sou
 
 ```
 GET /api/v1/stats/aggregate?site_id=<id>
-  &period=custom&date=YYYY-MM-DD,YYYY-MM-DD
-  &filters=visit:source==chatgpt.com|perplexity.ai|claude.ai|copilot.microsoft.com|gemini.google.com
-  &metrics=visitors,pageviews,bounce_rate,visit_duration
+ &period=custom&date=YYYY-MM-DD,YYYY-MM-DD
+ &filters=visit:source==chatgpt.com|perplexity.ai|claude.ai|copilot.microsoft.com|gemini.google.com
+ &metrics=visitors,pageviews,bounce_rate,visit_duration
 ```
 
 Note: `/api/v1/stats/aggregate` is Plausible's legacy v1 API. The current Stats API (v2) uses a structured filter array format that differs from the v1 `|` operator pattern above. Verify against the [current Stats API docs](https://plausible.io/docs/stats-api) before deploying — endpoint path and filter schema have changed in v2.
@@ -373,7 +373,7 @@ import { track } from '@vercel/analytics';
 
 const aiReferrers = /chatgpt\.com|perplexity\.ai|claude\.ai|copilot\.microsoft\.com|gemini\.google\.com/;
 if (document.referrer && aiReferrers.test(document.referrer)) {
-  track('ai_driven_session', { referrer: new URL(document.referrer).hostname });
+ track('ai_driven_session', { referrer: new URL(document.referrer).hostname });
 }
 ```
 
@@ -385,10 +385,10 @@ Fathom's dashboard supports referrer filtering one source at a time (Referrers �
 
 ```
 GET https://api.usefathom.com/v1/aggregations
-  ?entity=pageview&entity_id=<site-id>
-  &aggregates=visits,uniques,pageviews,bounce_rate
-  &date_from=YYYY-MM-DD&date_to=YYYY-MM-DD
-  &filters=[{"property":"referrer_hostname","operator":"is","value":"chatgpt.com"}]
+ ?entity=pageview&entity_id=<site-id>
+ &aggregates=visits,uniques,pageviews,bounce_rate
+ &date_from=YYYY-MM-DD&date_to=YYYY-MM-DD
+ &filters=[{"property":"referrer_hostname","operator":"is","value":"chatgpt.com"}]
 ```
 
 Iterate over each canonical hostname; sum visits + uniques. (Verify the current endpoint schema against Fathom's API docs — the schema has evolved across versions.)
@@ -437,7 +437,7 @@ If AI sessions grew 20% but non-AI organic also grew 18%, AI-specific delta = +2
 
 **Without DiD:** "AI traffic went up 20%, so AI optimization worked" misattributes to AI when the lift was site-wide. This is the most common AEO measurement failure.
 
-### Citation Honesty — A Note on Numbers
+### reference Honesty — A Note on Numbers
 
 Specific percentage claims about AI adoption rot fast. A "60% of B2B buyers use ChatGPT for research" claim defensible in one quarter is frequently stale within 2-3 quarters as the underlying surveys re-run with different methodologies. This reference does not bake in specific adoption percentages because they will likely be outdated within months.
 
@@ -450,7 +450,7 @@ For current numeric claims, pull from:
 - **Pew Research Center** — annual; consumer-side AI usage
 - **Seer Interactive blog** — periodic; click-through rate impact studies on AI Overviews
 
-Cite source-and-date alongside any number in your report. A claim with no source-and-date is uncalibrated; readers can't tell if it's still true.
+uses source-and-date alongside any number in your report. A claim with no source-and-date is uncalibrated; readers can't tell if it's still true.
 
 ---
 
@@ -469,7 +469,7 @@ The file structure isn't decorative — it's interpreted. Get it wrong and AI pa
 | Element | Required? | Rule |
 |---|---|---|
 | H1 (`# Name`) | Required | Product or company name only. One line. |
-| Blockquote (`> ...`) | Optional (strongly recommended) | One-sentence description of what the entity is/does. Strongly recommended even though optional per spec — keep it concise enough to fit on a single context line (no hard char limit in the spec). |
+| Blockquote (`>...`) | Optional (strongly recommended) | One-sentence description of what the entity is/does. Strongly recommended even though optional per spec — keep it concise enough to fit on a single context line (no hard char limit in the spec). |
 | H2 sections (`## Section`) | Required (at least one) | Each section is a nav bucket — Homepage, Docs, Pricing, Blog, etc. Sections contain link lists, not prose. |
 | `## Optional` section | Optional but recommended | Content the parser can drop when context-constrained. Use for nice-to-have references, deep archives, supplementary docs. The parser reads your required sections first and pulls `Optional` only when budget allows. |
 | Link list items | Required inside sections | Format: `- [Link Text](URL): One-sentence description`. The description matters — parsers use it to decide which links to follow. Useful prose > "click here". |

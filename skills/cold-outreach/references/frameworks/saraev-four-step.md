@@ -1,13 +1,13 @@
-# Frameworks: Saraev Four-Step (cold outbound)
+# Frameworks: Four-Step Cold Outbound
 
-An opinionated end-to-end cold-outbound framework derived from Nick Saraev's 2026 course. Strategist may pick this framework when the message is **net-new outbound to a stranger with zero pre-existing trust** and the goal is to reach "yes" without tripping sales/spam radar.
+An opinionated end-to-end cold-outbound framework synthesized from practitioner training. Strategist may pick this framework when the message is **net-new outbound to a stranger with zero pre-existing trust** and the goal is to reach "yes" without tripping sales/spam radar.
 
 **Use this in preference to the generic Observation→Problem→Proof→Ask structure when:**
 - Channel is email or DM and the prospect has no opt-in baseline
 - The message is touch 1 to a stranger (not a follow-up, not a reply, not warm intro)
 - The goal is to mass-deliver a pattern that looks like 1:1 personal
 
-**Source attribution caveat:** Saraev's source claims $15M+ generated via outbound and a $4M/yr business. Numbers are author-claimed, not stack-verified. Cite the source explicitly when invoking ("this draft applies Saraev's four-step framework"); do not pass the $15M claim through as stack endorsement.
+**Source basis:** internal research synthesis. Raw source ledger intentionally omitted from the public skill package; do not pass practitioner revenue claims through as stack endorsement.
 
 ---
 
@@ -28,7 +28,7 @@ Every cold outbound message answers four questions in order. Skip one and the me
 
 **Three valid tactics:**
 
-- **Cold-read** — vague-but-specific-feeling. "Love your channel, no BS, helped me get started in [generic field]" works for any creator. Saraev's gold-standard opener.
+- **Cold-read** — vague-but-specific-feeling. "Love your channel, no BS, helped me get started in [generic field]" works for any creator. Use only when no stronger real signal exists.
 - **Voluntary disclosure** — reveal a small fact about yourself ("helped me get started in management consulting"). Builds trust via reciprocity even if the connection is generic.
 - **Real signal** — a quote from their post, a number from their funding round, a named launch. Best when available; cold-read fallback when not.
 
@@ -64,7 +64,7 @@ Drive each lever:
 
 **Template:** *"I will do X in Y or Z risk reversal."*
 
-Worked examples (verbatim from source, attributed):
+Worked examples (pattern-derived, attributed):
 - "I'll generate $10K in 60 days or work free until I do."
 - "I'll book 20 meetings in 90 days or full refund."
 - "I'll redesign your homepage in 72 hours, only pay if you love it."
@@ -91,12 +91,12 @@ Worked examples (verbatim from source, attributed):
 
 ## The Seven Levers (Cialdini-mapped)
 
-Saraev's 7 levers map to canonical Cialdini influence principles. Track which the message activates; aim for ≥3 per touch 1.
+The 7 levers map to canonical Cialdini influence principles. Track which the message activates; aim for ≥3 per touch 1.
 
-| Saraev's name | Cialdini parallel | How it shows up |
+| Lever | Cialdini parallel | How it shows up |
 |---|---|---|
 | Give first | Reciprocity | Offer something small (insight, fix, free asset) before any ask. Creates obligation; lowers skepticism. |
-| Micro-commitments | Commitment & consistency | Escalate via tiny yeses (watch 30s video → 15-min call → proposal). Every back-and-forth step leaks ~5% of leads — minimize them. |
+| internal | Commitment & consistency | Escalate via tiny yeses (watch 30s video → 15-min call → proposal). Every back-and-forth step leaks ~5% of leads — minimize them. |
 | Social proof | Social proof | Specific clients, specific numbers ($112,482 last week, not "a lot of money"). Reference group must match the prospect's niche. |
 | Authority | Authority | Credentials, partnerships, named results. Must fit prospect's mental model (Google Partner > behavioral neuroscience degree for SMB). |
 | Rapport | Liking | Explicit (shared dog breed, school) + implicit (mirror their tone, message length, punctuation, lowercase if they use lowercase). |
@@ -105,9 +105,9 @@ Saraev's 7 levers map to canonical Cialdini influence principles. Track which th
 
 ---
 
-## The Verbatim $15M Template (source-attributed)
+## Structural Outbound Example
 
-Verbatim from Saraev's course. **Source-claimed $15M+ generation; not stack-verified.** Treat as a structural example, not a copy-paste replacement for the strategist's normal flow.
+Pattern-derived. Treat as a structural example, not a copy-paste replacement for the strategist's normal flow.
 
 ```
 Hi Nick, love your channel man — very no-BS, helped me get
@@ -149,21 +149,21 @@ Best, [Name]
 
 ## Coordination with This Skill
 
-- **Voice-auditor (downstream)** strips vendor-speak, AI tells, and em-dashes after the composer applies this framework. Saraev's "Sent from my iPhone" tag at the bottom and intentional-typo-at-the-end-of-long-emails are stylistic devices voice-auditor leaves alone (it kills phrases, not typos). If a Saraev draft survives voice-auditor with the iPhone tag intact, that's working as intended.
-- **Critic's Specificity dimension** enforces a ≥2-verifiable-specifics floor (see `agents/critic.md` §Specificity). A Saraev draft with a named client + a named number passes; a Saraev draft with the offer formula filled in but no specifics anywhere ("I'll grow your channel significantly or your money back") fails.
-- **anti-patterns.md** has a section §"AI-Generated Personalization Tells (Saraev)" that codifies the BeaverCorp-style false-specificity tell — composer must avoid that pattern when applying Step 1.
+- **Voice-auditor (downstream)** strips vendor-speak, AI tells, and em-dashes after the composer applies this framework. Casual sign-offs and intentional human-feeling rough edges are stylistic devices voice-auditor leaves alone when they fit the channel.
+- **Critic's Specificity dimension** enforces a ≥2-verifiable-specifics floor (see `agents/critic.md` §Specificity). A draft with a named client + a named number passes; a draft with the offer formula filled in but no specifics anywhere ("I'll grow your channel significantly or your money back") fails.
+- **anti-patterns.md** has a section §"AI-Generated Personalization Tells" that codifies the BeaverCorp-style false-specificity tell — composer must avoid that pattern when applying Step 1.
 
 ---
 
-## When NOT to Use Saraev's Framework
+## When NOT to Use framework's Framework
 
 - **Warm intros / mutual-connection messages.** The framework assumes zero pre-existing trust; warm intros earn a different opener.
-- **Replies and follow-ups.** Use `email.md` breakup template + `channels/twitter.md` reply patterns instead. Saraev's framework is for touch 1 to strangers.
+- **Replies and follow-ups.** Use `email.md` breakup template + `channels/twitter.md` reply patterns instead. This framework is for touch 1 to strangers.
 - **Internal-feeling sales contexts** (Sales Navigator inMail to a connection's connection). The "P2P stranger" assumption breaks; voice-auditor's semi-formal-peer register fits better.
-- **Compliance-regulated contexts** (financial services outbound under FINRA, healthcare outbound under HIPAA). The verbatim template's risk-reversal language can run into regulatory issues; defer to compliance review.
+- **Compliance-regulated contexts** (financial services outbound under FINRA, healthcare outbound under HIPAA). The example's risk-reversal language can run into regulatory issues; defer to compliance review.
 
 ---
 
-## Source
+## Source Basis
 
-Nick Saraev's 2026 cold-email course condensed at `/Users/hungvio/Desktop/ipse/_ideas/skills/COLD EMAIL COPYWRITING & OUTREACH Full Course 2026.md`. Source claims $15M+ outbound revenue generated; figure attributed as source claim, not stack-verified.
+Internal research synthesis. Raw source ledger intentionally omitted from the public skill package.

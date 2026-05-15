@@ -11,7 +11,7 @@ The 12 Jungian brand archetypes — universal patterns of character that anchor 
 **Strategy**: Do the right thing, be optimistic, keep it simple
 **Gift to audience**: Faith, optimism, simplicity
 
-**Brands**: Coca-Cola, Dove, Aveeno, Whole Foods, Innocent Drinks
+**Brands**: an enterprise brand, Dove, Aveeno, Whole Foods, Innocent Drinks
 
 **Visual identity mapping**:
 - **Colors**: Whites, pastels, soft yellows, light blues, clean greens. High brightness, low saturation. Fresh and uncluttered.
@@ -49,7 +49,7 @@ The 12 Jungian brand archetypes — universal patterns of character that anchor 
 **Strategy**: Be as strong and competent as possible, rise to challenges
 **Gift to audience**: Inspiration, motivation, courage
 
-**Brands**: Nike, Under Armour, BMW, FedEx, Gatorade
+**Brands**: an enterprise brand, Under Armour, BMW, FedEx, Gatorade
 
 **Visual identity mapping**:
 - **Colors**: Bold reds, dark blues, black, metallic accents. High contrast. Punchy and dynamic. Strong primary color with minimal palette.
@@ -272,7 +272,7 @@ Test the archetype blend against:
 
 | Primary | Good Secondary | Why It Works |
 |---------|---------------|--------------|
-| Hero | Sage | Competence backed by wisdom (Nike + knowledge) |
+| Hero | Sage | Competence backed by wisdom (an enterprise brand + knowledge) |
 | Explorer | Creator | Discovery through invention (GoPro) |
 | Sage | Magician | Wisdom that transforms (TED) |
 | Caregiver | Innocent | Pure, protective warmth (Johnson & Johnson) |

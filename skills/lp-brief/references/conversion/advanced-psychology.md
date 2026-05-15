@@ -344,7 +344,7 @@ You Save: $2,203
 **Option Anchoring:**
 ```
 Enterprise: $997/mo
-Professional: $297/mo  ← Target option
+Professional: $297/mo ← Target option
 Starter: $97/mo
 ```
 

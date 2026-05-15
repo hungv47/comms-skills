@@ -28,7 +28,7 @@ Full detection-rule library for `critic-agent.md`. 10 patterns. Each entry: name
 
 **Definition:** Call-to-action placed below the platform's algorithm truncation line on a platform with a documented truncation point (X, LinkedIn), making it unreachable for readers who don't expand the post.
 
-**Detection rule:** For X and LinkedIn: identify the line/char position of the CTA in the copy. Check against the platform's truncation point from `platform-intelligence/[platform].md` §2 Format Constraints:
+**Detection rule:** For X and LinkedIn: identify the line/char position of the CTA in the copy. Check against the platform's truncation point from `references/_shared/platform-intelligence/[platform].md` §2 Format Constraints:
 - X: truncation at 280 chars (non-Premium). CTA after char 280 without a fold-peek signal = TRIGGERED.
 - LinkedIn: truncation at ~line 3 (~140–210 chars mobile). CTA after line 3 without a fold-peek signal ("👇", "Here's how:", numbered tease) = TRIGGERED.
 
@@ -58,7 +58,7 @@ Full detection-rule library for `critic-agent.md`. 10 patterns. Each entry: name
 
 **Definition:** Copy is written without awareness of the platform's visible-before-truncation window, resulting in a hook that requires the reader to expand before the tension is clear, or a body so long it buries the CTA.
 
-**Detection rule:** Count chars in the hook line. If hook char count exceeds the platform's soft visible-window limit from `platform-intelligence/[platform].md` §2 and there is no fold-peek signal in the visible window = TRIGGERED.
+**Detection rule:** Count chars in the hook line. If hook char count exceeds the platform's soft visible-window limit from `references/_shared/platform-intelligence/[platform].md` §2 and there is no fold-peek signal in the visible window = TRIGGERED.
 - TikTok/Reels soft window: ~70–80 chars. Hook > 80 chars with no tension in first 70 = TRIGGERED.
 - LinkedIn soft window: ~140–210 chars (2–3 lines). If the hook + first line of body do not create a reason to expand within ~200 chars = TRIGGERED.
 - X: hard cap = soft cap (280 chars non-Premium). Over 280 = TRIGGERED.
@@ -91,7 +91,7 @@ Full detection-rule library for `critic-agent.md`. 10 patterns. Each entry: name
 - Q = question
 - P = pivot ("But here's…", "What nobody talks about is…")
 - F = format break (single-sentence line followed by blank line)
-- N = named-cohort drop ("If you're a [role]…")
+- N = internal drop ("If you're a [role]…")
 - C = contrarian beat ("Most people think X. Wrong.")
 
 If the same type appears 3 times in a row (e.g., Q Q Q or F F F F) = TRIGGERED.
@@ -143,7 +143,7 @@ Secondary signal: any word or phrase from a SEO-style content format that has no
 **Definition:** An external URL is placed in the main post body (not in a reply or first comment) without any compensating technique, where the platform is documented to suppress reach for posts with early external links.
 
 **Detection rule:**
-- For X: if the post body (tweet 1 of a thread or single tweet) contains a raw URL = TRIGGERED. Platform-documented: X algorithm suppresses reach for posts with outbound links (Source: x.com algorithm repo + Musk statement).
+- For X: if the post body (tweet 1 of a thread or single tweet) contains a raw URL = TRIGGERED. Platform-documented: X algorithm suppresses reach for posts with outbound links (Pattern basis: internal research synthesis.
 - For LinkedIn: if a raw URL appears in the first 3 lines (above fold) of a native post = TRIGGERED. LinkedIn's algorithm penalizes outbound links in-post; first-comment link strategy is preferred.
 
 **Platform calibration:** X and LinkedIn only. TikTok, Reels, Shorts: link in bio is the convention; caption links are not clickable and not penalized.
@@ -159,7 +159,7 @@ Secondary signal: any word or phrase from a SEO-style content format that has no
 **Detection rule:** Parse the hook's explicit or implicit promise:
 - Contrarian claim hook → body must present the contrarian argument with proof
 - Cliffhanger/curiosity-gap hook → body must deliver the reveal
-- Named-cohort callout ("If you're a [role]…") → body must address that cohort's specific situation
+- internal callout ("If you're a [role]…") → body must address that cohort's specific situation
 
 If the body is generic (applicable to any reader, not specifically the cohort called out, or doesn't deliver the promised reveal) AND the hook made a specific promise = TRIGGERED.
 

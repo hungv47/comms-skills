@@ -1,6 +1,6 @@
 ---
 name: humanize
-description: "Strips AI patterns, injects brand voice, and compresses existing text so it reads human-written. Targets 15%+ word reduction with zero idea loss. Produces `skills-resources/marketing/content/[slug].humanized.md`. Not for writing new copy (use copywriting). For brand voice reference, see brand-system. For SEO compliance, see seo."
+description: "Strips AI patterns, injects brand voice, and compresses existing text so it reads human-written. Targets 15%+ word reduction with zero idea loss. Produces `.agents/skill-artifacts/mkt/content/[slug].humanized.md`. Not for writing new copy (use copywriting). For brand voice reference, see brand-system. For SEO compliance, see seo."
 argument-hint: "[content file or text]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -40,10 +40,10 @@ routing:
   position: horizontal
   lifecycle: pipeline
   produces:
-    - skills-resources/marketing/content/[slug].humanized.md
+    - .agents/skill-artifacts/mkt/content/[slug].humanized.md
   consumes:
     - product-context.md
-    - skills-resources/marketing/content/[slug].md
+    - .agents/skill-artifacts/mkt/content/[slug].md
   requires: []
   defers-to:
     - skill: copywriting
@@ -77,7 +77,7 @@ Classifier-era detectors add a fourth failure mode: the text can look clean but 
 - Any content artifact (from `copywriting` or any other skill) or raw text
 
 ## Output
-- `skills-resources/marketing/content/[slug].humanized.md`
+- `.agents/skill-artifacts/mkt/content/[slug].humanized.md`
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
@@ -209,7 +209,7 @@ This skill's examples are marketing-focused, but it works on any content type. A
 
 ## Pre-Dispatch
 
-Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Start** (most context resolvable, summarize and dispatch) or **Cold Start** (bundle 3-question prompt). Full pattern + anti-patterns: `meta-skills/references/pre-dispatch-protocol.md`.
+Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Start** (most context resolvable, summarize and dispatch) or **Cold Start** (bundle 3-question prompt). Full pattern + anti-patterns: `references/_shared/pre-dispatch-protocol.md`.
 
 ### Needed dimensions
 - Original text + content type (always required as input — not asked)
@@ -219,7 +219,7 @@ Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Star
 
 ### Read order
 1. Pipeline: `brand/BRAND.md` → voice rules + lexicon. `research/product-context.md` → voice adjectives.
-2. Experience: `skills-resources/experience/brand.md` → voice notes from prior runs.
+2. Experience: `.agents/experience/brand.md` → voice notes from prior runs.
 3. Conversation context: brief from upstream skill (e.g., copywriting handed text directly).
 
 If `research/product-context.md` `date` is >30 days, warn and recommend re-running `icp-research` for fresh voice adjectives — brand voice evolves.

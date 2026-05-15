@@ -115,12 +115,12 @@ copywriting → content/[slug].copy.md → consumed by humanize, vn-tone
 humanize → content/[slug].humanized.md → final-stage polish
 vn-tone → content/[slug].vn-tone.md → Vietnamese register polish
 
-lp-brief → skills-resources/marketing/lp-brief/[slug]/brief.md → owns landing-page construction + conversion-principles gate; consumed by design-brief (per asset slot) and external designer/image-gen
-lp-eval → skills-resources/marketing/loops/[slug]/evals/[date]-cycle-N.md → owns post-launch landing-page evidence scoring; consumes eval-loop workspace and appends results.tsv
-design-brief → skills-resources/marketing/design-briefs/[slug].md → consumed by external designer or image-gen tool
+lp-brief → .agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md → owns landing-page construction + conversion-principles gate; consumed by design-brief (per asset slot) and external designer/image-gen
+lp-eval → skills-resources/loops/[slug]/evals/[date]-cycle-N.md → owns post-launch landing-page evidence scoring; consumes eval-loop workspace and appends results.tsv
+design-brief → .agents/skill-artifacts/mkt/design-briefs/[slug].md → consumed by external designer or image-gen tool
 seo → seo-[mode].md → consumed by copywriting (SEO content), campaign-plan
 
-cold-outreach → skills-resources/marketing/cold-outreach/[slug].md → standalone outbound execution
+cold-outreach → .agents/skill-artifacts/mkt/cold-outreach/[slug].md → standalone outbound execution
 ```
 
 ---

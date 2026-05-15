@@ -19,7 +19,7 @@ Each dimension is falsifiable. "Is the hook good?" is not a threshold. "Does the
 
 ## Dimension 1 — Hook Scroll-Stop Strength (0–10)
 
-Scored against `platform-intelligence/[platform].md` §1 Hook Taxonomy.
+Scored against `references/_shared/platform-intelligence/[platform].md` §1 Hook Taxonomy.
 
 | Score | Threshold |
 |---|---|
@@ -34,7 +34,7 @@ Scored against `platform-intelligence/[platform].md` §1 Hook Taxonomy.
 
 ## Dimension 2 — Char/Word Limit Compliance (0–10)
 
-Hard limits per platform from `platform-intelligence/[platform].md` §2 Format Constraints. Soft caps = visible-before-truncation window.
+Hard limits per platform from `references/_shared/platform-intelligence/[platform].md` §2 Format Constraints. Soft caps = visible-before-truncation window.
 
 | Score | Threshold |
 |---|---|
@@ -68,7 +68,7 @@ Applies to platforms with documented line-truncation behavior: **X** and **Linke
 
 ## Dimension 4 — Pattern-Interruption Density (0–10)
 
-Pattern interrupts: questions, mid-sentence pivots ("But here's what most people miss:"), format breaks (deliberate single-sentence paragraphs), named-cohort drops ("If you're a [role]…"), contrarian beats ("Most people think X. They're wrong."), numbered list breaks.
+Pattern interrupts: questions, mid-sentence pivots ("But here's what most people miss:"), format breaks (deliberate single-sentence paragraphs), internal drops ("If you're a [role]…"), contrarian beats ("Most people think X. They're wrong."), numbered list breaks.
 
 **Count:** total interrupt events ÷ total caption char count × 100 = interrupts per 100 chars.
 
@@ -115,13 +115,13 @@ Correct surface type AND adherence to format-specific constraints.
 total = D1 + D2 + D3 + D4 + D5
 
 if total >= 35 AND no individual dimension == 0:
-    verdict = pass
+ verdict = pass
 
 elif (total >= 25 AND total <= 34) OR any_dimension < 4:
-    verdict = done_with_concerns
+ verdict = done_with_concerns
 
 elif total < 25:
-    verdict = fail
+ verdict = fail
 ```
 
 **Edge case — single zero:** If one dimension scores 0 and total is 40, verdict is `done_with_concerns` (not `pass`), because a zero on any dimension indicates a category failure regardless of overall score.

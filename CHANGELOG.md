@@ -34,25 +34,25 @@ Practitioner-framework expansion across `copywriting`, `ad-copy`, and `humanize`
 Fresh-eyes patch for the 7.0.0 artifact-tree migration.
 
 ### Fixed
-- `short-form-brief`, `orchestrate-marketing`, workflow docs, and examples now consume the canonical research catalog path `skills-resources/research/short-form-research/[slug].md` instead of stale flat or marketing-local paths.
+- `short-form-brief`, `orchestrate-marketing`, workflow docs, and examples now consume the canonical research catalog path `.agents/skill-artifacts/research/short-form-research/[slug].md` instead of stale flat or marketing-local paths.
 - `lp-eval` frontmatter now declares `research/product-context.md` as a consumed dependency, matching its read order.
 
 ---
 
 ## [7.0.0] - 2026-05-13
 
-BREAKING: every artifact path migrates from `.agents/skill-artifacts/mkt/` to `skills-resources/marketing/`. Loop workspaces move to `skills-resources/marketing/loops/[slug]/`.
+BREAKING: every artifact path migrates from `.agents/skill-artifacts/mkt/` to `.agents/skill-artifacts/mkt/`. Loop workspaces move to `skills-resources/loops/[slug]/`.
 
 ### Changed (BREAKING)
-- `.agents/skill-artifacts/mkt/` → `skills-resources/marketing/` (folder renamed from `mkt` to `marketing`).
-- All SKILL.md `produces:` / `consumes:` paths updated: copywriting → `skills-resources/marketing/content/`, lp-brief → `skills-resources/marketing/lp-brief/[slug]/`, seo → `skills-resources/marketing/seo-[mode].md`, cold-outreach → `skills-resources/marketing/cold-outreach/`, ad-copy → `skills-resources/marketing/ad-copy/`, design-brief → `skills-resources/marketing/design-briefs/`, short-form-brief → `skills-resources/marketing/short-form-brief/`, campaign-plan → `skills-resources/marketing/campaign-plan.md`.
-- `lp-eval` loop path moves from `skills-resources/loops/[slug]/` to `skills-resources/marketing/loops/[slug]/` (`evals/[date]-cycle-N.md`, `results.tsv`, `learnings.md`).
+- `.agents/skill-artifacts/mkt/` → `.agents/skill-artifacts/mkt/` (folder renamed from `mkt` to `marketing`).
+- All SKILL.md `produces:` / `consumes:` paths updated: copywriting → `.agents/skill-artifacts/mkt/content/`, lp-brief → `.agents/skill-artifacts/mkt/lp-brief/[slug]/`, seo → `.agents/skill-artifacts/mkt/seo-[mode].md`, cold-outreach → `.agents/skill-artifacts/mkt/cold-outreach/`, ad-copy → `.agents/skill-artifacts/mkt/ad-copy/`, design-brief → `.agents/skill-artifacts/mkt/design-briefs/`, short-form-brief → `.agents/skill-artifacts/mkt/short-form-brief/`, campaign-plan → `.agents/skill-artifacts/mkt/campaign-plan.md`.
+- `lp-eval` loop path moves from `skills-resources/loops/[slug]/` to `skills-resources/loops/[slug]/` (`evals/[date]-cycle-N.md`, `results.tsv`, `learnings.md`).
 - `eval-loop` cross-references updated to point at domain-scoped loop paths.
-- `orchestrate-marketing` inline pre-dispatch bash scans `skills-resources/marketing/loops/` instead of the unscoped `skills-resources/loops/`.
+- `orchestrate-marketing` inline pre-dispatch bash scans `skills-resources/loops/` instead of the unscoped `skills-resources/loops/`.
 - README, CLAUDE.md, workflow-graph.md, and shared/marketing-foundations.md rewritten for the new paths.
 
 ### Migration
-Move any existing `mkt/` artifacts under `skills-resources/marketing/`. Move existing `loops/[slug]/` workspaces under `skills-resources/marketing/loops/[slug]/`. Then run `bun meta-skills/scripts/manifest-sync.ts` to regenerate the index.
+Move any existing `mkt/` artifacts under `.agents/skill-artifacts/mkt/`. Move existing `loops/[slug]/` workspaces under `skills-resources/loops/[slug]/`. Then run `bun meta-skills/scripts/manifest-sync.ts` to regenerate the index.
 
 ---
 

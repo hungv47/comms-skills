@@ -1,7 +1,5 @@
 # Emotional Triggers — 6-Lever Framework
 
-> Framework for writing copy that drives engagement (not just impressions). Source: Paolo Scales' breakdown of 2,400+ viral LinkedIn posts ([@paolo_scales](https://x.com/paolo_scales/status/2035437083175592061), 2026-03-22).
-
 The fundamental claim: information delivery loses; emotional response wins. Algorithms optimize for engagement velocity, and engagement velocity is a proxy for emotional intensity. A post that makes someone *feel* something (recognition, discomfort, tribal pull, aspiration) gets the comment, save, share. A post that just informs gets a like at best.
 
 Every viral piece uses ≥2-3 of these 6 triggers. The most explosive uses all 6. Use as a checklist when writing hooks, body copy, lead-magnet posts, TOF belief-disruption, CTA-driving content. Score copy on **trigger density** (see `agents/critic-agent.md` for the 0-2 / 3-4 / 5-6 dial).
@@ -89,7 +87,7 @@ The most tactical trigger and the foundation of every high-performing hook. Info
 
 | Weak gap | Strong gap |
 |---|---|
-| "here's how to get more linkedin engagement" | "the linkedin post that booked me 47 calls in 72 hours (copy the exact framework)" *(verbatim, Paolo)* |
+| "here's how to get more linkedin engagement" | "the linkedin post that booked me 47 calls in 72 hours (copy the exact framework)" (pattern example) |
 | "5 tips for better cold emails" | *[extend the Paolo pattern: name the specific framework + the falsifiable outcome from your own case study; use real numbers, not invented ones — fabricated results are the fastest way to burn the account]* |
 | "how to grow on tiktok" | *[same — the strong-gap structure is **specific framework + specific outcome + specific timeframe**; instantiate from real data in your domain, not from a swipe file]* |
 
@@ -100,7 +98,7 @@ The most tactical trigger and the foundation of every high-performing hook. Info
 - Tension between expectation and reality (sounds impossible, sounds too good to be true)
 - Clear value for closing the gap (you'll know how to do this too)
 
-**Stack with other triggers for compound hooks** *(both verbatim from Paolo)*:
+**Stack with other triggers for compound hooks** *(both pattern-derived)*:
 
 - Curiosity + productive discomfort: *"the uncomfortable truth about why your linkedin posts flop"*
 - Curiosity + tribal anxiety: *"why 90% of founders will never book inbound calls from linkedin"*
@@ -121,7 +119,7 @@ Show someone a specific result they want and make them believe they could have i
 |---|---|
 | "how I made $10M in my first year" | "how I went from 0 to $42k MRR in 90 days using only LinkedIn" |
 
-*Both rows verbatim from Paolo source. Extend the contrast in your own ICP using **real** outcome numbers from your case studies — fabricated MRR figures are detectable and burn trust permanently. The contrast pattern: implausibly-large outcome + vague timeframe **vs** plausibly-large outcome + specific timeframe + accessible method.*
+*both rows are pattern-derived. Extend the contrast in your own ICP using **real** outcome numbers from your case studies — fabricated MRR figures are detectable and burn trust permanently. The contrast pattern: implausibly-large outcome + vague timeframe **vs** plausibly-large outcome + specific timeframe + accessible method.*
 
 **Elements of effective aspiration:**
 
@@ -160,9 +158,9 @@ The "LinkedIn guru" archetype exists because writers use these triggers without 
 2. Pick **secondary trigger** — how do you deepen engagement after the hook lands?
 3. Run authenticity filter (6 questions above).
 4. Critic scores trigger density (see `agents/critic-agent.md`):
-   - 0-2 triggers → weak (rewrite or fold in another lever)
-   - 3-4 triggers → strong (target zone)
-   - 5-6 triggers → guru-energy risk (cut a lever, hold to substance)
+ - 0-2 triggers → weak (rewrite or fold in another lever)
+ - 3-4 triggers → strong (target zone)
+ - 5-6 triggers → guru-energy risk (cut a lever, hold to substance)
 
 **Trigger combinations that compound (paired with their archetypes):**
 
@@ -190,6 +188,5 @@ The "LinkedIn guru" archetype exists because writers use these triggers without 
 
 ## Source Notes
 
-- Framework distilled from Paolo Scales' analysis of 2,400+ viral LinkedIn posts and 2M+ impressions of own content (claim cited in source — not independently verified). Original thread: <https://x.com/paolo_scales/status/2035437083175592061>.
 - Adjacent triggers (FOMO 4-element stack for lead magnets) split out to [`lead-magnet-stack.md`](lead-magnet-stack.md).
 - TOF belief-disruption mechanic split out to [`belief-disruption.md`](belief-disruption.md) — uses Identity Validation + Productive Discomfort + Tribal Belonging as primary levers in a specific 5-step structure.

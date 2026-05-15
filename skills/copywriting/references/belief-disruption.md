@@ -1,7 +1,5 @@
 # Belief Disruption — TOF Ragebait Structure
 
-> 5-step structure for top-of-funnel content that creates demand where none existed by shifting beliefs in problem-unaware audiences. Source: Paolo Scales ([@paolo_scales](https://x.com/paolo_scales/status/2035437083175592061), 2026-03-22).
-
 ## When to Use
 
 Most copywriting frameworks (PAS, AIDA, the 6-trigger emotional stack) target **problem-aware** readers — people who already know they want the outcome. Belief disruption is for **problem-unaware** readers — people who don't yet know they have a problem because their current beliefs prevent them from seeing it.
@@ -204,6 +202,5 @@ To stack additional triggers, layer:
 
 ## Source Notes
 
-- Structure distilled from Paolo Scales' "TOF ragebait" section in <https://x.com/paolo_scales/status/2035437083175592061>. The 5-step naming and worked-example pattern follow the source directly; ICP-fit and audience-awareness rules are this skill's overlay.
 - Pairs with [`emotional-triggers.md`](emotional-triggers.md) (the 6-lever stack — Identity Validation + Productive Discomfort + Tribal Belonging are belief disruption's primary triggers).
 - For lead-magnet posts that *also* drive a CTA action, see [`lead-magnet-stack.md`](lead-magnet-stack.md) — belief disruption can serve as the body content with a lead-magnet stack on top.

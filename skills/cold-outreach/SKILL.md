@@ -1,6 +1,6 @@
 ---
 name: cold-outreach
-description: "Writes and evaluates cold outreach — email, LinkedIn, Twitter/X, iMessage/SMS, platform proposals — with signal-based personalization, channel-specific craft, and rubric scoring. Produces `skills-resources/marketing/cold-outreach/[slug].md` (+ `.rationale.md` + `.critic-score.md`). Handles first-touch compose and reply-to-inbound modes. Not for campaign orchestration or sequence design (compose touches individually, pass prior touches as context). Not for sourcing/list-building (start at 'here's who I'm reaching'). Brand voice: see brand-system. AI-sounding cleanup: humanize runs as terminal pass."
+description: "Writes and evaluates cold outreach — email, LinkedIn, Twitter/X, iMessage/SMS, platform proposals — with signal-based personalization, channel-specific craft, and rubric scoring. Produces `.agents/skill-artifacts/mkt/cold-outreach/[slug].md` (+ `.rationale.md` + `.critic-score.md`). Handles first-touch compose and reply-to-inbound modes. Not for campaign orchestration or sequence design (compose touches individually, pass prior touches as context). Not for sourcing/list-building (start at 'here's who I'm reaching'). Brand voice: see brand-system. AI-sounding cleanup: humanize runs as terminal pass."
 argument-hint: "[target/signal + channel + mode, or reply text to respond to]"
 allowed-tools: Read Grep Glob Bash WebSearch WebFetch
 license: MIT
@@ -50,13 +50,13 @@ routing:
   position: horizontal
   lifecycle: pipeline
   produces:
-    - skills-resources/marketing/cold-outreach/[slug].md
-    - skills-resources/marketing/cold-outreach/[slug].rationale.md
-    - skills-resources/marketing/cold-outreach/[slug].critic-score.md
+    - .agents/skill-artifacts/mkt/cold-outreach/[slug].md
+    - .agents/skill-artifacts/mkt/cold-outreach/[slug].rationale.md
+    - .agents/skill-artifacts/mkt/cold-outreach/[slug].critic-score.md
   consumes:
     - product-context.md
     - icp-research.md
-    - skills-resources/marketing/campaign-plan.md
+    - .agents/skill-artifacts/mkt/campaign-plan.md
   requires: []
   defers-to:
     - skill: copywriting
@@ -116,7 +116,7 @@ The orchestrator separates strategy from craft: specialists pick angle/signal/pr
 
 ## Output
 
-Writes to `skills-resources/marketing/cold-outreach/`:
+Writes to `.agents/skill-artifacts/mkt/cold-outreach/`:
 
 | File | Content |
 |------|---------|
@@ -208,7 +208,7 @@ Horizontal — runs standalone or called by `campaign-plan` when outbound is par
 - `references/frameworks/personalization-signals.md` — 4-level signal system + trigger catalogue (funding, hiring, post, tech-stack, event)
 - `references/frameworks/ctas.md` — low-friction asks, interest-based vs meeting-request, one-line-reply CTAs
 - `references/frameworks/objections.md` — reply playbooks per classification
-- `references/frameworks/saraev-four-step.md` — Nick Saraev's 4-step framework (personalization → who-am-I → offer → CTA), 7 Cialdini-mapped levers, verbatim $15M template, offer-formula equation. Strategist picks this in preference to `structures.md` when the message is touch 1 to a stranger with zero pre-existing trust.
+- `references/frameworks/saraev-four-step.md` — practitioner's 4-step framework (personalization → who-am-I → offer → CTA), 7 Cialdini-mapped levers, verbatim $15M template, offer-formula equation. Strategist picks this in preference to `structures.md` when the message is touch 1 to a stranger with zero pre-existing trust.
 
 **Shared guardrails:**
 - `references/anti-patterns.md` — AI tells, template smell, phrases that kill replies
@@ -247,7 +247,7 @@ Classify the task, then follow the matching route.
    - Same BLOCKED reason repeats on second pass → escalate as `NEEDS_CONTEXT` (name what's missing — usually a concrete client + number).
 7. TERMINAL: invoke `humanize` with `content-type: "short-outbound"` + channel
 8. POST-HUMANIZE REGRESSION: re-run critic's Specificity dim only. Drops ≥2 OR any named entity/number absent post-humanize → revert to critic-approved draft.
-9. Write artifacts to `skills-resources/marketing/cold-outreach/[slug].md` (+ .rationale.md + .critic-score.md)
+9. Write artifacts to `.agents/skill-artifacts/mkt/cold-outreach/[slug].md` (+ .rationale.md + .critic-score.md)
 10. Deliver message + rationale inline; show scorecard only if user asks or any dim scored 6-7
 ```
 
@@ -282,13 +282,13 @@ Classify the task, then follow the matching route.
 
 ## Pre-Dispatch
 
-Run the Pre-Dispatch protocol (`meta-skills/references/pre-dispatch-protocol.md`). cold-outreach has the most elaborate Pre-Dispatch in the stack (5 questions + missing-input protocol with hard blocks for un-faithfulness).
+Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`). cold-outreach has the most elaborate Pre-Dispatch in the stack (5 questions + missing-input protocol with hard blocks for un-faithfulness).
 
 **Needed dimensions:** mode (services-sell / saas-sell / partnership-sell / community-sell), channel (email / LinkedIn / Twitter DM / other), target (name + role + company), trigger (specific signal + strength 1-5), desired outcome (reply / call / resource open / connection accept), bridge (problem we solve that connects to trigger), proof (case studies + logos + metrics + testimonials).
 
 **Read order:**
-1. Pipeline: `research/product-context.md`, `research/icp-research.md`, `skills-resources/marketing/campaign-plan.md`. Read if present, do not block on missing.
-2. Experience: `skills-resources/experience/{audience,product,business}.md`.
+1. Pipeline: `research/product-context.md`, `research/icp-research.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`. Read if present, do not block on missing.
+2. Experience: `.agents/experience/{audience,product,business}.md`.
 
 If `icp-research.md` / `product-context.md` >30 days old, warn and recommend re-running `icp-research` (soft gate — proceed with "stale ICP" header note).
 
@@ -354,8 +354,8 @@ Use the **Agent tool** (general-purpose or Explore) with a prompt built as:
 
 1. **Read** the agent instruction file (e.g., `agents/strategist.md`) — include FULL content in the Agent prompt
 2. **Append** pre-writing context + any prior layer's output
-3. **Resolve paths to absolute** — rooted at this skill's directory. Example: `references/channels/email.md` → `<skill-root>/references/channels/email.md` (`<skill-root>` = install path, typically `marketing-skills/skills/cold-outreach/`). Tell the agent which references to read.
-4. **Pass upstream artifacts by content, not path** — orchestrator reads `research/*.md` and `skills-resources/marketing/*.md` FIRST, includes excerpts (VoC quotes, voice adjectives, pain language) in pre-writing. Sub-agents do NOT read artifact files directly.
+3. **Resolve paths to absolute** — rooted at this skill's directory. Example: `references/channels/email.md` → `<skill-root>/references/channels/email.md` (`<skill-root>` = install path, typically `<skill-root>/`). Tell the agent which references to read.
+4. **Pass upstream artifacts by content, not path** — orchestrator reads `research/*.md` and `.agents/skill-artifacts/mkt/*.md` FIRST, includes excerpts (VoC quotes, voice adjectives, pain language) in pre-writing. Sub-agents do NOT read artifact files directly.
 5. If **feedback** exists (critic FAIL), append at end with header "## Critic Feedback — Address Every Point"
 
 ### Single-agent fallback
@@ -512,7 +512,7 @@ Reply-specific rubric (5 dims, two substitutions):
 
 - **coreyhaines/cold-email** (Claude skill by Corey Haines, ex-Baremetrics growth): structural frameworks (O→P→P→A), 4-level personalization, subject-line discipline, breakup protocol. → `references/frameworks/structures.md`, `references/frameworks/personalization-signals.md`, `references/channels/email.md`.
 - **kostja94/cold-start-strategy** (Claude skill): "demand-signal outreach" — read posts/comments for expressed need rather than guessing pain. → `references/channels/twitter.md`, `references/channels/platform-proposals.md`.
-- **Nick Saraev — Make More Money** (YouTube, AI Automation Agency playbook, 2023-2024): services-mode defaults — audit/loom-teardown CTAs, revenue-tied problems, value-based positioning, Upwork as legit top-of-funnel. → `references/modes/services.md`, `references/channels/platform-proposals.md`. Specific artifacts: "Loom Teardown" template, "$10k/month Upwork Playbook" series.
+- **practitioner — Make More Money** (YouTube, AI Automation Agency playbook, 2023-2024): services-mode defaults — audit/loom-teardown CTAs, revenue-tied problems, value-based positioning, Upwork as legit top-of-funnel. → `references/modes/services.md`, `references/channels/platform-proposals.md`. Specific artifacts: "Loom Teardown" template, "$10k/month Upwork Playbook" series.
 
 ## Completion Status
 

@@ -10,7 +10,7 @@ note: 4 worked examples calibrating the 7-dim rubric. Synthetic illustrative dra
 
 4 worked examples covering the 2 × 2 matrix:
 
-| | Retargeting (warm) | Cold-traffic |
+| | Retargeting (warm) | internal |
 |---|---|---|
 | **Strong (PASS)** | Example 1 | Example 3 |
 | **Weak (FAIL)** | Example 2 | Example 4 |
@@ -30,10 +30,10 @@ Each example shows: input context → hero + 2 variants → per-variant scorecar
 - **conversion_event:** trial_start
 - **production_model:** in-house
 - **available_proof:** [
-    "Ramp · close time 9 days → 4 days · in-product analytics",
-    "Linear · 38% → 6% missed-deal rate · case study",
-    "Vercel · 12 deals/quarter saved · testimonial verbatim"
-  ]
+ "Ramp · close time 9 days → 4 days · in-product analytics",
+ "Linear · 38% → 6% missed-deal rate · case study",
+ "Vercel · 12 deals/quarter saved · testimonial verbatim"
+ ]
 - **lp_description:** "Close deals 2x faster. 14-day free trial. Built for B2B sales teams."
 - **brand_voice:** direct, peer-to-peer, no fluff
 - **recent_organic:** ["Close-time benchmark survey results", "Ramp case study", "How fast pipelines stay fast", "Why pipeline freshness predicts close rate"]
@@ -71,7 +71,7 @@ Each example shows: input context → hero + 2 variants → per-variant scorecar
 
 ### Critic Scorecard
 
-| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Trans | Total |
+| Variant | Hook | Char | internal | Pattern | Policy | Spec | Trans | Total |
 |---------|------|------|--------|---------|--------|------|-------|-------|
 | Hero | 9 | 9 | 10 | 9 | 9 | 9 | 9 | **64** |
 | A | 8 | 9 | 10 | 9 | 9 | 9 | 9 | **63** |
@@ -121,7 +121,7 @@ Same as Example 1, but the drafter ignored audience-temp framing and produced co
 
 ### Critic Scorecard
 
-| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Trans | Total |
+| Variant | Hook | Char | internal | Pattern | Policy | Spec | Trans | Total |
 |---------|------|------|--------|---------|--------|------|-------|-------|
 | Hero | 3 | 6 | 4 | 4 | 4 | 1 | 3 | **25** |
 | A | 2 | 6 | 4 | 4 | 4 | 1 | 3 | **24** |
@@ -156,10 +156,10 @@ Same as Example 1, but the drafter ignored audience-temp framing and produced co
 - **conversion_event:** trial_start
 - **production_model:** affiliate-creator
 - **available_proof:** [
-    "User testimonial: 'Lost 20 lbs in 30 days' — Jake, 32, verified user",
-    "Cohort: '5,000 users averaged 12 lbs lost in 90 days'",
-    "Calorie-tracking accuracy: 'photo-recognition matches manual entry within 8% (in-house test, n=200 meals)'"
-  ]
+ "User testimonial: 'Lost 20 lbs in 30 days' — Jake, 32, verified user",
+ "Cohort: '5,000 users averaged 12 lbs lost in 90 days'",
+ "Calorie-tracking accuracy: 'photo-recognition matches manual entry within 8% (in-house test, n=200 meals)'"
+ ]
 - **lp_description:** "Track calories by photo. 7-day free trial. $9.99/mo annual."
 - **brand_voice:** direct, evidence-led, no fluff
 - **recent_organic:** [] (cold audience)
@@ -197,7 +197,7 @@ Same as Example 1, but the drafter ignored audience-temp framing and produced co
 
 ### Critic Scorecard
 
-| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Trans | Total |
+| Variant | Hook | Char | internal | Pattern | Policy | Spec | Trans | Total |
 |---------|------|------|--------|---------|--------|------|-------|-------|
 | Hero | 9 | 9 | 10 | 9 | 9 | 9 | 9 | **64** |
 | A | 9 | 9 | 10 | 9 | 9 | 9 | 9 | **64** |
@@ -247,7 +247,7 @@ Same as Example 3, but `creative_format=repurposed-ugc` and target daily spend =
 
 ### Critic Scorecard (format-checker BOUNCED first; below is post-format-checker fix attempt that still failed critic)
 
-| Variant | Hook | Char | CTA-LP | Pattern | Policy | Spec | Trans | Total |
+| Variant | Hook | Char | internal | Pattern | Policy | Spec | Trans | Total |
 |---------|------|------|--------|---------|--------|------|-------|-------|
 | Hero | 2 | 5 | 2 | 3 | 0* | 1 | 1 | **14** |
 | A | 2 | 6 | 2 | 3 | 1 | 1 | 2 | **16** |

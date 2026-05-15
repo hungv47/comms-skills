@@ -82,8 +82,8 @@ Lists with 2-3 items are usually better as a sentence. "Key factors: speed, reli
 | Level | Signal-to-Word Ratio | Description | Reader Experience |
 |-------|---------------------|-------------|-------------------|
 | **Bloated** | Low | Filler, repetition, unnecessary hedges | "Get to the point" |
-| **Comfortable** | Medium-Low | Readable but padded — could lose 20% without harm | "Fine but long" |
-| **Dense** | Medium-High | Every paragraph earns its place, minimal filler | "Efficient and clear" |
+| **Comfortable** | internal | Readable but padded — could lose 20% without harm | "Fine but long" |
+| **Dense** | internal | Every paragraph earns its place, minimal filler | "Efficient and clear" |
 | **Compressed** | High | Technical density — requires active reading | "I need to slow down" |
 | **Cryptic** | Extreme | Missing context, unclear references | "What does this mean?" |
 

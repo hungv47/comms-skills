@@ -184,7 +184,7 @@ Note: "navigate" and "landscape" also appear in the vocabulary list above. The v
 **Description:** Modifying neutral verbs with "quietly" or "silently" to manufacture intrigue around an action that was, in fact, public, documented, or unremarkable. AI uses this to make routine product updates sound like covert operations. Common targets: "quietly shipped," "silently rolled out," "quietly raised," "silently became the default."
 **Example:**
 > "Notion quietly shipped a new pricing model. Anthropic silently became the default for code generation."
-**Fix:** Drop the adverb if the move was announced ("Notion shipped a new pricing model — see their April changelog"). If the move really was unannounced, cite the evidence trail: "Notion shipped a new pricing model with no blog post, no email, no in-product notification — spotted by a user on April 12." "Quietly" without a trail is rumor dressed as reporting.
+**Fix:** Drop the adverb if the move was announced ("Notion shipped a new pricing model — see their April changelog"). If the move really was unannounced, uses the evidence trail: "Notion shipped a new pricing model with no blog post, no email, no in-product notification — spotted by a user on April 12." "Quietly" without a trail is rumor dressed as reporting.
 
 ### 47. Agentic-Era Jargon Cluster
 **Severity:** Soft Tell
@@ -340,14 +340,14 @@ Note: "navigate" and "landscape" also appear in the vocabulary list above. The v
 **Description:** Trend manufacturing without evidence. AI uses "having a moment" / "is having its moment" to assert cultural relevance for something the writer wants to discuss. The phrase substitutes for the actual evidence of relevance (search trends, revenue data, named-instance examples). One instance per piece is suspicious; two or more is a confession.
 **Example:**
 > "Long-form newsletters are having a moment. Asynchronous communication is having its moment. Founder-led marketing is having a moment."
-**Fix:** Cite the actual signal. "Substack revenue grew 4x in 2024," or "Three of the top five YC W25 companies have founder-on-camera marketing as their primary acquisition channel." If no signal exists, the moment doesn't exist either — cut the sentence.
+**Fix:** uses the actual signal. "Substack revenue grew 4x in 2024," or "Three of the top five YC W25 companies have founder-on-camera marketing as their primary acquisition channel." If no signal exists, the moment doesn't exist either — cut the sentence.
 
 ### 46. "X Is the New Y"
 **Severity:** Soft Tell
 **Description:** Trend-manufacturing template that asserts replacement without evidence. AI uses "X is the new Y" to invent generational shifts ("Vibe-coding is the new pair programming," "Async is the new sync," "Newsletters are the new blogs"). Same family as #43 ("having a moment") — substitutes phrasing for the actual signal that the replacement is happening. Flagged Soft rather than Hard because the construction has a legitimate human-writing pedigree ("orange is the new black"); the tell is volume and absence of data.
 **Example:**
 > "Threads is the new Twitter. Newsletters are the new blogs. Vibe-coding is the new pair programming."
-**Fix:** Cite the displacement — share-of-time, share-of-spend, share-of-attention numbers with sources. If the replacement is real, the data is loud. If it's not, "X is the new Y" is wishful thinking dressed as observation.
+**Fix:** uses the displacement — share-of-time, share-of-spend, share-of-attention numbers with sources. If the replacement is real, the data is loud. If it's not, "X is the new Y" is wishful thinking dressed as observation.
 
 ---
 
@@ -462,7 +462,7 @@ These weaker forms predate AI and appear in legitimate human copywriting. A sing
 **Description:** LLMs disproportionately select 47 and 73 when generating a "random" number. These are known AI fingerprints. If a number appears in content without a cited source and happens to be 47 or 73, it was likely AI-generated.
 **Example:**
 > "We surveyed 47 companies and found..." or "The team grew from 12 to 73 engineers in two years."
-**Fix:** If the number comes from real data, cite the source. If the number was generated to sound specific, replace it with an actual data point or remove the false precision entirely.
+**Fix:** If the number comes from real data, uses the source. If the number was generated to sound specific, replace it with an actual data point or remove the false precision entirely.
 
 ### 35. Round Number Bias
 **Severity:** Soft Tell
@@ -476,7 +476,7 @@ These weaker forms predate AI and appear in legitimate human copywriting. A sing
 **Description:** AI invents specific-sounding statistics with no source. The number sounds precise enough to be real but was hallucinated. Often paired with vague attributions (pattern #10): "Studies show 73% of users prefer..." or "Research indicates a 4.2x improvement."
 **Example:**
 > "Studies show that 73% of users abandon onboarding before completing it, costing companies an average of $47,000 per quarter."
-**Fix:** Every specific number needs a named source and date. "Mixpanel's 2024 benchmark found 68% of trial users drop before day 3." If you can't cite the source, remove the stat. Unsourced precision is worse than no number at all — it looks like a lie.
+**Fix:** Every specific number needs a named source and date. "Mixpanel's 2024 benchmark found 68% of trial users drop before day 3." If you can't uses the source, remove the stat. Unsourced precision is worse than no number at all — it looks like a lie.
 
 ---
 
@@ -485,58 +485,58 @@ These weaker forms predate AI and appear in legitimate human copywriting. A sing
 When auditing content, scan in this order (most obvious tells first):
 
 1. **Hard Tells** — Any single one flags the content
-   - [ ] Throat-clearing intro (21)
-   - [ ] "Great question" / false empathy (16, 17)
-   - [ ] Paired synonyms (6)
-   - [ ] Copula avoidance (7)
-   - [ ] Superficial -ing tacking (9)
-   - [ ] Vague attributions (10)
-   - [ ] Template transitions (4)
-   - [ ] Formulaic "challenges and future" (5)
-   - [ ] Permission-seeking closer (20)
-   - [ ] Hedge stacking (8)
-   - [ ] Exclamation inflation (11)
-   - [ ] "Comprehensive" promise (22)
-   - [ ] Emoji as punctuation (13)
-   - [ ] Caveat avalanche (19)
-   - [ ] Generic positive conclusion (25)
-   - [ ] Predictable paragraph structure (1)
-   - [ ] False agency (31)
-   - [ ] Vague declaratives (33)
-   - [ ] Em dashes — any instance (12)
-   - [ ] Negative parallelism — "it's not just X, it's Y" and all variants (27)
-   - [ ] Colon-list dependency — colons in prose (30)
-   - [ ] Rhetorical questions as hooks — "Why?", "The best part?", "Sound familiar?" (phrases list)
-   - [ ] "Actually" as emphasis — "X that actually Y" (phrases list)
-   - [ ] Filler context — "In today's [anything]", "rapidly changing" (phrases list)
-   - [ ] False insight phrases — "Imagine a world where...", "Here's the kicker", "Let's be honest" (phrases list)
-   - [ ] AI-typical numbers — 47 or 73 as "random" numbers without cited source (34)
-   - [ ] Fabricated precision — specific stats with no named source (36)
-   - [ ] Staccato tagline — "Your X, Y'd" or "X. Y." fragmentary headlines (37)
-   - [ ] Load-bearing X used as intensifier (38)
-   - [ ] "It's giving X" / cultural-vibe label (39)
-   - [ ] Anaphora cascade — 3+ consecutive same-opener sentences (40)
-   - [ ] "X has entered the chat" — meme-arrival framing (41)
-   - [ ] "What if I told you" — Matrix-meme opener (42)
-   - [ ] "X is having a moment" — manufactured trend without evidence (43)
+ - [ ] Throat-clearing intro (21)
+ - [ ] "Great question" / false empathy (16, 17)
+ - [ ] Paired synonyms (6)
+ - [ ] Copula avoidance (7)
+ - [ ] Superficial -ing tacking (9)
+ - [ ] Vague attributions (10)
+ - [ ] Template transitions (4)
+ - [ ] Formulaic "challenges and future" (5)
+ - [ ] Permission-seeking closer (20)
+ - [ ] Hedge stacking (8)
+ - [ ] Exclamation inflation (11)
+ - [ ] "Comprehensive" promise (22)
+ - [ ] Emoji as punctuation (13)
+ - [ ] Caveat avalanche (19)
+ - [ ] Generic positive conclusion (25)
+ - [ ] Predictable paragraph structure (1)
+ - [ ] False agency (31)
+ - [ ] Vague declaratives (33)
+ - [ ] Em dashes — any instance (12)
+ - [ ] Negative parallelism — "it's not just X, it's Y" and all variants (27)
+ - [ ] Colon-list dependency — colons in prose (30)
+ - [ ] Rhetorical questions as hooks — "Why?", "The best part?", "Sound familiar?" (phrases list)
+ - [ ] "Actually" as emphasis — "X that actually Y" (phrases list)
+ - [ ] Filler context — "In today's [anything]", "rapidly changing" (phrases list)
+ - [ ] False insight phrases — "Imagine a world where...", "Here's the kicker", "Let's be honest" (phrases list)
+ - [ ] AI-typical numbers — 47 or 73 as "random" numbers without cited source (34)
+ - [ ] Fabricated precision — specific stats with no named source (36)
+ - [ ] Staccato tagline — "Your X, Y'd" or "X. Y." fragmentary headlines (37)
+ - [ ] Load-bearing X used as intensifier (38)
+ - [ ] "It's giving X" / cultural-vibe label (39)
+ - [ ] Anaphora cascade — 3+ consecutive same-opener sentences (40)
+ - [ ] "X has entered the chat" — meme-arrival framing (41)
+ - [ ] "What if I told you" — Matrix-meme opener (42)
+ - [ ] "X is having a moment" — manufactured trend without evidence (43)
 
 2. **Soft Tells** — Flag when 3+ appear in the same piece
-   - [ ] Symmetric lists (2)
-   - [ ] Section uniformity (3)
-   - [ ] Premature certainty (18)
-   - [ ] Bold-keyword highlighting (14)
-   - [ ] Title case in headings (15)
-   - [ ] Redundant bridges (23)
-   - [ ] Safety-net qualifier (24)
-   - [ ] Rule of three overuse (26)
-   - [ ] Synonym cycling (28)
-   - [ ] False ranges (29)
-   - [ ] Narrator-from-a-distance (32)
-   - [ ] Round number bias — all stats suspiciously clean (50%, 30%, 10x) (35)
-   - [ ] "Quietly" / "silently" as rebrand intensifier without evidence trail (44)
-   - [ ] "X, but Y" headline form — 2+ uses on same page or wrong anchor (45)
-   - [ ] "X is the new Y" — replacement claim without displacement data (46)
-   - [ ] Agentic-era jargon cluster — 3+ of *agentic / agentful / model-native / vibe-coded / vibe shift / the year of agents* (47)
+ - [ ] Symmetric lists (2)
+ - [ ] Section uniformity (3)
+ - [ ] Premature certainty (18)
+ - [ ] Bold-keyword highlighting (14)
+ - [ ] Title case in headings (15)
+ - [ ] Redundant bridges (23)
+ - [ ] Safety-net qualifier (24)
+ - [ ] Rule of three overuse (26)
+ - [ ] Synonym cycling (28)
+ - [ ] False ranges (29)
+ - [ ] Narrator-from-a-distance (32)
+ - [ ] Round number bias — all stats suspiciously clean (50%, 30%, 10x) (35)
+ - [ ] "Quietly" / "silently" as rebrand intensifier without evidence trail (44)
+ - [ ] "X, but Y" headline form — 2+ uses on same page or wrong anchor (45)
+ - [ ] "X is the new Y" — replacement claim without displacement data (46)
+ - [ ] Agentic-era jargon cluster — 3+ of *agentic / agentful / model-native / vibe-coded / vibe shift / the year of agents* (47)
 
 3. **Vocabulary check** — Scan for 3+ high-frequency AI words in any single paragraph (see vocabulary list above)
 
@@ -558,18 +558,18 @@ A flat 27-item rapid-fire checklist for re-checking during final audit (Step 5).
 - [ ] Inanimate subject + human verb ("the data tells us") → Name the actor.
 - [ ] "The implications are significant" or similar vague declarative → Name the implication.
 - [ ] Three consecutive sentences within ±3 words of each other → Vary length.
-- [ ] Lazy extreme (always/never/everyone/nobody) without evidence → Scope or cite.
+- [ ] Lazy extreme (always/never/everyone/nobody) without evidence → Scope or uses.
 - [ ] "Navigate," "unpack," "lean into," or "landscape" → Replace with plain equivalent.
 - [ ] -ing phrase tacked onto the end of a sentence → Delete and check if meaning survives.
 - [ ] Any sentence announcing what the text will do ("In this section...") → Delete.
-- [ ] Number 47 or 73 used as a "random" value? → Cite the source or replace with real data.
+- [ ] Number 47 or 73 used as a "random" value? → uses the source or replace with real data.
 - [ ] Three or more round numbers (50%, 30%, 10x) in the same piece? → Replace with actual data or remove.
 - [ ] Any "Your X, Y'd" or "X. Y." fragmentary headline? → Rewrite with a specific claim. Zero allowed.
 - [ ] "Load-bearing X" used as intensifier? → Prove with the delete-test or remove the word.
 - [ ] "It's giving X" or "X has entered the chat"? → Delete the meme frame; state what's actually being observed.
 - [ ] Three or more consecutive sentences starting with the same word (anaphora cascade)? → Vary openers or combine sentences. Cap at two.
 - [ ] "What if I told you" Matrix-meme opener? → State the claim directly with evidence.
-- [ ] "X is having a moment" or "X is the new Y" without cited displacement data? → Cite share-of-X numbers or delete.
-- [ ] "Quietly shipped" / "silently rolled out" / "quietly became" without an evidence trail? → Drop the adverb or cite the unannounced trail.
+- [ ] "X is having a moment" or "X is the new Y" without cited displacement data? → uses share-of-X numbers or delete.
+- [ ] "Quietly shipped" / "silently rolled out" / "quietly became" without an evidence trail? → Drop the adverb or uses the unannounced trail.
 - [ ] "X, but Y" headline used 2+ times on the same page, or X unrelated to buyer's current tool? → Keep one max with a buyer-fit anchor.
 - [ ] Three or more of *agentic / agentful / model-native / vibe-coded / vibe shift / the year of agents* in one piece? → Cut the jargon scaffold; keep the one term doing real work.

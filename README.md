@@ -51,7 +51,7 @@ research-skills/skills/icp-research        → research/product-context.md, rese
                                           ↓
 brand-system                         → brand/BRAND.md, brand/DESIGN.md, brand/ASSETS.md
                                           ↓
-campaign-plan                             → skills-resources/marketing/campaign-plan.md
+campaign-plan                             → .agents/skill-artifacts/mkt/campaign-plan.md
                                           ↓
                 ┌─────────────┬───────────┼───────────┬─────────────┐
                 ↓             ↓           ↓           ↓             ↓
@@ -94,7 +94,7 @@ Creates integrated marketing plans — channel strategy, positioning, content ca
 
 **Not for:** setting numeric targets (use `funnel-planner`)
 
-**Produces:** `skills-resources/marketing/campaign-plan.md`
+**Produces:** `.agents/skill-artifacts/mkt/campaign-plan.md`
 
 ---
 
@@ -109,7 +109,7 @@ Headlines, hooks, CTAs, taglines, and full-page section copy with rubric scoring
 
 **Not for:** AI pattern removal (use `humanize`)
 
-**Produces:** `skills-resources/marketing/content/[slug].copy.md`
+**Produces:** `.agents/skill-artifacts/mkt/content/[slug].copy.md`
 
 ---
 
@@ -125,7 +125,7 @@ Generates a campaign-grade brief for a landing page or redesign — hypothesis, 
 
 **Not for:** post-launch CRO analysis from analytics/experiments (use `lp-eval` inside an eval loop), or single-asset creative (use `design-brief`)
 
-**Produces:** `skills-resources/marketing/lp-brief/[slug]/brief.md` + per-target handoff prompts + per-slot prompts
+**Produces:** `.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md` + per-target handoff prompts + per-slot prompts
 
 ---
 
@@ -140,7 +140,7 @@ Scores landing-page performance from real evidence inside an existing eval loop 
 
 **Not for:** new page briefs or redesign specs (use `lp-brief`), generic heuristic audits without metric evidence, or creating the loop workspace (use `eval-loop`)
 
-**Produces:** `skills-resources/marketing/loops/[slug]/evals/[date]-cycle-N.md` + appends `skills-resources/marketing/loops/[slug]/results.tsv`
+**Produces:** `skills-resources/loops/[slug]/evals/[date]-cycle-N.md` + appends `skills-resources/loops/[slug]/results.tsv`
 
 ---
 
@@ -157,7 +157,7 @@ Produces graphic-design briefs for individual visuals — IG carousel/post/story
 
 **Status note:** Re-scoped from a previous render-focused skill. Per-platform module specs (IG/LinkedIn/FB/YT/X/OOH/banner) currently ship as a skeleton — practitioner-grade specs need a follow-up build pass.
 
-**Produces:** `skills-resources/marketing/design-briefs/[slug].md`
+**Produces:** `.agents/skill-artifacts/mkt/design-briefs/[slug].md`
 
 ---
 
@@ -173,7 +173,7 @@ Technical audit, keyword research, AI/AEO optimization, programmatic SEO, compet
 
 **Not for:** landing-page construction/conversion brief work (use `lp-brief`) or writing copy (use `copywriting`)
 
-**Produces:** `skills-resources/marketing/seo-[mode].md`
+**Produces:** `.agents/skill-artifacts/mkt/seo-[mode].md`
 
 ---
 
@@ -188,7 +188,7 @@ Strips AI patterns, injects brand voice, and compresses existing text. Targets 1
 
 **Not for:** writing new copy from scratch (use `copywriting`)
 
-**Produces:** `skills-resources/marketing/content/[slug].humanized.md`
+**Produces:** `.agents/skill-artifacts/mkt/content/[slug].humanized.md`
 
 ---
 
@@ -206,7 +206,7 @@ Uses a live-scraped corpus from VnExpress, Chinhphu.vn, Tinhte, Spiderum, Otofun
 
 **Not for:** translating from English to Vietnamese (use your preferred MT first, then this), writing new Vietnamese from scratch (use `copywriting`), or stripping AI patterns in English (use `humanize` first, then translate, then `vn-tone`).
 
-**Produces:** `skills-resources/marketing/content/[slug].vn-tone.md`
+**Produces:** `.agents/skill-artifacts/mkt/content/[slug].vn-tone.md`
 
 ---
 
@@ -221,7 +221,7 @@ Writes hero + 2 variants of Meta paid-ad copy (Facebook + Instagram), audience-t
 
 **Not for:** Google RSA / LinkedIn / TikTok Ads (refs not pre-staged — would force fabrication), audience setup or budget pacing (Ads Manager workflow), landing page copy (use `copywriting` or `lp-brief`), cold-outreach DMs (use `cold-outreach`), creative asset production (this skill produces copy spec only).
 
-**Produces:** `skills-resources/marketing/ad-copy/[audience-temp]-[date]-[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
+**Produces:** `.agents/skill-artifacts/mkt/ad-copy/[audience-temp]-[date]-[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
 
 ---
 
@@ -236,7 +236,7 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 
 **Not for:** sourcing or list-building (start at "here's who I'm reaching"), campaign orchestration across many prospects (compose touches individually with prior-touches context), fundraise/hiring outreach (different norms), or lifecycle/nurture emails (those are warm, consent-based, different craft).
 
-**Produces:** `skills-resources/marketing/cold-outreach/[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
+**Produces:** `.agents/skill-artifacts/mkt/cold-outreach/[slug].md` + `[slug].rationale.md` + `[slug].critic-score.md`
 
 ---
 
@@ -244,8 +244,8 @@ Writes and evaluates cold outreach across email, LinkedIn (DM + connection note)
 
 - `brand-system`, `campaign-plan`, `copywriting`, `lp-brief`, `seo`, `cold-outreach`, `ad-copy`, `design-brief` read `research/product-context.md` from [research-skills](https://github.com/hungv47/research-skills)
 - `cold-outreach` and `ad-copy` additionally read `research/icp-research.md` for target persona pain language
-- `campaign-plan` and `lp-brief` can read `skills-resources/meta/sketches/prioritize-*.md` and `skills-resources/meta/records/targets-*.md` from research-skills
-- `lp-eval` requires loop scaffolding from `meta-skills` `/eval-loop` and writes into `skills-resources/marketing/loops/[slug]/`
+- `campaign-plan` and `lp-brief` can read `.agents/skill-artifacts/meta/sketches/prioritize-*.md` and `.agents/skill-artifacts/meta/records/targets-*.md` from research-skills
+- `lp-eval` requires loop scaffolding from `meta-skills` `/eval-loop` and writes into `skills-resources/loops/[slug]/`
 
 ## Releases
 

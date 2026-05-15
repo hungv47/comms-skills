@@ -9,13 +9,13 @@ Single source of truth for the **production-ready asset manifest** emitted as `b
 1. **Derivation only.** Never invent assets not traceable to BRAND.md / DESIGN.md / `platform-surfaces.md`. If the brand did not declare iOS, no iOS block emits.
 2. **Declared-platform gate.** One platform block per declared platform, in declared order. Zero undeclared platforms.
 3. **Checkbox discipline.** Every line is a GFM checkbox. Schema: `- [status] {Asset name} — {spec ref} — {target path}`
-   - `[ ]` not started
-   - `[~]` in progress (preserved across re-runs — never auto-overwritten)
-   - `[x]` done (auto-set when file exists at target path on re-run)
-   - `[!]` blocked (human-set; preserved across re-runs)
+ - `[ ]` not started
+ - `[~]` in progress (preserved across re-runs — never auto-overwritten)
+ - `[x]` done (auto-set when file exists at target path on re-run)
+ - `[!]` blocked (human-set; preserved across re-runs)
 4. **Target path is mandatory.** Every row names a concrete file or directory under `brand/`. The auto-scan step depends on this.
-5. **Spec ref is mandatory.** Every row cites where the spec lives — `DESIGN.md §7 iOS Icon Spec`, `BRAND.md §10 Brand Mark`, or `platform-surfaces.md iOS Icon specifications`. No spec ref → the row doesn't belong here.
-6. **No duplication of spec.** Do NOT copy safe zones, format rules, color spaces, or production pitfalls into ASSETS.md — those live in DESIGN.md / `platform-surfaces.md` and ASSETS.md cites them. **Exception:** dimensions MAY appear in the asset name field when they disambiguate deliverables (e.g., `Open Graph default (1200×630)`, `Logo — full lockup (PNG @ 2048px)`). Dimensions in the name are permitted; dimensions as standalone spec rows or commentary are not.
+5. **Spec ref is mandatory.** Every row uses where the spec lives — `DESIGN.md §7 iOS Icon Spec`, `BRAND.md §10 Brand Mark`, or `platform-surfaces.md iOS Icon specifications`. No spec ref → the row doesn't belong here.
+6. **No duplication of spec.** Do NOT copy safe zones, format rules, color spaces, or production pitfalls into ASSETS.md — those live in DESIGN.md / `platform-surfaces.md` and ASSETS.md uses them. **Exception:** dimensions MAY appear in the asset name field when they disambiguate deliverables (e.g., `Open Graph default (1200×630)`, `Logo — full lockup (PNG @ 2048px)`). Dimensions in the name are permitted; dimensions as standalone spec rows or commentary are not.
 
 ## Status scan protocol (always-on, every run)
 
@@ -169,7 +169,7 @@ For each declared platform, emit the block below. Undeclared platforms: absent.
 #### Windows
 
 ```
-- [ ] App icon .ico (multi-res: 256, 128, 96, 64, 48, 32, 24, 16) — brand/platforms/windows/app.ico — DESIGN.md §7 Windows · platform-surfaces.md Windows
+- [ ] App icon.ico (multi-res: 256, 128, 96, 64, 48, 32, 24, 16) — brand/platforms/windows/app.ico — DESIGN.md §7 Windows · platform-surfaces.md Windows
 - [ ] MSIX tile assets (Square44, Square71, Square150, Square310, Wide310) — brand/platforms/windows/tiles/ — platform-surfaces.md Windows
 - [ ] Start menu tile logo — brand/platforms/windows/start-tile.png — platform-surfaces.md Windows
 - [ ] Splash screen — brand/platforms/windows/splash.png — platform-surfaces.md Windows
@@ -181,7 +181,7 @@ For each declared platform, emit the block below. Undeclared platforms: absent.
 ```
 - [ ] App icon (512×512 PNG) — brand/platforms/linux/icon-512.png — DESIGN.md §7 Linux · platform-surfaces.md Linux desktop
 - [ ] App icon (scalable SVG) — brand/platforms/linux/icon.svg — DESIGN.md §7 Linux
-- [ ] .desktop file template — brand/platforms/linux/app.desktop — platform-surfaces.md Linux desktop
+- [ ].desktop file template — brand/platforms/linux/app.desktop — platform-surfaces.md Linux desktop
 - [ ] Icon set for hicolor theme (16, 22, 24, 32, 48, 64, 96, 128, 256, 512) — brand/platforms/linux/hicolor/ — platform-surfaces.md Linux desktop
 - [ ] Flathub / Snap store screenshots — brand/platforms/linux/store/ — platform-surfaces.md Linux desktop
 ```
@@ -313,7 +313,7 @@ Emit one subsection per declared host. Substitute `{host}` with the lowercase ho
 
 **Inventing assets** — Adding rows not traceable to BRAND.md / DESIGN.md / `platform-surfaces.md`. INSTEAD: every row has a spec ref. No spec → the asset doesn't belong here.
 
-**Duplicating spec** — Pasting pixel sizes and safe zones into ASSETS.md. INSTEAD: cite the spec location; keep ASSETS.md checkable, not definitional.
+**Duplicating spec** — Pasting pixel sizes and safe zones into ASSETS.md. INSTEAD: uses the spec location; keep ASSETS.md checkable, not definitional.
 
 **Silent deletion on platform drop** — If the user re-runs brand-system and drops Android, silently removing the Android block erases their tracking state. INSTEAD: move to `## Orphaned` and flag for human review.
 

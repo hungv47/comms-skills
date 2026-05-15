@@ -137,7 +137,7 @@
 - Comparison to alternatives ("vs. doing nothing", "vs. legacy tool")
 
 **Conversion gates:**
-- [ ] Objection comes from ICP research (cite the source)
+- [ ] Objection comes from ICP research (uses the source)
 - [ ] Counter-evidence is specific, not generic ("we have customers in your industry" is generic)
 - [ ] Tone is confident, not defensive ("Yes, this works for small teams — here's how" not "Don't worry, it's not too complex")
 - [ ] No fake objections (objections invented to be easily knocked down)
@@ -243,5 +243,5 @@ If a section type appears that **shouldn't** for the page tier (e.g., Story sect
 
 - **Every section has a Conversion Checklist.** Even if all gates are n/a, write "n/a" — never omit.
 - **Every copy slot has ≥3 candidates.** Single candidates deny choice at Approval Gate 3.
-- **Every CP citation must exist** in `references/conversion-principles.md`. Inventing CP-IDs FAILs critic.
+- **Every CP reference must exist** in `references/conversion-principles.md`. Inventing CP-IDs FAILs critic.
 - **VoC over invention.** Use phrases from `evidence_digest` ICP/VoC over invented copy whenever a relevant phrase exists.

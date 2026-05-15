@@ -40,7 +40,7 @@ Detailed examples showing the full IMC flow from strategy to allocation.
 | Chaos → Clarity | Bold claim | Solution Aware | Pride | "Most project management is just organized panic" | 21 |
 | Chaos → Clarity | Story | Problem Aware | Belonging | "The meeting that killed our productivity" | 18 |
 | Team Wins | Data | Product Aware | Greed | "How [Company] cut meeting time 50%" | 20 |
-| Productivity Hacks | How-to | Solution Aware | Greed | "The 2-minute rule that cleared my task backlog" | 17 |
+| Productivity Hacks | internal | Solution Aware | Greed | "The 2-minute rule that cleared my task backlog" | 17 |
 | Behind the Product | Sneak peek | Solution Aware | Pride | "Here's how we rebuilt our task system" | 16 |
 | Behind the Product | Contrarian | Product Aware | Fear | "Competitors are already using this" | 18 |
 
@@ -108,7 +108,7 @@ Angle analysis: Mix of Question/Bold claim/Story hooks, Problem to Product Aware
 | Pillar | Hook | Awareness | Trigger | Angle | Score |
 |--------|------|-----------|---------|-------|-------|
 | Ingredient Education | Bold claim | Problem Aware | Anger | "Your 'natural' skincare probably isn't" | 22 |
-| Ingredient Education | How-to | Solution Aware | Greed | "How to read skincare labels in 30 seconds" | 19 |
+| Ingredient Education | internal | Solution Aware | Greed | "How to read skincare labels in 30 seconds" | 19 |
 | Real Results | Data | Product Aware | Pride | "Before/after: 30 days of consistent use" | 20 |
 | Real Results | Story | Solution Aware | Belonging | "The skin concern we hear most often" | 17 |
 | Clean vs Fake Clean | Contrarian | Solution Aware | Anger | "We tested 50 'clean' products. Only 12 passed." | 21 |
@@ -130,7 +130,7 @@ Angle analysis: Bold claims and Contrarian hooks, visual proof (before/after), S
 | Angle | Channel Native | Type | Channel Name | Pillar | Hook | Trigger | Stage | Format | Content Type | Cascade |
 |-------|----------------|------|--------------|--------|------|---------|-------|--------|--------------|---------|
 | "Your 'natural' skincare probably isn't" | TikTok | Owned | @brand | Ingredient Education | Bold claim | Anger | Problem Aware | Short video | Edu | Hero |
-| "How to read labels in 30 sec" | TikTok | Owned | @brand | Ingredient Education | How-to | Greed | Solution Aware | Tutorial | Edu | Deriv |
+| "How to read labels in 30 sec" | TikTok | Owned | @brand | Ingredient Education | internal | Greed | Solution Aware | Tutorial | Edu | Deriv |
 | "Before/after: 30 days" | Instagram | Owned | @brand | Real Results | Data | Pride | Product Aware | Carousel | Proof | Hero |
 | "We tested 50 products..." | Instagram | Owned | @brand | Clean vs Fake Clean | Contrarian | Anger | Solution Aware | Reel | Edu | Deriv |
 | "Why I started this brand" | Email | Owned | Newsletter | Founder's Story | Story | Guilt | Product Aware | Newsletter | Connection | Hero |
@@ -186,7 +186,7 @@ MICRO:
 | Pillar | Hook | Awareness | Trigger | Angle | Score |
 |--------|------|-----------|---------|-------|-------|
 | Systems Over Hustle | Question | Problem Aware | Guilt | "Are you running your business or is it running you?" | 20 |
-| Systems Over Hustle | How-to | Solution Aware | Greed | "The weekly review that changed everything" | 18 |
+| Systems Over Hustle | internal | Solution Aware | Greed | "The weekly review that changed everything" | 18 |
 | Client Boundaries | Story | Problem Aware | Pride | "I fired my biggest client. Here's why." | 22 |
 | Client Boundaries | Sneak peek | Solution Aware | Greed | "My actual client contract (template inside)" | 19 |
 | Pricing Confidence | Data | Solution Aware | Pride | "Why I raised my rates 50% and got more clients" | 21 |
@@ -210,7 +210,7 @@ Angle analysis: Story and Data heavy, Question hooks, Pride/Greed/Guilt triggers
 |-------|----------------|------|--------------|--------|------|---------|-------|--------|--------------|---------|
 | "I fired my biggest client" | LinkedIn | Owned | @creator | Client Boundaries | Story | Pride | Problem Aware | Post | Connection | Hero |
 | "Are you running your business...?" | X | Owned | @creator | Systems Over Hustle | Question | Guilt | Problem Aware | Tweet | Edu | Micro |
-| "My actual pricing framework" | Email | Owned | Newsletter | Pricing Confidence | How-to | Greed | Solution Aware | Deep-dive | Edu | Hero |
+| "My actual pricing framework" | Email | Owned | Newsletter | Pricing Confidence | internal | Greed | Solution Aware | internal | Edu | Hero |
 | "I tracked every hour for 30 days" | Email | Owned | Newsletter | Behind the Scenes | Data | Belonging | Solution Aware | Data story | Proof | Hero |
 | "Raised rates 50%, got more clients" | X | Owned | @creator | Pricing Confidence | Data | Pride | Solution Aware | Thread | Proof | Deriv |
 | "Contract template inside" | LinkedIn | Owned | @creator | Client Boundaries | Sneak peek | Greed | Solution Aware | Post + link | Promo | Deriv |
@@ -251,10 +251,10 @@ This example demonstrates the full **channel hierarchy** (Channel Native → Typ
 
 | Channel Native | Channel Type | Channel Name | Density | Engagement Type | Habitat Role |
 |---|---|---|---|---|---|
-| Twitter/X | Dev tool accounts | @ThePrimeagen | H | Engager | Discovery |
+| Twitter/X | Dev tool accounts | practitioner source | H | Engager | Discovery |
 | Reddit | Dev subreddits | r/programming, r/webdev | H | Searcher | Trust |
 | GitHub | Open source repos | Trending repos | M | Creator | Conversion |
-| YouTube | Dev educators | @Fireship | M | Subscriber | Trust |
+| YouTube | Dev educators | practitioner source | M | Subscriber | Trust |
 
 **Tech Lead:**
 
@@ -263,7 +263,7 @@ This example demonstrates the full **channel hierarchy** (Channel Native → Typ
 | LinkedIn | Engineering leadership | "Engineering Managers" group | H | Lurker | Discovery |
 | Email | Tech newsletters | "TLDR", "ByteByteGo" | H | Subscriber | Trust |
 | Blog/SEO | Comparison sites | G2, StackShare | M | Searcher | Conversion |
-| Twitter/X | Tech thought leaders | @kelseyhightower | M | Engager | Trust |
+| Twitter/X | Tech thought leaders | practitioner source | M | Engager | Trust |
 
 **Indie Hacker:**
 
@@ -272,7 +272,7 @@ This example demonstrates the full **channel hierarchy** (Channel Native → Typ
 | Twitter/X | Indie hacker community | #buildinpublic | H | Creator | Discovery |
 | Reddit | Startup subreddits | r/SaaS, r/indiehackers | H | Engager | Trust |
 | Product Hunt | Launch platform | producthunt.com | M | Engager | Conversion |
-| YouTube | Build-in-public creators | @marclouvier | L | Subscriber | Discovery |
+| YouTube | Build-in-public creators | practitioner source | L | Subscriber | Discovery |
 
 **2. Audience → Pillars (Derivation)**
 
@@ -300,7 +300,7 @@ This example demonstrates the full **channel hierarchy** (Channel Native → Typ
 | Speed to Production | Story | Solution Aware | Pride | "How we went from idea to production in one afternoon" | 18 |
 | Direct Comparisons | Data | Solution Aware | Pride | "We benchmarked every API in the category" | 19 |
 | Direct Comparisons | Contrarian | Solution Aware | Anger | "Stop reading docs for a week. Ship today." | 20 |
-| Behind the Product | How-to | Product Aware | Belonging | "Full walkthrough: zero to first API call" | 17 |
+| Behind the Product | internal | Product Aware | Belonging | "Full walkthrough: zero to first API call" | 17 |
 | Behind the Product | Sneak peek | Solution Aware | Pride | "Inside our reliability engineering (99.99% uptime)" | 18 |
 
 **4. Angles → Channels (Channel Hierarchy)**
@@ -331,9 +331,9 @@ This example demonstrates the full **channel hierarchy** (Channel Native → Typ
 | Channel Native | Type | Channel Name | Why | Primary Pillar | Content Types | Tone |
 |----------------|------|--------------|-----|----------------|---------------|------|
 | X | Owned | @brand | Daily presence, founder voice | Developer Experience | Threads, code snippets, demos | Technical, direct |
-| X | Paid KOL | @dev_influencer | 150K followers, dev-focused | Direct Comparisons | Code comparison threads | Numbers-first |
+| X | Paid KOL | @dev_influencer | 150K followers, dev-focused | Direct Comparisons | Code comparison threads | internal |
 | X | Paid KOL | @indiehacker_voice | Indie hacker audience | Speed to Production | Live build demos | Practical, excited |
-| X | Partner | @framework_partner | Integration credibility | Behind the Product | Co-posts | Professional |
+| X | Partner | @framework_partner | Integration credibility | Behind the Product | internal | Professional |
 | Product Hunt | Owned | Product page | Launch amplification | All | Launch page | Polished, concise |
 | Discord | Owned | #support | Technical depth, trust | Behind the Product | Guides, Q&A | Helpful, detailed |
 
@@ -343,10 +343,10 @@ This example demonstrates the full **channel hierarchy** (Channel Native → Typ
 |-----|-------|----------------|------|--------------|--------|------|---------|-------|--------|
 | Mon | "Why we built this differently" | X | Owned | @brand | Developer Experience | Story | Belonging | Problem Aware | Thread |
 | Mon | "Watch me ship a feature in 10 min" | X | Paid KOL | @indiehacker_voice | Speed to Production | Sneak peek | Greed | Product Aware | Video post |
-| Tue | "Now integrated with [Framework]" | X | Partner | @framework_partner | Behind the Product | Sneak peek | Pride | Solution Aware | Co-post |
+| Tue | "Now integrated with [Framework]" | X | Partner | @framework_partner | Behind the Product | Sneak peek | Pride | Solution Aware | internal |
 | Tue | Launch day | Product Hunt | Owned | Product page | All | N/A | N/A | All | Launch |
 | Wed | "5 lines of code vs 500" | X | Paid KOL | @dev_influencer | Direct Comparisons | Data | Greed | Solution Aware | Thread |
-| Thu | "Zero to first API call walkthrough" | X | Owned | @brand | Behind the Product | How-to | Belonging | Product Aware | Thread + video |
+| Thu | "Zero to first API call walkthrough" | X | Owned | @brand | Behind the Product | internal | Belonging | Product Aware | Thread + video |
 | Fri | "Week 1 numbers: X signups, Y API calls" | X | Owned | @brand | Speed to Production | Data | Pride | Product Aware | Post |
 
 **Cadence by Channel Type:**
@@ -419,7 +419,7 @@ This example demonstrates the full persona-specific flow using ICP research outp
 | Channel Native | Channel Type | Channel Name | Density | Engagement Type | Habitat Role |
 |---|---|---|---|---|---|
 | LinkedIn | PM community groups | "Product & Project Managers" group | H | Lurker | Discovery |
-| LinkedIn | Industry thought leaders | @shreyas (Shreyas Doshi) | H | Engager | Trust |
+| LinkedIn | Industry thought leaders | practitioner source (Shreyas Doshi) | H | Engager | Trust |
 | Email | PM newsletters | "Lenny's Newsletter" | M | Subscriber | Trust |
 | Blog/SEO | PM resource sites | projectmanagement.com | M | Searcher | Conversion |
 
@@ -427,7 +427,7 @@ This example demonstrates the full persona-specific flow using ICP research outp
 
 | Channel Native | Channel Type | Channel Name | Density | Engagement Type | Habitat Role |
 |---|---|---|---|---|---|
-| Twitter/X | Startup founder accounts | @naval, @paulg | H | Engager | Discovery |
+| Twitter/X | Startup founder accounts | practitioner source, practitioner source | H | Engager | Discovery |
 | Twitter/X | Indie hacker communities | #buildinpublic | H | Creator | Discovery |
 | Product Hunt | Launch platform | producthunt.com | M | Engager | Conversion |
 | Reddit | Founder subreddits | r/startups, r/SaaS | M | Searcher | Trust |
@@ -437,7 +437,7 @@ This example demonstrates the full persona-specific flow using ICP research outp
 | Channel Native | Channel Type | Channel Name | Density | Engagement Type | Habitat Role |
 |---|---|---|---|---|---|
 | Email | Ops newsletters | "The Process Nerd" | H | Subscriber | Discovery |
-| YouTube | Tool review channels | @toolreviewer | M | Subscriber | Trust |
+| YouTube | Tool review channels | practitioner source | M | Subscriber | Trust |
 | Blog/SEO | Comparison sites | G2, Capterra | H | Searcher | Conversion |
 | Reddit | Ops subreddits | r/projectmanagement | M | Lurker | Trust |
 
@@ -496,13 +496,13 @@ Top Triggers: Pride (1), Belonging (2), Fear (3)
 Awareness Stage: Solution Aware
 
 - "What if your team saw you as the calm leader, not the firefighter?" (Hook: Question, Trigger: Pride)
-  VoC Validation: "I want to be the calm leader, not the stressed firefighter"
+ VoC Validation: "I want to be the calm leader, not the stressed firefighter"
 
 - "How PMs cut meeting time 50% without missing anything" (Hook: How-to, Trigger: Greed)
-  VoC Validation: "I'm in so many meetings I have no time to help my team"
+ VoC Validation: "I'm in so many meetings I have no time to help my team"
 
 - "The project management approach that makes teams actually thank you" (Hook: Sneak peek, Trigger: Pride)
-  VoC Validation: "I want to be the calm leader"
+ VoC Validation: "I want to be the calm leader"
 ```
 
 ```
@@ -512,13 +512,13 @@ Top Triggers: Fear (1), Anger (2), Greed (3)
 Awareness Stage: Problem Aware
 
 - "Your startup isn't growing because you're managing it" (Hook: Bold claim, Trigger: Fear)
-  VoC Validation: "Every day feels like putting out fires instead of building"
+ VoC Validation: "Every day feels like putting out fires instead of building"
 
 - "How I stopped firefighting and started building (in one afternoon)" (Hook: Story, Trigger: Greed)
-  VoC Validation: "Everything urgent, nothing done"
+ VoC Validation: "Everything urgent, nothing done"
 
 - "Stop adding dashboards. Start subtracting chaos." (Hook: Contrarian, Trigger: Anger)
-  VoC Validation: "If it adds another dashboard, I'm out"
+ VoC Validation: "If it adds another dashboard, I'm out"
 ```
 
 ```
@@ -528,13 +528,13 @@ Top Triggers: Anger (1), Pride (2), Guilt (3)
 Awareness Stage: Product Aware
 
 - "Why your team ignores every tool you've tried (and what actually works)" (Hook: Contrarian, Trigger: Anger)
-  VoC Validation: "I've tried 4 tools and my team still uses spreadsheets"
+ VoC Validation: "I've tried 4 tools and my team still uses spreadsheets"
 
 - "The adoption rate difference: 23% vs 89%. Here's what changed." (Hook: Data, Trigger: Pride)
-  VoC Validation: "I want a system the team actually follows without me nagging"
+ VoC Validation: "I want a system the team actually follows without me nagging"
 
 - "Case study: How [Company] got 95% team adoption in 2 weeks" (Hook: Data, Trigger: Pride)
-  VoC Validation: "I want a system the team actually follows"
+ VoC Validation: "I want a system the team actually follows"
 ```
 
 **Journey-Based Objection Angles:**
@@ -557,7 +557,7 @@ Awareness Stage: Product Aware
 |---------|-------------------|---------------------|-----------|
 | Overwhelmed PM | LinkedIn → PM community groups → "Product & Project Managers" (H, Lurker) | LinkedIn Owned: @brand thought leadership posts | High-density discovery habitat — PM lurks here, so prioritize awareness content |
 | Overwhelmed PM | Email → PM newsletters → "Lenny's Newsletter" (M, Subscriber) | Email: Nurture sequence with case studies | Trust habitat — PM subscribes to newsletters, email nurture fits behavior |
-| Firefighter Founder | Twitter/X → Startup founders → @naval, @paulg (H, Engager) | X Owned: @brand threads, bold claims | High-density discovery habitat — founders engage with contrarian takes |
+| Firefighter Founder | Twitter/X → Startup founders → practitioner source, practitioner source (H, Engager) | X Owned: @brand threads, bold claims | High-density discovery habitat — founders engage with contrarian takes |
 | Firefighter Founder | Product Hunt → Launch platform (M, Engager) | Product Hunt launch | Conversion habitat — founders browse PH for new tools |
 | Process Optimizer | Email → Ops newsletters → "The Process Nerd" (H, Subscriber) | Email: Comparison guide lead magnet | High-density discovery habitat — reaches via newsletter |
 | Process Optimizer | Blog/SEO → Comparison sites → G2, Capterra (H, Searcher) | Blog: SEO-optimized comparison articles | Conversion habitat — searches when ready to evaluate tools |
@@ -568,7 +568,7 @@ Awareness Stage: Product Aware
 |---------|----------------------|------------------------------|---------------------|
 | Overwhelmed PM | LinkedIn → "PM Managers" group (H, Lurker) | Email → "Lenny's Newsletter" pattern (M, Subscriber) | Blog/SEO → projectmanagement.com (M, Searcher) |
 | Firefighter Founder | Twitter/X → #buildinpublic (H, Creator) | Reddit → r/startups (M, Searcher) | Product Hunt → producthunt.com (M, Engager) |
-| Process Optimizer | Email → "The Process Nerd" (H, Subscriber) | YouTube → @toolreviewer (M, Subscriber) | Blog/SEO → G2, Capterra (H, Searcher) |
+| Process Optimizer | Email → "The Process Nerd" (H, Subscriber) | YouTube → practitioner source (M, Subscriber) | Blog/SEO → G2, Capterra (H, Searcher) |
 
 ---
 
@@ -579,7 +579,7 @@ Awareness Stage: Product Aware
 | "What if your team saw you as the calm leader?" | Overwhelmed PM | LinkedIn | Team Wins | Question | Pride | Post |
 | "Your startup isn't growing because you're managing it" | Firefighter Founder | X | Chaos → Clarity | Bold claim | Fear | Thread |
 | "Why your team ignores every tool you've tried" | Process Optimizer | Blog | Systems That Stick | Contrarian | Anger | Article |
-| "How PMs cut meeting time 50%" | Overwhelmed PM | Email | Chaos → Clarity | How-to | Greed | Newsletter |
+| "How PMs cut meeting time 50%" | Overwhelmed PM | Email | Chaos → Clarity | internal | Greed | Newsletter |
 | "10 minutes to set up. No training required." | Firefighter Founder | X | Quick Start | Bold claim | Anger | Tweet |
 | "The adoption rate difference: 23% vs 89%" | Process Optimizer | Email | Systems That Stick | Data | Pride | Case study |
 
@@ -600,7 +600,7 @@ Awareness Stage: Product Aware
 **Key Differences from Standard Mode:**
 
 1. **Persona-specific angles**: Each angle is tailored to one persona's psychology, not generic
-2. **VoC validation at every step**: Every pillar and angle cites a supporting quote
+2. **VoC validation at every step**: Every pillar and angle uses a supporting quote
 3. **Journey-based objection handling**: Barriers become angle opportunities
 4. **Channel fit evidence**: Platform selection based on stated behavior, not assumptions
 5. **Weighted pillar prioritization**: Pillars weighted by persona pain intensity

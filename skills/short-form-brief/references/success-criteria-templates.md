@@ -19,9 +19,9 @@ Per-platform retention / completion / engagement targets the brief carries in it
 
 | Metric | Target | Source |
 |---|---|---|
-| 3s hold rate | ≥ 60% (outperforms <40% by 5-10× total reach) | Third-party data + Mosseri |
-| Watch time | longer than baseline (#1 ranking signal) | Mosseri Jan 2025 |
-| Reshares | meaningful uplift over baseline | Mosseri Jan 2025 |
+| 3s hold rate | ≥ 60% (outperforms <40% by 5-10× total reach) | Third-party data + platform leadership's |
+| Watch time | longer than baseline (#1 ranking signal) | platform leadership's Jan 2025 |
+| Reshares | meaningful uplift over baseline | platform leadership's Jan 2025 |
 | Quality threshold | If 3s hold < 40%, drop-off failed — rebuild hook | Operational rule |
 
 ### YouTube Shorts
@@ -101,4 +101,4 @@ For multi-platform briefs, list per-platform targets in the variant briefs (each
 - **No success criteria section.** Brief without targets has no measurement contract.
 - **Generic targets** ("get lots of views"). Specific platform thresholds only.
 - **Same targets across platforms.** TikTok 70% completion ≠ Reels 60% 3s hold ≠ Shorts loop rate. Per-platform.
-- **Targets without source.** Each target cites the platform doc or research sample.
+- **Targets without source.** Each target uses the platform doc or research sample.

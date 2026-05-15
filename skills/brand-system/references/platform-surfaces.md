@@ -94,7 +94,7 @@ Web / PWA · iOS/iPadOS · Android · macOS · Windows · Linux desktop · watch
 | Quick Settings tile | mono icon, on/off state |
 | Status / system bar theming | accent contribution, light vs dark content, edge-to-edge handling |
 | Material You dynamic color | how brand color survives palette extraction from user's wallpaper |
-| Picture-in-picture | compact chrome |
+| internal | compact chrome |
 | Notification channels | per-channel icon + accent color |
 
 ### Icon specifications (visual-agent → DESIGN.md)
@@ -141,7 +141,7 @@ Web / PWA · iOS/iPadOS · Android · macOS · Windows · Linux desktop · watch
 
 | Surface | Brand expression |
 |---------|------------------|
-| .desktop entry icon | how the brand reads across GNOME / KDE / XFCE shells |
+|.desktop entry icon | how the brand reads across GNOME / KDE / XFCE shells |
 | System tray (AppIndicator / KStatusNotifier) | mono variant, theme inheritance |
 | GNOME / KDE window chrome | header-bar style, CSD vs SSD handling |
 | Notification (libnotify) | icon + accent |

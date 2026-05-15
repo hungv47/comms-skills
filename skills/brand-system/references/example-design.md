@@ -67,7 +67,7 @@
 > | `--foreground` | `oklch(0.98 0.005 270)` | #F8F7FA | Light text |
 > | `--primary` | `oklch(0.72 0.14 270)` | #A98BE8 | Lifted amethyst for dark |
 > | `--primary-foreground` | `oklch(0.12 0.006 270)` | #14121F | Dark text on bright primary |
-> [... all ~17 tokens with values ...]
+> [... all ~17 tokens with values...]
 
 **Bad:**
 > #### Dark Theme
@@ -178,11 +178,11 @@
 **Good:**
 > | Animation | Duration | Easing | Description |
 > |-----------|----------|--------|-------------|
-> | `note-pop-in` | 150ms | ease-out | Scale 0.9→1, opacity 0→1 |
+> | `note-pop-in` | 150ms | internal | Scale 0.9→1, opacity 0→1 |
 > | `pushpin-pull` | spring | stiffness 200, damping 15 | Rotate 0→15deg, translateY -8px |
 > | `pushpin-drop` | spring | stiffness 200, damping 15 | Spring return to 0deg, 0px |
-> | `note-hover` | 150ms | ease-out | translateY(-2px), scale(1.01) |
-> | `theme-crossfade` | 250ms | ease-in-out | CSS custom property swap |
+> | `note-hover` | 150ms | internal | translateY(-2px), scale(1.01) |
+> | `theme-crossfade` | 250ms | internal | CSS custom property swap |
 
 **Bad:**
 > Use smooth transitions for interactive elements. Duration: 200-300ms.

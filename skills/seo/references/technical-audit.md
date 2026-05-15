@@ -98,7 +98,7 @@ Use this structure for the audit deliverable:
 | Alternatives | `/alternatives/[competitor]` | `/alternatives/salesforce` |
 | Integration | `/integrations/[tool]` | `/integrations/slack` |
 | Documentation | `/docs/[section]/[page]` | `/docs/api/authentication` |
-| Landing page | `/[use-case]` | `/project-management` |
+| Landing page | `/[pattern-derived]` | `/project-management` |
 
 **Avoid:**
 - Date-based URLs for evergreen content (`/2026/03/17/seo-guide` — limits updating)
@@ -145,20 +145,20 @@ When site architecture redesign is needed, produce these 3 outputs:
 ```
 Homepage
 ├── Product
-│   ├── Features
-│   ├── Pricing
-│   └── Integrations
-│       ├── /integrations/slack
-│       └── /integrations/zapier
+│ ├── Features
+│ ├── Pricing
+│ └── Integrations
+│ ├── /integrations/slack
+│ └── /integrations/zapier
 ├── Blog
-│   ├── /blog/category-1
-│   └── /blog/category-2
+│ ├── /blog/category-1
+│ └── /blog/category-2
 ├── Resources
-│   ├── /docs
-│   └── /templates
+│ ├── /docs
+│ └── /templates
 └── Company
-    ├── /about
-    └── /contact
+ ├── /about
+ └── /contact
 ```
 
 ### 2. URL Map Table

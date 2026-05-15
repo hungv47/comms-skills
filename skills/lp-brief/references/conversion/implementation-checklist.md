@@ -81,16 +81,16 @@
 - [ ] Mobile responsiveness verified on 3+ devices
 - [ ] Load time under 3 seconds (test with PageSpeed Insights)
 - [ ] Tracking pixels verified:
-  - [ ] Google Analytics
-  - [ ] Facebook Pixel (if applicable)
-  - [ ] Conversion tracking
+ - [ ] Google Analytics
+ - [ ] Facebook Pixel (if applicable)
+ - [ ] Conversion tracking
 - [ ] Heatmap tool installed
 - [ ] Session recording enabled
 - [ ] Event tracking configured for:
-  - [ ] CTA clicks
-  - [ ] Form starts
-  - [ ] Form completions
-  - [ ] Scroll milestones
+ - [ ] CTA clicks
+ - [ ] Form starts
+ - [ ] Form completions
+ - [ ] Scroll milestones
 - [ ] Message match confirmed (ad → landing page)
 - [ ] Trust signals visible and credible
 - [ ] Social proof recent and authentic

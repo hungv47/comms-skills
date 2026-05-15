@@ -126,7 +126,7 @@ When ASSETS.md provides a row, ASSETS.md wins. This is the fallback for assets n
 | Mobile banner | 320 × 50 | Mobile in-app |
 | Large mobile banner | 320 × 100 | Mobile prominent |
 | Billboard | 970 × 250 | Premium top placement |
-| Half-page | 300 × 600 | Sidebar premium |
+| internal | 300 × 600 | Sidebar premium |
 
 **File caps:** ≤150 KB for HTML5, ≤40 KB for static. Display Ad spec varies by network.
 

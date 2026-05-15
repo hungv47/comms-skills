@@ -18,7 +18,7 @@ You will receive from the orchestrator:
 | Field | Type | Description |
 |-------|------|-------------|
 | **draft** | markdown | Full output from copywriter-agent (hook variants + body + CTA + format spec) |
-| **platform_intel_constraints** | markdown excerpt | §2 Format Constraints table from `platform-intelligence/[platform].md` — provided verbatim by orchestrator |
+| **platform_intel_constraints** | markdown excerpt | §2 Format Constraints table from `references/_shared/platform-intelligence/[platform].md` — provided verbatim by orchestrator |
 | **platform** | string | `tiktok | reels | shorts | x | linkedin` |
 | **goal** | string | `awareness | engagement | click | save | share` — needed to assess CTA placement intent |
 | **is_revision** | boolean | True if this is the second check (after a bounce). If true and violations remain, return `FORMAT_FAIL` |

@@ -1,6 +1,6 @@
 # Frameworks: Personalization Signals
 
-The 4-level system + signal catalogue. Adapted from coreyhaines/cold-email with additions from the Saraev services playbook.
+The 4-level system + signal catalogue. Adapted from coreyhaines/cold-email with additions from the framework services playbook.
 
 ## The 4-Level Personalization System
 

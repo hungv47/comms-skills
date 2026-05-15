@@ -43,7 +43,7 @@ Use this default policy unless the operator supplies a stricter one:
 | Internal or low-stakes | Proxy only unless requested | No external detector required | Record `not_run` or `proxy_pass`; do not over-edit. |
 | Public marketing / thought leadership | Pangram if available, proxy fallback | `human_probability >= 0.95` OR `ai_probability <= 0.05` | If below threshold, run one detector-resistance rewrite cycle. |
 | Admissions, applications, compliance-sensitive, reputation-sensitive | Pangram required when credentials exist; proxy fallback only if unavailable | `human_probability >= 0.99` OR `ai_probability <= 0.01` | If below threshold after 2 cycles, return `DONE_WITH_CONCERNS`. |
-| Policy-capped environments | Operator-defined | Honor the stricter policy, commonly a false-positive cap around `0.5%` | Do not claim compliance unless the detector result and policy threshold are recorded. |
+| Policy-capped environments | internal | Honor the stricter policy, commonly a false-positive cap around `0.5%` | Do not claim compliance unless the detector result and policy threshold are recorded. |
 
 When the detector API reports both a label and probabilities, use the probability threshold, not the label alone. When it reports only a label, treat `likely_ai` or stronger as `pangram_fail` for high-stakes content. When it reports confidence intervals or calibration warnings, record them in the artifact and avoid binary compliance claims.
 

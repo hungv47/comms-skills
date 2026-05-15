@@ -200,7 +200,7 @@
 **Fix rule:** Straight `"..."` is safe everywhere. Curly smart-quotes are an MT output artifact.
 
 ### F5. English ellipsis and punctuation spacing
-**Wrong VN:** "Thật sự ... điều đó rất quan trọng ." (extra spaces)
+**Wrong VN:** "Thật sự... điều đó rất quan trọng." (extra spaces)
 **Right VN:** "Thật sự... điều đó rất quan trọng." (no space before punct)
 **Fix rule:** VN follows continental spacing — no space before `.`, `,`, `!`, `?`. No space after opening `(` or `"`.
 

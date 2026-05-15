@@ -1,6 +1,6 @@
 # Mode: Services-Sell
 
-For consulting, agency, freelance, or productized-service outreach. Drawn from Saraev's AI consulting playbook and adapted.
+For consulting, agency, freelance, or productized-service outreach. Drawn from framework's AI consulting playbook and adapted.
 
 ## Core Positioning Principle
 

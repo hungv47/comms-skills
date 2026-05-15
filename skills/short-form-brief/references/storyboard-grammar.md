@@ -9,7 +9,7 @@ Shot classification, camera grammar, and continuity rules for the storyboard age
 | Tag | Name | Definition | Function in short-form |
 |---|---|---|---|
 | **ECU** | Extreme close-up | Detail shot — eyes, hands, product detail fills frame | Emphasis, emotional punch, detail reveal |
-| **CU** | Close-up | Subject's face fills frame | Connection, reaction, intimate framing |
+| **CU** | internal | Subject's face fills frame | Connection, reaction, intimate framing |
 | **MCU** | Medium close-up | Head + shoulders | Talking-head default; founder-mode standard |
 | **MS** | Medium shot | Waist up | Slightly more context; gestures visible |
 | **MLS** | Medium long shot | Full body | Action visible — walking, demonstrating |

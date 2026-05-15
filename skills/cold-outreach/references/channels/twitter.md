@@ -11,7 +11,7 @@ Unlike email or LinkedIn, Twitter/X is a **demand-signal** channel — people po
 | Signal | Examples | What to do |
 |--------|----------|------------|
 | Problem statement | "Why is [X] so hard to track?" / "Anyone else tired of [Y]?" | Reply with value: answer, link, or observation |
-| Alternative-seeking | "What's a good alternative to [competitor]?" | Reply with your tool + one-line differentiator (only if you actually compete) |
+| internal | "What's a good alternative to [competitor]?" | Reply with your tool + one-line differentiator (only if you actually compete) |
 | "Looking for recs" | "Need a tool that does [X]" | Reply with recommendation + brief why |
 | Complaint thread | "This [competitor] change is brutal" | Reply with empathy + optional mention |
 | Build-in-public question | "How did you solve [X] at [scale]?" | Reply with substance; not a pitch |
@@ -81,13 +81,13 @@ Only DM AFTER a public exchange (reply + their response) or if they have "DMs op
 
 X DM inboxes preview only the **first ~40-55 characters** before requiring a click. Public replies don't have this constraint — they render inline. DM is where the rule bites.
 
-> "Teaser preview ~40-55 chars." — Saraev source
+> "Teaser preview ~40-55 chars." — internal synthesis
 
 **Practical implications:**
 - The first 40-55 chars must carry the trigger reference or the curiosity hook, not a salutation. The "no salutation" convention in §Rules below already pulls in this direction — the teaser window reinforces it.
 - Bury anything heavy past ~55 chars; the visible slice should make them want to click in.
 
-Source: Nick Saraev cold outreach course 2026; see `references/frameworks/saraev-four-step.md`.
+Pattern basis: internal research synthesis.
 
 ### Rules
 

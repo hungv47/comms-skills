@@ -6,27 +6,27 @@ Reference for the brand-system skill. Contains accessibility baseline, dark mode
 
 ```
 CONTRAST REQUIREMENTS (WCAG 2.1 AA):
-  Normal text (<18px):     4.5:1 minimum
-  Large text (18px+ bold): 3:1 minimum
-  UI components:           3:1 minimum
-  Focus indicators:        3:1 against adjacent colors
+ Normal text (<18px): 4.5:1 minimum
+ Large text (18px+ bold): 3:1 minimum
+ UI components: 3:1 minimum
+ Focus indicators: 3:1 against adjacent colors
 
 INTERACTIVE TARGETS:
-  Minimum: 44x44px touch targets (WCAG 2.5.8)
-  Spacing: 8px minimum between targets
+ Minimum: 44x44px touch targets (WCAG 2.5.8)
+ Spacing: 8px minimum between targets
 
 FOCUS STATES:
-  Visible focus ring on ALL interactive elements
-  Style: ring-2 ring-[var(--ring)] ring-offset-2 ring-offset-[var(--background)]
-  Never remove focus outline without replacement
+ Visible focus ring on ALL interactive elements
+ Style: ring-2 ring-[var(--ring)] ring-offset-2 ring-offset-[var(--background)]
+ Never remove focus outline without replacement
 
 COLOR INDEPENDENCE:
-  Never use color alone to convey meaning
-  Pair color with: icons, text labels, patterns, or position
+ Never use color alone to convey meaning
+ Pair color with: icons, text labels, patterns, or position
 
 MOTION SAFETY:
-  Respect prefers-reduced-motion
-  Provide reduced/no-animation fallbacks for all transitions
+ Respect prefers-reduced-motion
+ Provide reduced/no-animation fallbacks for all transitions
 ```
 
 ## Dark Mode Rules

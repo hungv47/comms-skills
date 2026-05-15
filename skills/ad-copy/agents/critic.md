@@ -179,7 +179,7 @@ How many verifiable specifics (named entities + named numbers + named research) 
 **Specificity Floor — auto-fail.** Same rule as cold-outreach: a variant with fewer than 2 verifiable specifics in the visible-window primary text auto-fails Specificity, regardless of other-dim scores. A "verifiable specific" is:
 - Named entity (a specific customer, a specific product, a specific named cohort)
 - Named number with context (`9 days → 4 days`, `20 lbs in 30 days`, `$50/month`, `$2K-per-call agency`)
-- Named research or source (`Cali Apps playbook`, `Clem 2026 thread`, `Saraev's $15M template`)
+- Named research or source (`Cali Apps playbook`, `Clem 2026 thread`, `framework's $15M template`)
 
 Pure generic flavor ("great work in SaaS", "leading B2B brands", "proven results") does NOT count.
 

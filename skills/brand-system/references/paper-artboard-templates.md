@@ -26,8 +26,8 @@ Every artboard follows this structure:
 <!-- Artboard: 1440x900, vertical flex container -->
 <div style="display: flex; flex-direction: column; padding: 60px; gap: 40px; width: 100%; height: 100%; background: #FAFAFA;">
 
-  <!-- Page Header -->
-  <!-- Content Groups (one write_html call each) -->
+ <!-- Page Header -->
+ <!-- Content Groups (one write_html call each) -->
 
 </div>
 ```
@@ -40,12 +40,12 @@ Used at the top of every artboard page. One `write_html` call.
 
 ```html
 <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
-  <div style="display: flex; align-items: baseline; gap: 16px;">
-    <span style="font-family: '[DisplayFont]'; font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: [accentColor];">[Brand Name]</span>
-    <span style="font-size: 14px; color: [mutedColor];">Brand Guidelines</span>
-  </div>
-  <h1 style="font-family: '[DisplayFont]'; font-size: 36px; font-weight: 700; color: [foregroundColor]; letter-spacing: -0.02em;">[Page Title]</h1>
-  <div style="width: 100%; height: 1px; background: [borderColor];"></div>
+ <div style="display: flex; align-items: baseline; gap: 16px;">
+ <span style="font-family: '[DisplayFont]'; font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: [accentColor];">[Brand Name]</span>
+ <span style="font-size: 14px; color: [mutedColor];">Brand Guidelines</span>
+ </div>
+ <h1 style="font-family: '[DisplayFont]'; font-size: 36px; font-weight: 700; color: [foregroundColor]; letter-spacing: -0.02em;">[Page Title]</h1>
+ <div style="width: 100%; height: 1px; background: [borderColor];"></div>
 </div>
 ```
 
@@ -59,11 +59,11 @@ A square with a color label below. Use inside a flex row to create palette strip
 
 ```html
 <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-start;">
-  <div style="width: 80px; height: 80px; border-radius: 8px; background: [hexColor]; border: 1px solid rgba(0,0,0,0.08);"></div>
-  <div style="display: flex; flex-direction: column; gap: 2px;">
-    <span style="font-size: 13px; font-weight: 600; color: [foregroundColor];">[Color Name]</span>
-    <span style="font-size: 12px; color: [mutedColor]; font-family: monospace;">[hexValue]</span>
-  </div>
+ <div style="width: 80px; height: 80px; border-radius: 8px; background: [hexColor]; border: 1px solid rgba(0,0,0,0.08);"></div>
+ <div style="display: flex; flex-direction: column; gap: 2px;">
+ <span style="font-size: 13px; font-weight: 600; color: [foregroundColor];">[Color Name]</span>
+ <span style="font-size: 12px; color: [mutedColor]; font-family: monospace;">[hexValue]</span>
+ </div>
 </div>
 ```
 
@@ -71,13 +71,13 @@ A square with a color label below. Use inside a flex row to create palette strip
 
 ```html
 <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-start;">
-  <div style="width: 140px; height: 100px; border-radius: 12px; background: [hexColor]; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-end; padding: 12px;">
-    <span style="font-size: 12px; font-weight: 500; color: [foregroundOnSwatch];">[hexValue]</span>
-  </div>
-  <div style="display: flex; flex-direction: column; gap: 2px;">
-    <span style="font-size: 14px; font-weight: 600; color: [foregroundColor];">[Color Name]</span>
-    <span style="font-size: 12px; color: [mutedColor];">[usage — e.g. "60% Primary"]</span>
-  </div>
+ <div style="width: 140px; height: 100px; border-radius: 12px; background: [hexColor]; border: 1px solid rgba(0,0,0,0.06); display: flex; align-items: flex-end; padding: 12px;">
+ <span style="font-size: 12px; font-weight: 500; color: [foregroundOnSwatch];">[hexValue]</span>
+ </div>
+ <div style="display: flex; flex-direction: column; gap: 2px;">
+ <span style="font-size: 14px; font-weight: 600; color: [foregroundColor];">[Color Name]</span>
+ <span style="font-size: 12px; color: [mutedColor];">[usage — e.g. "60% Primary"]</span>
+ </div>
 </div>
 ```
 
@@ -85,20 +85,20 @@ A square with a color label below. Use inside a flex row to create palette strip
 
 ```html
 <div style="display: flex; flex-direction: column; gap: 16px; flex: 1;">
-  <div style="display: flex; flex-direction: column; gap: 4px;">
-    <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: [mutedColor];">[Role — e.g. "Display Font"]</span>
-    <span style="font-family: '[FontName]'; font-size: 42px; font-weight: 700; color: [foregroundColor]; letter-spacing: -0.02em;">[Font Name]</span>
-  </div>
-  <p style="font-family: '[FontName]'; font-size: 18px; font-weight: 400; line-height: 28px; color: [foregroundColor];">
-    The quick brown fox jumps over the lazy dog. 0123456789
-  </p>
-  <!-- Weight strip -->
-  <div style="display: flex; gap: 24px; align-items: baseline;">
-    <span style="font-family: '[FontName]'; font-size: 16px; font-weight: 400; color: [foregroundColor];">Regular 400</span>
-    <span style="font-family: '[FontName]'; font-size: 16px; font-weight: 500; color: [foregroundColor];">Medium 500</span>
-    <span style="font-family: '[FontName]'; font-size: 16px; font-weight: 600; color: [foregroundColor];">Semibold 600</span>
-    <span style="font-family: '[FontName]'; font-size: 16px; font-weight: 700; color: [foregroundColor];">Bold 700</span>
-  </div>
+ <div style="display: flex; flex-direction: column; gap: 4px;">
+ <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: [mutedColor];">[Role — e.g. "Display Font"]</span>
+ <span style="font-family: '[FontName]'; font-size: 42px; font-weight: 700; color: [foregroundColor]; letter-spacing: -0.02em;">[Font Name]</span>
+ </div>
+ <p style="font-family: '[FontName]'; font-size: 18px; font-weight: 400; line-height: 28px; color: [foregroundColor];">
+ The quick brown fox jumps over the lazy dog. 0123456789
+ </p>
+ <!-- Weight strip -->
+ <div style="display: flex; gap: 24px; align-items: baseline;">
+ <span style="font-family: '[FontName]'; font-size: 16px; font-weight: 400; color: [foregroundColor];">Regular 400</span>
+ <span style="font-family: '[FontName]'; font-size: 16px; font-weight: 500; color: [foregroundColor];">Medium 500</span>
+ <span style="font-family: '[FontName]'; font-size: 16px; font-weight: 600; color: [foregroundColor];">Semibold 600</span>
+ <span style="font-family: '[FontName]'; font-size: 16px; font-weight: 700; color: [foregroundColor];">Bold 700</span>
+ </div>
 </div>
 ```
 
@@ -108,12 +108,12 @@ Shows spacing tokens as proportional bars.
 
 ```html
 <div style="display: flex; flex-direction: column; gap: 12px;">
-  <!-- Repeat for each spacing value -->
-  <div style="display: flex; align-items: center; gap: 16px;">
-    <span style="font-size: 12px; font-family: monospace; color: [mutedColor]; width: 60px; text-align: right; flex-shrink: 0;">[tokenName]</span>
-    <div style="width: [pxValue]px; height: 20px; background: [accentColor]; border-radius: 4px; opacity: 0.7;"></div>
-    <span style="font-size: 12px; font-family: monospace; color: [mutedColor]; flex-shrink: 0;">[pxValue]px</span>
-  </div>
+ <!-- Repeat for each spacing value -->
+ <div style="display: flex; align-items: center; gap: 16px;">
+ <span style="font-size: 12px; font-family: monospace; color: [mutedColor]; width: 60px; text-align: right; flex-shrink: 0;">[tokenName]</span>
+ <div style="width: [pxValue]px; height: 20px; background: [accentColor]; border-radius: 4px; opacity: 0.7;"></div>
+ <span style="font-size: 12px; font-family: monospace; color: [mutedColor]; flex-shrink: 0;">[pxValue]px</span>
+ </div>
 </div>
 ```
 
@@ -123,11 +123,11 @@ Rectangles demonstrating each radius value.
 
 ```html
 <div style="display: flex; gap: 24px; align-items: flex-end;">
-  <!-- Repeat for each radius -->
-  <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;">
-    <div style="width: 64px; height: 64px; background: [primaryColor]; border-radius: [radiusValue];"></div>
-    <span style="font-size: 11px; font-family: monospace; color: [mutedColor];">[radiusLabel]</span>
-  </div>
+ <!-- Repeat for each radius -->
+ <div style="display: flex; flex-direction: column; gap: 8px; align-items: center;">
+ <div style="width: 64px; height: 64px; background: [primaryColor]; border-radius: [radiusValue];"></div>
+ <span style="font-size: 11px; font-family: monospace; color: [mutedColor];">[radiusLabel]</span>
+ </div>
 </div>
 ```
 
@@ -137,13 +137,13 @@ Dashed border rectangle showing logo clear space requirements.
 
 ```html
 <div style="display: flex; align-items: center; justify-content: center; padding: 48px; border: 2px dashed [borderColor]; border-radius: 12px; position: relative;">
-  <!-- Logo area -->
-  <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-    <!-- Wordmark or SVG logo -->
-    <span style="font-family: '[DisplayFont]'; font-size: 48px; font-weight: 700; color: [foregroundColor]; letter-spacing: -0.02em;">[Brand Name]</span>
-  </div>
-  <!-- Clear space labels at edges -->
-  <span style="position: absolute; top: 16px; left: 50%; font-size: 10px; color: [mutedColor]; letter-spacing: 0.05em; text-transform: uppercase;">Clear Space: 1.5x</span>
+ <!-- Logo area -->
+ <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+ <!-- Wordmark or SVG logo -->
+ <span style="font-family: '[DisplayFont]'; font-size: 48px; font-weight: 700; color: [foregroundColor]; letter-spacing: -0.02em;">[Brand Name]</span>
+ </div>
+ <!-- Clear space labels at edges -->
+ <span style="position: absolute; top: 16px; left: 50%; font-size: 10px; color: [mutedColor]; letter-spacing: 0.05em; text-transform: uppercase;">Clear Space: 1.5x</span>
 </div>
 ```
 
@@ -154,13 +154,13 @@ Simplified frames for showing logo in context (nav bar, footer, loading).
 ```html
 <!-- Nav Bar Mockup -->
 <div style="display: flex; align-items: center; padding: 12px 24px; background: [backgroundColor]; border: 1px solid [borderColor]; border-radius: 8px; gap: 24px; width: 100%;">
-  <span style="font-family: '[DisplayFont]'; font-size: 18px; font-weight: 700; color: [foregroundColor];">[Brand]</span>
-  <div style="display: flex; gap: 20px; flex: 1;">
-    <span style="font-size: 14px; color: [mutedColor];">Features</span>
-    <span style="font-size: 14px; color: [mutedColor];">Pricing</span>
-    <span style="font-size: 14px; color: [mutedColor];">About</span>
-  </div>
-  <div style="padding: 6px 16px; background: [primaryColor]; border-radius: [radiusValue]; font-size: 13px; font-weight: 500; color: [primaryForeground];">Get Started</div>
+ <span style="font-family: '[DisplayFont]'; font-size: 18px; font-weight: 700; color: [foregroundColor];">[Brand]</span>
+ <div style="display: flex; gap: 20px; flex: 1;">
+ <span style="font-size: 14px; color: [mutedColor];">Features</span>
+ <span style="font-size: 14px; color: [mutedColor];">Pricing</span>
+ <span style="font-size: 14px; color: [mutedColor];">About</span>
+ </div>
+ <div style="padding: 6px 16px; background: [primaryColor]; border-radius: [radiusValue]; font-size: 13px; font-weight: 500; color: [primaryForeground];">Get Started</div>
 </div>
 ```
 
@@ -201,9 +201,9 @@ Structure:
 Structure:
 1. Page header — "UI Style Principles"
 2. 3-4 principle cards — each with:
-   - Principle name (display font, large)
-   - Description (body font, muted)
-   - Visual example area (illustrating the principle)
+ - Principle name (display font, large)
+ - Description (body font, muted)
+ - Visual example area (illustrating the principle)
 
 ### Artboard 5: Logo System (1440x1200)
 
@@ -224,10 +224,10 @@ Paper does not support image imports. Construct logos using:
 
 - **Wordmark**: Brand's Display font at large size, with deliberate letter-spacing and weight
 - **Logomark/Symbol**: Inline SVG using geometric primitives:
-  - Circles: `<svg><circle cx="..." cy="..." r="..." fill="..."/></svg>`
-  - Rectangles: `<svg><rect x="..." y="..." width="..." height="..." rx="..." fill="..."/></svg>`
-  - Lines: `<svg><line x1="..." y1="..." x2="..." y2="..." stroke="..." stroke-width="..."/></svg>`
-  - Paths: `<svg><path d="..." fill="..."/></svg>`
+ - Circles: `<svg><circle cx="..." cy="..." r="..." fill="..."/></svg>`
+ - Rectangles: `<svg><rect x="..." y="..." width="..." height="..." rx="..." fill="..."/></svg>`
+ - Lines: `<svg><line x1="..." y1="..." x2="..." y2="..." stroke="..." stroke-width="..."/></svg>`
+ - Paths: `<svg><path d="..." fill="..."/></svg>`
 - Match geometric choices to archetype personality (e.g., sharp angles for Hero/Ruler, circles for Caregiver/Innocent)
 - Keep symbols simple — 2-4 geometric elements maximum
 

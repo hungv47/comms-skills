@@ -156,7 +156,7 @@
 **Symptom:** Brief envelope exceeds 500 lines.
 **Why it kills:** Designer skims, misses critical spec. G6 FAIL.
 **Where it appears:** Total brief line count.
-**Fix direction:** Section-spec re-dispatch to compress (cite shared chain instead of duplicating; cap conversion-checklist where boilerplate).
+**Fix direction:** Section-spec re-dispatch to compress (uses shared chain instead of duplicating; cap conversion-checklist where boilerplate).
 
 ### FM-22 — Brief Thin (<250 lines)
 **Symptom:** Brief envelope below 250 lines.

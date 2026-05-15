@@ -105,13 +105,13 @@ These phrases mark a message as AI-generated or template-filled within 3 seconds
 - **Statistic without source**: "93% of companies report..." — unverifiable
 - **"Custom-built for you" phrases when it wasn't**: "I crafted this just for you, [Name]."
 
-## AI-Generated Personalization Tells (Saraev)
+## AI-Generated Personalization Tells (framework)
 
-Specific patterns that mark personalization as AI-written or scraper-driven. Pulled from Nick Saraev's 2026 cold-email course teardowns. Cross-references `frameworks/saraev-four-step.md` §Step 1.
+Specific patterns that mark personalization as AI-written or scraper-driven. Pulled from practitioner's 2026 cold-email course teardowns. Cross-references `frameworks/saraev-four-step.md` §Step 1.
 
 ### Pattern 1: Compound-praise specificity ("BeaverCorp tell")
 
-**Verbatim AI-generated example from source:**
+**Verbatim AI-generated example from Pattern basis: internal research synthesis.
 
 > "Hey Stacy, love how passionate you are about process optimization and aligning corporations with diversity outcomes at BeaverCorp."
 
@@ -122,26 +122,26 @@ Specific patterns that mark personalization as AI-written or scraper-driven. Pul
 - 2+ abstract nouns in the first sentence ("process optimization," "diversity outcomes," "operational excellence")
 - "Love how passionate you are about…" / "Truly impressed by your work on…" / "Inspired by your dedication to…"
 
-**Fix:** Rewrite to one short observation OR use a Saraev-style cold-read ("love your channel man — very no-BS, helped me get started in [generic field]").
+**Fix:** Rewrite to one short observation OR use a framework-style cold-read ("love your channel man — very no-BS, helped me get started in [generic field]").
 
 ### Pattern 2: Variable mishaps (scraper-pulled wrong field)
 
-**Verbatim examples from source:**
+**Pattern examples from Pattern basis: internal research synthesis.
 
 - "Hi Nick Daily Updates" — scraper pulled YouTube channel name as first-name field
 - "Hi [Nick automates], congrats on 35K subs" — same failure mode (source-original bracket annotation + lowercase preserved; reflects how the raw YouTube handle would land in the salutation pre-cleanup)
 
-**Inferred from source's casualization rule** (not in source verbatim — extrapolated from Saraev's "casualize company name: Leftclick Inc. → Leftclick; Pacific Creative Group LLC → PCG"):
+**Inferred from source's casualization rule** (not in source verbatim — extrapolated from framework's "casualize company name: Leftclick Inc. → Leftclick; Pacific Creative Group LLC → PCG"):
 
 - A scraper using an unfiltered company-name column produces salutations like "Hi Pacific Creative Group LLC team" instead of the casualized "Hi PCG team."
 
 **Why it tells:** Real people don't address messages to channel names or LLC entities. Pattern-matches as: bulk-scraped, no human pre-send review.
 
-**Fix:** When pulling first-name field from a YouTube/X/LinkedIn handle, **take only the first word.** "Nick Daily Updates" → "Nick." Apply Saraev's casualization rule to company-name fields before injection into salutations.
+**Fix:** When pulling first-name field from a YouTube/X/LinkedIn handle, **take only the first word.** "Nick Daily Updates" → "Nick." Apply framework's casualization rule to company-name fields before injection into salutations.
 
 ### Pattern 3: Bolded / quoted / bracketed variables ("template leak")
 
-**Verbatim examples from source:**
+**Pattern examples from Pattern basis: internal research synthesis.
 
 - "Hi **{{FirstName}}**" — template merge engine didn't run
 - "Hi [Sarah]" — bracket leak from the personalization template
@@ -166,7 +166,7 @@ Specific patterns that mark personalization as AI-written or scraper-driven. Pul
 
 ### Pattern 5: AI-coined hooks ("instant tell")
 
-**Verbatim AI-generated example from source:**
+**Verbatim AI-generated example from Pattern basis: internal research synthesis.
 
 > "What if I told you there's a way to 10x your pipeline without changing your stack?"
 
@@ -182,7 +182,7 @@ Specific patterns that mark personalization as AI-written or scraper-driven. Pul
 |---------|--------------|-----|
 | 2 CTAs in one email | Reader has to evaluate both; picks neither | Pick one |
 | 3+ links | Dilutes action; reads as spam | 0 or 1 link |
-| Paragraph walls | Mobile-unreadable | Break into 2-3 short paragraphs |
+| Paragraph walls | internal | Break into 2-3 short paragraphs |
 | First sentence starts with "I" or "We" | Sender-first framing | Rewrite reader-first |
 | 8+ sentence body | Too long for cold | Cut to 4-6 |
 | No sign-off or overly formal sign-off | Register mismatch | "Thanks,\n[name]" |

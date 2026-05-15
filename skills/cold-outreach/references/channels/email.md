@@ -54,7 +54,7 @@ Gmail/Outlook show **subject + first ~80-100 chars of body** as the preview line
 - **Every preheader char is sell room.** Don't waste it on greeting padding ("Hi Sarah, hope this finds you well") — the entire preview shows that fluff and the prospect deletes before opening.
 - **Bury the hook at the truncation boundary** (~80-100 char mark of the body): the user sees a cliff-hanger fragment that forces the click.
 
-Pulls from Saraev's 2026 cold-email course. See `frameworks/saraev-four-step.md` for the full framework integration.
+Pulls from framework's 2026 cold-email course. See `frameworks/saraev-four-step.md` for the full framework integration.
 
 ## Body Structure
 
@@ -131,7 +131,7 @@ Treat cold-email campaigns as **science experiments**, not creative drafts. Sing
 
 ### Iteration Cadence
 
-**Saraev's recommended cadence:** every Sunday, spend 20-30 minutes reviewing the prior week's variants and producing the next batch. Produces ~50 cycles/year vs. ad-hoc iteration that dies after week one.
+**framework's recommended cadence:** every Sunday, spend 20-30 minutes reviewing the prior week's variants and producing the next batch. Produces ~50 cycles/year vs. ad-hoc iteration that dies after week one.
 
 - **Make big changes early, small changes late.** Week 1: ship two fundamentally different emails (super-short vs. super-long, formal vs. casual). Once a winner is established, narrow the deltas — change one line, then one word.
 - **Always run multiple variants in parallel.** Kill bottom performers fast; build new variants off the top.
@@ -156,7 +156,7 @@ Stagnant at 2.5% after week 3 = your iteration isn't actually iterating. Re-eval
 - Once a 2-email campaign hits >4-5% reply, **add a third**. Each added step lifts reply rate a point or two while bringing block risk along.
 - Real follow-up copy = human ping, not newsletter. "Hey Pete, quick ping — did this get lost?" beats a 6-sentence fresh pitch.
 
-Source: Nick Saraev's 2026 cold-email course. See `frameworks/saraev-four-step.md`.
+Pattern basis: internal research synthesis.
 
 ---
 

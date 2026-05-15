@@ -15,21 +15,21 @@ Use a regression fixture for:
 
 ```yaml
 name: "[content type + scenario]"
-source: "[skill or artifact]"
-content_type: "short-outbound | landing-page | blog | docs | internal"
+Pattern basis: internal research synthesis.
+content_type: "short-outbound | internal | blog | docs | internal"
 protected_tokens:
-  - "[named entity]"
-  - "[number]"
-  - "[URL]"
+ - "[named entity]"
+ - "[number]"
+ - "[URL]"
 minimum_compression: "0-10% | 10-15% | 15-25% | 20-30%"
 detector_gate:
-  mode: "pangram | proxy"
-  threshold: "public >=0.95 human_probability or <=0.05 ai_probability; high-stakes >=0.99 human_probability or <=0.01 ai_probability; operator policy if stricter"
+ mode: "pangram | proxy"
+ threshold: "public >=0.95 human_probability or <=0.05 ai_probability; high-stakes >=0.99 human_probability or <=0.01 ai_probability; operator policy if stricter"
 expected:
-  hard_tells: 0
-  soft_tells_max: 2
-  protected_tokens_preserved: true
-  specificity_drop_max: 1
+ hard_tells: 0
+ soft_tells_max: 2
+ protected_tokens_preserved: true
+ specificity_drop_max: 1
 ```
 
 ## Regression Rules
