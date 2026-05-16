@@ -2,7 +2,7 @@
 
 ![Marketing Skills](./assets/banner.png)
 
-> **Agent Skills 2.0** — fresh start on the `refactor/v2.0` branch. Install via `npx skills add hungv47/marketing-skills@refactor/v2.0`. The `main` branch holds the legacy v1.x line.
+> **Agent Skills 2.0** — fresh start on the `refactor/v2.0` branch. Install via `npx skills add hungv47/marketing-skills@refactor/v2.0`. The `main` branch holds the legacy v7.x line.
 
 Brand identity, persuasive copy, campaign planning, landing-page architecture, post-launch landing-page evaluation, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 13 skills (plus `/orchestrate-marketing` orchestrator).
 
@@ -13,22 +13,28 @@ Brand identity, persuasive copy, campaign planning, landing-page architecture, p
 Installs via the [`skills` CLI](https://skills.sh). Requires Node.js 18+. Auto-detects Claude Code, Cursor, Codex, Windsurf, Gemini CLI, or VS Code.
 
 ```bash
-# Install the full marketing stack
-npx skills add hungv47/marketing-skills
+# Install the full marketing stack (Agent Skills 2.0)
+npx skills add hungv47/marketing-skills@refactor/v2.0
 
 # Cherry-pick a single skill (any skill in the stack — these are just examples)
-npx skills add hungv47/marketing-skills --skill copywriting
-npx skills add hungv47/marketing-skills --skill seo
-npx skills add hungv47/marketing-skills --skill humanize
+npx skills add hungv47/marketing-skills@refactor/v2.0 --skill copywriting
+npx skills add hungv47/marketing-skills@refactor/v2.0 --skill seo
+npx skills add hungv47/marketing-skills@refactor/v2.0 --skill humanize
 
 # List available skills without installing
-npx skills add hungv47/marketing-skills --list
+npx skills add hungv47/marketing-skills@refactor/v2.0 --list
 
 # Target a specific editor
-npx skills add hungv47/marketing-skills --agent claude-code
+npx skills add hungv47/marketing-skills@refactor/v2.0 --agent claude-code
 
 # Install globally (available in every project)
-npx skills add hungv47/marketing-skills -g
+npx skills add hungv47/marketing-skills@refactor/v2.0 -g
+```
+
+**Legacy v7.x install** (main branch — no `@refactor/v2.0` suffix):
+
+```bash
+npx skills add hungv47/marketing-skills
 ```
 
 See the [root README](https://github.com/hungv47/agent-skills#install) for the full install reference.
