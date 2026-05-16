@@ -2,7 +2,7 @@
 
 ![Marketing Skills](./assets/banner.png)
 
-> **v4.0.0 BREAKING:** `start-marketing` renamed to `orchestrate-marketing`. Update any `/start-marketing` invocations in your workflows to `/orchestrate-marketing`.
+> **Agent Skills 2.0** — fresh start on the `refactor/v2.0` branch. Install via `npx skills add hungv47/marketing-skills@refactor/v2.0`. The `main` branch holds the legacy v1.x line.
 
 Brand identity, persuasive copy, campaign planning, landing-page architecture, post-launch landing-page evaluation, design briefs, search visibility, humanization, localization polish, outbound, paid Meta ads, short-form video briefs, and platform-native social-copy. 13 skills (plus `/orchestrate-marketing` orchestrator).
 
