@@ -131,7 +131,7 @@ Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`).
 
 **Read order:**
 1. Pipeline: `research/icp-research.md` for audience + search behavior. `.agents/skill-artifacts/mkt/campaign-plan.md` for pillars/angles. `research/product-context.md` for category context.
-2. Experience: `.agents/experience/{audience,product,business}.md`.
+2. Experience: `skills-resources/experience/{audience,product,business}.md`.
 
 **Warm Start** (mode + site supplied, audience known):
 

@@ -284,7 +284,7 @@ Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`).
 **Read order:**
 1. Method: `references/_shared/copywriting-research-workflow.md` for the Research Doc -> Avatar & Offer Brief -> Belief Engineering -> Unique Mechanism SOP. Use it to identify missing proof, competitor-pattern, and mechanism context before dispatch.
 2. Pipeline: `research/product-context.md`, `research/icp-research.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `brand/BRAND.md`. Read if present, do not block on missing.
-3. Experience: `.agents/experience/{audience,product,business,brand}.md`.
+3. Experience: `skills-resources/experience/{audience,product,business,brand}.md`.
 
 If `icp-research.md` / `product-context.md` >30 days old, warn and recommend re-running `icp-research` (soft gate — proceed with "stale ICP" header note in rationale).
 

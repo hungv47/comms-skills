@@ -174,7 +174,7 @@ Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`).
 
 **Read order:**
 1. Pipeline: `research/product-context.md` for brand voice + dialect/glossary preferences. Existing `.agents/skill-artifacts/mkt/content/[slug].md` if polishing a prior artifact.
-2. Experience: `.agents/experience/brand.md` for register-mapping notes.
+2. Experience: `skills-resources/experience/brand.md` for register-mapping notes.
 3. Conversation: explicit `--register` arg from user always wins.
 
 ### Register Resolution (used in both warm and cold flows)

@@ -216,7 +216,7 @@ If hard gates pass, proceed to Pre-Dispatch flows.
 
 ### Read order
 1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (both confirmed by hard gate). `research/icp-research.md`, `research/product-context.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `.agents/skill-artifacts/meta/records/targets-*.md` (all optional, read when present).
-2. Experience: `.agents/experience/goals.md` for prior hypothesis/goal context. `.agents/experience/audience.md` for ICP fallback if no `icp-research.md`.
+2. Experience: `skills-resources/experience/goals.md` for prior hypothesis/goal context. `skills-resources/experience/audience.md` for ICP fallback if no `icp-research.md`.
 
 ### Warm Start (page identity supplied + goal/hypothesis derivable)
 

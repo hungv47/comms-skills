@@ -179,7 +179,7 @@ Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Star
 
 ### Read order
 1. Pipeline: `research/product-context.md` → product. `research/icp-research.md` → audience, habitats, VoC. `.agents/skill-artifacts/meta/sketches/prioritize-*.md` → strategic initiatives (optional, alignment only).
-2. Experience: `.agents/experience/{product,audience,business,goals}.md` for any dimension not covered by pipeline artifacts.
+2. Experience: `skills-resources/experience/{product,audience,business,goals}.md` for any dimension not covered by pipeline artifacts.
 
 If pipeline artifact `date` fields are >30 days, warn and recommend re-running upstream — audience and pains evolve.
 

@@ -182,7 +182,7 @@ Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`).
 **Read order:**
 1. Method: `references/research-workflow.md` for the Research Doc -> Avatar & Offer Brief -> Belief Engineering -> Unique Mechanism SOP. Use it to identify missing upstream context before dispatch.
 2. Pipeline: `research/icp-research.md` for VoC + pain language. `research/product-context.md` for product details and voice adjectives. `.agents/skill-artifacts/mkt/campaign-plan.md` for angle + awareness stage.
-3. Experience: `.agents/experience/{audience,product,goals}.md`.
+3. Experience: `skills-resources/experience/{audience,product,goals}.md`.
 
 If `research/icp-research.md` or `product-context.md` `date` fields >30 days old, warn and recommend re-running `icp-research`. Soft gate — proceed if user confirms, note "stale ICP" in artifact header.
 

@@ -43,7 +43,7 @@ routing:
   position: orchestrator
   lifecycle: pipeline
   produces:
-    - .agents/experience/marketing-workflow.md
+    - skills-resources/experience/marketing-workflow.md
   side-effects:
     - manifest-sync
   consumes:
@@ -60,7 +60,7 @@ routing:
     - .agents/skill-artifacts/mkt/seo-*.md
     - .agents/skill-artifacts/mkt/cold-outreach/*.md
     - .agents/skill-artifacts/mkt/short-form-brief/**/brief.md
-    - .agents/experience/*.md
+    - skills-resources/experience/*.md
   requires: []
   defers-to:
     - skill: brand-system
@@ -121,7 +121,7 @@ This skill does NOT execute marketing work. It is a router and progress-tracker.
 
 **Tier note (`metadata.budget: fast`):** This is a pure router — no sub-agent dispatch, no critic gate. The body below runs in-line: read state, parse intent, propose next skill, await user confirmation. No `agents/` directory, no L1/L2 layers, no rewrite cycles. The premium-orchestration substrate (multi-agent + critic) lives in the skills this router proposes; running it here would be theater.
 
-1. **State detection** — silently read `research/`, `brand/`, `.agents/skill-artifacts/mkt/`, `.agents/experience/*.md`.
+1. **State detection** — silently read `research/`, `brand/`, `.agents/skill-artifacts/mkt/`, `skills-resources/experience/*.md`.
 2. **Intention analysis** — parse the user's free-form ask. If empty, ask one bundled scoping question.
 3. **Routing decision** — propose the next 1–3 skills with rationale + cost + duration + what each produces.
 4. **User confirmation** — user picks one. Skill prints the hand-off `/skill-name` command and exits. Never auto-invokes.
@@ -190,8 +190,8 @@ See [`references/_shared/manifest-spec.md`](references/_shared/manifest-spec.md)
 | `.agents/skill-artifacts/mkt/cold-outreach/*.md` | Outbound touch composed. |
 | `.agents/skill-artifacts/mkt/short-form-brief/**/brief.md` | Video brief exists. |
 | `.agents/skill-artifacts/research/short-form-research/*.md` | Short-form best-practice catalogs (from research-skills). |
-| `.agents/experience/marketing-workflow.md` | Prior breadcrumb. |
-| `.agents/experience/brand.md`, `audience.md`, `content.md` | Persisted cold-start answers. |
+| `skills-resources/experience/marketing-workflow.md` | Prior breadcrumb. |
+| `skills-resources/experience/brand.md`, `audience.md`, `content.md` | Persisted cold-start answers. |
 
 Build a state map:
 
@@ -264,7 +264,7 @@ Apply rules in order — first match wins.
 
 **Ambiguity rule:** if user's intent matches 2+ buckets ("I need content for my new product"), propose 2 options with rationale. Don't pick for them.
 
-**Polish chain:** if user is producing copy and a `.agents/experience/content.md` says brand_mode=founder OR market includes Vietnamese, mention humanize/vn-tone as the terminal step after copywriting.
+**Polish chain:** if user is producing copy and a `skills-resources/experience/content.md` says brand_mode=founder OR market includes Vietnamese, mention humanize/vn-tone as the terminal step after copywriting.
 
 ---
 
@@ -305,7 +305,7 @@ If multiple options apply, show 2–3.
 
 ## Step 5: Persist + Hand Off
 
-Append to `.agents/experience/marketing-workflow.md`:
+Append to `skills-resources/experience/marketing-workflow.md`:
 
 ```markdown
 ## Session 2026-05-06
@@ -346,7 +346,7 @@ For canonical pipeline, decision rules, per-skill catalog, and polish-chain logi
 ## Output
 
 - **Inline only** — prints to conversation, no saved artifact.
-- **Side effect:** appends one entry to `.agents/experience/marketing-workflow.md`.
+- **Side effect:** appends one entry to `skills-resources/experience/marketing-workflow.md`.
 
 ## Status
 

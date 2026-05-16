@@ -165,9 +165,9 @@ Run the canonical Pre-Dispatch protocol (`references/_shared/pre-dispatch-protoc
    - Missing → "No short-form-research artifact for this market. Run `short-form-research` first, or proceed with platform references only (briefs will lack current trend signals). [Run upstream / Proceed without]"
    - Trend signals stale (>30d) → "Trend signals are X days old. Re-run research, or proceed with stale trends? Briefs may bet on decayed patterns."
    - Mechanics stale (>180d) → strongly recommend re-run; user can override with concerns flag.
-2. `brand/BRAND.md` + `.agents/experience/business.md` → infer `brand_mode`. Solo founder / personal brand → `founder`. Faceless product / company → `company`. Ambiguous → ask.
-3. `research/icp-research.md` + `.agents/experience/audience.md` → audience VoC, register, market.
-4. `.agents/experience/content.md` → recent content decisions, market lock-in.
+2. `brand/BRAND.md` + `skills-resources/experience/business.md` → infer `brand_mode`. Solo founder / personal brand → `founder`. Faceless product / company → `company`. Ambiguous → ask.
+3. `research/icp-research.md` + `skills-resources/experience/audience.md` → audience VoC, register, market.
+4. `skills-resources/experience/content.md` → recent content decisions, market lock-in.
 5. `.agents/skill-artifacts/mkt/campaign-plan.md` → if `[slug]` matches a campaign asset, inherit theme/dates/CTAs.
 
 **Warm Start** (research artifact found, brand_mode inferred):
@@ -216,7 +216,7 @@ Short-form brief — quick decisions (one round-trip).
 Answer 1-5 (skip resolved) in one response. I'll confirm what I heard, then dispatch.
 ```
 
-**Write-back to `.agents/experience/content.md`:**
+**Write-back to `skills-resources/experience/content.md`:**
 
 | Q | Key |
 |---|---|

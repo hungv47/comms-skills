@@ -219,7 +219,7 @@ Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Star
 
 ### Read order
 1. Pipeline: `brand/BRAND.md` → voice rules + lexicon. `research/product-context.md` → voice adjectives.
-2. Experience: `.agents/experience/brand.md` → voice notes from prior runs.
+2. Experience: `skills-resources/experience/brand.md` → voice notes from prior runs.
 3. Conversation context: brief from upstream skill (e.g., copywriting handed text directly).
 
 If `research/product-context.md` `date` is >30 days, warn and recommend re-running `icp-research` for fresh voice adjectives — brand voice evolves.

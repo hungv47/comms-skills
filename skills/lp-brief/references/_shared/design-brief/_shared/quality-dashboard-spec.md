@@ -1,5 +1,7 @@
 <!-- GENERATED SUPPORT FILE. Do not edit here. Run `node scripts/sync-skill-support.mjs` from the agent-skills repo root. -->
 
+<!-- GENERATED SUPPORT FILE. Do not edit here. Run `node scripts/sync-skill-support.mjs` from the agent-skills repo root. -->
+
 # Quality Dashboard Spec
 
 > Lightweight cross-skill quality telemetry for critic gates, eval loops, operator overrides, and rubric calibration.

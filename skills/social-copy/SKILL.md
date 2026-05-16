@@ -115,7 +115,7 @@ Social copy generator for 5 platforms: **tiktok, reels, shorts, x, linkedin**. C
 
 ## Pre-Dispatch
 
-Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`). Read `.agents/experience/audience.md`, `.agents/experience/brand.md`, and `.agents/experience/product.md` BEFORE asking.
+Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`). Read `skills-resources/experience/audience.md`, `skills-resources/experience/brand.md`, and `skills-resources/experience/product.md` BEFORE asking.
 
 **Needed dimensions:** platform, brand_mode, audience (who this is for + one pain), the one shift (what should reader do/believe after), topic or brief path.
 
@@ -127,7 +127,7 @@ Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`). R
 4. **Audience** — who is this for? (role + one pain, or "use icp-research.md") → `audience.md` if novel
 5. **Goal** — awareness / engagement / click / save / share? (default: engagement) → `goals.md`
 
-**Write-back:** answers persist to the mapped `.agents/experience/{domain}.md` files per protocol.
+**Write-back:** answers persist to the mapped `skills-resources/experience/{domain}.md` files per protocol.
 
 **Warm Start:** if `short-form-brief` artifact exists for this topic, extract platform, audience, hook angle, and goal from it — skip all five questions.
 

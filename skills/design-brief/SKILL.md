@@ -228,7 +228,7 @@ If `brand/ASSETS.md` exists, scan for a row matching the requested asset. If fou
 
 ### Read order (post-gate)
 1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (confirmed by hard gate). `brand/ASSETS.md` for dimension pre-fill. `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` if invoked from lp-brief. `.agents/skill-artifacts/mkt/content/[slug].copy.md` if copy supplied separately. `.agents/skill-artifacts/mkt/campaign-plan.md` for campaign context. `research/icp-research.md` for audience visual preferences.
-2. Experience: `.agents/experience/{brand,goals}.md`.
+2. Experience: `skills-resources/experience/{brand,goals}.md`.
 
 ### Optional Artifacts (read if present)
 

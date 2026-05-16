@@ -288,7 +288,7 @@ Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`). c
 
 **Read order:**
 1. Pipeline: `research/product-context.md`, `research/icp-research.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`. Read if present, do not block on missing.
-2. Experience: `.agents/experience/{audience,product,business}.md`.
+2. Experience: `skills-resources/experience/{audience,product,business}.md`.
 
 If `icp-research.md` / `product-context.md` >30 days old, warn and recommend re-running `icp-research` (soft gate — proceed with "stale ICP" header note).
 

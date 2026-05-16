@@ -249,7 +249,7 @@ Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`).
 
 **Read order:**
 1. Pipeline: `research/product-context.md`, `research/icp-research.md`. Existing brand assets directory if present.
-2. Experience: `.agents/experience/{product,audience,brand,business}.md`.
+2. Experience: `skills-resources/experience/{product,audience,brand,business}.md`.
 
 If pipeline artifact `date` fields are >30 days old, warn and recommend re-running `icp-research`.
 
