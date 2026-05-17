@@ -9,6 +9,16 @@ metadata:
   version: "1.0.0"
   budget: standard
   estimated-cost: "$0.50-1.50"
+  refactor_history:
+    - refactored_at: 2026-05-18
+      refactored_for: implementation-roadmap v6 Phase 2 Wave 1 (marketing-stack slot 1)
+      body_before: 224
+      body_after: 156
+      body_delta_pct: -30.4
+      note: |
+        Creative-leaning ref pattern (stacks/marketing.md). Cross-stack contract
+        preserved byte-identical. Full inventory in `references/playbook.md
+        § Refactor history`.
 promptSignals:
   phrases:
     - "write a tweet"
@@ -82,212 +92,119 @@ routing:
 
 **Core Question:** "Does this copy stop the scroll, clear all platform limits, and earn the click — on THIS platform?"
 
-## What It Does
-
-Social copy generator for 5 platforms: **tiktok, reels, shorts, x, linkedin**. Consumes a brief (from `short-form-brief` or `campaign-plan`) or an inline topic, plus brand voice and platform-intelligence references. Produces hook variants (A/B), body, CTA, with platform char/word/format limits enforced and CTA placement validated against each platform's algorithm truncation point.
-
-**Not in scope:** ad-copy (paid-platform bidding, audience tags, compliance), email-copy (subject lines, deliverability, sequence logic), long-form posts (LinkedIn articles, Substack).
-
-**5 platforms at launch:** `tiktok`, `reels`, `shorts`, `x`, `linkedin`. YouTube long-form excluded.
-
-**Single-platform per artifact.** Multi-platform = re-invoke with a different `platform` argument.
-
-**Single-market per artifact** (matches `short-form-brief`). Multi-market campaigns re-run per market. Vietnamese-market copy auto-routes through `vn-tone` via `--polish-chain vn-tone`.
-
-**Polish chain default:** `none`. Set `--polish-chain humanize` or `--polish-chain vn-tone` to route the critic-passed copy through a terminal pass.
+[Read [`references/playbook.md`](references/playbook.md) [PLAYBOOK] for why this skill exists, the creative-vs-structural framing, 5-dimension rubric summary, single-platform constraint rationale, and when NOT to use.]
 
 ---
 
-## Inputs
+## Critical Gates — Read First
 
-| Field | Required | Source | Notes |
-|---|---|---|---|
-| `brief_artifact_path` | ONE OF (brief or topic) | `.agents/skill-artifacts/mkt/short-form-brief/...` OR `.agents/skill-artifacts/mkt/campaign-plan.md` | Hook angle + audience already locked when brief exists |
-| `topic` | ONE OF (brief or topic) | inline | Fallback when no brief exists. Pre-Dispatch round asks hook-angle + audience |
-| `platform` | required | inline arg | `tiktok | reels | shorts | x | linkedin`. Maps to `references/_shared/platform-intelligence/[platform].md` |
-| `brand_system` | required if exists | `brand/BRAND.md` + `brand/DESIGN.md` | Voice, archetype, lexicon, banned words |
-| `brand_mode` | required | inline | `founder` (single-author voice) or `company` (multi-author brand voice) |
-| `goal` | optional | inline | `awareness | engagement | click | save | share`. Determines CTA type. Default `engagement` |
-| `variant_count` | optional | inline | 1–3 hooks. Default 2 (A/B). Hard cap 3 |
-| `polish_chain` | optional | inline | `humanize | vn-tone | none`. Default `none` |
+Non-negotiable constraints before dispatching any agent:
+
+1. **Single-platform per artifact.** Multi-platform = re-invoke with a different `platform` argument. Tier 1 hook archetypes are platform-specific; compromise copy across platforms is optimal for none. Captured as `anti-patterns.md` § "Multi-Platform in One Invocation."
+2. **Single-market per artifact.** Multi-market campaigns re-run per market. Vietnamese-market copy auto-routes through `vn-tone` via `--polish-chain vn-tone`.
+3. **Brand mode required.** Either `brand/BRAND.md` declares the mode OR operator answers Q3 in Cold Start. No silent default — defaulting silently triggers Anti-Pattern #5 (Brand-Voice Ignored) at critic time.
+4. **Max 1 format-check revision loop.** Two consecutive REVISION_REQUIRED = FORMAT_FAIL escalated to user. Looping until copy fits typically masks brief-vs-platform mismatch.
 
 ---
 
-## Pre-Dispatch
+## Before Starting
 
-Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`). Read `skills-resources/experience/audience.md`, `skills-resources/experience/brand.md`, and `skills-resources/experience/product.md` BEFORE asking.
+Apply the [before-starting-check](references/_shared/before-starting-check.md) [PLAYBOOK].
 
-**Needed dimensions:** platform, brand_mode, audience (who this is for + one pain), the one shift (what should reader do/believe after), topic or brief path.
-
-**Per-skill cold-start question registry (social-copy):**
-
-1. **Platform** — tiktok / reels / shorts / x / linkedin? → routing only
-2. **Topic or brief** — paste a brief path OR describe the topic in 1–2 sentences → `content.md`
-3. **Brand mode** — founder (personal voice) or company (brand voice)? → `brand.md` if novel
-4. **Audience** — who is this for? (role + one pain, or "use icp-research.md") → `audience.md` if novel
-5. **Goal** — awareness / engagement / click / save / share? (default: engagement) → `goals.md`
-
-**Write-back:** answers persist to the mapped `skills-resources/experience/{domain}.md` files per protocol.
-
-**Warm Start:** if `short-form-brief` artifact exists for this topic, extract platform, audience, hook angle, and goal from it — skip all five questions.
+0. **Mode resolution** per [`references/_shared/mode-resolver.md`](references/_shared/mode-resolver.md) [PROCEDURE]. Skill is `budget: standard`; `--fast` collapses format-check revision loop to ZERO (single-pass; hard-cap violation → FORMAT_FAIL immediately); `--deep` bumps revision loop to MAX 2 cycles. Critic gate is single-pass at baseline (no rewrite loop even under --deep). **Cold Start STILL fires under `--fast`** when context is missing — `--fast` does NOT authorize hallucinating audience or brand_mode (Anti-Pattern #5 floor; safety gates supersede mode-resolver downgrade).
+1. Read `.agents/manifest.json` — find any prior `.agents/skill-artifacts/mkt/copy/[platform]-*-[slug].md` for this topic + platform (variant exploration signal) and any `short-form-brief` or `campaign-plan` artifact this run might follow.
+2. Run Pre-Dispatch per [`references/procedures/pre-dispatch.md`](references/procedures/pre-dispatch.md) [PROCEDURE] — auto-scan first (`research/icp-research.md` + `brand/BRAND.md` + `experience/`), then Warm/Cold Start. 5-question Cold Start (platform / topic-or-brief / brand-mode / audience / goal), Write-back map (Q1 routing-only; Q2→content.md; Q3→brand.md if novel; Q4→audience.md if icp-research absent; Q5→goals.md), and Cold-Start-under-`--fast` floor all there.
 
 ---
 
-## Agent Roster
+## Quality Gate
 
-| Agent | Layer | File | Focus |
-|-------|-------|------|-------|
-| Copywriter Agent | 1 | `agents/copywriter-agent.md` | Hook variants (A/B/C), body, CTA, format spec. Platform-aware. Hook MUST match Tier 1 or Tier 2 archetype from platform-intelligence Hook Taxonomy |
-| Format Checker Agent | 2 (sequential) | `agents/format-checker-agent.md` | Enforces char/word limits, CTA placement vs truncation, format-spec correctness. Hard-cap violations bounce back to copywriter (max 1 revision loop) |
-| Critic Agent | 3 (final) | `agents/critic-agent.md` | Scores against 5-dim rubric (references/rubric.md). Outputs per-dimension score table + verdict + anti-patterns triggered |
+Critic agent verifies before delivery against the 5-dimension rubric in [`references/rubric.md`](references/rubric.md) [PROCEDURE]:
 
-**Why 3 agents:** Social copy is short-form by design. Splitting into more agents (hook-agent + body-agent) introduces collision risk during merge — flagged in copywriting contract `unknowns_pending_observation.layer_1_agent_collision_frequency`. Three agents is the floor for multi-agent dispatch and the ceiling for short-form-craft skills.
+- [ ] Hook scroll-stop strength (scored against platform-intel §1 Hook Taxonomy Tier 1 / Tier 2 archetypes)
+- [ ] Char/word limit compliance (hard caps + soft visible-window per platform-intel §2)
+- [ ] CTA placement vs algorithm truncation (X / LinkedIn; TikTok/Reels/Shorts default 10 — verbal CTA)
+- [ ] Pattern-interruption density (per-platform calibration; LinkedIn over-density penalty)
+- [ ] Format compliance (correct surface for goal — single post vs thread vs carousel vs vertical-video caption)
 
----
-
-## Dispatch Matrix
-
-| Step | Agent | Named Inputs | Named Outputs |
-|------|-------|-------------|---------------|
-| 1 | copywriter-agent | brief OR topic + brand-system + platform-intel/[platform].md + Pre-Dispatch answers + variant_count + goal | structured-draft (hook-variants + body + CTA + format-spec) |
-| 2 | format-checker-agent | structured-draft + platform-intel format-constraints section | passed-draft OR revision-request (named violations) |
-| 2a (if revision) | copywriter-agent (revision) | structured-draft + revision-request (critic feedback appended) | revised-draft |
-| 2b (if revised) | format-checker-agent (re-check) | revised-draft + platform-intel format-constraints | final-passed-draft OR format-fail |
-| 3 | critic-agent | final-passed-draft + brief + brand-voice context + references/rubric.md + references/anti-patterns.md | scored verdict (pass/DWC/fail) + per-dimension table + anti-patterns list |
-
-**Format-check bounce rule:** hard-cap violations send the draft back to copywriter ONCE. Two consecutive violations = `format-fail` — escalate to user with: "Format-fail: [platform] [violation]. Manual fix required before publish."
-
----
-
-## Execution Flow
-
-```
-Pre-Dispatch (read experience/ first; ask ≤5 questions if missing)
-     ↓
-1. Dispatch copywriter-agent
-     ↓
-2. Dispatch format-checker-agent
-     ↓ (if hard-cap violation)
-   2a. Bounce to copywriter-agent with revision-request (max 1 time)
-     ↓
-   2b. Re-check with format-checker-agent
-     ↓ (two consecutive failures → format-fail → escalate to user)
-3. Dispatch critic-agent
-     ↓
-   PASS (score ≥35)       → assemble artifact → optional polish chain → DONE
-   DONE_WITH_CONCERNS     → assemble artifact with concerns flagged → DONE_WITH_CONCERNS
-   FAIL (score <25)       → deliver artifact with critic annotations flagged to user
-     ↓
-4. [Optional] Polish chain
-   polish_chain=humanize  → route to humanize skill as terminal pass
-   polish_chain=vn-tone   → route to vn-tone skill as terminal pass
-   polish_chain=none      → skip
-```
-
-### How to spawn a sub-agent
-
-For each agent dispatched, use the **Agent tool** with a prompt constructed as follows:
-
-1. **Read** the agent instruction file (e.g., `agents/copywriter-agent.md`) — include its FULL content in the Agent prompt
-2. **Append** the brief and Pre-Dispatch context after the instructions
-3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory (e.g., `references/rubric.md` → `/absolute/path/social-copy/references/rubric.md`). Tell the agent: "Read the reference file at [absolute path]."
-4. **Pass upstream artifacts by content, not path**: orchestrator reads `brand/BRAND.md` and platform-intelligence docs FIRST, then includes relevant excerpts in the dispatch payload. Sub-agents should NOT read brand files directly — the orchestrator curates what they need.
-5. If **feedback** exists (from format-checker bounce), append it with the header: `## Format-Checker Feedback — Address Every Violation`
-
-### Single-agent fallback
-
-If multi-agent dispatch is unavailable, execute each agent's instructions sequentially in-context in this order: copywriter-agent → format-checker-agent → critic-agent. The output quality should be equivalent — multi-agent pattern optimizes for focus, not capability.
-
----
-
-## Output Artifact
-
-**Path:** `.agents/skill-artifacts/mkt/copy/[platform]-[YYYY-MM-DD]-[slug].md`
-
-**Frontmatter schema (verbatim from spec — match exactly):**
-
-```yaml
-type: social-copy-artifact
-platform: tiktok | reels | shorts | x | linkedin
-date: YYYY-MM-DD
-slug: short-kebab-slug
-brand_mode: founder | company
-goal: awareness | engagement | click | save | share
-variant_count: 1-3
-brief_source: <path or inline-topic>
-platform_intel_version: <last_verified date from platform-intelligence/[platform].md>
-critic_score: <numeric, 0-50 across 5 dimensions × 0-10>
-critic_verdict: pass | done_with_concerns | fail
-status: done | done_with_concerns | blocked | needs_context
-polish_chain_applied: vn-tone | humanize | none
-```
-
-**Body schema (sectioned markdown — match exactly):**
-
-```markdown
-## Hook variants
-### Variant A
-<verbatim hook text — character count enforced>
-**Char count:** N / [platform limit]
-**Algorithm signal targeted:** <one of platform-intel top-5 signals>
-
-### Variant B
-<verbatim hook text — character count enforced>
-**Char count:** N / [platform limit]
-**Algorithm signal targeted:** <one of platform-intel top-5 signals>
-
-## Body
-<verbatim body text — character/word count enforced>
-**Char count:** N / [platform limit]
-
-## CTA
-<verbatim CTA text>
-**Placement:** <line N of M; relative position to algorithm truncation point>
-
-## Format spec
-- Single post / thread (X) / carousel (LinkedIn) / vertical-video-caption (TikTok/Reels/Shorts)
-- Aspect ratio (if media-coupled): N:M
-- Pattern-interruption density: <count of interrupts per 100 chars>
-
-## Critic verdict
-| Dimension | Score | Notes |
-|---|---|---|
-| Hook scroll-stop strength | 0-10 | scored vs platform-intel Hook Taxonomy |
-| Char/word limit compliance | 0-10 | hard cap or violation reason |
-| CTA placement vs truncation | 0-10 | for platforms with truncation lines |
-| Pattern-interruption density | 0-10 | scored against platform anti-patterns |
-| Format compliance | 0-10 | single post vs thread vs carousel correctness |
-| **Total** | / 50 | pass ≥ 35; done_with_concerns 25-34; fail < 25 |
-
-## Anti-patterns triggered (if any)
-- <list of detected anti-patterns from references/anti-patterns.md>
-```
-
----
-
-## Critic Gate
-
-Read `references/rubric.md` for full dimension definitions and thresholds.
-
-**Pass threshold:** total ≥ 35/50 AND no individual dimension scores 0.
+**Pass:** total ≥ 35/50 AND no individual dimension scores 0.
 **Done with concerns:** 25–34 OR any individual dimension below 4.
 **Fail:** < 25.
 
-**If critic returns fail:** deliver the artifact with annotations and flag to user: "Copy scored [X] — manual review recommended on [specific dimensions]." Do NOT silently discard — failed copy still ships as an artifact with `status: done_with_concerns` so the user can decide.
+**Discrimination test (mandatory every run):** weak brief MUST score < 25; strong brief MUST score ≥ 35. If both pass or both fail, flag `RUBRIC INTEGRITY WARNING`. (Implemented in `agents/critic-agent.md` per `rubric.md § Discrimination Test`.)
 
-**Discrimination test:** a weak brief MUST score < 25; a strong brief MUST score ≥ 35. If both pass or both fail, the rubric is broken — flag this. (Implemented inside `agents/critic-agent.md`.)
+---
+
+## Artifact Contract
+
+- **Path:** `.agents/skill-artifacts/mkt/copy/[platform]-[YYYY-MM-DD]-[slug].md`
+- **Lifecycle:** `pipeline` (per `agent-skills/CLAUDE.md` taxonomy — regenerated by re-running; not edited in place)
+- **Frontmatter fields (13, verbatim):** `type` · `platform` · `date` · `slug` · `brand_mode` · `goal` · `variant_count` · `brief_source` · `platform_intel_version` · `critic_score` · `critic_verdict` · `status` · `polish_chain_applied` — full schema + per-field semantics in [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE]
+- **Required body sections (in order — cross-stack contract):** Hook variants (one `### Variant [A|B|C]` block per variant) · Body · CTA · Format spec · Critic verdict (6-row table) · Anti-patterns triggered (explicit `- None` if empty) — full sectioned schema in `format-conventions.md`
+- **Side effects (mandatory on PASS / done_with_concerns / fail — NOT on FORMAT_FAIL or NEEDS_CONTEXT, per `procedures/dispatch-mechanics.md`):**
+  - Write the artifact path
+  - Experience write-back per `procedures/pre-dispatch.md` Write-back map: Q1 (Platform) routing-only; Q2 (Topic) → `experience/content.md` (append); Q3 (Brand mode) → `experience/brand.md` IF novel; Q4 (Audience) → `experience/audience.md` IF icp-research absent AND audience supplied via Cold Start; Q5 (Goal) → `experience/goals.md`. **Q1 is NOT persisted** — adding "Platform — last used" would be net-new behavior. **Q4 skip-if-exists** — don't overwrite icp-research-populated personas.
+  - Run `bun scripts/manifest-sync.ts` as last step to index the new artifact
+- **Required Artifacts** (per `format-conventions.md`):
+
+  | Artifact | Source | If Missing |
+  |----------|--------|------------|
+  | `brand/BRAND.md` OR `brand_mode=founder` fallback | brand-system | If neither present, ask Q3 explicitly; if user can't answer, return `NEEDS_CONTEXT`. |
+
+- **Optional Artifacts** (per `format-conventions.md`):
+
+  | Artifact | Source | Benefit |
+  |----------|--------|---------|
+  | `short-form-brief/[slug]/brief.md` | short-form-brief | Locks platform + hook angle + audience + goal; reduces Cold Start to brand_mode + variant_count |
+  | `research/icp-research.md` | icp-research (hungv47/research-skills) | Resolves audience dimension; gives critic richer voice/brand-mode signal |
+  | `research/product-context.md` | icp-research (hungv47/research-skills) | Gives copywriter primary CTA + canonical terminology |
+
+- **Consumed by:** `humanize` + `vn-tone` (polish chain — read `## Body` + `## CTA`, rewrite in place, preserve Hook variants for A/B comparability, update `polish_chain_applied`); `eval-loop` (frontmatter `critic_score` + `critic_verdict` + `goal` + `platform` → `results.tsv`); operator publish workflow (Hook variants + Body + CTA + Format spec + Critic verdict + Anti-patterns triggered)
+- **Cross-stack OUTPUT contract:** 13-field frontmatter schema + 6-section body schema + 5-dimension critic verdict table + Anti-patterns triggered listing convention are all load-bearing — schema changes require atomic update of polish-chain + eval-loop + operator-workflow consumers (per `anti-patterns.md` row "Cross-stack contract drift")
+
+---
+
+## Chain Position
+
+**Previous:** `short-form-brief` (when brief locks platform/hook/audience/goal) OR `campaign-plan` (when campaign declares social cadence) OR none (greenfield with Cold Start) | **Next:** `humanize` / `vn-tone` (polish chain, optional) OR direct operator publish.
+
+**Horizontal role:** invoked at any stage of the marketing pipeline. NOT foundational (unlike icp-research / brand-system) — it's a leaf-node producer.
+
+**Re-run triggers (operator judgment):** new platform target, brand voice shift, hook A/B variant exploration, post-publish underperformance (re-run with different `variant_count` and/or `goal`).
+
+### Skill Deference
+- Paid Meta / Google / LinkedIn ad copy → `ad-copy`
+- Full video brief with storyboard + audio + production spec → `short-form-brief`
+- Landing-page copy, headlines, taglines, section copy → `copywriting`
+- LinkedIn articles, Substack posts, blog content (long-form) → `copywriting` or `seo`
+- Vietnamese-market polish → `vn-tone` (terminal pass)
+- AI-pattern stripping post-generation → `humanize` (terminal pass)
+
+---
+
+## Agent Manifest
+
+| Agent | Layer | File | Focus |
+|-------|-------|------|-------|
+| Copywriter Agent | 1 (solo) | `agents/copywriter-agent.md` | Hook variants (A/B/C) + body + CTA + format spec. Platform-aware. Hook MUST match Tier 1 or Tier 2 archetype from platform-intelligence Hook Taxonomy |
+| Format Checker Agent | 2 (sequential) | `agents/format-checker-agent.md` | Hard caps + soft visible-window + CTA placement vs truncation + format-spec correctness. Hard-cap violations bounce back to copywriter (max 1 revision cycle) |
+| Critic Agent | 3 (final, single-pass) | `agents/critic-agent.md` | Scores against 5-dim rubric. Outputs per-dimension table + verdict + anti-patterns triggered. No rewrite loop (single-pass by design — short-form regenerates fast) |
+
+**Why 3 agents:** Splitting into more (hook-agent + body-agent + CTA-agent separately) introduces collision risk during merge — flagged in copywriting contract `unknowns_pending_observation.layer_1_agent_collision_frequency`. Three is the floor for multi-agent dispatch and the ceiling for short-form-craft skills.
+
+---
+
+## Routing + Dispatch
+
+Single sequential graph; no route branching (unlike icp-research's A/B/C). The 3-agent dispatch graph (copywriter → format-checker → critic), single-agent fallback, format-check bounce + FORMAT_FAIL escalation, polish-chain handoff, post-write side effects, and mode-resolver interaction live in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE]. Load at copywriter-agent dispatch entry.
+
+**Format-check bounce rule (load-bearing summary):** PASS → critic. REVISION_REQUIRED → bounce to copywriter ONCE with named violations under `## Format-Checker Feedback — Address Every Violation` header. Second REVISION_REQUIRED → FORMAT_FAIL escalated to user, artifact ships `status: blocked`, critic NOT dispatched.
 
 ---
 
 ## Anti-Patterns
 
-1. **Generic hook openers** — "Have you ever...", "Did you know...", "In this video I'll..." These match no Tier 1 or Tier 2 archetype and signal platform-blind writing.
-2. **Algorithm-blind CTAs** — CTA placed below the truncation line on X (280 chars visible) or LinkedIn (first 3 lines visible). Reader won't reach it.
-3. **Format mismatch** — carousel content delivered as a thread; video caption written as feed-post body; long-form LinkedIn article draft dropped into a native post slot.
-4. **Char-limit-blind copy** — writing to 500 chars when the platform truncates at 280; writing to 3,000 chars when the feed shows ~200.
-5. **Brand-voice ignored** — corporate-cliché copy when `brand_mode=founder`; personal diary voice when `brand_mode=company`.
-6. **Pattern-interrupt monotony** — same interrupt type (question / pivot / stats-drop) repeated 3+ times in a row; density score drops.
-7. **Pasted-from-blog body** — long-form prose dropped into a short-form surface without compression. Identifiable by avg sentence length > 20 words AND no visual breaks (line breaks, numbers, em-dashes) in caption body.
+Critic-load reference: [`references/anti-patterns.md`](references/anti-patterns.md) [ANTI-PATTERN]. Re-read before any output ships — 14-pattern catalog (10 from original body's catalog + 4 cross-cutting failures: polish-chain routed on FAIL/FORMAT_FAIL, multi-platform in one invocation, VN-market without vn-tone, cross-stack contract drift) caught at orchestrator or operator level. Per-pattern detection rule + platform calibration + agent ownership inline.
 
 ---
 
@@ -296,6 +213,31 @@ Read `references/rubric.md` for full dimension definitions and thresholds.
 Every run ends with explicit status:
 
 - **DONE** — copy generated, all format limits passed, critic score ≥35, variant_count hooks delivered
-- **DONE_WITH_CONCERNS** — copy delivered; critic score 25–34 OR individual dimension below 4; concerns annotated in artifact
-- **BLOCKED** — platform not in supported set (tiktok/reels/shorts/x/linkedin); or brief contradicts brand_mode (e.g., VN market + brand_mode=company but no company voice defined); needs user resolution
-- **NEEDS_CONTEXT** — no brief, no topic, no brand voice, and no experience/ entries to derive from; recommend running `short-form-brief` or `brand-system` first, or answer Pre-Dispatch questions
+- **DONE_WITH_CONCERNS** — copy delivered; critic score 25–34 OR individual dimension below 4 OR critic verdict `fail` (FAIL artifacts still ship with annotations per locked decision); concerns annotated in artifact
+- **BLOCKED** — FORMAT_FAIL (two consecutive REVISION_REQUIRED); platform not in supported set; brief contradicts brand_mode with no resolution; needs user fix
+- **NEEDS_CONTEXT** — no brief, no topic, no brand voice, no `experience/` entries, no `brand/BRAND.md`; recommend running `short-form-brief` or `brand-system` first, or answer Pre-Dispatch questions
+
+---
+
+## References
+
+| Reference | Load class | Use For |
+|---|---|---|
+| [playbook.md](references/playbook.md) | PLAYBOOK | Why this skill exists, creative-vs-structural framing, 5-dimension rubric summary, single-platform constraint rationale, when NOT to use, polish-chain semantics |
+| [_shared/before-starting-check.md](references/_shared/before-starting-check.md) | PLAYBOOK | Pre-Pre-Dispatch read pattern (canonical at `meta-skills/references/`, synced) |
+| [_shared/mode-resolver.md](references/_shared/mode-resolver.md) | PROCEDURE | `--fast` / `--deep` behavior contract |
+| [_shared/pre-dispatch-protocol.md](references/_shared/pre-dispatch-protocol.md) | PROCEDURE | Canonical Pre-Dispatch spec |
+| [procedures/pre-dispatch.md](references/procedures/pre-dispatch.md) | PROCEDURE | Read order, Warm/Cold Start path, 5-question Cold Start prompt, Write-back map (Q1 routing-only, Q4 skip-if-exists), Cold-Start-under-`--fast` floor, Required + Optional artifacts |
+| [procedures/dispatch-mechanics.md](references/procedures/dispatch-mechanics.md) | PROCEDURE | 5-step Dispatch Protocol, single-agent fallback, sequential graph (copywriter → format-checker → critic), format-check bounce + FORMAT_FAIL escalation, critic single-pass + discrimination test, post-write side effects, polish-chain handoff, chain position, skill deference, mode-resolver interaction |
+| [format-conventions.md](references/format-conventions.md) | PROCEDURE | Artifact path convention, 13-field frontmatter schema + semantics, 6-section body schema, format-check rules table, per-platform hard caps + soft windows, anti-patterns listing convention, polish-chain output handling, cross-stack consumers |
+| [rubric.md](references/rubric.md) | PROCEDURE | 5-dimension rubric — full thresholds + per-platform calibration + Pass Logic + Discrimination Test |
+| [examples/social-walkthrough.md](references/examples/social-walkthrough.md) | EXAMPLE | Full end-to-end Walkthrough on LinkedIn founder-voice case (Cold Start → 3-agent dispatch → critic 44/50 PASS → artifact assembly → polish-chain decision) |
+| [examples.md](references/examples.md) | EXAMPLE | 10 per-platform strong/weak examples (1 strong + 1 weak × 5 platforms) with brief input + generated copy + critic verdict |
+| [anti-patterns.md](references/anti-patterns.md) | ANTI-PATTERN | 14 named anti-patterns (10 from original + 4 cross-cutting failures) with detection rule + platform calibration + agent ownership |
+| [_shared/platform-intelligence/](references/_shared/platform-intelligence/) | data catalog | Per-platform reference catalogs (tiktok, reels, shorts, x, linkedin, youtube template): §1 Hook Taxonomy (Tier 1 / Tier 2), §2 Format Constraints (hard caps + soft window + truncation), §3 Algorithm Signals (top-5), §4 Anti-Patterns (platform-specific bait penalties) |
+| `marketing-skills/CLAUDE.md` | reference | Stack-level conventions (Pre-Dispatch Protocol, Complexity Routing, Multi-Agent Skills) |
+
+### Sub-Agent Instructions (agents/)
+- [agents/copywriter-agent.md](agents/copywriter-agent.md) — Hook variants + body + CTA + format spec; Tier 1/2 archetype enforcement
+- [agents/format-checker-agent.md](agents/format-checker-agent.md) — Hard caps + CTA placement + format compliance; REVISION_REQUIRED + FORMAT_FAIL verdicts
+- [agents/critic-agent.md](agents/critic-agent.md) — 5-dimension scoring + discrimination test + anti-patterns detection

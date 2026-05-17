@@ -8,7 +8,7 @@ status: active
 
 # Social Copy Anti-Patterns
 
-Full detection-rule library for `critic-agent.md`. 10 patterns. Each entry: name, detection rule (falsifiable — a critic agent can run this check on any copy without human judgment), platform calibration where relevant.
+Full detection-rule library for `critic-agent.md`. 14 patterns (10 craft anti-patterns + 4 cross-cutting failures appended in v0.2). Each entry: name, detection rule (falsifiable — a critic agent can run this check on any copy without human judgment), platform calibration where relevant, agent ownership (orchestrator vs critic-agent vs format-checker-agent).
 
 ---
 
@@ -169,8 +169,65 @@ If the body is generic (applicable to any reader, not specifically the cohort ca
 
 ---
 
+---
+
+## 11. Polish Chain Routed on FORMAT_FAIL or FAIL Artifact
+
+**Definition:** Orchestrator invokes `humanize` or `vn-tone` as a terminal pass on an artifact that critic returned as `fail` OR that format-checker returned as FORMAT_FAIL. Polish skills don't fix critic-fail issues (generic hook, format mismatch) or format-fail issues (hard-cap violation that copywriter couldn't resolve in one revision cycle).
+
+**Detection rule:** If `polish_chain_applied != none` in frontmatter AND (`critic_verdict == fail` OR `status == blocked` from FORMAT_FAIL) = TRIGGERED.
+
+**Owned by:** Orchestrator (`dispatch-mechanics.md` § "Polish chain handoff"). Polish chain runs ONLY after PASS or DONE_WITH_CONCERNS.
+
+**Why it fails:** Polishing a critic-failed copy doesn't fix the underlying issue. The polish skill will rewrite Body + CTA but Hook variants stay (per polish-chain contract — preserves A/B comparability), and the failing dimension (typically Hook scroll-stop or Format compliance) won't improve. Operator wastes a polish-skill invocation on copy that needs a copywriter re-run, not a register polish.
+
+---
+
+## 12. Multi-Platform in One Invocation
+
+**Definition:** Operator requests social-copy for multiple platforms in a single run (e.g., `/social-copy "fire the agency" tiktok+linkedin --variants 2`) or orchestrator silently generates copy for >1 platform.
+
+**Detection rule:** If `platform` frontmatter contains a `+` or `,` or list value (anything other than a single value from `tiktok | reels | shorts | x | linkedin`) = TRIGGERED.
+
+**Owned by:** Orchestrator (`pre-dispatch.md` § "social-copy Pre-Dispatch shape" — single-platform per invocation). Multi-platform = re-invoke per platform.
+
+**Why it fails:** Tier 1 hook archetypes are platform-specific (TikTok's POV Callout Cliffhanger doesn't exist on LinkedIn; LinkedIn's pattern-interrupt expectation is 1–2/100 vs TikTok's 3+/100). A single artifact that tries to cover multiple platforms produces compromise copy that's optimal for none. Per-platform reference catalogs at `_shared/platform-intelligence/[platform].md` are scoped to single-platform consumption by design.
+
+---
+
+## 13. Vietnamese-Market Copy Without vn-tone Polish
+
+**Definition:** Brief or topic explicitly targets the Vietnamese market (Vietnamese-language copy required) but `polish_chain_applied: none` in frontmatter — vn-tone terminal pass was skipped.
+
+**Detection rule:** If brief / topic mentions Vietnam, Vietnamese, VN, or supplies Vietnamese-language source text AND `polish_chain_applied != vn-tone` = TRIGGERED.
+
+**Owned by:** Pre-Dispatch (`pre-dispatch.md` should default `--polish-chain vn-tone` when market signal is Vietnamese). Orchestrator confirms at Cold Start / Warm Start.
+
+**Why it fails:** Vietnamese register polish requires native-register awareness (báo chí for news/professional, semi-casual for B2B SaaS founder voice, bro for indie/casual, pop-marketing for consumer brands). Copywriter-agent generates English-pattern Vietnamese that reads as translated AI output — pronoun drift, missing particles, literal idioms, passive-voice calques. vn-tone is the terminal fix.
+
+---
+
+## 14. Cross-Stack Contract Drift
+
+**Definition:** Refactor or schema change to the artifact frontmatter or required body sections (Hook variants A/B + Body + CTA + Format spec + Critic verdict + Anti-patterns triggered) ships without atomic update of downstream consumers (humanize / vn-tone / eval-loop / operator publish workflow).
+
+**Detection rule:** If a code review or diff modifies `format-conventions.md` § "Frontmatter schema" OR § "Required body sections" OR § "Critic verdict table" without a paired update to:
+- `humanize` skill's body-section reader (reads `## Body` + `## CTA`)
+- `vn-tone` skill's body-section reader + register hook check
+- `meta-skills/scripts/manifest-sync.ts` artifact-type classifier (if `type` field changes)
+- `eval-loop` results.tsv ingestion (if `critic_score` or `critic_verdict` field semantics change)
+
+= TRIGGERED.
+
+**Owned by:** Refactor program — guardrail enforced at PR review time (rule: "artifacts ↔ evals contract is sacred"; schema changes require atomic update in the same commit). The umbrella `agent-skills` repo's refactor protocol documents the full rule; this catalog row is the per-skill instance.
+
+**Why it fails:** Polish-chain skills silently fail (rewrite wrong sections, skip required updates) when frontmatter or body schema drifts. eval-loop ledger ingests stale or malformed scores. Operator publish workflow breaks parse on missing or renamed sections. The cascade is invisible until someone notices a polish run produced an empty or duplicated artifact — by which point multiple downstream artifacts are corrupted.
+
+---
+
 ## Changelog
 
 | Version | Date | Change |
 |---|---|---|
 | 0.1 | 2026-05-09 | Initial version, 10 anti-patterns from spec + expansion |
+| 0.2 | 2026-05-18 | Added 4 cross-cutting failures (#11 polish-chain on FAIL; #12 multi-platform; #13 VN without vn-tone; #14 contract drift). Refactor program v6 Phase 2 Wave 1 — marketing-stack slot 1. |
