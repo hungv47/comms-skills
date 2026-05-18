@@ -9,6 +9,11 @@ metadata:
   version: "8.0.0"
   budget: deep
   estimated-cost: "$1-3"
+  refactor_history:
+    - version: "8.0.0 → 8.0.0"
+      date: 2026-05-18
+      slot: "v6 Phase 2 Wave 1 — marketing-stack slot 10/14"
+      note: "Body 470→~210 (-55%) + 5 new refs (playbook + format-conventions + procedures/pre-dispatch + procedures/dispatch-mechanics + examples/campaign-walkthrough) + new anti-patterns.md (5 from body + 4 cross-cutting marketing-stack rows). Structural: nested `### Artifact Template` under new `## Artifact Contract` H2 wrapper per marketing-stack sibling-parity convention (matches ad-copy slot 9 + copywriting slot 8 + cold-outreach slot 7 + humanize slot 6 + vn-tone slot 5 + short-form-brief slot 4 + seo slot 3). See references/playbook.md 'History / origin' for full detail."
 promptSignals:
   phrases:
     - "marketing plan"
@@ -65,6 +70,8 @@ routing:
 
 **Core Question:** "Does every angle trace to a pillar, every channel to a habitat, and every timeline slot to a real team capacity?"
 
+> Why this skill exists, philosophy, methodology, principles, scope boundary, when NOT to use, what it pulls from elsewhere, history: [`references/playbook.md`](references/playbook.md) [PLAYBOOK].
+
 ## Critical Gates — Read First
 
 - **Identify the growth motion BEFORE selecting channels.** PLG (product drives acquisition), SLG (outbound/performance drives acquisition), or Hybrid. The motion determines channel priorities — PLG favors community/SEO/forums, SLG favors paid/email/IRL/SMS.
@@ -74,17 +81,8 @@ routing:
 - **Do NOT schedule 10 pieces/week for a 2-person team.** Match cadence to actual capacity. Over-scheduling guarantees missed deadlines.
 - **Stale ICP research (>30 days) produces misaligned plans.** Recommend re-running `icp-research` before proceeding.
 
-## Philosophy
-
-Frameworks (ORB, 3D Angles, Pillar Types) are proven defaults — not mandatory templates. Adapt based on data. When ICP research provides habitat maps, use them. When it doesn't, gather the data before planning channels.
-
-## Inputs Required
-- ICP research from `research/icp-research.md` + `research/product-context.md` (or user-provided)
-
-## Output
-- `.agents/skill-artifacts/mkt/campaign-plan.md`
-
 ## Quality Gate
+
 Before delivering, the **critic agent** verifies:
 - [ ] Growth motion explicitly stated (PLG / SLG / Hybrid)
 - [ ] 3-5 pillars, each with ICP evidence
@@ -97,14 +95,32 @@ Before delivering, the **critic agent** verifies:
 - [ ] Timeline has 3 phases with realistic cadence
 - [ ] Launch sequence follows ORB (Owned → Rented → Borrowed)
 
-## Chain Position
-Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search strategy), `cold-outreach` (outbound execution)
-**Re-run triggers:** When ICP research is updated, when launching a new product/campaign, or when channel performance data suggests reallocation.
+Full 11-row Quality Gate Checklist + 4 Internal Consistency Checks + 9-row Rewrite Routing: [`agents/critic-agent.md`](agents/critic-agent.md). Max 2 rewrite cycles per critic verdict.
 
-### Skill Deference
-- **Need numeric targets (CAC, LTV, conversion rates)?** → Use `funnel-planner`.
-- **Need to compare pages for SEO?** → Coordinate with `seo` for keyword targeting and content structure.
-- **Need a landing page for a campaign?** → Use `lp-brief`.
+---
+
+## Before Starting
+
+Per `references/_shared/before-starting-check.md` [PLAYBOOK] — load product-context.md + icp-research.md + optional prioritize sketch + check freshness (>30d → recommend `icp-research` re-run, soft gate).
+
+| Artifact | Source | Required? |
+|---|---|---|
+| `research/product-context.md` | icp-research | Recommended — product positioning + accuracy constraints + unique mechanism |
+| `research/icp-research.md` | icp-research | Recommended — primary persona + pains + habitats + VoC + awareness levels |
+| `.agents/skill-artifacts/meta/sketches/prioritize-*.md` | prioritize | Optional — alignment with strategic initiatives |
+| `skills-resources/experience/{product,audience,business,goals}.md` | (any skill) | Optional — keys fill dimension gaps from prior runs |
+
+## Pre-Dispatch
+
+Run the canonical Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md` [PROCEDURE]).
+
+**Needed dimensions:** product (what it does, who pays), audience primary persona (role + company size + 1-2 pains), campaign goal (what 90 days needs to achieve), growth motion (PLG / SLG / Hybrid — drives channel weighting), duration + cadence (e.g., 60 days, 3 posts/week), constraints (team size, budget tier, channels off-limits).
+
+Full read order + Warm/Cold Start templates (5-question Cold Start) + Write-back map (5 rows → product/audience/goals/business) + Growth Motion → Channel Priority reference + intent-mismatch detection (defer to `funnel-planner` for numeric targets) + `--fast` behavior: [`references/procedures/pre-dispatch.md`](references/procedures/pre-dispatch.md) [PROCEDURE].
+
+## Mode Resolution
+
+Per `references/_shared/mode-resolver.md` [PROCEDURE] — this skill is `budget: deep`; `--fast` flag collapses Layer 2 sequential chain into single inline pass (3 pillars not 5, 2 angles per pillar, top 2-3 channels only, 3-phase timeline + ORB inline, no rewrite loop). **`--fast` does NOT skip** Cold Start, Critical Gates 1-6, or the artifact frontmatter contract (per marketing-skills CLAUDE.md "Safety gates supersede `--fast`").
 
 ---
 
@@ -121,207 +137,60 @@ Previous: `icp-research` | Next: `lp-brief` (per landing page), `seo` (search st
 
 **Note:** This skill is primarily sequential — each agent depends on the previous. Pillar-agent is the only Layer 1 agent. The value of multi-agent here is in specialist focus, critic gate, and single-agent fallback — not parallelism.
 
----
+### Shared References
 
-## Routing Logic
-
-### Route A: Quick Plan (MVP or Startup)
-**When:** Limited ICP data, small team, need a plan fast.
-
-```
-1. Pre-dispatch: Gather context (Step 0)
-2. Dispatch: pillar-agent (3 pillars, not 5)
-3. Dispatch: angle-agent (2 angles per pillar, not 3+)
-4. Dispatch: channel-agent (top 2-3 channels only)
-5. Dispatch: critic-agent
-6. If FAIL → re-dispatch (max 2 cycles)
-7. Deliver — timeline and launch sequence done by orchestrator inline
-```
-
-### Route B: Full Plan
-**When:** ICP research complete, campaign launch, or strategic planning.
-
-```
-1. Pre-dispatch: Gather context (Step 0)
-2. LAYER 1: Dispatch pillar-agent
-3. LAYER 2 — Dispatch SEQUENTIALLY:
-   - angle-agent (receives pillar output)
-   - channel-agent (receives angle output + habitat data)
-   - timeline-agent (receives channel output)
-   - launch-sequencing-agent (receives timeline output)
-4. Dispatch: critic-agent (receives complete plan)
-5. If FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
-6. Deliver artifact
-```
-
-### Route C: Called by Another Skill
-**When:** `lp-brief`, `cold-outreach`, or another downstream skill needs plan context.
-
-```
-1. Read existing .agents/skill-artifacts/mkt/campaign-plan.md if available
-2. If not available, run Route B
-3. Return plan to calling skill
-```
+- **Domain catalogs** (loaded by agents at dispatch): `references/3d-angle-framework.md` (angle-agent), `references/channel-strategy.md` (channel-agent), `references/distribution-models/clipping-and-live.md` (channel-agent — conditional), `references/examples.md` (5 worked examples across verticals)
+- **Shared:** `references/_shared/{pre-dispatch-protocol, before-starting-check, mode-resolver}.md`
 
 ---
 
-## Pre-Dispatch
+## Routing + Dispatch
 
-Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Start** (most context resolvable, summarize and dispatch) or **Cold Start** (bundle 5-question prompt). Full pattern + anti-patterns: `references/_shared/pre-dispatch-protocol.md`.
-
-### Needed dimensions
-- Product (what it does, who pays)
-- Audience primary persona (role + company size + 1-2 pains)
-- Campaign goal (what this 90 days needs to do)
-- Growth motion (PLG / SLG / Hybrid — drives channel weighting)
-- Duration + cadence (e.g., 60 days, 3 posts/week)
-- Constraints (team size, budget tier, channels off-limits)
-
-### Read order
-1. Pipeline: `research/product-context.md` → product. `research/icp-research.md` → audience, habitats, VoC. `.agents/skill-artifacts/meta/sketches/prioritize-*.md` → strategic initiatives (optional, alignment only).
-2. Experience: `skills-resources/experience/{product,audience,business,goals}.md` for any dimension not covered by pipeline artifacts.
-
-If pipeline artifact `date` fields are >30 days, warn and recommend re-running upstream — audience and pains evolve.
-
-### Warm Start (most dimensions resolvable)
+Three routes — Route A (quick plan when ICP data is limited), Route B (full plan), Route C (called by another skill).
 
 ```
-Found:
-- product → "[1-line summary from product-context.md]"
-- audience → "[primary persona from icp-research.md]"
-- growth motion → "[PLG / SLG / Hybrid from experience/business.md]"
+ROUTE A (quick plan — MVP or startup, limited ICP data):
+  1. Pre-Dispatch (per procedures/pre-dispatch.md)
+  2. Dispatch pillar-agent (3 pillars, not 5)
+  3. Dispatch angle-agent (2 angles per pillar)
+  4. Dispatch channel-agent (top 2-3 channels only)
+  5. Dispatch critic-agent
+  6. FAIL → re-dispatch (max 2 cycles)
+  7. Deliver — timeline and launch sequence done by orchestrator inline
 
-Need before dispatching:
-- Campaign goal — acquire leads / drive trial signups / launch a feature / awareness?
-- Duration + cadence — e.g., "60 days, 3 posts/week"
-- Any constraints — team size, budget tier, channels off-limits?
+ROUTE B (full plan — ICP research complete, campaign launch):
+  1. Pre-Dispatch (per procedures/pre-dispatch.md)
+  2. LAYER 1: Dispatch pillar-agent (solo)
+  3. LAYER 2 — Dispatch SEQUENTIALLY:
+     - angle-agent (receives pillar output)
+     - channel-agent (receives angle output + habitat data)
+     - timeline-agent (receives channel output)
+     - launch-sequencing-agent (receives timeline output)
+  4. Dispatch critic-agent (receives complete plan)
+  5. FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
+  6. Deliver artifact
 
-Answer in one response. I'll confirm and dispatch.
+ROUTE C (called by another skill — lp-brief, cold-outreach, ad-copy):
+  1. Read existing .agents/skill-artifacts/mkt/campaign-plan.md if available
+  2. If not available OR stale (>30d), run Route B
+  3. Return plan to calling skill
 ```
 
-If all six dimensions are resolvable (rare on first run, common after experience/ has been seeded), skip the inline probes and just summarize, asking "Override or proceed?"
-
-### Cold Start (3+ dimensions missing)
-
-```
-Campaign-plan turns audience + product + offer into a 90-day plan with pillars,
-angles, channels, and timeline. To make it specific to you, I need a few things.
-(For richer output later, run `icp-research` first — but I can work from your
-answers now.)
-
-1. **Product** in one sentence — what does it do, who pays for it?
-2. **Audience** — primary buyer (role + company size + top 1-2 pain points)
-3. **Campaign goal** — acquire leads / drive trial signups / launch a feature /
-   warm cold leads / awareness?
-4. **Growth motion** — does the product sell itself with free trial or signup
-   (PLG), require sales conversations or paid performance (SLG), or both
-   (Hybrid)?
-5. **Duration + constraints** — campaign window (30/60/90 days), cadence
-   (posts per week), team size, budget tier, channels off-limits.
-
-Answer 1-5 in one response. I'll confirm and dispatch.
-```
-
-### Write-back
-
-After cold-start answers, append each Q+A to experience/:
-
-| Question | File | Key |
-|---|---|---|
-| 1. Product | `product.md` | `Product — one-line` |
-| 2. Audience | `audience.md` | `Audience — primary persona` + `Audience — pain points (primary)` |
-| 3. Campaign goal | `goals.md` | `Goals — current campaign focus` |
-| 4. Growth motion | `business.md` | `Business — growth motion` |
-| 5. Duration + constraints | `business.md` | `Business — team + budget` and `goals.md` `Goals — campaign cadence` |
-
-### Reference: Growth Motion → Channel Priority
-
-Used by channel-agent. Available regardless of how growth motion was resolved (warm-start lookup or cold-start answer):
-
-| Motion | Channel Priority |
-|--------|-----------------|
-| **PLG** | Search engines/AEO, Forums/Communities, Social media (organic), Mailbox (onboarding), Store/Listing platforms, Bounty/Info platforms |
-| **SLG** | Search engines/AEO (paid), Social media (paid), Mailbox (outbound), SMS, IRL (events/OOH), News |
-| **Hybrid** | Blend both — designate primary motion per audience segment |
-
-### Context to Pass to All Agents
-
-After Pre-Dispatch resolves:
-1. **Growth motion** — drives channel weighting
-2. **Campaign goal** — what success looks like
-3. **ICP summary** — persona, pains, habitats, awareness levels
-4. **VoC quotes** — top buyer-language phrases
-5. **Constraints** — team size, budget, timeline
+Mechanics (how to spawn agents, single-agent fallback, orchestrator-written sections — Growth Motion / Foundation / Channel Execution Briefs / offline execution notes, Layer 1 + Layer 2 dispatch tables, critic gate + rewrite loop with named re-dispatch, chain position, re-run triggers, skill deference): [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE]. Load at Layer 1 dispatch entry.
 
 ---
 
-## Dispatch Protocol
+## Artifact Contract
 
-### How to spawn a sub-agent
+- **Path:** `.agents/skill-artifacts/mkt/campaign-plan.md` (single artifact per run; overwrite on re-run unless version preservation requested via `campaign-plan.v[N].md` rename)
+- **Lifecycle:** `pipeline` — re-run on ICP update / new campaign launch / channel performance reallocation / growth motion change / team capacity change
+- **Frontmatter fields:** `skill`, `version`, `date`, `status` (+ optional: `campaign_name`, `goal`, `audience`, `growth_motion`, `team_size`, `budget_tier`, `duration_days`)
+- **Consumed by:** `lp-brief`, `cold-outreach`, `ad-copy`, `seo`, `short-form-brief`, `funnel-planner` — they read campaign context for hypothesis grounding + channel-aware composition
+- **Cross-stack contract:** schema changes require atomic update of `format-conventions.md` § "Frontmatter — required fields" + § "Body section order" — never silently drift; downstream consumers jump to sections by heading match
 
-1. **Read** the agent instruction file — include its FULL content in the Agent prompt
-2. **Append** the context and upstream output after the instructions
-3. **Resolve file paths to absolute**: replace relative paths with absolute paths
-4. **Pass upstream artifacts by content**: orchestrator reads `.agents/skill-artifacts/` files, includes relevant excerpts
-5. If **feedback** exists, append with "## Critic Feedback — Address Every Point"
+Full template + per-field format rules (frontmatter rules, body section order, table schemas, slug pattern, re-run convention, anti-drift checks): [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE].
 
-### Single-agent fallback
-
-If multi-agent dispatch is unavailable, execute sequentially in-context:
-1. Pillar extraction (3-5 from ICP)
-2. Angle generation per pillar (3D framework)
-3. Channel assignment per angle (habitat-informed)
-4. Timeline phasing (Pre-launch → Launch → Sustain)
-5. Launch sequencing (ORB)
-6. Self-evaluate with critic rubric
-
----
-
-## Orchestrator-Written Sections
-
-The orchestrator writes these sections inline (no agent dispatched):
-- **Growth Motion** — determined in Step 0, written directly into the artifact before Layer 1
-- **Foundation** — core message and awareness distribution, assembled after pillar-agent returns
-- **Channel Execution Briefs** — assembled by the orchestrator after channel-agent returns, using channel-agent's output (channel assignments + habitat data) to populate the briefs table with objective, tactic, budget type, metric, owner, and milestone per channel
-
-## Layer 1: Pillar Foundation
-
-Dispatch **pillar-agent** alone. It produces the pillar table that all downstream agents need.
-
-| Agent | Instruction File | Pass These Inputs | Reference Files |
-|-------|-----------------|-------------------|-----------------|
-| Pillar Agent | `agents/pillar-agent.md` | brief + ICP research summary + VoC | — |
-
-Wait for completion. Pillar output becomes input for all Layer 2 agents.
-
----
-
-## Layer 2: Sequential Strategy Chain
-
-Dispatch **ONE AT A TIME, IN ORDER**. Each receives the previous agent's output.
-
-```
-pillar-agent → angle-agent → channel-agent → timeline-agent → launch-sequencing-agent → critic-agent
-```
-
-| Step | Agent | Instruction File | Receives | Reference Files |
-|------|-------|-----------------|----------|-----------------|
-| 1 | Angle Agent | `agents/angle-agent.md` | Pillar table | `references/3d-angle-framework.md` |
-| 2 | Channel Agent | `agents/channel-agent.md` | Angle bank + habitat data + growth motion | `references/channel-strategy.md` (includes 9-Channel Framework); `references/distribution-models/clipping-and-live.md` conditionally when target demo skews male 21–30 or habitat data flags H-density live-streaming presence |
-| 3 | Timeline Agent | `agents/timeline-agent.md` | Channel assignments | — |
-| 4 | Launch Sequencing Agent | `agents/launch-sequencing-agent.md` | Timeline | — |
-| 5 | Critic Agent | `agents/critic-agent.md` | Complete assembled plan | — |
-
----
-
-## Critic Gate
-
-- **PASS:** Deliver the plan artifact.
-- **FAIL:** Re-dispatch the earliest failing agent with critic feedback. Max 2 cycles.
-
----
-
-## Artifact Template
+### Artifact Template
 
 ```markdown
 ---
@@ -390,56 +259,11 @@ For offline channels (IRL, SMS), include execution notes:
 > On re-run: rename existing artifact to `campaign-plan.v[N].md` and create new with incremented version.
 ```
 
-## Next Step
-
-Run `lp-brief` for any campaign landing pages, `seo` for search-channel execution, `cold-outreach` for outbound.
-
----
-
-## Worked Example — B2B SaaS Project Management Tool (Route B)
-
-### Step 0: Pre-Dispatch
-Goal: Drive 500 trial signups in 60 days. Audience: Engineering managers at 50-200 person companies. Awareness: 60% Problem Aware, 30% Solution Aware, 10% Product Aware.
-
-### Layer 1: Pillar Agent
-Returns 4 pillars:
-| # | Pillar | Type | % | Stage |
-|---|--------|------|---|-------|
-| 1 | "The meeting tax" | Problem | 35% | Problem Aware |
-| 2 | "Async-first shipping" | Transformation | 30% | Solution Aware |
-| 3 | "Teams who switched" | Trust | 25% | Product Aware |
-| 4 | "The async-first movement" | Social | 10% | All |
-
-### Layer 2, Step 1: Angle Agent
-Returns 12 angles across 4 pillars, scored 15-23/25. Example angles:
-- "12 hrs/week lost to status theater" (Data, Problem Aware, Fear, 22/25, Shareable)
-- "How to ship 2x without hiring" (How-to, Solution Aware, Greed, 20/25, Searchable)
-
-### Layer 2, Step 2: Channel Agent
-Returns assignments: LinkedIn (primary, "12 hrs/week"), Email (owned, "async-first shipping"), X/Twitter (ecosystem, "teams who switched"), Blog (owned, searchable how-to content).
-
-### Layer 2, Step 3: Timeline Agent
-Returns 3 phases: Pre-launch (W1-W3, problem content), Launch (W4-W5, transformation + proof), Sustain (W6+, trust + social). Weekly calendar with pillar rotation.
-
-### Layer 2, Step 4: Launch Sequencing Agent
-Returns ORB sequence: Internal (T-4w) → Email list alpha (T-2w) → Partner posts (T-1w) → LinkedIn/X launch (Day 0) → PR + paid (T+1w).
-
-### Critic Agent → PASS
-All quality gates met. Pillar-angle-channel traces verified. Timeline realistic for 3-person team.
-
 ---
 
 ## Anti-Patterns
 
-**Channel-first planning** — "We need TikTok content." INSTEAD: Start with habitat maps. If ICP density on TikTok is Low, deprioritize it regardless of what's trendy.
-
-**Identical messages across channels** — Same text on LinkedIn, X, and Email. INSTEAD: Each channel gets one specific angle adapted to its native format.
-
-**Angles without pillar connection** — Orphan angles that don't trace back. INSTEAD: Every angle names its parent pillar. No exceptions.
-
-**Timeline without capacity check** — 10 pieces/week for a solo marketer. INSTEAD: Match cadence to team size. 3 pieces/week is realistic for one person.
-
-**Too many pillars** — 7 pillars dilute the message. INSTEAD: 3-5. If you can't cut, you haven't committed to a strategy.
+Section 1 (Strategy & Pillar) + Section 2 (Process & Dispatch) + Section 3 (Cross-Cutting marketing-stack): [`references/anti-patterns.md`](references/anti-patterns.md) [ANTI-PATTERN]. Re-read before any plan ships. 5 from body (channel-first / orphan angles / identical-across-channels / too-many-pillars / capacity-vs-cadence) + 4 process (angles-before-pillars / skipping-9-channel-eval / offline-without-execution-notes / ORB-violation) + 4 cross-cutting (growth-motion-undeclared / stale-ICP-silently-shipped / frontmatter-schema-drift / wrong-skill-for-intent).
 
 ---
 
@@ -451,20 +275,26 @@ Every run ends with explicit status:
 - **BLOCKED** — ICP and product context incompatible (different audiences imply different campaigns); needs user scope decision
 - **NEEDS_CONTEXT** — `research/icp-research.md` and `research/product-context.md` missing; recommend `icp-research` first
 
+## Next Step
+
+Run `lp-brief` for any campaign landing pages, `seo` for search-channel execution, `cold-outreach` for outbound.
+
 ---
 
-## Agent Files
+## Worked Example
 
-### Sub-Agent Instructions (agents/)
-- [agents/pillar-agent.md](agents/pillar-agent.md) — Messaging pillars from ICP pains
-- [agents/angle-agent.md](agents/angle-agent.md) — 3D angle generation and scoring
-- [agents/channel-agent.md](agents/channel-agent.md) — Habitat-informed channel assignments
-- [agents/timeline-agent.md](agents/timeline-agent.md) — Phase sequencing and editorial calendar
-- [agents/launch-sequencing-agent.md](agents/launch-sequencing-agent.md) — ORB Framework activation order
-- [agents/critic-agent.md](agents/critic-agent.md) — Alignment, rigor, and completeness
+End-to-end Route B walkthrough (B2B SaaS async-first PM tool — PLG, 60 days, 500 trial signups, 4 pillars + 12 angles + 5 selected channels + 4 skipped with rationale + 3-phase timeline + 5-phase ORB launch + critic PASS cycle 1) + cycle-2 FAIL hypothetical + Route C snippet (called by lp-brief): [`references/examples/campaign-walkthrough.md`](references/examples/campaign-walkthrough.md) [EXAMPLE].
 
-### Shared References (references/)
-- [references/3d-angle-framework.md](references/3d-angle-framework.md) — Three-dimensional angle generation methodology (angle-agent)
-- [references/channel-strategy.md](references/channel-strategy.md) — Habitat-informed channel selection (channel-agent)
-- [references/distribution-models/clipping-and-live.md](references/distribution-models/clipping-and-live.md) — Clipping ecosystem (Whop/Zagged paid-CPM bounty) + Jubilee format + compelling-source test; consulted by channel-agent when target demo skews male 21–30 or habitat data flags live-streaming density
-- [references/examples.md](references/examples.md) — 5 complete worked examples
+---
+
+## References
+
+- **Playbook:** `references/playbook.md` [PLAYBOOK]
+- **Format:** `references/format-conventions.md` [PROCEDURE]
+- **Anti-patterns:** `references/anti-patterns.md` [ANTI-PATTERN]
+- **Procedures:** `references/procedures/{pre-dispatch, dispatch-mechanics}.md` [PROCEDURE]
+- **Example:** `references/examples/campaign-walkthrough.md` [EXAMPLE]
+- **Domain catalogs** (loaded by agents at dispatch): `references/{3d-angle-framework, channel-strategy, examples}.md`, `references/distribution-models/clipping-and-live.md`
+- **Shared:** `references/_shared/{pre-dispatch-protocol, before-starting-check, mode-resolver, clipping-and-live}.md`
+- **Agents:** 6 sub-agents in `agents/` — see Agent Manifest above. `critic-agent.md` holds the canonical 11-row Quality Gate Checklist + 9-row Rewrite Routing + 4 Internal Consistency Checks.
+- `marketing-skills/CLAUDE.md` §"Pre-Dispatch Protocol" + §"Complexity Routing" + §"Multi-Agent Skills" — stack-level conventions this skill inherits
