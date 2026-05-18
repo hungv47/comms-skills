@@ -9,6 +9,11 @@ metadata:
   version: "0.1.0"
   budget: standard
   estimated-cost: "$0.75-1.50"
+  refactor_history:
+    - version: "0.1.0 → 0.1.0"
+      date: 2026-05-18
+      slot: "v6 Phase 2 Wave 1 — marketing-stack slot 14/14 (FINAL marketing slot; v6 program COMPLETE)"
+      note: "Body 217→172 (-21%, 45 lines saved; 172 vs ≤200 structural target — 28 lines under target). 5 new refs (playbook, format-conventions with full evaluation artifact template byte-identical, anti-patterns NEW with 10 body-implicit + 4 cross-cutting incl. sibling-coordination with lp-brief, procedures/{pre-dispatch, dispatch-mechanics}). All 4 agents UNCHANGED. Cross-stack contract preserved byte-identical (6 Critical Gates / Responsibility Split / Inputs / Outputs / 4-agent Manifest / Read Order / Cold Start 5-question bundle / Dispatch 8-step / Evaluation Artifact Template 10-field frontmatter + 8 body sections + Evidence 6-column + Results Row 8-column / Results Row Discipline + append-loop-result.ts invocation / 4-tier Completion). Version stays at v0.1.0 — deliberate provisional-rubric signal. See references/playbook.md 'History / origin' for full detail."
 promptSignals:
   phrases:
     - "landing page eval"
@@ -90,6 +95,8 @@ routing:
 
 **Core Question:** "Did this landing-page cycle create measurable signal strong enough to keep, discard, watch, or block, and what should the next strategy/execution skill know?"
 
+> Why this skill exists, philosophy, methodology, principles, when NOT to use, history: [`references/playbook.md`](references/playbook.md) [PLAYBOOK].
+
 ## Critical Gates
 
 1. **Existing eval loop required.** If `skills-resources/loops/[slug]/program.md` and `context.md` do not exist, return `NEEDS_CONTEXT` and recommend `/eval-loop`. This skill does not create loops.
@@ -145,48 +152,17 @@ Side effects:
 
 ## Pre-Dispatch
 
-Read `references/_shared/eval-loop-spec.md` before writing artifacts when available. In an installed skill checkout, use `references/_shared/eval-loop-spec.md` as the equivalent path.
+Read `references/_shared/eval-loop-spec.md` before writing artifacts when available.
 
-### Read Order
+**Hard-block conditions (fire BEFORE Cold Start):** (1) `program.md` or `context.md` absent → NEEDS_CONTEXT, recommend `/eval-loop`. (2) No measurement evidence for current cycle → BLOCKED with missing-evidence list. (3) Custom 10+ column `results.tsv` schema → warn + flag to eval-loop owner; require hand-edit (not standard helper).
 
-1. `skills-resources/loops/[slug]/program.md`
-2. `skills-resources/loops/[slug]/context.md`
-3. `skills-resources/loops/[slug]/results.tsv`
-4. Latest files in `skills-resources/loops/[slug]/strategy/`, `execution/`, and `evals/`
-5. Relevant canonical artifacts: `brand/BRAND.md`, `research/product-context.md`, `research/icp-research.md`, campaign plan if present
+**Read Order:** `program.md` → `context.md` → `results.tsv` → latest `strategy/` + `execution/` + `evals/` files → canonical artifacts (`brand/BRAND.md`, `research/product-context.md`, `research/icp-research.md`, campaign plan if present). If `.agents/manifest.json` is stale, run `bun scripts/manifest-sync.ts`.
 
-If `.agents/manifest.json` is stale or missing, run:
+**Warm Start** (loop exists + metric evidence present): summarize loop + primary metric + baseline/prior result + latest strategy/execution artifact + current evidence window; proceed to evaluate cycle N.
 
-```bash
-bun scripts/manifest-sync.ts
-```
+**Cold Start** (loop exists but cycle context missing): ask 5 bundled questions — loop slug/path + page URL/route + measurement window + primary metric value/baseline + what changed this cycle. If the loop itself does not exist, return `NEEDS_CONTEXT` and recommend `/eval-loop` instead of asking the rest.
 
-### Warm Start
-
-When the loop exists and metric evidence is present:
-
-```text
-Found:
-- loop: skills-resources/loops/[slug]/
-- primary metric: [from program.md]
-- baseline/prior result: [from context.md or results.tsv]
-- latest strategy/execution artifact: [path]
-- current evidence window: [window + source]
-
-Proceeding to evaluate cycle [N].
-```
-
-### Cold Start / Missing Evidence
-
-Ask one bundled question set, then stop until answered:
-
-1. Which loop slug/path should this evaluation write into?
-2. What page URL or route is being evaluated?
-3. What measurement window and source should be used?
-4. What is the primary metric value for this window, and what baseline should it compare against?
-5. What changed this cycle? Link or summarize strategy/execution artifacts if they exist.
-
-If the loop itself does not exist, return `NEEDS_CONTEXT` and recommend `/eval-loop` instead of asking the rest.
+Full Read Order + Warm/Cold Start templates verbatim + hard-block conditions + Needed dimensions + write-back (none — eval-loop owns persistent state, not lp-eval) + `--fast` behavior: [`references/procedures/pre-dispatch.md`](references/procedures/pre-dispatch.md) [PROCEDURE].
 
 ## Dispatch
 
@@ -199,72 +175,34 @@ If the loop itself does not exist, return `NEEDS_CONTEXT` and recommend `/eval-l
 7. Promote learning only when Critic allows it.
 8. Run manifest sync.
 
-## Evaluation Artifact Template
+Full per-layer dispatch tables + critic revision-cycle semantics + side-effects ALL-OR-NOTHING on critic FAIL: [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE].
 
-```markdown
----
-skill: lp-eval
-version: 1
-date: YYYY-MM-DD
-status: done | done_with_concerns | blocked | needs_context
-summary: "[page] cycle N landing-page evaluation"
-purpose: "Post-launch evidence snapshot for a landing-page eval loop"
-lifecycle: evaluation
-use_when: "Deciding whether to keep, discard, watch, or block the current landing-page cycle"
-do_not_use_when: "Designing the next page revision without reading the latest loop context and results"
-upstream: "skills-resources/loops/[slug]/program.md, context.md, strategy/, execution/, metric source"
-downstream: "results.tsv, learnings.md, lp-brief next-cycle brief"
----
+## Artifact Contract
 
-# [Page] Cycle N Evaluation
+- **Primary artifact:** `skills-resources/loops/[slug]/evals/YYYY-MM-DD-cycle-N.md`
+- **Side effects:** append one row to `results.tsv` via validated helper; update `learnings.md` ONLY for high-confidence keep/discard reusable lessons (critic gates); run `manifest-sync.ts`
+- **Lifecycle:** `evaluation` (per `_shared/eval-loop-spec.md`)
+- **Frontmatter:** 10 fields (skill / version / date / status / summary / purpose / lifecycle / use_when / do_not_use_when / upstream / downstream) — see [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE]
+- **Body:** 8 sections (Title / Verdict / Evidence 6-col table / What Changed This Cycle / Diagnosis / Next Cycle Recommendation / Results Row 8-col TSV / Learning Promotion)
+- **Results Row schema:** 8 columns (cycle / date / artifact / primary_metric / value / baseline / status / description) — `status` must be `keep | discard | watch | blocked` (Critic Hard Fail #6 otherwise)
+- **Cross-stack contract:** consumed by future lp-eval cycles (trend analysis), by `lp-brief --rev=N+1` (hypothesis seeding), by humans reviewing loop progress. lp-eval does NOT directly consume lp-brief output — sibling coordination is at the eval-loop boundary, not artifact-schema boundary. Schema changes require atomic update across `_shared/eval-loop-spec.md` + downstream callers — never silently drift.
 
-## Verdict
+Full evaluation artifact template byte-identical + Evidence table format + Results Row format + Learning Promotion rules + `append-loop-result.ts` invocation + known-limitation on custom 10+ column schemas: [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE].
 
-- Status: keep | discard | watch | blocked
-- Confidence: high | medium | low | blocked
-- Primary metric: [name] = [value] vs [baseline]
-- Decision: [one sentence]
+### Evaluation Artifact Template (summary)
 
-## Evidence
+Save to `skills-resources/loops/[slug]/evals/YYYY-MM-DD-cycle-N.md`. 10-field frontmatter (skill / version / date / status / summary / purpose / lifecycle: evaluation / use_when / do_not_use_when / upstream / downstream). 8 body sections in order:
 
-| Signal | Current | Baseline | Window | Source | Caveat |
-|---|---:|---:|---|---|---|
-| primary metric |  |  |  |  |  |
+1. Title `# [Page] Cycle N Evaluation`
+2. **Verdict** — Status / Confidence / Primary metric / Decision (one sentence)
+3. **Evidence** — table (Signal / Current / Baseline / Window / Source / Caveat)
+4. **What Changed This Cycle** — strategy/execution artifact or operator note
+5. **Diagnosis** — Likely Drivers + Confounders subsections
+6. **Next Cycle Recommendation** — Keep / Discard / Watch / Route-next-work-to lines
+7. **Results Row** — fenced TSV block (8 columns)
+8. **Learning Promotion** — Promote to learnings.md (yes/no) + Lesson + Expiry/caveat
 
-## What Changed This Cycle
-
-- [strategy/execution artifact or operator note]
-
-## Diagnosis
-
-### Likely Drivers
-
-- [driver tied to evidence]
-
-### Confounders
-
-- [traffic mix, seasonality, campaign change, tracking issue, sample size]
-
-## Next Cycle Recommendation
-
-- Keep:
-- Discard:
-- Watch:
-- Route next work to:
-
-## Results Row
-
-```tsv
-cycle	date	artifact	primary_metric	value	baseline	status	description
-N	YYYY-MM-DD	evals/YYYY-MM-DD-cycle-N.md	metric	value	baseline	keep|discard|watch|blocked	description
-```
-
-## Learning Promotion
-
-- Promote to `learnings.md`: yes | no
-- Lesson:
-- Expiry / caveat:
-```
+Full byte-identical template in [`references/format-conventions.md`](references/format-conventions.md).
 
 ## Results Row Discipline
 
@@ -293,6 +231,14 @@ bun scripts/append-loop-result.ts "<loop slug>" \
 
 - Do not append a row if the Critic verdict is FAIL. Return `BLOCKED`.
 
+---
+
+## Anti-Patterns
+
+Pipeline reference: [`references/anti-patterns.md`](references/anti-patterns.md) [ANTI-PATTERN]. Re-read before any cycle artifact ships. 10 lp-eval-specific patterns (generic heuristic audit dressed up as CRO, fabricated analytics, scoring without an existing eval-loop, confidence inflation, scope drift becoming redesign, low-confidence learning promotion, ledger row appended on FAIL, custom-schema row via standard helper, missing primary metric source-window, weak baseline comparability) + 4 cross-cutting marketing-stack rows (upstream context skipped — no loop scaffolded, cross-stack contract drift, polish-chain misroute, sibling-skill confusion with lp-brief).
+
+Most common in practice: scope drift to redesign (Critical Gate 6 + Critic dimension "Boundary Control"), confidence inflation (Critical Gate 5 + Critic dimension "Attribution Honesty"), low-confidence learning promotion (Critic Hard Fail #7), missing primary metric source-window (Critic Hard Fail #2).
+
 ## Completion
 
 End with one status:
@@ -301,3 +247,16 @@ End with one status:
 - `DONE_WITH_CONCERNS` — artifact and row written, but confidence is low/medium or confounders are material
 - `NEEDS_CONTEXT` — missing loop or required metric evidence
 - `BLOCKED` — contradictory data, filesystem failure, or critic failed after revision
+
+---
+
+## References
+
+- **Playbook:** `references/playbook.md` [PLAYBOOK]
+- **Format:** `references/format-conventions.md` [PROCEDURE] — full evaluation artifact template byte-identical
+- **Anti-patterns:** `references/anti-patterns.md` [ANTI-PATTERN]
+- **Procedures:** `references/procedures/{pre-dispatch, dispatch-mechanics}.md` [PROCEDURE]
+- **Shared:** `references/_shared/{eval-loop-spec, before-starting-check, manifest-spec, mode-resolver, pre-dispatch-protocol, anti-sycophancy, artifact-contract-template, thin-critic-rubric}.md`
+- **Agents:** 4 sub-agents in `agents/` — see Agent Manifest above. `critic-agent.md` holds the canonical 6-dimension 0-10 Pass/Fail Rubric (Loop Fit / Metric Integrity / Attribution Honesty / Decision Discipline / Boundary Control / Ledger Correctness) + 4-tier Verdict + 7 Hard Fails.
+- **Sibling coordination:** `lp-brief` (construction-time architecture; this skill routes recommendations TO lp-brief but does not produce briefs); `eval-loop` (owns loop scaffolding + `program.md` + `context.md` + `results.tsv` schema + durable learning ledger).
+- `marketing-skills/CLAUDE.md` §"Pre-Dispatch Protocol" + §"Complexity Routing" + §"Multi-Agent Skills" — stack-level conventions this skill inherits
