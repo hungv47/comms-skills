@@ -9,6 +9,11 @@ metadata:
   version: "2.0.0"
   budget: standard
   estimated-cost: "$0.15-0.40"
+  refactor_history:
+    - version: "2.0.0 → 2.0.0"
+      date: 2026-05-18
+      slot: "v6 Phase 2 Wave 1 — marketing-stack slot 6/14"
+      note: "Body 545→230 (-57.8%) + 5 new refs (anti-patterns extracted). Structural: `## Artifact Template` nested as `### Artifact Template` under new `## Artifact Contract` H2 wrapper per marketing-stack sibling-parity convention (matches vn-tone slot 5; same pattern in short-form-brief slot 4 + seo slot 3). See references/playbook.md 'History / origin' for full detail."
 promptSignals:
   phrases:
     - "sounds like ai"
@@ -59,6 +64,8 @@ routing:
 
 **Core Question:** "Would a human editor believe a human wrote this — and would they cut nothing?"
 
+> Why this skill exists, philosophy, methodology, principles, when NOT to use, history: [`references/playbook.md`](references/playbook.md) [PLAYBOOK].
+
 ## Critical Gates — Read First
 
 1. **Do NOT skip the pattern scan.** Step 2 (strip) needs the diagnosis. Without it, strip-agent is guessing.
@@ -66,18 +73,6 @@ routing:
 3. **Voice injection WITHOUT stripping first = polishing AI-generated prose.** Strip always comes first. The soul-injection agent receives clean text, not AI-patterned text.
 4. **Content type matters.** Documentation gets a lighter touch than marketing copy. Check the Content Type Calibration table before dispatching.
 5. **Detector resistance is structural, not lexical.** Pangram-style classifiers can catch synonym-swapped prose. For high-stakes public content, prior detector failures, or explicit detector-sensitive requests, use the detector-resistance pass after the normal critic and record the threshold used.
-
-## Philosophy
-
-AI-generated content fails in three ways: it reads like AI wrote it (patterns), it sounds like nobody wrote it (no voice), and it says too much with too little (bloat). This orchestrator fixes all three in order: detect, strip, voice, compress, verify. Each concern gets a specialist agent. The critic ensures nothing ships below the bar.
-
-Classifier-era detectors add a fourth failure mode: the text can look clean but still preserve the semantic and structural fingerprint of LLM output. Humanize therefore changes argument shape, rhythm, specificity, and register when the content type warrants it. It does not try to "evade" detectors through tricks; it makes the text genuinely more authored, more specific, and less template-shaped.
-
-## Inputs Required
-- Any content artifact (from `copywriting` or any other skill) or raw text
-
-## Output
-- `.agents/skill-artifacts/mkt/content/[slug].humanized.md`
 
 ## Quality Gate
 Before delivering, the **critic agent** verifies:
@@ -104,14 +99,30 @@ These patterns are so strongly associated with AI that a single instance ruins c
 8. **No unsourced 47 or 73.** These are known LLM number biases. Any instance of 47 or 73 in the output must have a cited real-world source. If the number was generated, replace with actual data or remove entirely.
 9. **No staccato taglines.** "Your X, Y'd" ("Your Workflows, Mapped") and "X. Y." ("Analytics. Simplified.") are fragmentary headline constructions so overused by AI they are an instant fingerprint. Rewrite with a specific claim that communicates something real.
 
-## Chain Position
-Horizontal — works on output from any skill. If content passed the `copywriting` skill, humanize focuses on compression + residual patterns. For external or AI-generated content, full pipeline applies.
-**Re-run triggers:** When brand voice adjectives change, when upstream copy consistently triggers AI detection, or when voice injection guidance is updated.
+---
 
-### Skill Deference
-- **Need new copy written from scratch?** Use `copywriting` — this skill cleans existing content, not creates new.
-- **Conversion-focused landing page needed?** Use `lp-brief` — this skill focuses on voice and AI pattern removal, not landing-page architecture.
-- **Content already passed the copywriting skill?** Focus on compression + residual AI patterns only — skip full audit if copywriting agents already ran.
+## Before Starting
+
+Per `references/_shared/before-starting-check.md` [PLAYBOOK] — load brand voice + content type, identify any prior humanize artifact for the same slug, check freshness windows on voice adjectives (>30d → recommend `icp-research` re-run).
+
+| Artifact | Source | Required? |
+|---|---|---|
+| `brand/BRAND.md` | brand-system | Recommended — voice rules + lexicon |
+| `research/product-context.md` | icp-research | Recommended — voice adjectives + audience register |
+| `.agents/skill-artifacts/mkt/content/[slug].md` | upstream | Optional — if polishing a prior artifact, extract source skill from frontmatter |
+| `skills-resources/experience/brand.md` | (any skill) | Optional — `Voice — adjectives` key if user previously persisted |
+
+## Pre-Dispatch
+
+Run the canonical Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md` [PROCEDURE]).
+
+**Needed dimensions:** target voice (adjectives or brand ref), compression target (light/moderate/heavy), register preservation (keep formal vs neutralize), detector mode (none/proxy/pangram), protected tokens (Route C only).
+
+Full read-order + Warm/Cold Start prompts + Pre-Writing Assembly + write-back map + hard-block conditions + `--fast` behavior: [`references/procedures/pre-dispatch.md`](references/procedures/pre-dispatch.md) [PROCEDURE].
+
+## Mode Resolution
+
+Per `references/_shared/mode-resolver.md` [PROCEDURE] — auto-downgrade for ≤3 sentences AND no prior artifacts (collapses to Route A); `--fast` flag collapses Route B → Route A regardless of text length (skip voice-extractor + soul-injection + compression; run pattern-scanner + strip + critic only) and skips Detector-Resistance Verification. **`--fast` does NOT skip Cold Start, Critical Gates 1-5, or Absolute Prohibitions 1-9.**
 
 ---
 
@@ -128,59 +139,36 @@ Horizontal — works on output from any skill. If content passed the `copywritin
 
 ---
 
-## Routing Logic
+## Routing + Dispatch
 
-Classify the task, then follow the matching route.
-
-### Route A: Quick Humanize (short text)
-**When:** Text is under 200 words. Voice injection and compression have limited impact on short content.
+Three routes — Route A (short text, pattern-only), Route B (full pipeline), Route C (called by another skill).
 
 ```
-1. Pre-dispatch: Gather context (Step 0 below)
-2. LAYER 1 — Dispatch ONE agent:
-   - pattern-scanner-agent (voice-extractor skipped — short text)
-3. LAYER 2 — Dispatch SEQUENTIALLY:
-   - strip-agent (receives pattern-scanner output + original text)
-   - critic-agent (receives strip-agent output — skip soul-injection + compression)
-4. If critic returns FAIL → re-dispatch strip-agent with feedback (max 2 cycles)
-5. Deliver artifact
+ROUTE A (text < 200 words):
+  1. Pre-Dispatch (per procedures/pre-dispatch.md)
+  2. LAYER 1: pattern-scanner-agent only (voice-extractor skipped)
+  3. LAYER 2: strip-agent → critic-agent (soul-injection + compression skipped)
+  4. Critic FAIL → re-dispatch strip-agent (max 2 cycles)
+  5. Deliver artifact
+
+ROUTE B (text ≥ 200 words, full):
+  1. Pre-Dispatch
+  2. LAYER 1 IN PARALLEL: pattern-scanner + voice-extractor
+  3. User checkpoint: present diagnosis, confirm proceed
+  4. LAYER 2 SEQUENTIAL: strip → soul-injection → compression → critic
+  5. Critic FAIL → re-dispatch named agent(s) (max 2 cycles)
+  6. Detector-Resistance Verification (if detector_mode != none)
+  7. Deliver artifact
+
+ROUTE C (called by another skill):
+  1. Pre-Dispatch: trust calling skill's pre-resolved voice + content_type + protected_tokens + detector_mode
+  2. If content already passed copywriting's Seven-Sweeps: skip pattern-scanner, dispatch compression + critic only
+  3. Otherwise: Layer 1 (no user checkpoint) → Layer 2
+  4. Return polished text + metadata to calling skill (no standalone artifact file)
+  5. Run protected-token regression if `protected_tokens` was passed
 ```
 
-**Note:** Route A skips voice-extractor, soul-injection, and compression agents. For texts under 200 words, pattern removal is the primary value. If the user requests voice injection on short text, upgrade to Route B.
-
-### Route B: Full Humanize
-**When:** Text is 200+ words and needs the full treatment (pattern removal + voice + compression).
-
-```
-1. Pre-dispatch: Gather context (Step 0 below)
-2. LAYER 1 — Dispatch IN PARALLEL:
-   - pattern-scanner-agent
-   - voice-extractor-agent
-3. Present diagnosis to user: Show pattern counts, top 3 patterns, compression estimate.
-   Ask: "Proceed with all fixes, or review the flagged patterns first?"
-4. LAYER 2 — Dispatch SEQUENTIALLY:
-   - strip-agent (receives pattern-scanner output + original text)
-   - soul-injection-agent (receives strip-agent output + voice-extractor profile)
-   - compression-agent (receives soul-injection output)
-   - critic-agent (receives compression output)
-5. If critic returns FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
-6. Deliver final artifact
-7. For high-stakes public content or prior AI-detection failures: run Detector-Resistance Verification (below)
-```
-
-### Route C: Called by Another Skill
-**When:** Invoked by `copywriting`, `lp-brief`, or another skill for inline humanization.
-
-```
-1. Pre-dispatch: Read context from calling skill's artifacts
-2. If content already passed copywriting's Seven-Sweeps:
-   - Skip pattern-scanner (patterns already cleaned)
-   - Dispatch compression-agent (receives the text directly)
-   - Dispatch critic-agent
-3. Otherwise: Follow Route B (full pipeline)
-4. Return humanized output to the calling skill
-5. Run protected-token regression if the caller passed `protected_tokens`
-```
+Mechanics (how to spawn agents, single-agent fallback, Layer 1 user checkpoint details, Layer 2 sequential pipeline, critic gate + rewrite loop, Detector-Resistance Verification, chain position, skill deference) live in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE]. Load at Layer 1 dispatch entry.
 
 ---
 
@@ -207,174 +195,19 @@ This skill's examples are marketing-focused, but it works on any content type. A
 
 ---
 
-## Pre-Dispatch
+## Artifact Contract
 
-Before dispatching agents, run the Pre-Dispatch protocol. Two flows: **Warm Start** (most context resolvable, summarize and dispatch) or **Cold Start** (bundle 3-question prompt). Full pattern + anti-patterns: `references/_shared/pre-dispatch-protocol.md`.
+- **Path (Route A/B):** `.agents/skill-artifacts/mkt/content/[slug].humanized.md`
+- **Path (Route C):** no standalone artifact — polished text + metadata embedded in calling skill's artifact
+- **Lifecycle:** `pipeline` — one artifact per (slug, run); re-run renames to `[slug].humanized.v[N].md` and creates new with incremented version
+- **Frontmatter fields:** `skill`, `version`, `date`, `status`, `compression` (%), `detector_status` (not_run / proxy_pass / proxy_fail / pangram_pass / pangram_fail), `protected_tokens_preserved` (true / false / N/A)
+- **Body sections (3, in order):** Humanization Summary (10-row metric table) · Change Log (4-column table: Location / Original / Change / Rule) · Humanized content (H2 sections from original preserved as-is)
+- **Consumed by:** upstream calling skill (Route C) OR human reader (Route A/B); calling skills SHOULD preserve `polish_chain_applied: humanize` + `humanize_quality_score: N/50` + `humanize_detector_status: <value>` in their own artifact frontmatter
+- **Cross-stack contract:** schema changes require atomic update of `format-conventions.md` § "Frontmatter field order" + § "Body section headers (verbatim)" — never silently drift
 
-### Needed dimensions
-- Original text + content type (always required as input — not asked)
-- Target voice — adjectives or a brand reference (decides soul-injection-agent's lever)
-- Compression target — light / moderate / heavy (decides compression-agent's lever)
-- Register preservation — keep formal vs neutralize (decides strip-agent's intensity)
+Full template + per-section format rules (date format, typography binary gate, frontmatter + body section headers, Change Log row format, quality_score format, detector_status field values, protected_tokens_preserved field values) live in [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE].
 
-### Read order
-1. Pipeline: `brand/BRAND.md` → voice rules + lexicon. `research/product-context.md` → voice adjectives.
-2. Experience: `skills-resources/experience/brand.md` → voice notes from prior runs.
-3. Conversation context: brief from upstream skill (e.g., copywriting handed text directly).
-
-If `research/product-context.md` `date` is >30 days, warn and recommend re-running `icp-research` for fresh voice adjectives — brand voice evolves.
-
-### Warm Start (most dimensions resolvable)
-
-```
-Found:
-- brand voice → "[3 adjectives from BRAND.md]"
-- content type → "[blog | landing page | docs | email | social]"
-
-Defaults applied: compression=moderate, register=preserve.
-Override anything, or proceed?
-```
-
-If user proceeds, dispatch. Optional inline probe only if the content type genuinely couldn't be inferred from the input.
-
-### Cold Start (no voice context)
-
-```
-Humanize strips AI patterns and injects voice. To make the output sound like
-*you* (not generic-clean), I need a quick read on:
-
-1. **Target voice** — 3 adjectives (e.g., "blunt, specific, dry") OR a reference
-   brand whose voice you'd want to match OR point me at `brand/BRAND.md` if it
-   exists.
-2. **Preserve register?** — If the source is technical/formal/legal, keep it
-   that way (yes), or neutralize toward a more conversational baseline (no)?
-3. **Compression target** — Light (10-15%, light-touch), Moderate (20-30%,
-   default), or Heavy (30%+, aggressive).
-
-Answer 1-3 in one response. I'll dispatch.
-```
-
-### Write-back
-
-After cold-start answers, append to experience/:
-
-| Question | File | Key |
-|---|---|---|
-| 1. Target voice | `brand.md` | `Voice — adjectives` (only if 3-adjective form, not when pointing at BRAND.md) |
-| 2-3. Routing only | (not persisted) | — |
-
-### Pre-Writing Assembly
-
-After Pre-Dispatch resolves, compile these fields and pass to every agent in the `pre-writing` input:
-- **Content type** — blog, landing page, docs, email, social
-- **Voice adjectives** — from BRAND.md / experience / cold-start (or defaults: "clear, specific, human")
-- **Audience register** — formal, professional, conversational, casual
-- **Original word count** — for compression tracking
-- **Source** — which skill or external source produced the content
-- **User directives** — patterns to keep, intensity preferences
-- **Protected tokens** — named entities, numbers, URLs, proof points that must survive
-- **Detector mode** — `none | proxy | pangram`
-
----
-
-## Dispatch Protocol
-
-### How to spawn a sub-agent
-
-For each agent dispatched below, use the **Agent tool** with a prompt constructed as follows:
-
-1. **Read** the agent instruction file (e.g., `agents/pattern-scanner-agent.md`) — include its FULL content in the Agent prompt
-2. **Append** the brief and pre-writing context after the instructions
-3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory. Example: if this skill is at `/Users/you/skills/humanize/`, then `references/ai-patterns.md` becomes `/Users/you/skills/humanize/references/ai-patterns.md`. Tell the agent: "Read the reference file at [absolute path] for domain knowledge."
-4. **Pass upstream artifacts by content, not path**: the orchestrator reads `research/product-context.md` FIRST, then includes relevant excerpts (voice adjectives, audience register) in the pre-writing object. Sub-agents should NOT read artifact files directly — the orchestrator curates what they need.
-5. If **feedback** exists (from a critic FAIL cycle), append it at the end of the prompt with the header "## Critic Feedback — Address Every Point"
-
-### Single-agent fallback
-
-If multi-agent dispatch is unavailable (no Agent tool, single-agent runtime, or context constraints), execute each agent's instructions sequentially in-context:
-
-1. **Layer 1:** Run pattern-scanner-agent's detection logic on the text. Then run voice-extractor-agent's profile logic.
-2. **Layer 2:** Apply strip-agent's fixes, then soul-injection-agent's voice techniques, then compression-agent's rules.
-3. **Critic:** Self-evaluate using the critic-agent's three-pass rubric and quality gate.
-
-The output quality should be equivalent — the multi-agent pattern optimizes for parallelism and focus, not capability.
-
----
-
-## Layer 1: Parallel Diagnosis
-
-Spawn the following agents **IN PARALLEL** (multiple Agent tool calls in a single message). For each agent, follow the Dispatch Protocol above.
-
-| Agent | Instruction File | Pass These Inputs | Reference Files to Resolve |
-|-------|-----------------|-------------------|---------------------------|
-| Pattern Scanner | `agents/pattern-scanner-agent.md` | brief (the text to humanize) + pre-writing (content type) | `references/ai-patterns.md` |
-| Voice Extractor | `agents/voice-extractor-agent.md` | brief (the text to assess) + pre-writing (voice adjectives, audience) | `references/voice-injection.md`, `references/detector-resistance.md` |
-
-After both agents return, **present the diagnosis to the user** before proceeding to Layer 2:
-- Show Hard Tell count vs. Soft Tell count
-- Show top 3 most impactful patterns with examples from their text
-- Show estimated compression potential
-- Show voice register assessment and gap
-
-Ask: **"Proceed with all fixes, or review the flagged patterns first?"**
-
-If the user wants to review, walk through each flagged pattern and confirm which to fix vs keep. Pass the user's decisions to strip-agent as part of the pre-writing context.
-
----
-
-## Layer 2: Sequential Pipeline
-
-Dispatch these agents **ONE AT A TIME, IN ORDER** using the Dispatch Protocol above. Each receives the previous agent's full output as the `upstream` field.
-
-```
-strip-agent → soul-injection-agent → compression-agent → critic-agent
-```
-
-| Step | Agent | Instruction File | Receives |
-|------|-------|-----------------|----------|
-| 1 | Strip Agent | `agents/strip-agent.md` | Pattern-scanner output (upstream) + original text (brief) + user-approved keeps (pre-writing) |
-| 2 | Soul Injection | `agents/soul-injection-agent.md` | Strip-agent output (upstream) + voice-extractor profile (pre-writing) |
-| 3 | Compression | `agents/compression-agent.md` | Soul-injection output (upstream) + content type targets (pre-writing) |
-| 4 | Critic | `agents/critic-agent.md` | Compression output (upstream) + original text for comparison (brief) |
-
-Each agent returns the full document with their edits applied + a change log. The orchestrator passes the complete output (text + log) to the next agent.
-
----
-
-## Critic Gate
-
-The critic agent returns one of two verdicts:
-
-### PASS
-The text meets all quality standards. Score is 35/50 or above. Zero absolute prohibition violations. If detector mode is enabled, proceed to Detector-Resistance Verification before delivery.
-
-### FAIL
-The critic returns specific failures with:
-- Which text failed and on which dimension
-- Specific fix instructions
-- Which agent to re-dispatch
-
-**Rewrite loop:**
-1. Read the critic's failure report
-2. Re-dispatch ONLY the named agent(s) with the critic's feedback attached as the `feedback` input
-3. Run the modified output back through the critic
-4. **Maximum 2 rewrite cycles.** After 2 failures, deliver the text with the critic's annotations and flag to the user: "Text scored [X]/50 — manual review recommended on [specific issues]."
-
-### Detector-Resistance Verification
-
-Read `references/detector-resistance.md` before running this step.
-
-Run when `detector_mode != none`:
-
-1. **Protected-token regression:** compare final text against `protected_tokens`. Any missing named entity, number, URL, or proof point is a FAIL; re-dispatch the responsible agent with the missing token list.
-2. **External detector if available:** if the operator configured Pangram or an equivalent detector, run it and record the score/status. If not available, do not invent a score.
-3. **Proxy checklist:** evaluate argument shape, specificity source, register variance, semantic compression, and human imperfection.
-4. **Failure handling:** if external detector or proxy fails, re-dispatch `soul-injection-agent` for structural variance and specificity repair, then `compression-agent`, then `critic-agent`. Max 2 cycles total.
-5. **After 2 failures:** deliver as `DONE_WITH_CONCERNS` with detector/proxy notes and the preserved-token result.
-
----
-
-## Artifact Template
+### Artifact Template
 
 ```markdown
 ---
@@ -417,102 +250,13 @@ protected_tokens_preserved: true | false
 
 > On re-run: rename existing artifact to `[slug].humanized.v[N].md` and create new with incremented version.
 
-## Next Step
-
-Content is ready for publishing.
-
----
-
-## Worked Example — Full Humanize (Route B)
-
-**Input:** AI-generated SaaS onboarding blog post, 178 words. Content type: blog post.
-
-### Step 0: Pre-Dispatch
-- Content type: blog post (strip: full, voice: moderate, compression: 15-25%)
-- Voice adjectives: "direct, warm, technical" (from product-context.md)
-- Original word count: 178
-
-### Layer 1: Parallel Dispatch
-
-**Pattern Scanner returns:**
-- 8 Hard Tells found, 2 Soft Tells
-- Top 3: throat-clearing intro (#21, 1 instance), paired synonyms (#6, 2 instances), em dash (#12, 1 instance)
-- Absolute prohibitions: 1 em dash, 1 filler context phrase
-- Estimated compression: 40-50%
-
-**Voice Extractor returns:**
-- Voice profile: direct (short sentences, imperatives), warm (inclusive pronouns), technical (domain-specific)
-- Current register: formal/generic. Target: professional/conversational
-- Sterility: all 6 signs present — uniform sentence length, no experience markers, no fragments, any-brand paragraphs
-- 5 injection opportunities flagged (specificity, rhythm, reader presence)
-
-### User Checkpoint
-"Found 8 Hard Tells and 2 Soft Tells. Top issues: throat-clearing intro, paired synonyms, em dash. Estimated 40-50% compression potential. Proceed with all fixes?"
-
-User confirms. Proceed to Layer 2.
-
-### Layer 2: Sequential Dispatch
-
-**Strip Agent receives** pattern-scanner output + original text:
-> Removes "In today's rapidly evolving SaaS landscape," (throat-clearing). Picks "critical" from "critical and essential" (paired synonym). Removes em dash + -ing phrase. Removes "It's important to note that" (hedge). Removes "In conclusion" (formulaic). Removes "Start building..." (permission-seeking). Word count: 178 to 112.
-
-**Soul Injection receives** strip output + voice profile:
-> Leads with the data point (50% retention). Adds Intercom example with specific numbers. Replaces "companies" with named company. Varies rhythm: 11, 4, 18, 9 word sentences. Adds reader presence. Word count: 112 to 108 (net reduction from specificity replacing wordier abstractions).
-
-**Compression receives** soul-injection output:
-> Applies filler phrase compression ("The key takeaway is that" deleted). Merges setup + conclusion into single sentence. Word count: 108 to 91.
-
-**Critic receives** compression output:
-> Pass 1: Zero Hard Tells. 0 Soft Tells. Vocabulary clean. Density: every paragraph has facts. Meaning preserved. Compression: 49%.
-> Pass 2: "What still sounds AI?" Nothing flagged. No quotables. Read-aloud clean.
-> Pass 3: Directness 8, Rhythm 8, Trust 8, Authenticity 7, Density 9. Total: 40/50. PASS.
-
-### Final Output (91 words, 49% compression)
-
-> SaaS companies with structured onboarding retain 50% more users. Yet most treat it as a product tour and stop there.
->
-> Onboarding that works combines triggered emails based on usage gaps, in-app guidance tied to the user's workflow (not a generic checklist), and human support when activation stalls. Intercom's onboarding rebuild in 2024 cut their time-to-value from 14 days to 3 by replacing their 12-step tour with two targeted nudges.
->
-> Less coverage, more precision. Guide users to one aha-moment fast, then expand.
-
-### Change Annotation
-
-| Location | Original | Change | Rule |
-|----------|----------|--------|------|
-| Para 1, S1 | "In today's rapidly evolving SaaS landscape" | Deleted | Pattern #21 (throat-clearing intro) |
-| Para 1, S1 | "critical and essential" | "critical" then restructured | Pattern #6 (paired synonyms) |
-| Para 1, S1 | "has become a critical component of..." | Lead with the data point instead | Compression: setup elimination |
-| Para 1, S3 | "more quickly and efficiently" | Deleted (paired synonyms + filler) | Pattern #6, Compression |
-| Para 2, S1 | "It's important to note that" | Deleted | Pattern #8 (hedge) + Compression |
-| Para 2, S2 | "a seamless and intuitive experience" | Restructured with specifics | Pattern #6 + AI vocabulary ("seamless") + Voice: specificity |
-| Para 3, S1 | "In conclusion" | Deleted | Pattern #5 (formulaic structure) + #25 (generic positive conclusion) |
-| Para 3, S3 | "Start building... see the difference!" | Replaced with actionable takeaway | Pattern #20 (permission-seeking) + Pattern #11 (exclamation) |
-| Throughout | Generic claims | Added Intercom example | Voice: specificity as personality |
-| --- | 178 words to 91 words | **49% compression** | --- |
-
 ---
 
 ## Anti-Patterns
 
-**Skipping the pattern scan** — Dispatching strip-agent without a diagnosis. Strip-agent needs the violation log as its work order. Without it, edits are guesswork. INSTEAD: always run pattern-scanner-agent first.
+Polish-pipeline reference: [`references/anti-patterns.md`](references/anti-patterns.md) [ANTI-PATTERN]. Re-read before any output ships. 10 pipeline anti-patterns (skipping pattern scan, voice injection before stripping, mechanical pattern-matching, sterile output, surface compression, voice cosplay, one-pass editing, ignoring critic FAIL, destroying structure, over-compressing introductions) + 4 cross-cutting marketing-stack rows (upstream-skipped-humanize, calling skill drops protected_tokens contract, cross-stack contract drift, detector-status fabrication).
 
-**Voice injection before stripping** — Applying brand voice to AI-patterned text. You are polishing a turd. The voice injection agent expects clean, pattern-free input. INSTEAD: strip first, inject second. Always.
-
-**Mechanical pattern-matching without judgment** — Not every instance of a Soft Tell pattern needs fixing. A single hedge before a genuinely uncertain claim is honest. Use the checklist as a detection tool, not a find-and-replace script. Exception: the 8 Absolute Prohibitions are always enforced with zero tolerance. INSTEAD: fix Hard Tells and Absolute Prohibitions unconditionally; apply judgment to Soft Tells.
-
-**Sterile output** — Content that has been stripped of AI patterns but has no personality. If the output reads like a legal document, soul-injection-agent was skipped or under-applied. Clean does not equal good. INSTEAD: always run soul-injection-agent after strip-agent (Route B).
-
-**Surface compression** — Cutting depth instead of filler. Removing a data point to save 8 words is the opposite of what compression should do. INSTEAD: check every deletion against the Depth Preservation Rules in conciseness-rules.md.
-
-**Voice cosplay** — Injecting a personality that does not match the brand. A fintech compliance tool should not sound like a DTC sneaker brand. INSTEAD: read the voice adjectives from product-context.md. They are constraints, not suggestions.
-
-**One-pass editing** — Running all steps simultaneously. Each step has a different focus: detect, strip, voice, compress, verify. Combining them produces worse results because you are optimizing for conflicting goals simultaneously. INSTEAD: follow the sequential pipeline. Each agent has one job.
-
-**Ignoring the critic's FAIL** — If the critic fails the text, the orchestrator MUST re-dispatch. Delivering failed text to the user breaks the quality contract. INSTEAD: re-dispatch the named agent(s) with the critic's feedback. Max 2 cycles, then deliver with annotations.
-
-**Destroying structure in the name of conciseness** — Removing all subheadings, merging all sections, eliminating all lists because "shorter is better." Structure aids scanning. INSTEAD: compress within structure before eliminating structure.
-
-**Over-compressing introductions** — The opening carries disproportionate weight. A 50% compressed intro that loses its hook is worse than a 20% compressed intro that keeps it. INSTEAD: compress introductions last and most carefully.
+Most common in practice: em dash retention (Absolute Prohibition #1), voice injection before stripping (Critical Gate 3), surface compression (cuts data not filler), sterile clean output (soul-injection skipped or under-applied).
 
 ---
 
@@ -526,20 +270,20 @@ Every run ends with explicit status:
 
 ---
 
-## Agent Files
+## Worked Example
 
-### Sub-Agent Instructions (agents/)
-- [agents/pattern-scanner-agent.md](agents/pattern-scanner-agent.md) — Scans all 47 AI patterns, logs violations, estimates compression
-- [agents/voice-extractor-agent.md](agents/voice-extractor-agent.md) — Reads voice adjectives, assesses register, identifies injection opportunities
-- [agents/strip-agent.md](agents/strip-agent.md) — Surgical removal of flagged AI patterns
-- [agents/soul-injection-agent.md](agents/soul-injection-agent.md) — Applies brand voice through rhythm, specificity, experience markers
-- [agents/compression-agent.md](agents/compression-agent.md) — Systematic compression at sentence, paragraph, section levels
-- [agents/critic-agent.md](agents/critic-agent.md) — Three-pass audit, 5-dimension scoring, PASS/FAIL gate
-- [agents/_template.md](agents/_template.md) — Reusable template for creating new agent files
+End-to-end Route B walkthrough (AI-generated SaaS onboarding blog post, 178 words → 91 words, 49% compression, 40/50 PASS cycle 1) + FAIL-handling cycle-2 variant + `--fast` variant + Route C variant (called by cold-outreach with protected_tokens): [`references/examples/humanize-walkthrough.md`](references/examples/humanize-walkthrough.md) [EXAMPLE].
 
-### Shared References (references/)
-- [references/ai-patterns.md](references/ai-patterns.md) — 47 AI writing patterns across 8 categories + high-frequency vocabulary and phrase lists; detection, examples, fixes, severity (pattern-scanner, strip, critic)
-- [references/voice-injection.md](references/voice-injection.md) — Voice adjective framework, rhythm, specificity, personality injection (voice-extractor, soul-injection)
-- [references/conciseness-rules.md](references/conciseness-rules.md) — Compression techniques at sentence, paragraph, and section level (compression-agent)
-- [references/detector-resistance.md](references/detector-resistance.md) — Pangram-aware structural/semantic detector-resistance protocol and proxy checklist
-- [references/regression-suite.md](references/regression-suite.md) — Fixture protocol for protected-token, specificity, compression, and detector/proxy regressions
+---
+
+## References
+
+- **Playbook:** `references/playbook.md` [PLAYBOOK]
+- **Format:** `references/format-conventions.md` [PROCEDURE]
+- **Anti-patterns:** `references/anti-patterns.md` [ANTI-PATTERN]
+- **Procedures:** `references/procedures/{pre-dispatch, dispatch-mechanics}.md` [PROCEDURE]
+- **Example:** `references/examples/humanize-walkthrough.md` [EXAMPLE]
+- **Domain catalogs** (loaded by agents at dispatch): `references/{ai-patterns, voice-injection, conciseness-rules, detector-resistance, regression-suite}.md`
+- **Shared:** `references/_shared/{before-starting-check, manifest-spec, mode-resolver, pre-dispatch-protocol}.md`
+- **Agents:** 6 sub-agents in `agents/` — see Agent Manifest above. `critic-agent.md` holds the canonical 5-dimension rubric.
+- `marketing-skills/CLAUDE.md` §"Pre-Dispatch Protocol" + §"Complexity Routing" + §"Multi-Agent Skills" — stack-level conventions this skill inherits
