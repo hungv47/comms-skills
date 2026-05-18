@@ -11,6 +11,11 @@ metadata:
   estimated-cost: "$1-2"
   status: done_with_concerns
   notes: "Re-scoped from design-create (brief-only, no rendering). Platform-aware module content for IG/LinkedIn/FB/YT/X/OOH/banner is skeleton-only — needs a follow-up build pass with practitioner-grade specs (aspect ratios, safe zones, mobile type scales, thumb-stop contrast, file conventions, anti-patterns) per platform."
+  refactor_history:
+    - version: "2.0.0 → 2.0.0"
+      date: 2026-05-18
+      slot: "v6 Phase 2 Wave 1 — marketing-stack slot 11/14"
+      note: "Body 488→~225 (-54%) + 5 new refs (playbook + format-conventions + procedures/pre-dispatch + procedures/dispatch-mechanics + examples/design-brief-walkthrough) + new anti-patterns.md (7 from body + 4 cross-cutting marketing-stack rows). Structural: `### Artifact Template` nested under new `## Artifact Contract` H2 wrapper per marketing-stack sibling-parity convention (matches campaign-plan slot 10 + ad-copy slot 9 + copywriting slot 8 + cold-outreach slot 7 + humanize slot 6 + vn-tone slot 5 + short-form-brief slot 4 + seo slot 3). `status: done_with_concerns` preserved verbatim (platform-modules.md skeleton-only flagged in metadata.notes — deferred to v6.3.0 follow-up build pass, NOT in scope for body-diet refactor). See references/playbook.md 'History / origin' for full detail."
 promptSignals:
   phrases:
     - "design brief"
@@ -91,6 +96,8 @@ routing:
 
 **Core Question:** "Could a designer or image-gen tool execute this asset on-brand and on-platform without follow-up questions?"
 
+> Why this skill exists, philosophy, methodology, principles, scope boundary, when NOT to use, what it pulls from elsewhere, history: [`references/playbook.md`](references/playbook.md) [PLAYBOOK].
+
 ## Critical Gates — Read First
 
 - **Do NOT render.** This skill produces the brief, not the asset. The brief carries spec + reference direction + image-gen prompt (where applicable). Rendering happens downstream — image-gen (Midjourney / Imagen / DALL·E / Claude Design), vector tooling (Pencil / Figma), or a human designer.
@@ -99,37 +106,6 @@ routing:
 - **Do NOT use stock-AI defaults.** No default purple-blue gradients, centered-isolated-on-white, faux-3D bevels, or glassmorphism unless DESIGN.md specifies. Critic scores generic-AI smell explicitly.
 - **Do NOT skip the brief approval gate.** The brief is a candidate, not a delivery — user reviews before downstream rendering.
 - **Platform spec is mandatory.** Every brief includes aspect ratio, safe zones, mobile readability (type scale, thumb-stop contrast), file format, and file-size limits. See `references/platform-modules.md`.
-
-## Philosophy
-
-A great brief eliminates downstream ambiguity. Render quality is bounded by brief quality — a vague brief produces drift no matter how good the renderer. The brief is the deliverable; every visual decision binds to a brand anchor and a platform constraint.
-
-Brand fidelity > aesthetic novelty. Platform fitness > generic polish. A boring on-brand brief beats a striking off-brand one.
-
-## Inputs Required
-
-- **Asset request** — type (IG carousel, OG image, banner ad), platform/format, purpose (announce/educate/convert/recruit), copy if available
-- **`brand/BRAND.md`** — voice, archetype, sacred elements
-- **`brand/DESIGN.md`** — palette, typography, surface language, motion (if applicable)
-
-## Inputs Optional
-
-- **`brand/ASSETS.md`** — pre-fills format/dimensions if asset matches a row; ticks box on completion
-- **`.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-id].md`** — slot spec when brief is for a landing-page asset
-- **`.agents/skill-artifacts/mkt/content/[slug].copy.md`** — copy used IN the asset (headline, body, CTA)
-- **`.agents/skill-artifacts/mkt/campaign-plan.md`** — campaign context, channel placement, awareness stage
-
-## Output
-
-`.agents/skill-artifacts/mkt/design-briefs/[slug].md` containing:
-- Approved concept (visual direction, references)
-- Brand anchors (palette/typography/sacred elements from DESIGN.md)
-- Platform spec (aspect ratio, safe zones, type scale, contrast, format, size cap)
-- Asset slots (compound assets — e.g. carousel slides)
-- Copy placement (when copy lives in the asset)
-- Failure modes (platform-specific + generic-AI)
-- Downstream handoff: image-gen prompt OR designer spec OR vector-tool spec
-- Critic report (rubric + generic-AI-aesthetic check)
 
 ## Quality Gate
 
@@ -145,17 +121,35 @@ Before delivering, the **critic agent** verifies:
 - [ ] **Generic-AI-aesthetic check — full 13-pattern detector from `references/visual-rubric.md` §"Generic-AI-Aesthetic Detector". Score 0-3 per pattern (max 39). Thresholds: 0-7 clean / 8-15 DONE_WITH_CONCERNS / 16+ auto-FAIL.**
 - [ ] Downstream-handoff completeness — image-gen prompt is specific (lens / lighting / mood / era / composition / color cast), or designer spec covers placement/typography/color tokens, or vector-tool spec specifies layout grid
 
-## Chain Position
+Full 8-dimension Rubric Scores + 13-pattern Generic-AI-Aesthetic Detector + per-route scoring-mode shifts (designer-handoff route): [`agents/critic-agent.md`](agents/critic-agent.md). Max 2 rewrite cycles per critic verdict.
 
-Previous: `brand-system` (required), `lp-brief` (optional — slot spec), `copywriting` (optional — copy) | Next: external rendering (image-gen / Pencil / Figma / human designer)
+---
 
-**Re-run triggers:** BRAND.md or DESIGN.md updates, new asset row in ASSETS.md, lp-brief slot needs an explicit per-asset brief, campaign launch.
+## Before Starting
 
-### Skill Deference
+Per `references/_shared/before-starting-check.md` [PLAYBOOK] — load brand/BRAND.md + brand/DESIGN.md + optional ASSETS.md + check freshness (>60d → soft warning, user can override).
 
-- **No brand system?** → run `brand-system` first; design-brief hard-blocks without it.
-- **Need in-asset copy?** → run `copywriting` first or in parallel.
-- **Whole-page redesign?** → use `lp-brief`.
+| Artifact | Source | Required? |
+|---|---|---|
+| `brand/BRAND.md` | brand-system | **REQUIRED** (hard gate) — voice, archetype, sacred elements |
+| `brand/DESIGN.md` | brand-system | **REQUIRED** (hard gate) — palette, typography, surface language, motion |
+| `brand/ASSETS.md` | brand-system Route B | Optional — auto-fill dimensions, tick checkbox on completion |
+| `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Optional — slot spec when brief is for an LP asset |
+| `.agents/skill-artifacts/mkt/content/[slug].copy.md` | copywriting | Optional — copy to use in the asset |
+| `.agents/skill-artifacts/mkt/campaign-plan.md` | campaign-plan | Optional — campaign context, awareness stage |
+| `research/icp-research.md` | icp-research | Optional — audience visual preferences |
+
+## Pre-Dispatch
+
+Run the canonical Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md` [PROCEDURE]). **Hard gate fires BEFORE cold-start questioning** — missing brand artifacts return NEEDS_CONTEXT, recommend `brand-system`.
+
+**Needed dimensions:** asset type (OG / IG carousel / banner / hero / OOH / etc.), downstream route (image-gen / vector-tool / designer-handoff / template-pack — drives Layer 2), brand reference (auto-resolved by hard gate), copy/headline if any (renders IN the asset), constraints (dimensions, deadline, must-include elements).
+
+Full hard-gate semantics + read order + Warm/Cold Start templates (4-question Cold Start) + 2-row Write-back map + Step 0.5 Route Detection (5 steps including target_tool pick + platform module pull) + `--fast` behavior (hard gate + Cold Start + Step 0.5 + Approval Gate 2 + critic all preserved; Layer 1 collapsed + Approval Gate 1 skipped + critic rewrite-loop disabled): [`references/procedures/pre-dispatch.md`](references/procedures/pre-dispatch.md) [PROCEDURE].
+
+## Mode Resolution
+
+Per `references/_shared/mode-resolver.md` [PROCEDURE] — this skill is `budget: standard`; `--fast` flag collapses Layer 1 parallel into single inline pass + Layer 1.5 to 1 brief instead of 3 + skips Approval Gate 1 (no choice to present). **`--fast` does NOT skip** hard gate, Cold Start, Step 0.5, Approval Gate 2, critic-agent, or Generic-AI-Aesthetic Detector (per marketing-skills CLAUDE.md "Safety gates supersede `--fast`").
 
 ---
 
@@ -171,9 +165,14 @@ Previous: `brand-system` (required), `lp-brief` (optional — slot spec), `copyw
 | Figma-Spec Agent | 2 (downstream-route: `designer-handoff`) | `agents/figma-spec-agent.md` | Produces design spec markdown for human designer in Figma |
 | Critic Agent | 3 (final) | `agents/critic-agent.md` | Visual rubric scoring + generic-AI-aesthetic detection + platform-fit check |
 
+### Shared References
+
+- **Domain catalogs** (loaded by agents at dispatch): `references/asset-types.md` (per-asset format specs), `references/platform-modules.md` (per-platform brief checklists — skeleton, needs follow-up build pass per metadata.notes), `references/prompt-patterns.md` (image-gen prompt structures + tool → asset-type table), `references/visual-rubric.md` (critic 8-dim scoring + 13-pattern Generic-AI-Aesthetic Detector), `references/failure-modes.md` (generic-AI catalog + brand drift), `references/examples.md` (end-to-end worked examples per asset type)
+- **Shared:** `references/_shared/{pre-dispatch-protocol, before-starting-check, mode-resolver, anti-sycophancy, shared-critic-rubrics, quality-feedback-protocol, quality-dashboard-spec}.md`
+
 ---
 
-## Routing Logic
+## Routing + Dispatch
 
 Every brief carries a **downstream-route** tag identifying its renderer. The tag drives which optional sub-agent runs after the brief is approved.
 
@@ -207,210 +206,21 @@ Override auto-detection with `--route=image-gen|vector-tool|designer-handoff|tem
 | Hero illustration (custom) | image-gen or designer-handoff | Generative or human-designer |
 | Spot icon / decoration | vector-tool | Vector |
 
----
-
-## Pre-Dispatch
-
-This skill is **hard-gated** on brand artifacts. Cold-start questioning happens after the gate. Full Pre-Dispatch protocol pattern: `references/_shared/pre-dispatch-protocol.md`.
-
-### Hard gate (before any questioning)
-
-`brand/BRAND.md` AND `brand/DESIGN.md` must be present. If either missing → return **NEEDS_CONTEXT**, recommend `brand-system` (Route A for BRAND only, Route B for full design tokens). If either >60 days stale and user hasn't confirmed, warn before proceeding.
-
-If `brand/ASSETS.md` exists, scan for a row matching the requested asset. If found, pre-fill format/dimensions/path and prepare to tick the checkbox on completion.
-
-### Needed dimensions
-- Asset type (OG image / IG carousel / banner / hero / OOH / etc.)
-- Downstream route (image-gen / vector-tool / designer-handoff / template-pack — drives Layer 2)
-- Brand reference (resolved by hard gate to `brand/DESIGN.md`)
-- Copy/headline if any (to render IN the asset)
-- Constraints (dimensions, deadline, must-include elements)
-
-### Read order (post-gate)
-1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (confirmed by hard gate). `brand/ASSETS.md` for dimension pre-fill. `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` if invoked from lp-brief. `.agents/skill-artifacts/mkt/content/[slug].copy.md` if copy supplied separately. `.agents/skill-artifacts/mkt/campaign-plan.md` for campaign context. `research/icp-research.md` for audience visual preferences.
-2. Experience: `skills-resources/experience/{brand,goals}.md`.
-
-### Optional Artifacts (read if present)
-
-| Artifact | Source | Benefit |
-|----------|--------|---------|
-| `brand/ASSETS.md` | brand-system Route B | Auto-fill dimensions, tick checkbox on completion |
-| `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-id].md` | lp-brief | Slot spec when brief is for an LP asset |
-| `.agents/skill-artifacts/mkt/content/[slug].copy.md` | copywriting | Copy to use in the asset |
-| `.agents/skill-artifacts/mkt/campaign-plan.md` | campaign-plan | Campaign context, awareness stage |
-| `research/icp-research.md` | icp-research | Audience visual preferences |
-
-**Warm Start** (invoked from lp-brief or campaign-plan with asset spec):
-
-```
-Hard gate passed: brand/BRAND.md + brand/DESIGN.md present.
-Found:
-- asset spec → "[from upstream slot or campaign-plan]"
-- copy → "[from copywriting if present]"
-- ASSETS.md row → "[matched / no match]"
-
-Auto-detecting downstream route from asset type. Override or proceed?
-```
-
-**Cold Start** (standalone invocation, asset request from user):
-
-```
-design-brief produces a per-asset brief that downstream renderers (Claude
-Design / Pencil MCP / Figma / human designer) execute. Before I dispatch:
-
-1. **Asset type** — what's being designed? (OG image / IG carousel / IG post /
-   IG story / LinkedIn document / LinkedIn single-image / FB ad / YouTube
-   thumbnail / X card / OOH / banner / hero / other.)
-2. **Downstream route** — image-gen (generative for photos/illustrations) /
-   vector-tool (Pencil/Figma for layouts and variants) / designer-handoff
-   (human designer for print or complex composition) / template-pack
-   (multi-format social packs from one brief). Auto-detected from asset
-   type by default — override here.
-3. **Copy/headline** — what text appears IN the asset? Headline, body,
-   CTA, brand mark text. Reference `.agents/skill-artifacts/mkt/content/[slug].copy.md`
-   if supplied separately.
-4. **Constraints** — dimensions (if non-standard), deadline, must-include
-   elements (logo placement, brand mark, legal disclaimer, etc.).
-
-Answer 1-4 in one response. (Brand reference is auto-resolved from
-brand/BRAND.md + brand/DESIGN.md.) I'll dispatch.
-```
-
-**Write-back:**
-
-| Q | File | Key |
-|---|---|---|
-| 4. Constraints (durable: legal disclaimer policies, logo placement rules) | `brand.md` | `Brand — design constraints` (only if user expresses durable rule) |
-| 1, 2, 3. Asset-specific dimensions | (per-asset, lives in design-brief artifact) |
+Mechanics (how to spawn agents, single-agent fallback, Step 0.5 Route Detection details, Layer 1 parallel + Layer 1.5 brief-synth + Approval Gate 1 with full user-response handling + Layer 2 route-dependent dispatch + Layer 3 critic gate + rewrite loop + Approval Gate 2 with full user-response handling + ASSETS.md auto-tick semantics + chain position + re-run triggers + skill deference): [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE]. Load at Layer 1 dispatch entry.
 
 ---
 
-## Step 0.5: Route Detection (Orchestrator)
+## Artifact Contract
 
-Before Layer 1, pick a downstream route AND (for `image-gen`) a target generative tool. Both are required by downstream sub-agents.
+- **Path:** `.agents/skill-artifacts/mkt/design-briefs/[slug].md` (default overwrite on re-run; preserve-history mode renames to `[slug].v[N].md`). Rejected briefs save as `[slug]-rejected.md` (Gate 2 reject); paused-candidate exits save as `[slug]-candidates.md` (Gate 1 stop).
+- **Lifecycle:** `pipeline` — re-run on BRAND.md/DESIGN.md update / new ASSETS.md row / lp-brief slot request / campaign launch / render dissatisfaction
+- **Frontmatter fields:** `skill`, `version`, `date`, `status`, `downstream_route`, `target_tool` (when image-gen), `asset_type`, `platform`, `dimensions`, `brand_anchors` (primary_color + primary_type + motion), `sacred_respected` (list)
+- **Consumed by:** image-gen tools (Claude Design / Midjourney / Imagen / DALL·E / Ideogram / Veo / Suno); vector tools (Pencil / Figma); human designers (Designer-Handoff Spec block); `lp-brief` (when invoked from LP asset slot); `brand/ASSETS.md` auto-tick (literal path match)
+- **Cross-stack contract:** schema changes require atomic update of `format-conventions.md` § "Frontmatter — required fields" + § "Body section order" + § "Downstream Handoff Block schemas" — never silently drift; downstream consumers jump to sections by heading match and route by `downstream_route` field
 
-1. **`--route=` override** → honor it. Warn if asset-type default differs.
-2. **Else** walk the asset-type → default route table above.
-3. **State route + rationale in 1 line** before dispatching:
-   > "Downstream route: image-gen (photographic OG image). Target tool: midjourney-v6 (editorial mood). Override with `--route=` if needed."
-4. **For `image-gen`**, pick `target_tool` from `references/prompt-patterns.md` "tool → asset type" table (e.g., `claude-design`, `midjourney-v6`, `imagen-3`, `dall-e-3`, `ideogram`, `veo`, `suno`).
-5. **Pull the platform module** from `references/platform-modules.md` and pass its spec checklist (aspect, safe zones, type scale, contrast, format, size cap, anti-patterns) to brief-synth-agent and critic-agent.
+Full template + per-field format rules (frontmatter rules, body section order, Platform Spec 8-row schema, per-route Downstream Handoff Block schemas, re-run convention, ASSETS.md auto-tick semantics, anti-drift checks): [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE].
 
-`route`, `target_tool`, and `platform_module` are part of every agent's context.
-
----
-
-## Layer 1: Parallel Foundation
-
-Spawn **IN PARALLEL**; outputs feed Layer 1.5:
-
-| Agent | Instruction File | Pass These Inputs | Reference Files |
-|-------|-----------------|-------------------|-----------------|
-| Brand-Anchor Agent | `agents/brand-anchor-agent.md` | full BRAND.md + DESIGN.md + asset request | — |
-| Concept Agent | `agents/concept-agent.md` | asset request + brand digest | `references/asset-types.md`, `references/platform-modules.md`, `references/failure-modes.md` |
-| Copy-Anchor Agent | `agents/copy-anchor-agent.md` | asset request + copywriting artifact (if any) + brand voice rules | — |
-
----
-
-## Layer 1.5: Brief Synthesis
-
-| Agent | Instruction File | Pass These Inputs | Reference Files |
-|-------|-----------------|-------------------|-----------------|
-| Brief Synthesizer | `agents/brief-synth-agent.md` | brand anchor + 3 concepts + copy + route + platform module + asset request | `references/asset-types.md`, `references/platform-modules.md` |
-
-Output: 3 candidate briefs, each with concept name, visual direction, hierarchy, platform spec (resolved against the module), copy placement, failure modes to avoid.
-
----
-
-## Approval Gate 1 — Brief Selection
-
-**STOP and present** the 3 candidate briefs. Do not proceed to image-gen prompt or designer spec.
-
-Format:
-
-```
-## Brief Candidates
-
-### A. [Concept Name]
-[Visual direction, mood, references — 3-5 lines]
-**Why this:** [argument]
-**Risk:** [main concern]
-
-### B. [Concept Name]
-...
-
-### C. [Concept Name]
-...
-
-**Pick one (A/B/C), request revisions, or specify your own direction.**
-```
-
-User responses:
-- **"A" / "B" / "C"** → proceed with that brief to Layer 2.
-- **"Revise X"** → re-dispatch concept-agent with feedback, regenerate, re-present.
-- **"None of these"** → ask one clarifying question, regenerate.
-- **"Switch route to X"** → re-dispatch brief-synth with the new route. If concept-agent's tool-feasibility for that concept was RETHINK on the new route, re-run concept-agent first.
-- **"Stop"** → save as `.agents/skill-artifacts/mkt/design-briefs/[slug]-candidates.md`, exit BLOCKED.
-
----
-
-## Layer 2: Downstream Handoff Augmentation
-
-Dispatch ONE based on downstream route:
-
-| Route | Agent | Output addition |
-|-------|-------|--------|
-| `image-gen` | `agents/prompt-craft-agent.md` | Image-gen prompt block (primary + 2 variants) appended to brief |
-| `vector-tool` | (none — brief synth already wrote the vector spec block) | — |
-| `designer-handoff` | `agents/figma-spec-agent.md` | Designer-handoff spec block appended to brief |
-| `template-pack` | `agents/prompt-craft-agent.md` per format | Per-format prompt blocks |
-
----
-
-## Layer 3: Critic Gate
-
-| Agent | Instruction File | Receives |
-|-------|-----------------|----------|
-| Critic Agent | `agents/critic-agent.md` | Approved brief + Layer 2 output + platform module |
-
-Critic produces an inline rubric report with PASS / FAIL.
-
-- **PASS** → Approval Gate 2.
-- **FAIL** → re-dispatch the relevant Layer 2 agent or brief-synth with feedback. Max 2 rewrite cycles; after 2 failures, deliver with critic annotations as DONE_WITH_CONCERNS.
-
----
-
-## Approval Gate 2 — Brief Acceptance
-
-**STOP and present** the assembled brief + critic report.
-
-Format:
-
-```
-## [Asset Name] — Design Brief — [Downstream route]
-
-**Concept:** [name selected at Gate 1]
-**Critic:** [PASS / DONE_WITH_CONCERNS]
-**Score:** [/40 with sub-scores]
-
-[Brief preview — concept, anchors, platform spec, copy placement, failure modes, handoff block]
-
-[Critic notes — concerns to monitor]
-
-**Approve to write artifact, revise, or reject.**
-```
-
-User responses:
-- **"Approve"** →
-  1. Write `.agents/skill-artifacts/mkt/design-briefs/[slug].md`.
-  2. **ASSETS.md auto-tick:** if the brief's asset path is a literal string match for a `brand/ASSETS.md` row's path field (never auto-tick on slug or asset-type heuristic), flip `[ ]` → `[x]` and append a date stamp. No match → skip; design-brief doesn't own ASSETS.md row creation (that's brand-system).
-  3. Status DONE.
-- **"Revise X"** → re-dispatch brief-synth or Layer 2 agent with feedback (1 cycle), re-present.
-- **"Reject"** → save as `.agents/skill-artifacts/mkt/design-briefs/[slug]-rejected.md` with a `Rejection Notes` block, exit BLOCKED.
-
----
-
-## Artifact Template — `.agents/skill-artifacts/mkt/design-briefs/[slug].md`
+### Artifact Template
 
 ```markdown
 ---
@@ -525,19 +335,7 @@ sacred_respected: [list of sacred elements honored]
 
 ## Anti-Patterns
 
-**Skipping the brief approval gate** — Going straight to image-gen burns credits or designer time on a misaligned concept. INSTEAD: 3 briefs, user picks one, then handoff.
-
-**Inventing tokens** — Using a color or font not in DESIGN.md because it "fits the mood." INSTEAD: If DESIGN.md is incomplete for this asset's needs, flag it in the brief and ask the user — either expand DESIGN.md (re-run brand-system) or accept the limitation.
-
-**Stock-AI defaults** — Default purple-blue gradient, centered isolated subject on white, glassmorphism, faux-3D bevels. INSTEAD: Critic-agent's generic-AI rubric explicitly catches these. If a concept relies on them, score it down before delivering.
-
-**Generic-photo prompts** — "Modern office, professional, 4k, hyperrealistic." Looks like every other AI-stock-photo. INSTEAD: Specific lens, lighting, mood, era, composition, color cast.
-
-**Ignoring safe zones** — Designing edge-to-edge for Instagram and losing CTA to the crop. INSTEAD: Platform module defines safe zones — concept must fit them.
-
-**Treating the brief as a render** — Writing a fluffy concept paragraph and calling it done. The brief must be specific enough that a downstream tool/designer can execute without follow-up.
-
-**Treating Claude Design output as brand-system input** — claude.ai/design generates exploration. It's a starting point downstream of this brief, not a brand commitment.
+Section 1 (Process & Approval-Gate: skipping Gate 1, skipping Gate 2, treating brief as render) + Section 2 (Brand & Token: inventing tokens, stock-AI defaults, generic-photo prompts, ignoring safe zones) + Section 3 (Cross-Cutting marketing-stack: Claude-Design-as-brand-input, hard-gate-bypass-under-fast, frontmatter-schema-drift, wrong-skill-for-intent): [`references/anti-patterns.md`](references/anti-patterns.md) [ANTI-PATTERN]. Re-read before any brief ships.
 
 ---
 
@@ -552,23 +350,20 @@ Per project standard, every run ends with explicit status:
 
 ---
 
-## Agent Files
+## Worked Example
 
-### Sub-Agent Instructions (agents/)
+End-to-end walkthrough (OG image for async-first PM tool launch — image-gen route, midjourney-v6 target, brand artifacts loaded from BRAND.md + DESIGN.md, copy from copywriting artifact, ASSETS.md path match, Layer 1 parallel returns 3 distinct concepts, Approval Gate 1 user picks "Editorial calm", Layer 2 prompt-craft returns primary + 2 variants, Layer 3 critic PASS 27/28 + AI-aesthetic 0/27, Approval Gate 2 Approve, artifact written + ASSETS.md auto-tick) + cycle-2 FAIL hypothetical + `--fast` variant snippet + Route C snippet (called by lp-brief): [`references/examples/design-brief-walkthrough.md`](references/examples/design-brief-walkthrough.md) [EXAMPLE]. Additional asset-type examples (IG carousel, YouTube thumbnail, OOH billboard, template-pack): [`references/examples.md`](references/examples.md).
 
-- [agents/brand-anchor-agent.md](agents/brand-anchor-agent.md) — Token + sacred element pull
-- [agents/concept-agent.md](agents/concept-agent.md) — 3 concept directions
-- [agents/copy-anchor-agent.md](agents/copy-anchor-agent.md) — In-asset copy resolution
-- [agents/brief-synth-agent.md](agents/brief-synth-agent.md) — 3 candidate briefs
-- [agents/prompt-craft-agent.md](agents/prompt-craft-agent.md) — Image-gen prompts
-- [agents/figma-spec-agent.md](agents/figma-spec-agent.md) — Designer handoff spec
-- [agents/critic-agent.md](agents/critic-agent.md) — Visual rubric + AI-aesthetic + platform-fit check
+---
 
-### Shared References (references/)
+## References
 
-- [references/asset-types.md](references/asset-types.md) — Per-asset format specs
-- [references/platform-modules.md](references/platform-modules.md) — Per-platform brief checklists (skeleton — needs follow-up build pass)
-- [references/prompt-patterns.md](references/prompt-patterns.md) — Image-gen prompt structures
-- [references/visual-rubric.md](references/visual-rubric.md) — Critic scoring dimensions
-- [references/failure-modes.md](references/failure-modes.md) — Generic-AI catalog, brand drift
-- [references/examples.md](references/examples.md) — End-to-end worked examples
+- **Playbook:** `references/playbook.md` [PLAYBOOK]
+- **Format:** `references/format-conventions.md` [PROCEDURE]
+- **Anti-patterns:** `references/anti-patterns.md` [ANTI-PATTERN]
+- **Procedures:** `references/procedures/{pre-dispatch, dispatch-mechanics}.md` [PROCEDURE]
+- **Example:** `references/examples/design-brief-walkthrough.md` [EXAMPLE]
+- **Domain catalogs** (loaded by agents at dispatch): `references/{asset-types, platform-modules, prompt-patterns, visual-rubric, failure-modes, examples}.md`
+- **Shared:** `references/_shared/{pre-dispatch-protocol, before-starting-check, mode-resolver, anti-sycophancy, shared-critic-rubrics, quality-feedback-protocol, quality-dashboard-spec}.md`
+- **Agents:** 7 sub-agents in `agents/` — see Agent Manifest above. `critic-agent.md` holds the canonical 8-dimension Visual Rubric + 13-pattern Generic-AI-Aesthetic Detector + per-route scoring-mode shifts.
+- `marketing-skills/CLAUDE.md` §"Pre-Dispatch Protocol" + §"Complexity Routing" + §"Multi-Agent Skills" — stack-level conventions this skill inherits
