@@ -339,3 +339,55 @@ Adds nothing, costs chars.
 - **Vendor-speak anti-patterns:** mirror cold-outreach's `anti-patterns.md` §"Banned Phrases" — same banned list, ad-format additions for visible-window economy and ceiling triggers.
 - **AI-tell structural fails:** mirror cold-outreach's auto-fail list (em-dash, "just"/"quick", rhetorical-question hook, setup-sentence opener, fact-free body, generic claim soup) — same rules, scoped to primary text + headline + description.
 - **Fabrication anti-patterns:** stack-wide rule from v4.0.3 / v4.0.5 / v4.1.1 anti-fabrication patches — every direct quote/blockquote must trace verbatim to a named source; every measured claim must trace to `available_proof[]` via `claim_list`.
+
+---
+
+## 9. Orchestrator-Level Anti-Patterns
+
+These thirteen patterns operate at the pipeline level — they describe how the orchestrator (the ad-copy SKILL.md, not any individual sub-agent) can fail to produce shippable ad copy even when individual agents succeed in isolation. Each row names the failure, the cost, and which agent or step enforces the guardrail.
+
+| Anti-pattern | Why it fails | Guardrail |
+|--------------|--------------|-----------|
+| Cold-creative reused as retargeting | Warm audiences want fit/credibility/timing, not awareness/positioning per `ad-intelligence/meta-retargeting.md` §3 | Strategist enforces warm-objection map when audience-temp=retargeting; critic Hook dim weights "is this addressing the warm objection set?" |
+| Frequency creep on retargeting | Audience too small for budget; same people seeing same ads | Out of scope for ad-copy (budget pacing); rationale flags it if creative_format=repurposed-ugc + retargeting (volume insufficient to refresh fast enough) |
+| Lookalike audiences on cold trial app | Post-Andromeda, lookalikes underperform broad targeting per `ad-intelligence/meta-cold-traffic.md` §2 | Out of scope for ad-copy (audience setup); rationale flags it if user mentions lookalikes in offer description |
+| Repurposed UGC pushed to scale (>$15K/day) | Capped at $10-15K/day spend ceiling per `ad-intelligence/creative-cadence.md` §5 | Strategist surfaces ceiling warning when creative_format=repurposed-ugc; rationale carries the warning to artifact |
+| Optimizing for purchase on 3-day trial subscription | Apple 24h signal window — purchase data arrives too late per `ad-intelligence/meta-cold-traffic.md` §3 | Pre-Dispatch soft-warns; proceeds as `done_with_concerns` only if user overrides |
+| Banned health/finance/political claim | Meta policy review auto-rejects; account-level penalty risk | Format-checker hard-gate via `references/policy-floor.md`; critic Policy dim auto-fail |
+| Fabricated stat or named entity | Critic Specificity Floor auto-fail per `references/anti-patterns.md` | Critic verifies every named entity + number traces to `pre_writing.Q6.available_proof[]` |
+| Hero + 2 variants are paraphrases | Variant-volume discipline collapses; A/B test signal collapses | Strategist assigns distinct `angle_archetype` per variant; composer enforces distinct `anchor_proof` per variant; critic Pattern-Interruption dim checks variants are genuinely distinct |
+| Em-dashes in ad copy | AI rhythm filler; reads instantly fake | Voice-auditor zero-tolerance auto-fail (same rule as cold-outreach) |
+| "Quick question?" / "Are you tired of..." hooks | Generic; doesn't earn the 3-second window | Critic Hook dim 0-2 band |
+| Multi-CTA in one ad | Splits intent; conversion-event signal degrades | Composer one-CTA-per-variant rule; format-checker flag |
+| Running humanize twice | Strips specificity, drifts toward generic | Terminal pass runs ONCE per variant |
+| Changing every variable at once | No learning; cannot tell if hook, format, proof, CTA, funnel, or offer caused the result | Strategist names one isolated variable per variant using Variable Subtraction |
+
+---
+
+## 10. Cross-Cutting Marketing-Stack Anti-Patterns
+
+These patterns apply across the marketing stack — ad-copy calls `humanize` as terminal polish-chain per variant (hero + A + B = 3 humanize invocations), and is itself called by `campaign-plan` as a Route B consumer. Enforced via Pre-Dispatch wiring + critic verification + cross-skill contract.
+
+### Caller skipped the protected_tokens contract (per-variant) when invoking humanize
+
+**Problem:** Orchestrator dispatches `humanize` for hero variant with `content-type: "short-outbound"` but forgets to pass `protected_tokens` listing the named entities + numbers + URLs in the critic-approved variant. humanize's compression-agent paraphrases "$2.3M ARR" to "millions in ARR" or drops the `app.com/trial?utm=meta_q4` URL. The post-humanize regression check still catches it (Specificity dim drops ≥2 or named entity absent or URL absent) and reverts to the critic-approved variant — but the run wasted a humanize cycle. With 3 variants per artifact, the waste compounds 3x.
+
+**INSTEAD:** Terminal pass step in `procedures/dispatch-mechanics.md` § "Terminal Pass: Humanize" lists `protected_tokens` as a required input (every named entity + number + URL in critic-approved variant). Do NOT skip per variant — it's the contract that prevents silent paraphrase. The URL check is ad-copy-specific (unlike cold-outreach which rarely embeds URLs); humanize's regression must verify URL preservation. Sibling pattern to cold-outreach's protected_tokens contract; see sibling humanize's `anti-patterns.md` § "Calling skill drops protected_tokens contract" for the consumer-side framing.
+
+### Post-humanize regression check disabled or judgment-overridden (per-variant)
+
+**Problem:** Orchestrator runs humanize on hero, sees a clean polished variant, ships it without re-running critic's Specificity dim. Two slots later eval shows the named proof ("12,000 users in 90 days") was paraphrased to "thousands of users" — exactly the kind of generic claim the critic was designed to catch. With 3 variants, skipping regression on even one variant introduces silent specificity drift that the artifact frontmatter doesn't surface.
+
+**INSTEAD:** Regression check is **automatic, not judgment** (per `dispatch-mechanics.md` § "Terminal Pass: Humanize" step 4). The check runs per variant (3 invocations of critic's Specificity dim per artifact). The Specificity Floor of ≥2 verifiable specifics still applies. If any variant's check fails, revert THAT variant to critic-approved (do NOT try to re-fix humanize; do NOT cascade revert across all 3 variants). Operator override of regression requires explicit `--skip-regression-per-variant` flag (not currently implemented; v6.3.0 candidate).
+
+### Campaign-plan Route B invocation drops audience-temp / creative-format / production-model context
+
+**Problem:** `campaign-plan` calls ad-copy Route B for paid touches in a Q4 campaign but passes only the budget split + landing-page link, leaving audience-temp + creative-format + conversion-event unset. ad-copy's Pre-Dispatch hits Missing-Input Hard Blocks for "Audience-temp missing" + "Creative-format missing" and surfaces AskUserQuestion — but the user is mid-campaign-plan flow and the question is jarring.
+
+**INSTEAD:** When invoked via Route B, the calling skill (campaign-plan) MUST resolve audience-temp + offer + creative-format + conversion-event + production-model BEFORE dispatching ad-copy per audience-temperature. ad-copy Route B is NOT the right place to interrogate the user on campaign-level decisions — those belong in campaign-plan's own Pre-Dispatch. If campaign-plan passes incomplete context, ad-copy Route B should escalate `NEEDS_CONTEXT` back to campaign-plan, not break the flow with mid-stream AskUserQuestion to the user. Note: ad-copy is a per-audience-temp skill (one invocation per temp); if campaign-plan needs both warm AND cold, it dispatches ad-copy TWICE (Route B is NOT stacked).
+
+### Cross-stack contract drift (Artifact Template schema)
+
+**Problem:** A maintainer adds a new frontmatter field to ad-copy's `[audience-temp]-[date]-[slug].md` artifact (e.g., `bid_strategy: lowest_cost | bid_cap | target_cost`) without checking calling-skill consumers (`campaign-plan` reads `critic_total`, `critic_per_variant.hero`, `audience_temp`, `creative_format`, `conversion_event` from ad-copy output to budget across audience-temps). Schema drifts; campaign-plan's manifest reader breaks on the new field.
+
+**INSTEAD:** Artifact Template (11-field frontmatter with nested `critic_per_variant: {hero, variant_a, variant_b}` + 3 body files: `[slug].md`, `[slug].rationale.md`, `[slug].critic-score.md` per `format-conventions.md`) is the contract. Schema changes require atomic update of `format-conventions.md` § "Frontmatter field order" + § "Field values — audience_temp / creative_format / production_model / conversion_event enums" so the convention IS the contract. Add new fields at the END of frontmatter to avoid breaking existing positional readers. Bid-strategy / budget fields belong in `campaign-plan` artifacts (ad-copy doesn't own bidding), not ad-copy artifacts.
