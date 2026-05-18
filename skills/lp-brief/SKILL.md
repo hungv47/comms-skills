@@ -9,6 +9,11 @@ metadata:
   version: "1.0.0"
   budget: deep
   estimated-cost: "$2-4"
+  refactor_history:
+    - version: "1.0.0 → 1.0.0"
+      date: 2026-05-18
+      slot: "v6 Phase 2 Wave 1 — marketing-stack slot 13/14 (largest in entire stack)"
+      note: "Body 677→338 (-50%, 339 lines saved) + 5 new refs (playbook, format-conventions with full 205-line artifact template byte-identical, anti-patterns NEW with 12 body + 4 cross-cutting, procedures/{pre-dispatch, dispatch-mechanics}). 338 vs ≤300 mixed structural+creative target by 38 — accepted overage for natural floor of 9-agent / 5-layer / 3-approval-gate skill (Approval Gate 1+2+3 presentation blocks ≈56 lines must stay as bullets per design-brief slot 11 byte-identical precedent). 9 existing agents + 7 data-catalog refs + conversion/ subdir UNCHANGED. Cross-stack contract preserved byte-identical (6 Critical Gates / Inputs / Output / dual-critic Quality Gate / Chain Position / 9-agent Manifest / 3-Route step lists / Hard gates / Pre-Dispatch 5 dimensions / 3 Approval Gate presentation blocks / Layer 5 critic verdict logic Cycle 1+Cycle 2 tables / 12-field artifact frontmatter / 14-section body structure / 4-tier Completion Status). Per-layer dispatch tables (Layer 1/1.5/2/3/3.5/4) EXTRACTED to dispatch-mechanics.md (body retains the per-layer description + sequential-not-parallel rule for Layer 3.5). See references/playbook.md 'History / origin' for full detail."
 promptSignals:
   phrases:
     - "page brief"
@@ -77,6 +82,8 @@ routing:
 
 **Core Question:** "Could a designer (or Claude Design) build the right page from this brief without a single follow-up question?"
 
+> Why this skill exists, philosophy, methodology, principles, when NOT to use, history: [`references/playbook.md`](references/playbook.md) [PLAYBOOK].
+
 ## Critical Gates — Read First
 
 - **Do NOT generate a brief without brand artifacts.** Missing `brand/BRAND.md` or `brand/DESIGN.md` → return `NEEDS_CONTEXT`. Brief depends on tokens, voice rules, sacred elements.
@@ -85,12 +92,6 @@ routing:
 - **Do NOT exceed the brief length envelope.** Useful brief is 250–500 lines. <250 = insufficient depth (designer asks follow-ups). >500 = bloat (designer skims, misses spec). Critic enforces.
 - **Do NOT inline the full skill chain.** If project has a shared chain doc (e.g., `growth/page-redesigns/_prompts.md`), reference by section header; add page-specific overrides only.
 - **Do NOT inject placeholder testimonials, fake logos, or pretend numbers.** If a proof asset isn't real, spec it ("Customer logo grid, 6 cells × 60px") and note "delete cell if not real" — never fabricate.
-
-## Philosophy
-
-Operates between strategy and design. By invocation, WHY (hypothesis) and WHO (audience) should be stable; the brief turns those into HOW (architecture + section spec + asset slots) precise enough for execution. The conversion rubric is internalized here — every section is evaluated against landing-page best practices at brief time so the page is *built* right rather than waiting for a separate heuristic audit.
-
-Brand fidelity > aesthetic novelty. Conversion craft > visual flair. Specificity > flexibility. Designer executes, doesn't interpret.
 
 ## Inputs
 
@@ -175,7 +176,7 @@ Step 0 → L1 (evidence-anchor ∥ brand-anchor) → L1.5 (hypothesis) → ★ G
        → write brief.md + handoff/* + asset-slots/* to .agents/skill-artifacts/mkt/lp-brief/[slug]/
 ```
 
-Per-layer details, contracts, and references are in the layer sections below.
+Per-layer dispatch tables (Layer 1 / Layer 1.5 / Layer 2 / Layer 3 / Layer 3.5 / Layer 4 with Pass-These-Inputs + Reference-Files columns) + Approval Gate user-response handling for all 3 gates + single-agent fallback live in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE].
 
 ### Route B: Existing LP redesign (evidence-anchored)
 
@@ -214,109 +215,23 @@ If hard gates pass, proceed to Pre-Dispatch flows.
 - Goal — leads / signups / purchases / demos
 - Route (A or B) — already resolved by hard gates above
 
-### Read order
-1. Pipeline: `brand/BRAND.md`, `brand/DESIGN.md` (both confirmed by hard gate). `research/icp-research.md`, `research/product-context.md`, `.agents/skill-artifacts/mkt/campaign-plan.md`, `.agents/skill-artifacts/meta/records/targets-*.md` (all optional, read when present).
-2. Experience: `skills-resources/experience/goals.md` for prior hypothesis/goal context. `skills-resources/experience/audience.md` for ICP fallback if no `icp-research.md`.
+Full read order + Warm/Cold Start prompts + 4-question Cold Start template + Write-back map + Project-Specific Workflows + Context-to-Pass + hard-block conditions + `--fast` behavior: [`references/procedures/pre-dispatch.md`](references/procedures/pre-dispatch.md) [PROCEDURE].
 
-### Warm Start (page identity supplied + goal/hypothesis derivable)
+## Mode Resolution
 
-Common when invoked from a campaign-plan that already declared the page's role:
-
-```
-Hard gates passed: brand artifacts present, [Route A fresh | Route B existing/rev].
-Found:
-- page → "[route, tier]"
-- goal → "[from experience/goals.md or campaign context]"
-- hypothesis seed → "[from prior brief if rev > 1, campaign context, ICP, or page-state evidence]"
-
-Anything to override, or proceed to Layer 1?
-```
-
-### Cold Start (no campaign context, no prior rev, fresh hypothesis)
-
-```
-lp-brief produces a campaign-grade landing-page brief — hypothesis, surface rhythm,
-section spec, asset slots, hand-off prompts. Before I dispatch, I need:
-
-1. **Page route + tier** — e.g., "/pricing, conversion-primary" or
-   "/about, conversion-secondary". (Programmatic templates out of scope.)
-2. **Hypothesis intent** — what is this page trying to prove or fix?
-   One sentence. (Examples: "show pricing above the fold drives more
-   trial starts" / "add objection-handling to address scaling concerns".)
-3. **Goal** — what does the redesigned page need to do? Generate leads,
-   drive trial signups, drive purchases, book demos, or other?
-4. **Route confirmation** — [A: greenfield/new page] or
-   [B: existing-page redesign/rev]. If B, include URL/screenshot/code and any analytics notes you have.
-
-Answer 1-4 in one response. I'll confirm and dispatch Layer 1.
-```
-
-### Write-back
-
-After cold-start answers, append to experience/:
-
-| Question | File | Key |
-|---|---|---|
-| 1. Page route + tier | (not persisted — page-specific, not stable cross-skill) |
-| 2. Hypothesis intent | `goals.md` | `Goals — page hypothesis: [route]` |
-| 3. Goal | `goals.md` | `Goals — page conversion goal: [route]` |
-| 4. Route | (resolved by hard gates, not persisted) |
-
-### Project-Specific Workflows
-
-This skill **does not ship a default skill-chain doc.** Two paths:
-
-1. **Project has one** (e.g., `growth/page-redesigns/_prompts.md`) — read once at orchestrator level. Brief REFERENCES by section header; never inline-duplicate. Add page-specific overrides only.
-2. **Project does not** — brief generates a per-page chain inline: "Skill Chain" section listing downstream skills/prompts (`design-brief` per asset slot, `copywriting` for headline polish, `humanize` for AI-flavored copy). Page-scoped only — no project-level default created.
-
-Rationale: project-level default locks teams into our chain. Per-page is correct because the chain depends on generative slots, copy polish needs, and asset rendering — all page-specific.
-
-### Context to Pass to All Agents
-
-After Pre-Dispatch resolves:
-1. **Page identity** — route, name, current state (URL/screenshot/code if exists)
-2. **Tier** — conversion-primary or conversion-secondary
-3. **Evidence signals** — from current page state, prior brief, ICP, campaign context, and any analytics/experiment notes
-4. **Brand digest** — palette, type, motion, sacred, voice rules (from brand-anchor after L1)
-5. **Audience digest** — top 3 ICP objections, top 5 VoC phrases, awareness stage (from evidence-anchor after L1)
-6. **Campaign context** — traffic source, awareness stage, conversion target
+Per `references/_shared/mode-resolver.md` [PROCEDURE] — `--fast` collapses Layer 1/1.5/2/3/3.5/4 to single-agent execution per layer (no parallelism), skips Layer 5 critic dispatch (critics noted as "skipped under --fast"). **`--fast` does NOT skip Hard Gates (brand artifacts present), 3 Approval Gates (user-facing contract), or Critical Gates 1-6 (no brief without brand artifacts; no skipping conversion rubric; no proposing sacred-element changes; no exceeding 250-500 envelope; no inlining shared skill chain; no placeholder testimonials).**
 
 ---
 
 ## Dispatch Protocol
 
-### How to spawn a sub-agent
-
-1. Read agent instruction file — include FULL content in Agent prompt
-2. Append context (digest excerpts, prior layer outputs, asset slot list, etc.)
-3. Resolve all file paths to absolute (rooted at skill directory)
-4. Pass upstream artifacts by content — orchestrator reads `research/icp-research.md`, `research/product-context.md`, campaign artifacts, prior briefs, and provided page/evidence notes FIRST and includes excerpts; sub-agents don't read these directly
-5. If critic feedback exists, append with `## Critic Feedback — Address Every Point`
-
-### Single-agent fallback
-
-If multi-agent dispatch is unavailable, execute layers sequentially. Approval gates remain — single-agent mode does not bypass user gates.
+Canonical dispatch mechanics (how to spawn a sub-agent: read agent file FULL content + append context + resolve paths absolute + pass upstream artifacts by content + append critic feedback on FAIL) + single-agent fallback (Approval gates remain — single-agent mode does not bypass user gates) live in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE].
 
 ---
 
-## Layer 1: Parallel Foundation
+## Layer 1 → 1.5 (parallel foundation → hypothesis)
 
-| Agent | Pass These Inputs | Reference Files |
-|-------|-------------------|-----------------|
-| Evidence-Anchor Agent | page identity + tier + current page state/evidence (if present) + ICP | — |
-| Brand-Anchor Agent | full BRAND.md + DESIGN.md + page identity | — |
-
-Wait for both — outputs feed Layer 1.5.
-
----
-
-## Layer 1.5: Hypothesis
-
-| Agent | Pass These Inputs | Reference Files |
-|-------|-------------------|-----------------|
-| Hypothesis Agent | evidence digest + brand digest + page tier + campaign context | `references/hypothesis-rubric.md`, `references/conversion-principles.md` |
-
-Output: 3 candidates, each scored 3Q (Visual / Falsifiable / Uniquely Ours).
+Layer 1 dispatches evidence-anchor + brand-anchor IN PARALLEL; outputs feed Layer 1.5 (hypothesis-agent → 3 candidates scored 3Q: Visual / Falsifiable / Uniquely Ours, against `references/hypothesis-rubric.md`). Full per-agent Pass-These-Inputs + Reference-Files tables in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE].
 
 ---
 
@@ -352,11 +267,7 @@ User responses:
 
 ## Layer 2: Architecture
 
-| Agent | Pass These Inputs | Reference Files |
-|-------|-------------------|-----------------|
-| Architecture Agent | approved hypothesis + brand digest + evidence digest + tier | `references/surface-rhythm.md`, `references/section-templates.md` |
-
-Output: surface rhythm plan + section list + ASCII diagram + scroll velocity notes (where eye accelerates/decelerates/pauses).
+Architecture-agent receives approved hypothesis + brand digest + evidence digest + tier; outputs surface rhythm plan + section list + ASCII diagram + scroll velocity notes (where eye accelerates/decelerates/pauses), against `references/surface-rhythm.md` + `references/section-templates.md`. Full dispatch table in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md).
 
 ---
 
@@ -391,42 +302,21 @@ User responses:
 
 ---
 
-## Layer 3: Section Spec (then Asset Slots in 3.5)
+## Layer 3 → 3.5 → 4 (section spec → asset slots → handoff)
 
-| Agent | Pass These Inputs | Reference Files |
-|-------|-------------------|-----------------|
-| Section-Spec Agent | architecture + evidence digest + brand digest + ICP objections + VoC | `references/section-templates.md`, `references/conversion-principles.md`, `references/failure-modes.md` |
+**Layer 3:** section-spec-agent writes per-section spec — copy slots, layout, motion, asset slot references, conversion-checklist embed.
 
-## Layer 3.5: Asset Slots (after section-spec)
+**Layer 3.5:** asset-slot-agent runs **after** section-spec (sequential, not parallel) because slot IDs originate in section-spec's per-section asset references. Parallel execution would guarantee ID drift.
 
-| Agent | Pass These Inputs | Reference Files |
-|-------|-------------------|-----------------|
-| Asset-Slot Agent | architecture + section-spec output (canonical source of slot IDs) + brand digest | `references/_shared/design-brief/asset-types.md` |
+**Layer 4:** handoff-agent receives full assembled brief + `target_handoff` (specialty targets, may be null) + detected_stack (framework + motion library, auto-detected from repo at write time). Always emits `handoff-implementation.md` (universal coding-agent prompt block for Claude Code / Cursor / Codex / Opus / Gemini / GPT — stack auto-detected; falls back to pure HTML/CSS/Vanilla JS; motion stack from `brand/DESIGN.md` or GSAP+ScrollTrigger+Lenis default; contains verbatim Asset Placeholder Rule so coding agents never invent stock-photo URLs). Optionally emits one additional `handoff-{target}.md` per `target_handoff` entry.
 
-Asset-slot-agent runs **after** section-spec because slot IDs originate in section-spec's per-section asset references. Parallel execution guarantees ID drift.
-
----
-
-## Layer 4: Hand-Off Composition
-
-| Agent | Pass These Inputs | Reference Files |
-|-------|-------------------|-----------------|
-| Hand-Off Agent | full assembled brief (architecture + section spec + asset slots) + `target_handoff` (specialty targets, may be null) + detected_stack (framework + motion library, auto-detected from repo) | `references/handoff-formats.md` |
-
-Output (always): `handoff-implementation.md` — universal coding-agent prompt block (Claude Code / Cursor / Codex / Opus / Gemini / GPT). Stack auto-detected at write time; falls back to pure HTML/CSS/Vanilla JS. Motion stack from `brand/DESIGN.md` or GSAP+ScrollTrigger+Lenis default. Contains verbatim Asset Placeholder Rule so coding agents never invent stock-photo URLs.
-
-Output (optional, per `target_handoff`): one additional `handoff-{target}.md` per listed specialty target.
+Full per-agent Pass-These-Inputs + Reference-Files tables in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md).
 
 ---
 
 ## Layer 5: Critic Gate (parallel)
 
-| Agent | Pass These Inputs | Reference Files |
-|-------|-------------------|-----------------|
-| Conversion Critic | full brief | `references/conversion-principles.md`, `references/section-templates.md` |
-| Brand-Voice Critic | full brief + brand digest | `references/failure-modes.md` |
-
-Both run in parallel. Orchestrator merges reports.
+Conversion-critic + brand-voice-critic run in parallel against the full brief. Orchestrator merges reports. Full per-critic Pass-These-Inputs + Reference-Files tables in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md).
 
 **Verdict logic** (max 2 cycles total). Critics return binary PASS/FAIL; NOTEs are advisory and don't change the verdict.
 
@@ -471,210 +361,19 @@ User responses:
 
 ---
 
-## Artifact Template — `.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md`
+## Artifact Contract
 
-```markdown
----
-skill: lp-brief
-version: 1
-date: [today]
-status: [done | done_with_concerns | blocked | needs_context]
-page_route: [/pricing | /services | etc.]
-tier: [primary | secondary]
-rev: [N — what revision this is]
-hypothesis_title: [from approved hypothesis]
-target_handoff: [claude-design | pencil | figma | designer | null | list of any]  # specialty targets in addition to always-on implementation prompt; pass single value, list, or null
-brand_anchors:
-  primary_color: [hex with token name]
-  primary_type: [font, weight]
-  surface: [paper / matte / glass-if-DESIGN.md-permits]
-sacred_respected: [list]
-critic_scores:
-  conversion: [N/M]
-  brand_voice: [N/M]
-shared_skill_chain: [path to project's _prompts.md if referenced]
----
+- **Path:** `.agents/skill-artifacts/mkt/lp-brief/[slug]/brief.md` (versioned re-runs: `v[N]/brief.md` for `--rev=N`)
+- **Always-emitted companion:** `handoff-implementation.md` (universal coding-agent prompt, stack auto-detected at write time)
+- **Optional companions:** `handoff-{claude-design,figma,designer}.md` per `target_handoff`
+- **Per-slot artifacts** (written by downstream `design-brief`, not lp-brief): `asset-slots/{slot-id}.prompt.md`
+- **Lifecycle:** `pipeline` — versioned re-runs preserve prior versions
+- **Frontmatter:** 12 fields (skill / version / date / status / page_route / tier / rev / hypothesis_title / target_handoff / brand_anchors / sacred_respected / critic_scores / shared_skill_chain) — see [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE]
+- **Body:** 14 sections (Title heading block / Concerns / IMC Context / Hypothesis Approved / What Changed from rev N-1 / Page Architecture / Section-by-Section Spec / Asset Slots / What NOT to Do / Implementation Prompt / Hand-Off / Pre-flight Checklist / Skill Chain / Launch Plan + Results + Why This Works)
+- **Envelope:** 250-500 lines enforced strictly by brand-voice critic G6 (under 250 = insufficient depth FAIL; over 500 = bloat FAIL)
+- **Cross-stack contract:** consumed by human designers + coding agents + `design-brief` (per slot) + indirectly by `lp-eval` cycles (when brief referenced from loop's `strategy/` directory). Schema changes require atomic update across upstream callers (campaign-plan) + downstream consumers (design-brief, coding agents, lp-eval) — never silently drift.
 
-# Landing-Page Brief: [Title]
-
-**Page:** [route + name]
-**Tier:** [primary / secondary]
-**Rev:** [N — what changed from rev N-1, if applicable]
-**Hand-off target:** [Claude Design / Figma / designer]
-
-## Concerns (only present if status = done_with_concerns)
-
-> Pinned at top so downstream operators see them before reading the brief body.
->
-> **Conversion critic:** [score / verdict] — [each FAIL bullet, verbatim from critic]
-> **Brand-voice critic:** [score / verdict] — [each FAIL bullet, verbatim from critic]
->
-> Decide before execution: ship as-is, revise manually, or kill.
-
-## IMC Context
-
-[1–3 lines: where this page sits in the campaign, traffic source, awareness stage, role in funnel.]
-
-## Hypothesis (Approved)
-
-**Claim:** [single sentence — falsifiable]
-**3Q score:** Visual [Y/N] / Falsifiable [Y/N] / Unique [Y/N]
-**Why this:** [argument tied to evidence signals or audience signals]
-**What we're betting:** [the falsifiable bet — what success looks like, what failure looks like]
-
-## What Changed from rev N-1 (if rev > 1)
-
-[Bullet list — only present if --rev=N. Tied to page-state changes, post-launch evidence, or new ICP signals.]
-
-## Page Architecture
-
-### Surface Rhythm
-
-[3–5 lines: how the page reads at scroll speed. Fast / slow / pause beats.]
-
-### Section List
-
-1. **Hero** — [purpose + headline pull]
-2. **[Section name]** — [purpose]
-...
-N. **CTA Block** — [purpose]
-
-### ASCII Diagram
-
-```
-┌─────────────────────────────────────┐
-│  HERO    [headline]    [hero CTA]   │  ← 100vh, low velocity
-├─────────────────────────────────────┤
-│  VALUE PROP — 3 columns             │
-├─────────────────────────────────────┤
-│  SOCIAL PROOF — logo grid + quote   │
-├─────────────────────────────────────┤
-│  ...                                 │
-└─────────────────────────────────────┘
-```
-
-### Scroll Velocity Plan
-
-| Section | Velocity | Why |
-|---------|----------|-----|
-| Hero | Slow / pause | First-impression gate |
-| Value prop | Medium | Argument scan |
-| Social proof | Slow | Decision moment |
-| Features | Fast | Detail layer |
-| Objection | Slow | Decision blocker |
-| CTA | Pause | Action moment |
-
-## Section-by-Section Spec
-
-### 1. Hero
-
-**Purpose:** [first-impression conversion gate]
-
-**Headline candidates (3, 4-U scored):**
-1. "[copy]" — Useful: Y, Unique: Y, Urgent: Y, Ultra-specific: Y → 4/4
-2. "[copy]" — 3/4
-3. "[copy]" — 4/4
-**Recommended:** #[N] — [why]
-
-**Subhead:** "[copy]"
-
-**Hero CTA:** "[copy]" — primary, action verb + outcome, first-person
-
-**Visual:** [reference to asset slot — see Asset Slots section]
-
-**Layout:**
-- Heading: [type token, size]
-- Subhead: [type token, size]
-- CTA position: [above-fold, button style, contrast pair]
-- Background: [hex / asset slot]
-
-**Motion:** [duration token from DESIGN.md if applicable; static otherwise]
-
-**Conversion checklist (gates):**
-- [ ] 4-U ≥ 3/4
-- [ ] Message match to traffic source
-- [ ] Above-fold value clear in 3 seconds
-- [ ] Primary CTA visible without scroll
-- [ ] Trust signal within scroll-distance (logo grid below or testimonial widget)
-- [ ] Voice rules: no forbidden vocab
-
-### 2. [Next Section]
-
-[Same structure: purpose, copy candidates with rubric, visual, layout, motion, conversion checklist.]
-
-[Continue per section...]
-
-## Asset Slots
-
-| Slot | Section | Dimensions | Format | File path | Fallback | Generation prompt |
-|------|---------|-----------|--------|-----------|----------|-------------------|
-| Hero image | Hero | 1920×1080 | WebP | `growth/[slug]/hero.webp` | solid #004700 | [link to prompt template, see asset-slots/] |
-| Logo grid | Social proof | 6 cells × 60px | SVG | `growth/[slug]/logos.svg` | "delete cell if not real" | — |
-| Founder portrait | Story | 600×600 | WebP | `growth/[slug]/founder.webp` | spot illustration | [link if generative] |
-
-**Generation prompts** for asset slots that use generative AI live at `.agents/skill-artifacts/mkt/lp-brief/[slug]/asset-slots/[slot-name].prompt.md`. Each is written by `design-brief` against the slot's spec — the prompt is the actionable handoff to an image-generation tool.
-
-## What NOT to Do
-
-- [Sacred element 1 — verbatim "do not touch" line]
-- [Sacred element 2]
-- [Page-specific failure mode — e.g., "do not use stock-photo office imagery; ICP rejects it"]
-- [Voice violations — e.g., "no leverage / unlock / seamlessly anywhere"]
-
-## Implementation Prompt (Coding Agents)
-
-> **Always emitted as a companion file**, not inlined here (keeps brief.md within the 250–500 line envelope). Full paste-ready block lives at `handoff-implementation.md` alongside this brief.
->
-> - **Stack:** `[detected framework | vanilla HTML/CSS/JS]` — auto-detected from repo at write time
-> - **Motion stack:** `[from brand/DESIGN.md | GSAP + ScrollTrigger + Lenis default]`
-> - **Recipients:** any frontier coding agent (Claude Code, Cursor, Codex, etc.) — tool-agnostic
-
-## Hand-Off (Specialty Targets)
-
-> Optional — only present when `target_handoff` lists `claude-design` / `pencil` / `figma` / `designer`. **Omit this entire section when `target_handoff` is null.** The implementation prompt companion is the universal default; these are supplements for projects that also use a design tool or human designer.
-
-### To: [Claude Design / Figma / designer]
-
-**Prompt block (paste verbatim):**
-
-```
-[Hand-off prompt composed by handoff-agent — concrete enough to execute without follow-up]
-```
-
-### Pre-flight Checklist
-
-- [ ] All copy in brief is final (or marked "candidate — pick one")
-- [ ] All asset slots have file paths and fallbacks
-- [ ] All sacred elements listed under What NOT to Do
-- [ ] Critic scores both ≥ pass threshold
-- [ ] Shared skill chain referenced (if project uses one) — not duplicated
-
-## Skill Chain
-
-**If project has a shared chain doc:** "See `growth/page-redesigns/_prompts.md` § Phase A — Hero Build" (etc.). List only page-specific overrides under each referenced phase.
-
-**If project does not:** generate a per-page chain inline — list the downstream skills/prompts in execution order, each with one-line scope:
-
-1. `design-brief` — spec hero asset (slot: `hero-image`), then run image-gen against the produced prompt at `asset-slots/hero-image.prompt.md`
-2. `copywriting` — polish 3 headline candidates against 4-U + voice
-3. [implementation step — Claude Design / Figma / designer]
-4. `humanize` — final pass on any AI-generated body copy
-5. [post-launch] collect analytics/recordings/experiment notes → run `lp-eval` inside the page's eval loop, then feed the resulting eval into next `lp-brief --rev=N`
-
-Page-scoped only. No project-level default is created.
-
-## Launch Plan
-
-[3–5 lines: when, traffic ramp, instrumentation (UTMs, events to fire), success criteria from hypothesis.]
-
-## Results (filled post-launch)
-
-[Empty until launched. After: actual metrics, hypothesis verdict, what to take into rev N+1.]
-
-## Why This Works (sanity check)
-
-[2–4 lines: the brief's load-bearing arguments — why this hero/this architecture/this CTA hierarchy lands the hypothesis.]
-```
+Full 205-line artifact template byte-identical + per-section format rules + companion file conventions: [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE].
 
 > Re-run with `--rev=N`: write to `.agents/skill-artifacts/mkt/lp-brief/[slug]/v[N]/brief.md`, preserve prior versions.
 
@@ -688,29 +387,9 @@ See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP
 
 ## Anti-Patterns
 
-**Pretending heuristic review is CRO** — a best-practice teardown is not optimization. INSTEAD: build with the conversion rubric inside this brief; after launch, use real analytics/recordings/experiment evidence to inform rev N+1.
+Pipeline reference: [`references/anti-patterns.md`](references/anti-patterns.md) [ANTI-PATTERN]. Re-read before any brief ships. 12 lp-brief-specific patterns (pretending heuristic review is CRO, generic hypothesis, inlining shared skill chain, stale or fake proof, ignoring sacred elements, no objection handling, brief too short, brief too long, hero copy violating voice, coding-agent inventing asset URLs, implementation-prompt sacred-creep, implementation-prompt stack mismatch) + 4 cross-cutting marketing-stack rows (upstream context skipped → NEEDS_CONTEXT, cross-stack contract drift, polish-chain misroute, downstream eval-loop violation).
 
-**Generic hypothesis** — "This page should convert better." Not falsifiable. INSTEAD: "Engineering managers reject /pricing because they perceive overkill for small teams; segmenting proof by team size lifts conversion."
-
-**Inlining the shared skill chain** — Duplicating the project's `_prompts.md` content into every brief. INSTEAD: reference by section header, add page-specific overrides only.
-
-**Stale or fake proof** — Logo grid from 2023, testimonials with no source, "Trusted by 1000+ teams" with no link. INSTEAD: "delete cell if not real" — every proof element has a verifiable source.
-
-**Ignoring sacred elements** — Brief proposes new logo treatment for "freshness." Auto-FAIL. INSTEAD: sacred elements are rails. Inside-the-rails creativity only.
-
-**No objection handling** — Brief has hero, features, CTA — no rebuttal of the audience's stated objections. ICP research lists them; the brief must address the top 1–2.
-
-**Brief too short** — Under 250 lines. Designer asks 5 follow-up questions. INSTEAD: spec everything: every section, every slot, every fallback.
-
-**Brief too long** — Over 500 lines. Designer skims; misses critical spec. INSTEAD: cite shared chain instead of duplicating; cap section spec at the conversion-checklist gates.
-
-**Hero copy violating voice** — "Unlock seamless leverage" passes 4-U but fails brand. The brand-voice critic catches this before delivery.
-
-**Coding-agent inventing asset URLs** — implementation prompt without the verbatim Asset Placeholder Rule → coding agent fills `<img>` tags with hallucinated Unsplash URLs (`images.unsplash.com/photo-{guess}...`) that 404 or load wrong imagery. INSTEAD: handoff-agent lifts the Asset Placeholder Rule verbatim from `references/handoff-formats.md` into every implementation prompt, plus an "Invent or substitute asset URLs" entry in the DO NOT block. Slots that lack a render route (`pending-media-skill`) are spec'd with the placeholder fallback and re-rendered when the appropriate media-briefing skill ships.
-
-**Implementation-prompt sacred-creep** — coding agent adds noise overlay, custom cursor, or preloader for "polish" when brand_digest doesn't declare them. INSTEAD: CORE SETUP & GLOBALS lists ONLY treatments brand_digest explicitly declares; every other "Awwwards trick" is sacred drift and gets caught by the brand-voice critic.
-
-**Implementation-prompt stack mismatch** — emitting Vanilla JS prompt for a Next.js project, or React component tree for a static site. INSTEAD: handoff-agent runs stack detection (package.json + framework configs) at write time before composing the prompt; never asks the user.
+Most common in practice: ignoring sacred elements (Critical Gate 3 + Brand-voice critic G1 sacred 4/4 auto-FAIL), brief too long (Critical Gate 4 + G6 envelope), coding-agent inventing asset URLs (G8b Implementation Prompt Compliance — Asset Placeholder Rule verbatim), hero copy violating voice (G2 Forbidden Vocabulary single-hit FAIL).
 
 ---
 
@@ -723,26 +402,14 @@ See `references/examples.md` — three end-to-end walkthroughs (Route A fresh LP
 
 ---
 
-## Agent Files
+## References
 
-### Sub-Agent Instructions (agents/)
-
-- [agents/evidence-anchor-agent.md](agents/evidence-anchor-agent.md) — Evidence signal pull
-- [agents/brand-anchor-agent.md](agents/brand-anchor-agent.md) — Token + sacred + voice digest
-- [agents/hypothesis-agent.md](agents/hypothesis-agent.md) — 3 hypothesis candidates with 3Q
-- [agents/architecture-agent.md](agents/architecture-agent.md) — Surface rhythm + section list
-- [agents/section-spec-agent.md](agents/section-spec-agent.md) — Per-section spec
-- [agents/asset-slot-agent.md](agents/asset-slot-agent.md) — Named asset slots with prompts
-- [agents/handoff-agent.md](agents/handoff-agent.md) — Tool-specific hand-off
-- [agents/conversion-critic-agent.md](agents/conversion-critic-agent.md) — Local conversion-principles rubric
-- [agents/brand-voice-critic-agent.md](agents/brand-voice-critic-agent.md) — Brand fidelity + voice + envelope
-
-### Shared References (references/)
-
-- [references/conversion-principles.md](references/conversion-principles.md) — Canonical LP construction rubric (4-U, above-fold, CTA, message-match, objection handling, social proof); cites local `references/conversion/*`
-- [references/surface-rhythm.md](references/surface-rhythm.md) — Page-architecture patterns (scroll velocity, section beats, breathing room)
-- [references/section-templates.md](references/section-templates.md) — Hero, value prop, social proof, features, objection, FAQ, CTA — each with conversion-checklist
-- [references/hypothesis-rubric.md](references/hypothesis-rubric.md) — 3Q scoring (Visual / Falsifiable / Uniquely Ours)
-- [references/handoff-formats.md](references/handoff-formats.md) — Claude Design / Pencil MCP / Figma spec hand-off patterns
-- [references/failure-modes.md](references/failure-modes.md) — Page-level failures (thin hero, weak CTA, no objection handling, brief bloat)
-- [references/examples.md](references/examples.md) — Worked LP-brief examples
+- **Playbook:** `references/playbook.md` [PLAYBOOK]
+- **Format:** `references/format-conventions.md` [PROCEDURE] — full 205-line artifact template byte-identical + companion file conventions
+- **Anti-patterns:** `references/anti-patterns.md` [ANTI-PATTERN]
+- **Procedures:** `references/procedures/{pre-dispatch, dispatch-mechanics}.md` [PROCEDURE]
+- **Examples:** `references/examples.md` — Route A + Route B + Route C worked walkthroughs
+- **Domain catalogs** (loaded by agents at dispatch): `references/{conversion-principles, section-templates, surface-rhythm, hypothesis-rubric, handoff-formats, failure-modes}.md` + `references/conversion/` subdir (6 source files: core-principles, advanced-psychology, social-proof-trust, ux-design, testing-optimization, implementation-checklist)
+- **Shared:** `references/_shared/{before-starting-check, manifest-spec, mode-resolver, pre-dispatch-protocol, anti-sycophancy, artifact-contract-template, thin-critic-rubric, brand-system/*, design-brief/*}.md`
+- **Agents:** 9 sub-agents in `agents/` — see Agent Manifest above. `conversion-critic-agent.md` holds the canonical CP-01 → CP-13 scoring rubric + Cross-Cutting Checks + Scoring Patterns Per CP + Tier Excuses + Cycle Logic. `brand-voice-critic-agent.md` holds the canonical G1-G8b gates + Sacred Element Detection + Voice Forbidden Vocab Detection + Token Discipline + Envelope Math.
+- `marketing-skills/CLAUDE.md` §"Pre-Dispatch Protocol" + §"Complexity Routing" + §"Multi-Agent Skills" — stack-level conventions this skill inherits
