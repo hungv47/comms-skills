@@ -211,3 +211,51 @@ These rules are defaults, not laws. Bend them when:
 - **A "longer" email is the right length** — if you're responding to a detailed question, 8 sentences can be correct
 
 **But:** if you're bending a rule, write down why in the change log. If you can't articulate a reason, the rule should hold.
+
+---
+
+## Orchestrator-Level Anti-Patterns
+
+These nine patterns operate at the pipeline level — they describe how the orchestrator (the cold-outreach SKILL.md, not any individual sub-agent) can fail to produce a sendable message even when individual agents succeed in isolation. Each row names the failure, the cost, and which agent or step enforces the guardrail.
+
+| Anti-pattern | Why it fails | Guardrail |
+|--------------|--------------|-----------|
+| Template-with-{{FirstName}} swap | Signal never connects; reader pattern-matches to spam | Signal analyst flags; critic "Signal Connection" dimension |
+| "I hope this email finds you well" / "My name is X and I work at Y" | Zero-value opener; vendor telltale | voice-auditor auto-flags |
+| "Quick 30-minute call?" in touch 1 | Ask is too expensive for zero trust | CTA Friction rubric; strategist defaults to interest-question CTAs |
+| Feature dumps | One proof beats ten features; reads as desperation | proof-selector picks ONE; voice-auditor cuts lists |
+| Fake Re:/Fwd: subject lines | Short-term open rate bump, long-term trust destruction, reply rate collapse | Banned in `references/channels/email.md`; voice-auditor auto-fails |
+| Running humanize twice | Strips specificity, drifts toward generic | Terminal pass runs ONCE |
+| Arguing with "no" in reply route | Burns goodwill, tanks domain reputation | reply-composer hard gate; critic auto-fails |
+| Skipping ICP artifact when present | Re-asks user for what's already known | Step 0 enforces artifact check first |
+| Multi-touch without prior-touches input | Touch 2 repeats touch 1's angle | Orchestrator prompts for prior touches when slug ends `-t2`, `-t3`, etc. |
+
+---
+
+## Cross-Cutting Marketing-Stack Anti-Patterns
+
+These patterns apply across the marketing stack — cold-outreach calls `humanize` as the terminal polish-chain pass for short-outbound EN content, and is itself called by `campaign-plan` as a Route C consumer. Enforced via Pre-Dispatch wiring + critic verification + cross-skill contract.
+
+### Caller skipped the protected_tokens contract when invoking humanize
+
+**Problem:** Orchestrator dispatches `humanize` with `content-type: "short-outbound"` but forgets to pass `protected_tokens` listing the named entities and numbers in the critic-approved draft. humanize's compression-agent paraphrases "$2.3M ARR" to "millions in ARR" or drops the Ramp logo. The post-humanize regression check still catches it (Specificity dim drops ≥2 or named entity absent) and reverts to the critic-approved draft — but the run wasted a humanize cycle.
+
+**INSTEAD:** Terminal pass step in `procedures/dispatch-mechanics.md` § "Terminal Pass: Humanize" lists `protected_tokens` as a required input (every named entity + number in critic-approved draft). Do NOT skip — it's the contract that prevents silent paraphrase. See sibling humanize's `anti-patterns.md` § "Calling skill drops protected_tokens contract" for the consumer-side framing.
+
+### Post-humanize regression check disabled or judgment-overridden
+
+**Problem:** Orchestrator runs humanize, sees a clean polished message, ships it without re-running critic's Specificity dim. Two slots later eval shows the named proof ("cut close time from 9 days to 4 days") was paraphrased to "significantly reduced close time" — exactly the kind of generic claim the critic was designed to catch.
+
+**INSTEAD:** Regression check is **automatic, not judgment** (per `dispatch-mechanics.md` § "Terminal Pass: Humanize" step 4). The check is just re-running critic's Specificity dim on humanized text + comparing against pre-humanize. The Specificity Floor of ≥2 verifiable specifics still applies. If the check fails, revert to critic-approved draft (do NOT try to re-fix humanize). Operator override of the regression check requires an explicit `--skip-regression` flag (not currently implemented; would be a v6.3.0 candidate).
+
+### Campaign-plan Route C invocation drops mode/channel context
+
+**Problem:** `campaign-plan` calls cold-outreach Route C for a sequence of outbound touches but passes only the target list and prior-touches, leaving mode + channel unset. cold-outreach's Pre-Dispatch hits the Missing-Input Hard Block for "Mode missing" + "Channel missing" and surfaces AskUserQuestion — but the user is mid-flow with campaign-plan and the question is jarring.
+
+**INSTEAD:** When invoked via Route C, the calling skill (campaign-plan) MUST resolve mode + channel + per-touch CTA shape BEFORE dispatching cold-outreach per touch. cold-outreach Route C is NOT the right place to interrogate the user on campaign-level decisions — those belong in campaign-plan's own Pre-Dispatch. If campaign-plan passes incomplete context, cold-outreach Route C should escalate `NEEDS_CONTEXT` back to campaign-plan, not break the flow with mid-stream AskUserQuestion to the user.
+
+### Cross-stack contract drift (Artifact Template schema)
+
+**Problem:** A maintainer adds a new frontmatter field to cold-outreach's `[slug].md` artifact (e.g., `engagement_status: replied | bounced | no_reply`) without checking calling-skill consumers (`campaign-plan` reads `critic_total`, `touch`, `route` from cold-outreach output to sequence next touches). Schema drifts; campaign-plan's manifest reader breaks on the new field, or worse, silently ignores it.
+
+**INSTEAD:** Artifact Template (9-field frontmatter + 3 body files: `[slug].md`, `[slug].rationale.md`, `[slug].critic-score.md` per `format-conventions.md`) is the contract. Schema changes require atomic update of `format-conventions.md` § "Frontmatter field order" so the convention IS the contract. Currently campaign-plan's Route C consumer reads `critic_total`, `touch`, `route`, `mode`, `channel`, `status` — preserve those; add new fields at the END of the frontmatter to avoid breaking existing positional readers.
