@@ -66,7 +66,7 @@ Under `--fast`: brief-synth produces 1 brief instead of 3 (concept-agent already
 
 ## Approval Gate 1 — Brief Selection
 
-**STOP and present** the 3 candidate briefs. Do NOT proceed to image-gen prompt or designer spec.
+**STOP and present** the 3 candidate briefs. Do not proceed to image-gen prompt or designer spec.
 
 Format:
 
@@ -87,15 +87,12 @@ Format:
 **Pick one (A/B/C), request revisions, or specify your own direction.**
 ```
 
-### User response handling
-
-| Response | Orchestrator action |
-|---|---|
-| **"A" / "B" / "C"** | Proceed with that brief to Layer 2. |
-| **"Revise X"** (where X is a candidate letter) | Re-dispatch concept-agent with feedback (1 cycle), regenerate candidates, re-present. |
-| **"None of these"** | Ask one clarifying question, regenerate. |
-| **"Switch route to X"** (where X is a new downstream route) | Re-dispatch brief-synth with the new route. If concept-agent's tool-feasibility for that concept was RETHINK on the new route, re-run concept-agent first. |
-| **"Stop"** | Save as `.agents/skill-artifacts/mkt/design-briefs/[slug]-candidates.md`, exit BLOCKED. |
+User responses:
+- **"A" / "B" / "C"** → proceed with that brief to Layer 2.
+- **"Revise X"** → re-dispatch concept-agent with feedback, regenerate, re-present.
+- **"None of these"** → ask one clarifying question, regenerate.
+- **"Switch route to X"** → re-dispatch brief-synth with the new route. If concept-agent's tool-feasibility for that concept was RETHINK on the new route, re-run concept-agent first.
+- **"Stop"** → save as `.agents/skill-artifacts/mkt/design-briefs/[slug]-candidates.md`, exit BLOCKED.
 
 Under `--fast`: Approval Gate 1 is SKIPPED (only 1 candidate exists; user reviews at Gate 2 only).
 
@@ -162,13 +159,13 @@ Format:
 **Approve to write artifact, revise, or reject.**
 ```
 
-### User response handling
-
-| Response | Orchestrator action |
-|---|---|
-| **"Approve"** | (1) Write `.agents/skill-artifacts/mkt/design-briefs/[slug].md`. (2) **ASSETS.md auto-tick:** if the brief's asset path is a literal string match for a `brand/ASSETS.md` row's path field (NEVER auto-tick on slug or asset-type heuristic), flip `[ ]` → `[x]` and append a date stamp. No match → skip; design-brief does NOT own ASSETS.md row creation (that's brand-system). (3) Status DONE. |
-| **"Revise X"** (where X is a section / agent / concern) | Re-dispatch brief-synth or Layer 2 agent with feedback (1 cycle), re-present. |
-| **"Reject"** | Save as `.agents/skill-artifacts/mkt/design-briefs/[slug]-rejected.md` with a `Rejection Notes` block, exit BLOCKED. |
+User responses:
+- **"Approve"** →
+  1. Write `.agents/skill-artifacts/mkt/design-briefs/[slug].md`.
+  2. **ASSETS.md auto-tick:** if the brief's asset path is a literal string match for a `brand/ASSETS.md` row's path field (never auto-tick on slug or asset-type heuristic), flip `[ ]` → `[x]` and append a date stamp. No match → skip; design-brief doesn't own ASSETS.md row creation (that's brand-system).
+  3. Status DONE.
+- **"Revise X"** → re-dispatch brief-synth or Layer 2 agent with feedback (1 cycle), re-present.
+- **"Reject"** → save as `.agents/skill-artifacts/mkt/design-briefs/[slug]-rejected.md` with a `Rejection Notes` block, exit BLOCKED.
 
 Approval Gate 2 fires regardless of `--fast` — user acceptance is non-optional. Per anti-pattern #2.
 

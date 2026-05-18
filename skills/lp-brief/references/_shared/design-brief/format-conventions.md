@@ -80,7 +80,7 @@ The Artifact Template prescribes a fixed section order. Do **not** reorder; down
 
 ## Platform Spec table schema
 
-Eight rows, all required:
+Nine rows, all required:
 
 | Field | Source |
 |---|---|
