@@ -9,6 +9,11 @@ metadata:
   version: "2.0.0"
   budget: deep
   estimated-cost: "$1-3"
+  refactor_history:
+    - version: "2.0.0 → 2.0.0"
+      date: 2026-05-18
+      slot: "v6 Phase 2 Wave 1 — marketing-stack slot 8/14"
+      note: "Body 538→211 (-61%) + 5 new refs (playbook + format-conventions + procedures/pre-dispatch + procedures/dispatch-mechanics + examples/copywriting-walkthrough) + new anti-patterns.md (5 orchestrator-level + 4 pipeline-level + 4 cross-cutting marketing-stack rows — baseline had only 5 trailing one-liners). Structural: `## Artifact Template` nested as `### Artifact Template` under new `## Artifact Contract` H2 wrapper per marketing-stack sibling-parity convention (matches cold-outreach slot 7 + humanize slot 6 + vn-tone slot 5 + short-form-brief slot 4 + seo slot 3). See references/playbook.md 'History / origin' for full detail."
 promptSignals:
   phrases:
     - "write copy"
@@ -68,20 +73,20 @@ routing:
 
 **Core Question:** "Is every key line visual, falsifiable, and uniquely ours?"
 
-## Philosophy
+> Why this skill exists, philosophy, methodology, principles, page-specific guidance, when NOT to use, what it pulls from elsewhere, history: [`references/playbook.md`](references/playbook.md) [PLAYBOOK].
 
-Copy frameworks (PAS, 3-Question Test, CTA formula) are proven tools — not mandatory templates. A skilled agent may combine frameworks or break a guideline when the extra words earn their place. Construction starts with **Argument Engineering**: define the belief sequence, proof burden, Unique Mechanism, and competitor contrast before choosing words. The test is: does this stop the scroll and move the reader? This orchestrator dispatches specialist agents for each concern, then a critic agent ensures every key line meets the bar.
+## Critical Gates — Read First
 
-## Inputs Required
-- Brief: what to write (headline, hook, CTA, tagline, subject line, or full-page copy)
-- Context: audience, product, awareness stage (from `research/icp-research.md`, `research/product-context.md`, or user-provided)
-
-## Output
-- Inline annotations + alternatives on key lines (when called by another skill)
-- `.agents/skill-artifacts/mkt/content/[slug].copy.md` (for standalone full-page copy tasks)
+1. **Argument Engineering before word-choice.** Audience + the one shift + Unique Mechanism + belief sequence must be resolved in Pre-Dispatch BEFORE any agent dispatches. Skipping these produces generic copy that scores well on V/F but fails on U.
+2. **V/F/U is per-line, not per-piece.** Every key line gets scored 1-5 on Visual / Falsifiable / Uniquely-Ours. Average ≥3.5 PASS; below 3.0 on any single dimension FAIL regardless of average.
+3. **Competitor Swap Test catches generic claims.** If a competitor could sign your headline without lying, U fails — independent of V/F scores. Critic auto-fail.
+4. **Trigger density 3-4 for persuasion-heavy copy.** 0-2 = WEAK (FAIL → psychology-agent adds primary lever). 5-6 = GURU-ENERGY (FAIL → psychology-agent cuts lowest-load-bearing trigger).
+5. **Route classification at Step 1.** Single key line → Route A (one agent + critic). Full page → Route B (Layer 1 parallel + Merge + variant + Layer 2 sequential + critic). Called by lp-brief / campaign-plan → Route C (caller picks agents).
 
 ## Quality Gate
+
 Before delivering, the **critic agent** verifies:
+
 - [ ] Every key line passes the Three-Question Test: visual? falsifiable? uniquely ours?
 - [ ] Hook and body choices form an airtight argument: the reader can see the old belief, new belief, proof, Unique Mechanism, and next action without a logical gap
 - [ ] Rubric score averages ≥3.5 across V/F/U for all key lines
@@ -91,13 +96,33 @@ Before delivering, the **critic agent** verifies:
 - [ ] CTA follows formula: [action verb] + [what they get] (not "Learn More" or "Click Here")
 - [ ] Every headline/hook contains concrete nouns or specific numbers (no abstract "better," "innovative," "leading")
 
-## Chain Position
-Horizontal — called by `campaign-plan`, `lp-brief`. Can run standalone.
-**Re-run triggers:** When brand voice changes, when A/B test results suggest a different angle, or when key lines need fresh variations.
+---
 
-### Skill Deference
-- **Content reads as AI-generated?** → Run `humanize` after
-- **Optimizing for search/AI citations?** → Coordinate with `seo`
+## Before Starting
+
+Per `references/_shared/before-starting-check.md` [PLAYBOOK] — load brand voice + audience + Unique Mechanism, identify any prior copywriting artifact for the same slug, check freshness windows on ICP / product-context (>30d → recommend `icp-research` re-run with soft gate).
+
+| Artifact | Source | Required? |
+|---|---|---|
+| `research/icp-research.md` | icp-research | Recommended — VoC + pain language |
+| `research/product-context.md` | icp-research | Recommended — voice adjectives + Unique Mechanism (if persisted) |
+| `.agents/skill-artifacts/mkt/campaign-plan.md` | campaign-plan | Optional — if copy is part of broader campaign (Route C) |
+| `brand/BRAND.md` | brand-system | Recommended — voice rules + lexicon |
+| `skills-resources/experience/{audience,product,goals}.md` | (any skill) | Optional — `Goals — copy shift` / `Product — unique mechanism` keys if user previously persisted |
+
+## Pre-Dispatch
+
+Run the canonical Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md` [PROCEDURE]).
+
+**Needed dimensions:** surface (page / email / social / headline / CTA / etc.), audience, the one shift (what should reader believe after?), unique proof (what can you say nobody else can?), Unique Mechanism (the proprietary "how" that makes the offer different and better), belief sequence (what the reader must accept before the CTA feels obvious), traffic source (if applicable).
+
+Full read-order + Warm/Cold Start prompts (7-question Cold Start) + write-back (6 questions) + Pre-Writing Assembly + hard-block conditions + `--fast` behavior: [`references/procedures/pre-dispatch.md`](references/procedures/pre-dispatch.md) [PROCEDURE].
+
+**Language:** default English. If another language specified, note in pre-writing — agent instructions are optimized for English copy; other languages may need adapted idioms and cultural references.
+
+## Mode Resolution
+
+Per `references/_shared/mode-resolver.md` [PROCEDURE] — this skill is `budget: deep`; `--fast` flag collapses Layer 1 parallel (hook + body + cta + social-proof) to sequential dispatch, skips variant-agent, and skips Layer 2's psychology-agent + zero-risk-agent (keeps voice-agent + critic only). **`--fast` does NOT skip Cold Start or Critical Gates 1-5** (per marketing-skills CLAUDE.md "Safety gates supersede `--fast`").
 
 ---
 
@@ -115,282 +140,57 @@ Horizontal — called by `campaign-plan`, `lp-brief`. Can run standalone.
 | Zero-Risk Agent | 2 (sequential) | `agents/zero-risk-agent.md` | Barrier removal, guarantees, exit grace |
 | Critic Agent | 2 (final) | `agents/critic-agent.md` | Rubric scoring, 3Q test, annotation, PASS/FAIL |
 
----
+### Shared References (read by multiple agents)
 
-## Routing Logic
-
-Classify the task, then follow the matching route.
-
-### Route A: Single Key Line
-**When:** Brief asks for a headline, hook, CTA, tagline, or subject line — not a full page.
-
-```
-1. Pre-dispatch: Gather context (Step 0 below)
-2. Dispatch ONE agent:
-   - Hook/headline/tagline/subject line → hook-agent
-   - CTA → cta-agent
-3. Dispatch: critic-agent (on the single agent's output)
-4. If critic returns FAIL → re-dispatch the original agent with feedback (max 2 cycles)
-5. Deliver annotated key lines
-```
-
-**Note:** Route A skips variant-agent. Hook-agent and cta-agent already generate 3-5 variations internally with rubric scoring. Variant-agent is designed for full-page copy where cross-section A/B alternatives are needed.
-
-### Route B: Full-Page Copy
-**When:** Brief asks for landing page copy, full-page copy, or multiple sections.
-
-```
-1. Pre-dispatch: Gather context (Step 0 below)
-2. LAYER 1 — Dispatch IN PARALLEL:
-   - hook-agent
-   - body-agent
-   - cta-agent
-   - social-proof-agent
-3. MERGE: Assemble Layer 1 outputs into page structure
-4. Dispatch: variant-agent (on merged output)
-5. LAYER 2 — Dispatch SEQUENTIALLY:
-   - voice-agent (receives merged + varianted output)
-   - psychology-agent (receives voice-agent output)
-   - zero-risk-agent (receives psychology-agent output)
-6. Dispatch: critic-agent (receives zero-risk-agent output)
-7. If critic returns FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
-8. Deliver final artifact
-```
-
-### Route C: Called by Another Skill
-**When:** Invoked by `campaign-plan` or `lp-brief` for inline copy work.
-
-```
-1. Pre-dispatch: Read context from calling skill's artifacts
-2. Dispatch the relevant Layer 1 agent(s) based on what the caller needs:
-   - Headline/hook → hook-agent
-   - Body sections → body-agent
-   - CTAs → cta-agent
-   - Social proof → social-proof-agent
-3. Dispatch: critic-agent
-4. Return annotated output to the calling skill
-```
+- **Frameworks** (`references/`): `headline-formulas.md` (hook), `page-sections.md` (body + social-proof), `emotional-triggers.md` (psychology + hook + critic), `belief-disruption.md` (psychology + hook, TOF only), `lead-magnet-stack.md` (hook + social-proof + cta, lead-magnet posts), `research-workflow.md` (Pre-Dispatch step 1), `discovery-story.md` (social-proof mechanism-led trust)
 
 ---
 
-## Pre-Dispatch
+## Routing + Dispatch
 
-Run the Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`).
-
-**Needed dimensions:** surface (page / email / social / headline / CTA / etc.), audience, the one shift (what should reader believe after?), unique proof (what can you say nobody else can?), Unique Mechanism (the proprietary "how" that makes the offer different and better), belief sequence (what the reader must accept before the CTA feels obvious), traffic source (if applicable).
-
-**Read order:**
-1. Method: `references/research-workflow.md` for the Research Doc -> Avatar & Offer Brief -> Belief Engineering -> Unique Mechanism SOP. Use it to identify missing upstream context before dispatch.
-2. Pipeline: `research/icp-research.md` for VoC + pain language. `research/product-context.md` for product details and voice adjectives. `.agents/skill-artifacts/mkt/campaign-plan.md` for angle + awareness stage.
-3. Experience: `skills-resources/experience/{audience,product,goals}.md`.
-
-If `research/icp-research.md` or `product-context.md` `date` fields >30 days old, warn and recommend re-running `icp-research`. Soft gate — proceed if user confirms, note "stale ICP" in artifact header.
-
-**Language:** default English. If another language specified, note in pre-writing — agent instructions are optimized for English copy; other languages may need adapted idioms and cultural references.
-
-**Warm Start** (icp-research + product-context + campaign-plan exist):
+Three routes — Route A (single key line), Route B (full-page copy), Route C (called by another skill).
 
 ```
-Found:
-- audience → "[VoC summary from icp-research.md]"
-- product/voice → "[adjectives from product-context.md]"
-- campaign angle → "[from campaign-plan.md if present]"
-- Unique Mechanism → "[proprietary mechanism from product-context.md or campaign-plan.md if present]"
+ROUTE A (single key line):
+  1. Pre-Dispatch (per procedures/pre-dispatch.md)
+  2. Dispatch ONE agent (hook-agent OR cta-agent)
+  3. Dispatch: critic-agent
+  4. Critic FAIL → re-dispatch the original agent with feedback (max 2 cycles)
+  5. Deliver annotated key lines
 
-Need before dispatching: surface (page/email/headline/CTA/etc.) + the
-one shift this copy should produce + confirmation that the Unique Mechanism
-above is the mechanism to anchor the argument on. If the surface is a
-direct-response page or persuasion-heavy email, also confirm the belief
-sequence or let Body Agent derive it from the research workflow.
+ROUTE B (full-page copy):
+  1. Pre-Dispatch
+  2. LAYER 1 — IN PARALLEL: hook + body + cta + social-proof
+  3. MERGE — assemble into page structure (Awareness-building OR Direct-Response narrative per body-agent)
+  4. Dispatch: variant-agent (on merged output)
+  5. LAYER 2 — SEQUENTIAL: voice → psychology → zero-risk → critic
+  6. Critic FAIL → re-dispatch named agent(s) with feedback (max 2 cycles)
+  7. Deliver final artifact
+
+ROUTE C (called by lp-brief or campaign-plan):
+  1. Pre-Dispatch: read context from calling skill's artifacts
+  2. Dispatch the Layer 1 agent(s) the caller named
+  3. Dispatch: critic-agent
+  4. Return annotated output to calling skill (no standalone artifact)
 ```
 
-**Cold Start** (no upstream artifacts):
-
-```
-copywriting writes for a specific surface, a specific audience, with a
-specific shift in mind. Generic prompts produce generic copy. Before I dispatch:
-
-1. **Surface** — landing page (full) / homepage section / email / social post
-   / headline only / CTA only / tagline / subject line / other?
-2. **Audience** — primary buyer (role + situation + 1-2 pains they articulate).
-   Or point me at `research/icp-research.md` if it exists.
-3. **The one shift** — what should the reader believe after reading this
-   that they don't believe now? One sentence.
-4. **Unique proof** — what can you say that nobody else can? Specific
-   client + number, named feature with results, or domain credentials.
-5. **Unique Mechanism** — what proprietary "how" makes the offer different
-   and better than the old way or commodity alternative? Name it in one
-   sentence. If none exists yet, say "unknown" and the copy must surface that
-   as a concern.
-6. **Belief sequence** — what 3-6 beliefs must the reader accept before the
-   CTA feels like the logical next step? If unknown, say "derive from brief."
-7. **Traffic source** (only if Q1 is page or email) — ad / search / email /
-   social / direct? Determines what the reader already knows and expects.
-
-Answer 1-7 (or 1-6 if no traffic source) in one response. I'll dispatch.
-```
-
-**Write-back:**
-
-| Q | File | Key |
-|---|---|---|
-| 2. Audience | `audience.md` | `Audience — primary persona` (only if novel; pre-existing icp-research takes precedence) |
-| 3. The one shift | `goals.md` | `Goals — copy shift: [surface]` |
-| 4. Unique proof | `product.md` | `Product — proof points` |
-| 5. Unique Mechanism | `product.md` | `Product — unique mechanism` |
-| 6. Belief sequence | `goals.md` | `Goals — copy belief sequence: [surface]` |
-| 1, 7. Surface + traffic source | (routing only) |
+Mechanics (how to spawn agents, single-agent fallback, Layer 1 parallel dispatch, Merge Step with both narrative section-order tables + assembly rules + conflict resolution, variant-agent post-merge, Layer 2 sequential pipeline, critic gate + rewrite loop, chain position, skill deference) live in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE]. Load at Layer 1 dispatch entry.
 
 ---
 
-## Dispatch Protocol
+## Artifact Contract
 
-### How to spawn a sub-agent
+- **Path (Route A/B):** `.agents/skill-artifacts/mkt/content/[slug].copy.md`
+- **Path (Route C):** no standalone artifact — annotated copy embedded in calling skill's artifact
+- **Lifecycle:** `pipeline` — on re-run for same slug, rename existing to `[slug].copy.v[N].md` and create new with incremented version
+- **Frontmatter fields:** `skill`, `version`, `date`, `status`
+- **Body sections (in order):** descriptive metadata block (Date / Audience / Awareness Stage / Traffic Source) · Pre-Writing 5-item block · Key Lines (Route A) OR section-by-section copy (Route B) · A/B Variants (Route B only)
+- **Consumed by:** human reader (Route A/B), `lp-brief` (Route C — reads pre_writing.unique_mechanism + key_lines.\*.score for next-section refinements), `campaign-plan` (Route C — reads surface + audience for campaign coherence)
+- **Cross-stack contract:** schema changes require atomic update of `format-conventions.md` § "Frontmatter field order" + § "Pre-Writing block format" + § "Key Lines block format" — never silently drift
 
-For each agent dispatched below, use the **Agent tool** with a prompt constructed as follows:
+Full template + per-section format rules (slug derivation, Pre-Writing block format, Key Lines block format with V/F/U scoring, A/B Variants block format, re-run convention) live in [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE].
 
-1. **Read** the agent instruction file (e.g., `agents/hook-agent.md`) — include its FULL content in the Agent prompt
-2. **Append** the brief and pre-writing context after the instructions
-3. **Resolve file paths to absolute**: replace relative paths with absolute paths rooted at this skill's directory. Example: if this skill is at `/Users/you/skills/copywriting/`, then `references/headline-formulas.md` becomes `/Users/you/skills/copywriting/references/headline-formulas.md`. Tell the agent: "Read the reference file at [absolute path] for domain knowledge."
-4. **Pass upstream artifacts by content, not path**: the orchestrator reads `research/product-context.md` and `research/icp-research.md` FIRST, then includes relevant excerpts (VoC quotes, voice adjectives, pain language) in the pre-writing object. Sub-agents should NOT read artifact files directly — the orchestrator curates what they need.
-5. If **feedback** exists (from a critic FAIL cycle), append it at the end of the prompt with the header "## Critic Feedback — Address Every Point"
-
-### Single-agent fallback
-
-If multi-agent dispatch is unavailable (no Agent tool, single-agent runtime, or context constraints), execute each agent's instructions sequentially in-context:
-- Layer 1: run each agent's domain instructions one at a time, writing each section
-- Layer 2: apply each refinement pass to the full document in order
-- Critic: self-evaluate using the critic-agent's rubric and quality gate
-
-The output quality should be equivalent — the multi-agent pattern optimizes for parallelism and focus, not capability.
-
----
-
-## Layer 1: Parallel Section Writers
-
-Spawn the following agents **IN PARALLEL** (multiple Agent tool calls in a single message). For each agent, follow the Dispatch Protocol above.
-
-| Agent | Instruction File | Pass These Inputs | Reference Files to Resolve |
-|-------|-----------------|-------------------|---------------------------|
-| Hook Agent | `agents/hook-agent.md` | brief + pre-writing | `references/headline-formulas.md`, `references/research-workflow.md`, `references/emotional-triggers.md` (TOF/lead-magnet hooks), `references/belief-disruption.md` (problem-unaware audience), `references/lead-magnet-stack.md` (lead-magnet posts) |
-| Body Agent | `agents/body-agent.md` | brief + pre-writing | `references/page-sections.md`, `references/research-workflow.md` |
-| CTA Agent | `agents/cta-agent.md` | brief + pre-writing | `references/lead-magnet-stack.md` (lead-magnet CTAs only) |
-| Social Proof Agent | `agents/social-proof-agent.md` | brief + pre-writing + available proof points | `references/page-sections.md`, `references/discovery-story.md`, `references/lead-magnet-stack.md` (FOMO layer 1-2 social-proof patterns) |
-
-**For single key line tasks (Route A):** Dispatch only the relevant agent, not all four.
-
----
-
-## Merge Step
-
-After all Layer 1 agents return, assemble their outputs into the page structure.
-
-### Section Order (full-page copy)
-
-**Awareness-building narrative** (Body Agent chose Problem -> Solution -> How It Works):
-
-1. **Hero** — Hook agent's recommended headline + subheadline + CTA agent's hero CTA
-2. **Social Proof Bar** — Social proof agent's bar element
-3. **Problem** — Body agent's Problem section
-4. **Solution** — Body agent's Solution section
-5. **How It Works** — Body agent's How It Works section
-6. **Testimonials** — Social proof agent's testimonials
-7. **Key Stats** — Social proof agent's stats (if applicable)
-8. **Final CTA** — CTA agent's final CTA + risk reversal
-
-**Direct-response narrative** (Body Agent chose 6 Necessary Beliefs):
-
-1. **Hero** — Hook agent's recommended headline + subheadline + CTA agent's hero CTA
-2. **Social Proof Bar** — Social proof agent's bar element
-3. **Necessary Beliefs** — Body agent's belief sequence, preserving the Problem / Mechanism / Superiority / Proof / Fit / Opportunity order
-4. **Mechanism Close** — Body agent's Unique Mechanism close
-5. **Testimonials** — Social proof agent's testimonials
-6. **Key Stats** — Social proof agent's stats (if applicable)
-7. **Final CTA** — CTA agent's final CTA + risk reversal
-
-### Assembly Rules
-The merge is deterministic assembly, not creative synthesis. Slot each agent's output into the template by ownership:
-
-**Awareness-building narrative:**
-
-| Section | Owner Agent | Content Source |
-|---------|-----------|---------------|
-| Headline + Subheadline | Hook Agent | Recommended hook + subheadline from hook-agent output |
-| Hero CTA | CTA Agent | Hero CTA from cta-agent output |
-| Social Proof Bar | Social Proof Agent | Bar element from social-proof-agent output |
-| Problem | Body Agent | Problem section from body-agent output |
-| Solution | Body Agent | Solution section from body-agent output |
-| How It Works | Body Agent | How It Works section from body-agent output |
-| Testimonials | Social Proof Agent | Testimonials from social-proof-agent output |
-| Mid-Page CTA | CTA Agent | Mid-page CTA from cta-agent output |
-| Key Stats | Social Proof Agent | Stats from social-proof-agent output |
-| Final CTA + Risk Reversal | CTA Agent | Final CTA + risk reversal from cta-agent output |
-
-**Direct-response narrative:**
-
-| Section | Owner Agent | Content Source |
-|---------|-----------|---------------|
-| Headline + Subheadline | Hook Agent | Recommended hook + subheadline from hook-agent output |
-| Hero CTA | CTA Agent | Hero CTA from cta-agent output |
-| Social Proof Bar | Social Proof Agent | Bar element from social-proof-agent output |
-| Necessary Beliefs | Body Agent | Necessary Beliefs section from body-agent output |
-| Mechanism Close | Body Agent | Mechanism Close from body-agent output |
-| Testimonials | Social Proof Agent | Testimonials from social-proof-agent output |
-| Key Stats | Social Proof Agent | Stats from social-proof-agent output |
-| Final CTA + Risk Reversal | CTA Agent | Final CTA + risk reversal from cta-agent output |
-
-If the Body Agent chose Direct-Response 6 Necessary Beliefs, do not force its output back into Problem / Solution / How It Works slots. Preserve the belief sequence as the persuasive body architecture.
-
-### Conflict Resolution
-- Each agent owns specific sections (table above). If two agents mention the same fact (e.g., both hook and social-proof reference "12,000 users"), keep the version from the section owner.
-- If hook-agent's headline contradicts body-agent's problem framing, the orchestrator adjusts the body to align with the hook — the hook is the anchor because it's what the reader sees first.
-
-### After Merge: Variant Agent
-Dispatch the **variant-agent** with the assembled document as `upstream`. It returns A/B alternatives for key sections. Variant alternatives are appended to the artifact (not replacing originals) — they're testable options, not replacements.
-
----
-
-## Layer 2: Sequential Craft Refiners
-
-Dispatch these agents **ONE AT A TIME, IN ORDER** using the Dispatch Protocol above. Each receives the previous agent's full output as the `upstream` field.
-
-```
-voice-agent → psychology-agent → zero-risk-agent → critic-agent
-```
-
-| Step | Agent | Instruction File | Receives | Reference Files to Resolve |
-|------|-------|-----------------|----------|---------------------------|
-| 1 | Voice Agent | `agents/voice-agent.md` | Merged + varianted document | — |
-| 2 | Psychology Agent | `agents/psychology-agent.md` | Voice agent's output | `references/emotional-triggers.md`, `references/belief-disruption.md` (TOF copy only) |
-| 3 | Zero-Risk Agent | `agents/zero-risk-agent.md` | Psychology agent's output | — |
-| 4 | Critic Agent | `agents/critic-agent.md` | Zero-risk agent's output | `references/emotional-triggers.md` (trigger density gate) |
-
-Each agent returns the full document with their edits applied + a change log.
-
----
-
-## Critic Gate
-
-The critic agent returns one of two verdicts:
-
-### PASS
-The copy meets all quality standards. Deliver the critic's annotated output as the final artifact.
-
-### FAIL
-The critic returns specific failures with:
-- Which lines failed and on which dimension
-- Specific fix instructions
-- Which agent to re-dispatch
-
-**Rewrite loop:**
-1. Read the critic's failure report
-2. Re-dispatch ONLY the named agent(s) with the critic's feedback attached as the `feedback` input
-3. Run the modified output back through the critic
-4. **Maximum 2 rewrite cycles.** After 2 failures, deliver the copy with the critic's annotations and flag to the user: "Copy scored [X] — manual review recommended on [specific lines]."
-
----
-
-## Artifact Template
+### Artifact Template
 
 ```markdown
 ---
@@ -434,92 +234,15 @@ status: done | done_with_concerns | blocked | needs_context
 
 ## A/B Variants
 [Variant agent's alternatives with hypotheses and test priority]
-
-> On re-run: rename existing artifact to `[slug].copy.v[N].md` and create new with incremented version.
 ```
 
-## Next Step
-
-Run `humanize` to refine voice and compress.
-
----
-
-## Worked Example — Full-Page Copy (Route B)
-
-**Brief:** Landing page for StatusZero, a tool that replaces standups with async status updates.
-**Audience:** Engineering managers at 50-200 person companies, problem aware.
-**Traffic:** LinkedIn ads (cold).
-
-### Step 0: Pre-Dispatch
-1. Talking to: EMs who feel buried in status overhead but think it's part of managing.
-2. Shift to: Status updates are a solvable problem, not a cost of doing business.
-3. Only we can say: Internal data shows 12 hrs/week lost to status theater.
-4. Traffic: LinkedIn ad click — cold, haven't searched, hook must interrupt.
-
-### Layer 1: Parallel Dispatch
-→ **Hook agent** returns 5 headline variations, recommends: "Your team loses 12 hours a week to status updates nobody reads." (V:5 F:5 U:4)
-→ **Body agent** returns Problem (status theater pain), Solution (async updates), How It Works (3 steps)
-→ **CTA agent** returns hero CTA ("See how teams ship without status theater →"), mid-page, and final CTAs with risk reversal
-→ **Social proof agent** returns logo bar (4 tech companies), 2 testimonials with metrics, key stat
-
-### Merge (orchestrator assembles)
-Slots Layer 1 outputs into template: Hero → Social Proof Bar → Problem → Solution → How It Works → Testimonials → Final CTA
-
-### Dispatch: Variant Agent
-Receives merged document. Returns A/B alternatives:
-→ Hero variant B: "I cut meetings 80%. Output doubled." (tests story hook vs. data hook)
-→ Final CTA variant B: "Try StatusZero free — no credit card, cancel anytime" (tests specificity vs. risk-first)
-
-### Layer 2: Sequential Dispatch
-→ **Voice agent** receives merged + varianted doc. Fixes 3 AI patterns, adjusts tone to "direct, technical." Returns modified doc + change log.
-→ **Psychology agent** receives voice output. Adds "which means..." bridges to 2 features, strengthens emotion in problem section. Returns modified doc + change log.
-→ **Zero-risk agent** receives psychology output. Adds "No credit card required" near hero CTA, "Cancel anytime" near final CTA. Returns modified doc + change log.
-
-### Dispatch: Critic Agent → PASS
-Receives zero-risk output. Scores all key lines. All average ≥3.5. Annotated and delivered.
-
----
-
-## Agent Files
-
-### Sub-Agent Instructions (agents/)
-- [agents/hook-agent.md](agents/hook-agent.md) — Headlines, hooks, 3Q scoring, formulas
-- [agents/body-agent.md](agents/body-agent.md) — Problem, Solution, How It Works sections
-- [agents/cta-agent.md](agents/cta-agent.md) — CTA formula, risk reversal, placement
-- [agents/social-proof-agent.md](agents/social-proof-agent.md) — Testimonials, stats, credibility
-- [agents/variant-agent.md](agents/variant-agent.md) — A/B alternatives, rubric scoring
-- [agents/voice-agent.md](agents/voice-agent.md) — Clarity, voice consistency, AI slop removal
-- [agents/psychology-agent.md](agents/psychology-agent.md) — So What, Prove It, Specificity, Emotion
-- [agents/zero-risk-agent.md](agents/zero-risk-agent.md) — Barrier removal, guarantees, exit grace
-- [agents/critic-agent.md](agents/critic-agent.md) — Final evaluation, scoring, PASS/FAIL
-- [agents/_template.md](agents/_template.md) — Reusable template for creating new agent files
-
-### Shared References (references/)
-- [references/headline-formulas.md](references/headline-formulas.md) — Headline formula catalog (hook-agent)
-- [references/page-sections.md](references/page-sections.md) — Page section types, templates, testimonial selection (body-agent, social-proof-agent)
-- [references/emotional-triggers.md](references/emotional-triggers.md) — 6-lever framework for engagement-driven copy (psychology-agent, hook-agent, critic-agent for trigger density)
-- [references/belief-disruption.md](references/belief-disruption.md) — TOF ragebait 5-step structure for problem-unaware audiences (psychology-agent, hook-agent)
-- [references/lead-magnet-stack.md](references/lead-magnet-stack.md) — 5-element lead-magnet post + 4-layer FOMO sequence (hook-agent, social-proof-agent, cta-agent)
-- [references/research-workflow.md](references/research-workflow.md) — 4-phase argument research SOP: Research Doc, Avatar & Offer Brief, Belief Engineering, Unique Mechanism
-- [references/discovery-story.md](references/discovery-story.md) — Discovery Story social-proof arc for mechanism-led trust building
-
-### Page-Specific Guidance
-
-| Page | Key Principle |
-|------|--------------|
-| **Homepage** | What you do in one sentence. Primary use case, not every feature. |
-| **Landing Page** | One goal, one CTA. Match headline to traffic source. Remove nav. |
-| **Pricing** | Lead with value, not price. Anchor with most popular plan. |
-| **Feature** | Lead with outcome ("Track time in one click"), not feature name. |
-| **About** | Founding story. What you believe. Team photos + real context. |
+> On re-run: rename existing artifact to `[slug].copy.v[N].md` and create new with incremented version.
 
 ---
 
 ## Anti-Patterns
 
-**Skipping the pre-writing** — Dispatching agents without answering the 4 pre-writing questions. Every agent needs this context to write relevant copy.
-
-**Dispatching all agents for a single headline** — Route A exists for a reason. A single key line only needs one Layer 1 agent + critic.
+Polish-pipeline + orchestrator + cross-cutting references: [`references/anti-patterns.md`](references/anti-patterns.md) [ANTI-PATTERN]. Re-read before any output ships. 5 orchestrator-level rows (skipping pre-writing, dispatching all for single key line, ignoring critic FAIL, wrong-agent re-dispatch, >2 rewrite cycles) + 4 pipeline-level rows (voice-too-early, psychology trigger-density miss, zero-risk over-application, variant gratuity) + 4 cross-cutting marketing-stack rows (Route C context drop, brand-system absent → voice fabrication, humanize chain skipped for AI-sounding, artifact schema drift).
 
 ---
 
@@ -531,8 +254,26 @@ Every run ends with explicit status:
 - **BLOCKED** — brief is fundamentally contradictory (e.g., audience and offer don't align); needs user reconciliation before any agent dispatch
 - **NEEDS_CONTEXT** — brand voice or audience undefined and not derivable from the brief; recommend `brand-system` or `icp-research`
 
-**Ignoring the critic's FAIL** — If the critic fails the copy, the orchestrator MUST re-dispatch. Delivering failed copy to the user breaks the quality contract.
+## Next Step
 
-**Re-dispatching the wrong agent** — The critic specifies which agent to re-dispatch. Read the failure report carefully.
+Run `humanize` to refine voice and compress.
 
-**More than 2 rewrite cycles** — Diminishing returns. After 2 cycles, deliver with annotations and let the user decide.
+---
+
+## Worked Example
+
+End-to-end Route B walkthrough (StatusZero landing page — async standup replacement for engineering managers, LinkedIn ads cold traffic, full Layer 1 parallel + Merge + variant + Layer 2 sequential + critic PASS at 4.4 V/F/U average) + cycle-2 FAIL variant (Competitor Swap Test failure on hero, hook-agent re-anchors on Unique Mechanism, cycle 2 PASS) + Route A single-key-line snippet + Route C called-by-lp-brief snippet: [`references/examples/copywriting-walkthrough.md`](references/examples/copywriting-walkthrough.md) [EXAMPLE].
+
+---
+
+## References
+
+- **Playbook:** `references/playbook.md` [PLAYBOOK]
+- **Format:** `references/format-conventions.md` [PROCEDURE]
+- **Anti-patterns:** `references/anti-patterns.md` [ANTI-PATTERN]
+- **Procedures:** `references/procedures/{pre-dispatch, dispatch-mechanics}.md` [PROCEDURE]
+- **Example:** `references/examples/copywriting-walkthrough.md` [EXAMPLE]
+- **Domain catalogs** (loaded by agents at dispatch): `references/{headline-formulas, page-sections, emotional-triggers, belief-disruption, lead-magnet-stack, research-workflow, discovery-story}.md`
+- **Shared:** `references/_shared/{before-starting-check, mode-resolver, pre-dispatch-protocol}.md`
+- **Agents:** 9 sub-agents in `agents/` — see Agent Manifest above. `critic-agent.md` holds the canonical V/F/U rubric + trigger-density gate + Authenticity filter + re-dispatch routing table.
+- `marketing-skills/CLAUDE.md` §"Pre-Dispatch Protocol" + §"Complexity Routing" + §"Multi-Agent Skills" — stack-level conventions this skill inherits
