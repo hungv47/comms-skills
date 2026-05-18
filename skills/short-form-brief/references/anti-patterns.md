@@ -1,6 +1,16 @@
+---
+title: Short-Form Brief — Anti-Patterns Catalog
+lifecycle: canonical
+status: stable
+produced_by: short-form-brief
+load_class: ANTI-PATTERN
+---
+
 # Anti-Patterns Catalog
 
 Auto-FAIL patterns and high-risk patterns the critic-agent watches for. Cross-referenced by hook-agent, storyboard-agent, copy-pack-agent during craft, and by critic-agent during gate.
+
+**Load when:** any craft agent (hook / storyboard / copy-pack / audio / production-mode) drafts content OR critic agent fires (4-sub-critic gate) OR re-dispatch heuristic kicks in (critic FAIL routes to named source agent). Re-read before any output ships as `done` or `done_with_concerns`.
 
 ---
 
@@ -152,3 +162,45 @@ These don't fail the brief outright but pin to `done_with_concerns`:
 - Mechanics docs verified date approaching warn window — research refresh recommended within next 30 days
 - Cold-start audience hint instead of ICP — voice grounding is directional
 - Brand mode = company but no BRAND.md found — voice inferred from market norm
+
+---
+
+## Cross-Cutting Marketing-Stack Anti-Patterns
+
+These patterns aren't tied to a single sub-critic — they apply to any short-form-brief output and any other marketing-stack artifact that produces user-facing prose. Enforced via `procedures/pre-dispatch.md` (auto-routing) + critic gate (where applicable).
+
+### VN-market brief without vn-tone polish chain
+
+**Problem:** `market = VN` resolved at Pre-Dispatch, but the polish chain bypasses `vn-tone` and ships the brief with `polish_chain_applied: none` or `polish_chain_applied: humanize`. Spoken-line section reads as Vietnamese-by-Google-Translate — particles missing, pronoun drift, idioms calqued from English, passive voice constructions.
+
+**INSTEAD:** Pre-Dispatch (`procedures/pre-dispatch.md` § "VN auto-routing") enforces `vn-tone` for VN founder (spoken-line + full body) and VN company (full body). Auto-routing is the default; operator does not pick. If polish chain somehow ships as `none` for `market = VN`, critic Brand-fit flags as voice-mismatch FAIL and re-dispatches `copy-pack-agent` after re-running `vn-tone`.
+
+### Polish chain skipped on critic FAIL (cycle 2)
+
+**Problem:** Cycle 2 critic returns one residual FAIL; orchestrator ships `done_with_concerns` but ALSO skips the polish chain. Brief reads in raw model voice with concerns pinned — concerns are valid, prose is bad.
+
+**INSTEAD:** Polish chain runs on `done_with_concerns` outputs same as `done` outputs. The concerns are about craft (hook archetype miss, vague action, audio mismatch) — polish doesn't fix craft, but it doesn't hurt either, and the brief still goes to a producer who needs readable prose. Polish chain ONLY skips under `--fast` (operator opted out of multi-pass) or `polish_chain_applied: none` per the (market, brand_mode) table in `procedures/dispatch-mechanics.md` § "Polish Chain."
+
+### Multi-platform invocation exceeding hard cap
+
+**Problem:** Operator invokes with `--platforms tiktok,reels,shorts,linkedin` (4 platforms). Skill quietly drops one or runs all 4 anyway. Either path violates Critical Gate 2 (1 hero + max 2 variants).
+
+**INSTEAD:** Pre-Dispatch hard-block ("Platforms requested > 3 → reject and re-ask"). Orchestrator surfaces the cap, asks operator to pick 1 hero + max 2 variants, and waits. Does not silently drop platforms (operator might not notice which got dropped).
+
+### Cross-stack contract drift
+
+**Problem:** Operator or maintainer adds a new frontmatter field or H2 section to the hero artifact without updating downstream consumers (currently human producers; potentially `short-form-eval` if it expands to score against briefs). Schema silently drifts; downstream parsers (if any exist or get built) break.
+
+**INSTEAD:** Output Artifact Structure (frontmatter + 14 body sections) is the contract. Schema changes require atomic update of any consumer. For schema changes, also update `format-conventions.md` § "Frontmatter field order" and § "Body section headers (verbatim)" so the convention IS the contract. Flag to operator before changing.
+
+### Production-mode-agent fed `mixed` without transition principle
+
+**Problem:** `production_mode: mixed` (live-action + motion-graphic) requested but the production notes don't specify the transition principle (when does live cut to graphic, what's the visual rule, what's the audio handoff). Producer reads "mixed" and has to invent the transition logic on set or in post.
+
+**INSTEAD:** When `production_mode: mixed` is resolved, production-mode-agent MUST emit a transition principle section (e.g., "Live-action establishes founder + product context 0:00–0:08; motion-graphic takes over for data viz 0:08–0:25; cut back to live for CTA 0:25–0:30. Audio bridges via beat-bed sustained across the cut."). Empty transition principle = production-mode-agent FAIL → re-dispatch.
+
+### Hard-cap erosion via "just one more variant"
+
+**Problem:** Operator argues "one more platform won't hurt" mid-conversation. Brief gets 3 variants instead of 2.
+
+**INSTEAD:** Hard cap is hard. 1 hero + max 2 variants per invocation, no exceptions. If operator wants a 3rd platform, re-invoke (this guarantees the platform gets its own hero brief with full critic verification, not a tacked-on variant). The cap is cost discipline AND craft discipline — variants get TRUE RECUTS (per `format-conventions.md` § "Variant 'What Changed From Hero' guard"), and craft attention erodes past 2.

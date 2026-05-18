@@ -9,6 +9,11 @@ metadata:
   version: "1.0.0"
   budget: deep
   estimated-cost: "$2-4 (single platform) / $4-8 (1 hero + 2 variants)"
+  refactor_history:
+    - version: "1.0.0 → 1.0.0"
+      date: 2026-05-18
+      slot: "v6 Phase 2 Wave 1 — marketing-stack slot 4/14"
+      note: "Body 371→183 (-50.7%) + 5 new refs + anti-patterns.md extended with cross-cutting. Cross-stack contract preserved byte-identical. See references/playbook.md 'History / origin' for full detail."
 promptSignals:
   phrases:
     - "short-form brief"
@@ -68,6 +73,8 @@ routing:
 
 **Core Question:** "Could a producer walk on set or open After Effects and ship this brief verbatim, with the result being recognized as native to its platform?"
 
+> Why this skill exists, philosophy, methodology, principles, when NOT to use, history: [`references/playbook.md`](references/playbook.md) [PLAYBOOK].
+
 ---
 
 ## Critical Gates — Read First
@@ -83,20 +90,6 @@ Non-negotiable constraints before dispatching any agent:
 
 ---
 
-## Philosophy
-
-The brief is the contract between research and production. Specificity is the unit of value: "hand pulls latch on case, latch click audible at 0:03–0:05" beats "show product." A producer should never need to ask follow-up questions to execute.
-
-Per-platform variants are craft, not parameter-tweaking. A LinkedIn cut isn't a TikTok with longer captions — it's a re-thought hook archetype, audio rule, caption norm, and CTA placement, all from the research catalog.
-
-Brand mode and market drive the voice and polish chain; they're not cosmetic. Founder content sounds nothing like company content; making one prompt handle both produces blandness.
-
-## Inputs / Output
-
-**Inputs:** Angle (required); target platforms (1-3, hard cap 1+2); brand mode (founder | company, auto-detect or ask); production mode (live-action | motion-graphic | mixed, default per brand mode); market (inherited from research); optional campaign tie-in.
-
-**Output:** `.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md` (hero) + `[slug]/variants/[platform].md` per variant.
-
 ## Quality Gate
 
 Critic agent verifies before delivery (all four PASS required, max 2 rewrite cycles):
@@ -106,17 +99,36 @@ Critic agent verifies before delivery (all four PASS required, max 2 rewrite cyc
 - [ ] Brief aligns with target platform's algorithmic preferences from research catalog (completion thresholds, hold rates, audio rules, captions, watermarks)
 - [ ] Caption + verbal lines use VoC phrases from ICP; voice matches BRAND.md archetype; no generic founder/company tropes
 
-## Chain Position
+Full 4-sub-critic rubric (Hook / Production / Algorithm-fit / Brand-fit) + binary verdicts + format-fit test + 13-row Rewrite Routing Table live in `agents/critic-agent.md`.
 
-Previous: `short-form-research` (warm-start, soft-required) | Next: human producer / video editor / motion designer (no further skill chain).
+---
 
-**Re-run triggers:** angle change, platform mix change, market pivot, campaign re-positioning.
+## Before Starting
 
-### Skill Deference
-- No research artifact → `short-form-research` first (soft — proceeds without it but flags `trend_signals_stale`)
-- No BRAND.md + brand_mode unresolvable → `brand-system` first
-- No ICP + no audience hint → `icp-research` first
-- Static visual brief (carousel, infographic) → `design-brief`
+Per `references/_shared/before-starting-check.md` [PLAYBOOK] — load research artifact + ICP + BRAND.md context, check freshness windows (trends >30d → recommend `short-form-research` re-run; mechanics >180d → strong recommend).
+
+| Artifact | Source | Required? |
+|---|---|---|
+| `.agents/skill-artifacts/research/short-form-research/[slug].md` | short-form-research | Soft-required (Critical Gate 1) — proceeds without it but flags `trend_signals_stale` |
+| `research/icp-research.md` | icp-research | Soft-required (Critical Gate 4) — proceeds with cold-start hint but flags `voc_source: cold-start-hint` |
+| `brand/BRAND.md` | brand-system | Recommended — brand_mode inference + voice archetype |
+| `.agents/skill-artifacts/mkt/campaign-plan.md` | campaign-plan | Optional — inherits theme/dates/CTAs if `[slug]` matches |
+
+---
+
+## Pre-Dispatch
+
+Run the canonical Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md` [PROCEDURE]).
+
+**Needed dimensions:** angle, platforms (1-3), brand_mode (founder | company), production_mode (auto | live-action | motion-graphic | mixed), market, optional campaign tie-in.
+
+Full read-order + Warm Start + Cold Start (5-question bundled) + write-back map + hard-block conditions + VN auto-routing for polish chain: `references/procedures/pre-dispatch.md` [PROCEDURE].
+
+---
+
+## Mode Resolution
+
+Per `references/_shared/mode-resolver.md` [PROCEDURE] — auto-downgrade for ≤3 sentences AND no prior artifacts (rare for this skill given the input shape); `--fast` flag skips Layer 2 (no critic, no platform-tailor) and runs Layer 1 + 1.5 single-pass via single-agent fallback. **`--fast` does NOT skip Cold Start or Critical Gates 1-6.**
 
 ---
 
@@ -136,12 +148,12 @@ Previous: `short-form-research` (warm-start, soft-required) | Next: human produc
 
 ---
 
-## Routing Logic
+## Routing + Dispatch
 
 Single route — the skill always runs Layer 1 + Layer 1.5 + Layer 2. Multi-platform invocations add `platform-tailor-agent` in Layer 2.
 
 ```
-1. Pre-dispatch (warm-start scan + cold-start if needed)
+1. Pre-Dispatch (warm-start scan + cold-start if needed) — per procedures/pre-dispatch.md
 2. LAYER 1 IN PARALLEL: format-agent, voc-extraction-agent, production-mode-agent
 3. LAYER 1.5 IN PARALLEL (after Layer 1): hook-agent, storyboard-agent, audio-agent, copy-pack-agent
 4. LAYER 2 SEQUENTIAL:
@@ -152,161 +164,24 @@ Single route — the skill always runs Layer 1 + Layer 1.5 + Layer 2. Multi-plat
 7. Deliver hero + variants
 ```
 
----
-
-## Pre-Dispatch
-
-Run the canonical Pre-Dispatch protocol (`references/_shared/pre-dispatch-protocol.md`).
-
-**Needed dimensions:** angle, platforms (1-3), brand_mode (founder | company), production_mode (auto | live-action | motion-graphic | mixed), market, optional campaign tie-in.
-
-**Read order:**
-1. Latest matching `.agents/skill-artifacts/research/short-form-research/[slug].md` from `.agents/manifest.json` (or `Glob` fallback) — **primary dependency.**
-   - Missing → "No short-form-research artifact for this market. Run `short-form-research` first, or proceed with platform references only (briefs will lack current trend signals). [Run upstream / Proceed without]"
-   - Trend signals stale (>30d) → "Trend signals are X days old. Re-run research, or proceed with stale trends? Briefs may bet on decayed patterns."
-   - Mechanics stale (>180d) → strongly recommend re-run; user can override with concerns flag.
-2. `brand/BRAND.md` + `skills-resources/experience/business.md` → infer `brand_mode`. Solo founder / personal brand → `founder`. Faceless product / company → `company`. Ambiguous → ask.
-3. `research/icp-research.md` + `skills-resources/experience/audience.md` → audience VoC, register, market.
-4. `skills-resources/experience/content.md` → recent content decisions, market lock-in.
-5. `.agents/skill-artifacts/mkt/campaign-plan.md` → if `[slug]` matches a campaign asset, inherit theme/dates/CTAs.
-
-**Warm Start** (research artifact found, brand_mode inferred):
-
-```
-Found context for short-form-brief:
-- research artifact: .agents/skill-artifacts/research/short-form-research/[slug].md (trends 8d ago, mechanics 22d ago — fresh)
-- brand_mode: founder (from BRAND.md archetype)
-- market: VN (from research artifact)
-- production_mode default: live-action (founder)
-- platforms in research: TikTok, Reels, Shorts
-
-Missing: angle, target platforms for this brief. What's the angle?
-```
-
-**Cold Start** (multi-question bundle):
-
-```
-Short-form brief — quick decisions (one round-trip).
-
-1. Angle / topic for this piece:
-   [free text]
-
-2. Target platform(s) (1-3 max — hard cap 1 hero + 2 variants):
-   (a) TikTok only
-   (b) Reels only
-   (c) Shorts only
-   (d) TikTok + Reels (default for founder content)
-   (e) Reels + Shorts (default for company content)
-   (f) All three (highest cost — review whether each is worth it)
-   (g) Other: ___
-
-3. Brand mode (skip if BRAND.md was found):
-   (a) Founder — face-led, voice-driven, parasocial
-   (b) Company — faceless, product-led, motion-graphic-friendly
-
-4. Production mode (skip if you want default per brand mode):
-   (a) Live-action (default for founder)
-   (b) Motion-graphic / animated (default for company)
-   (c) Mixed
-   (d) Use brand-mode default — auto
-
-5. Campaign tie-in (skip if no campaign-plan applies):
-   [free text — campaign slug or theme to inherit, or 'none']
-
-Answer 1-5 (skip resolved) in one response. I'll confirm what I heard, then dispatch.
-```
-
-**Write-back to `skills-resources/experience/content.md`:**
-
-| Q | Key |
-|---|---|
-| 3. Brand mode | `Content — brand mode` |
-| 4. Production mode | `Content — production mode default` |
+Mechanics (how to spawn agents, parallel/sequential tables, single-agent fallback, critic routing, polish chain table, chain position, skill deference) live in [`references/procedures/dispatch-mechanics.md`](references/procedures/dispatch-mechanics.md) [PROCEDURE]. Load at Layer 1 dispatch entry.
 
 ---
 
-## Dispatch Protocol
+## Artifact Contract
 
-For each agent dispatched, use the **Agent tool** with a prompt built as follows:
+- **Hero path:** `.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md`
+- **Variant path:** `.agents/skill-artifacts/mkt/short-form-brief/[slug]/variants/[platform].md`
+- **Lifecycle:** `pipeline` — one artifact per (angle, platform-set, market); re-run on angle/platform/market pivot
+- **Frontmatter fields:** `type`, `role`, `status`, `date`, `slug`, `angle`, `brand_mode`, `production_mode`, `market`, `hero_platform`, `variants[]`, `research_artifact`, `research_trend_signals_date`, `research_mechanics_date`, `campaign_tie_in`, `critic_passes[]`, `critic_loop_count`, `polish_chain_applied` (full schema in Output Artifact Structure below)
+- **Hero body sections (14, in order):** TL;DR for the Producer · What This Brief Bets On · Audience & Voice · Format Specification · Hook · Storyboard · On-Screen Text Choreography · Audio Plan · Caption · CTA · Production Notes · What NOT To Do · Success Criteria · Variant Roadmap
+- **Variant body sections:** What Changed From Hero · Hook · Storyboard delta · Audio Plan · Caption · CTA
+- **Consumed by:** human producers / video editors / motion designers (no further skill chain at v1)
+- **Cross-stack contract:** schema changes require atomic update of `format-conventions.md` § "Frontmatter field order" + § "Body section headers (verbatim)" — never silently drift
 
-1. **Read** the agent instruction file — include FULL content in the Agent prompt
-2. **Append** brief, context, and Layer 1/1.5 outputs (for Layer 2 agents)
-3. **Resolve paths to absolute** for reference files
-4. **Pass research artifact context by excerpt** — orchestrator extracts the relevant per-platform section from `short-form-research.md` and passes excerpts; sub-agents do not re-read the artifact
-5. If **feedback** exists (critic FAIL cycle), append at end with header "## Critic Feedback — Address Every Point"
+Full template + per-section format rules (date format, timing format, framing tags, archetype tagging, VoC exact-quote rule, variant "What Changed" guard) live in [`references/format-conventions.md`](references/format-conventions.md) [PROCEDURE].
 
-**Single-agent fallback:** if multi-agent dispatch unavailable, execute each agent's instructions sequentially in-context. Output quality equivalent.
-
----
-
-## Layer 1: Foundation (Parallel)
-
-Spawn **IN PARALLEL** (multiple Agent tool calls in one message).
-
-| Agent | Instruction File | Inputs | Reference Files |
-|-------|-----------------|--------|-----------------|
-| Format Agent | `agents/format-agent.md` | `{ platforms, research_artifact_excerpt }` | None — research artifact is the source |
-| VoC Extraction Agent | `agents/voc-extraction-agent.md` | `{ icp_excerpt, product_context_excerpt, audience_hint }` | None |
-| Production Mode Agent | `agents/production-mode-agent.md` | `{ brand_mode, production_mode, angle }` | `references/production-modes.md` |
-
----
-
-## Layer 1.5: Craft (Parallel, after Layer 1)
-
-Spawn **IN PARALLEL** after Layer 1 completes.
-
-| Agent | Instruction File | Inputs | Reference Files |
-|-------|-----------------|--------|-----------------|
-| Hook Agent | `agents/hook-agent.md` | All Layer 1 + research's hook archetypes | `references/hook-archetypes.md`, `references/anti-patterns.md` |
-| Storyboard Agent | `agents/storyboard-agent.md` | Format spec + production mode + recommended hook | `references/storyboard-grammar.md`, `references/anti-patterns.md` |
-| Audio Agent | `agents/audio-agent.md` | Storyboard + research's audio-trend output if applicable | None — research artifact is the source |
-| Copy Pack Agent | `agents/copy-pack-agent.md` | Format spec + VoC + research's caption/CTA findings | `references/caption-cta-rules.md` |
-
----
-
-## Layer 2: Finalize (Sequential)
-
-| Agent | Instruction File | Inputs | Reference Files |
-|-------|-----------------|--------|-----------------|
-| Platform Tailor Agent | `agents/platform-tailor-agent.md` | Hero brief + research catalog per variant platform | `references/hook-archetypes.md`, `references/caption-cta-rules.md` |
-| Critic Agent | `agents/critic-agent.md` | Hero + variants | `references/anti-patterns.md`, `references/success-criteria-templates.md` |
-
-**Conditional dispatch:** `platform-tailor-agent` runs only when `len(platforms) >= 2`. Otherwise Layer 2 starts at critic.
-
----
-
-## Critic Routing
-
-Critic returns one of:
-
-- **PASS** → apply polish chain (per market + brand_mode), deliver as `done`
-- **FAIL with named sub-critic** → re-dispatch source agent with feedback:
-  - Hook FAIL → `hook-agent` (rewrite to clear hook window, fix triad, pass 3Q)
-  - Production FAIL → `storyboard-agent` / `audio-agent` / `production-mode-agent` (specific failures)
-  - Algorithm-fit FAIL → `format-agent` / `storyboard-agent` / `audio-agent` (length/captions/audio rule mismatch)
-  - Brand-fit FAIL → `voc-extraction-agent` / `hook-agent` / `copy-pack-agent` (re-pull VoC, kill generic tropes)
-
-**Loop cap:** 2 cycles. After cycle 2 with any FAIL remaining, ship `done_with_concerns` with concerns pinned at top of brief.
-
----
-
-## Polish Chain (Layer 2 post-critic)
-
-After PASS, apply language polish to the spoken-line section (Hook verbal + VO direction + on-screen text where it's spoken text):
-
-| (Market, Brand mode) | Polish chain |
-|---|---|
-| VN, founder | `vn-tone` Layer 2 on spoken-line section + full body |
-| VN, company | `vn-tone` Layer 2 on full body |
-| EN, founder | `humanize` Layer 2 on spoken-line section |
-| EN, company | none |
-| Other | flag `polish-chain-extension-needed` |
-
-The polish chain runs as a final pass over the relevant sections — not a re-dispatch of craft agents. See `references/polish-chain.md`.
-
----
-
-## Output Artifact Structure
+### Output Artifact Structure (frontmatter spec)
 
 `.agents/skill-artifacts/mkt/short-form-brief/[slug]/brief.md` (hero) — full template lives in `.agents/skill-artifacts/meta/short-form-brief-spec.md` §5.1. Frontmatter:
 
@@ -333,23 +208,15 @@ polish_chain_applied: vn-tone | humanize | none
 ---
 ```
 
-**Body sections (in order):**
-1. TL;DR for the Producer
-2. What This Brief Bets On (traces to research)
-3. Audience & Voice (VoC phrases, register, polish chain applied)
-4. Format Specification
-5. Hook (recommended + 2 alternatives, all with 3Q test)
-6. Storyboard (shot/scene table)
-7. On-Screen Text Choreography
-8. Audio Plan
-9. Caption (per platform)
-10. CTA
-11. Production Notes (live-action OR motion-graphic OR both)
-12. What NOT To Do (per-platform failure modes from research)
-13. Success Criteria (retention/completion/engagement targets)
-14. Variant Roadmap (links to variants/[platform].md)
+`variants/[platform].md` template starts with "What Changed From Hero" — guards against caption-only resizing (per `format-conventions.md`).
 
-`variants/[platform].md` template starts with "What Changed From Hero" — guards against caption-only resizing.
+---
+
+## Anti-Patterns
+
+Critic-load reference: [`references/anti-patterns.md`](references/anti-patterns.md) [ANTI-PATTERN]. Re-read before any output ships. Five sub-critic clusters (Hook / Production / Algorithm-fit / Brand-fit / Variant) + 5 soft anti-patterns + 6 cross-cutting marketing-stack rows (VN auto-routing, polish-chain on FAIL, hard-cap erosion, cross-stack contract drift, mixed production-mode transition principle).
+
+Most common in practice: AI slop openers ("Hey guys"), vague action verbs ("show product"), caption-only variant resizing, missing VoC in caption first-line, generic founder/company tropes.
 
 ---
 
@@ -362,10 +229,23 @@ polish_chain_applied: vn-tone | humanize | none
 
 ---
 
-## Format Conventions
+## Worked Example
 
-- All dates ISO 8601 (`YYYY-MM-DD`).
-- All timings in seconds (`0:03–0:05`), not vague phrases.
-- All shots specify framing per `references/storyboard-grammar.md` (ECU/CU/MCU/MS/MLS/LS/WS/EWS).
-- All hooks tag archetype name from research catalog.
-- All VoC phrases quoted exactly — no paraphrasing.
+End-to-end walkthrough (Pre-Dispatch warm-start → Layer 1 parallel → Layer 1.5 parallel → Layer 2 platform-tailor + critic PASS → polish chain → deliver; plus FAIL-handling cycle 2 variant + `--fast` variant): [`references/examples/short-form-brief-walkthrough.md`](references/examples/short-form-brief-walkthrough.md) [EXAMPLE].
+
+Two condensed reference briefs in different (market, brand_mode, platform) combinations: [`references/_examples/example-1-vn-founder-tiktok.md`](references/_examples/example-1-vn-founder-tiktok.md), [`references/_examples/example-2-us-company-reels-shorts.md`](references/_examples/example-2-us-company-reels-shorts.md).
+
+---
+
+## References
+
+- **Playbook:** `references/playbook.md` [PLAYBOOK]
+- **Format:** `references/format-conventions.md` [PROCEDURE]
+- **Anti-patterns:** `references/anti-patterns.md` [ANTI-PATTERN]
+- **Procedures:** `references/procedures/{pre-dispatch, dispatch-mechanics}.md` [PROCEDURE]
+- **Example:** `references/examples/short-form-brief-walkthrough.md` [EXAMPLE]
+- **Domain catalogs** (loaded by craft agents at dispatch, not orchestrator): `references/{hook-archetypes, storyboard-grammar, caption-cta-rules, production-modes, success-criteria-templates, polish-chain}.md`
+- **Platform intelligence** (loaded by format-agent + platform-tailor-agent): `references/platform-intelligence/{tiktok, reels, shorts, linkedin, x, youtube}.md`
+- **Shared:** `references/_shared/{before-starting-check, manifest-spec, mode-resolver, pre-dispatch-protocol}.md`
+- **Agents:** 9 sub-agents in `agents/` — see Agent Manifest above. `critic-agent.md` holds the canonical 4-sub-critic gate + 13-row Rewrite Routing Table.
+- `marketing-skills/CLAUDE.md` §"Pre-Dispatch Protocol" + §"Complexity Routing" + §"Multi-Agent Skills" — stack-level conventions this skill inherits
